@@ -6,8 +6,10 @@
     "baseUrl": ".",
     "paths": {
       "assets/*": ["./assets/*"],
+      "themes/*": ["./themes/*"],
       "components/*": ["./components/*"],
       "constants/*": ["./constants/*"],
+      "screens/*": ["./screens/*"],
     } 
   }
 }
