@@ -8,7 +8,6 @@ import { InputProps } from 'types/components/Inputs/types';
 import { inputStyles } from './utils/styles';
 
 export const Input: FC<InputProps> = ({
-    type,
     variant,
     placeholder,
     value,
