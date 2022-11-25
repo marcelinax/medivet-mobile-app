@@ -10,6 +10,9 @@
       "components/*": ["./components/*"],
       "constants/*": ["./constants/*"],
       "screens/*": ["./screens/*"],
+      "layouts/*": ["./layouts/*"],
+      "utils/*": ["./utils/*"],
+      "types/*": ["./types/*"],
     } 
   }
 }

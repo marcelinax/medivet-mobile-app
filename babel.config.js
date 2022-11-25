@@ -13,6 +13,9 @@ module.exports = function(api) {
             themes: './themes',
             components: './components',
             screens: './screens',
+            layouts: './layouts',
+            utils: './utils',
+            types: './types',
           },
           extensions: [
             '.js',
