@@ -3,7 +3,6 @@ import colors from 'themes/colors';
 
 export const inputStyles = StyleSheet.create({
     input: {
-        paddingHorizontal: 10,
         height: '100%',
         fontSize: 20,
         fontWeight: '400',
@@ -11,7 +10,8 @@ export const inputStyles = StyleSheet.create({
     },
     outline: {
         borderColor: colors.GRAY_LIGHT,
-        borderWidth: 1
+        borderWidth: 1,
+        paddingLeft: 10
     },
     underline: {
         borderBottomWidth: 1,

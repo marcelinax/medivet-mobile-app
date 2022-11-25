@@ -1,32 +1,23 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import sizes from 'constants/sizes';
 import React, { FC } from 'react';
-import { StyleProp, StyleSheet, Text, TextInput, TextInputProps, TextStyle, View } from 'react-native';
+import { StyleProp, StyleSheet, Text, TextInput, TextStyle, View } from 'react-native';
 import colors from 'themes/colors';
 import icons from 'themes/icons';
-import { InputType, InputVariant } from 'types/components/Inputs/types';
+import { InputProps } from 'types/components/Inputs/types';
 import { inputStyles } from './utils/styles';
 
-interface Props extends TextInputProps {
-    type: InputType;
-    variant: InputVariant;
-    placeholder?: string;
-    value: any;
-    label?: string;
-    isClearable?: boolean;
-    rounded?: boolean;
-    icon?: any;
-}
-
-export const Input: FC<Props> = ({
+export const Input: FC<InputProps> = ({
     type,
     variant,
     placeholder,
     value,
+    onChange,
     label,
     isClearable,
     rounded,
     icon,
+    children,
     ...props
 }) => {
     const getInputStylesDependingOnVariant = (): StyleProp<TextStyle> => {
@@ -39,12 +30,18 @@ export const Input: FC<Props> = ({
     };
 
     const onClearValue = (): void => {
-
+        onChange('');
     };
 
     const getBorderRadius = (): number => {
         if (variant === 'underline') return 0;
         return rounded ? 20 : 10;
+    };
+
+    const getIconStyles = (): StyleProp<TextStyle> => {
+        if (icon) {
+            if (variant === 'outline') return { paddingLeft: 0, paddingRight: 10 };
+        }
     };
 
     return (
@@ -55,12 +52,14 @@ export const Input: FC<Props> = ({
                     styles.inputInnerContainer,
                     getInputStylesDependingOnVariant(),
                     label && variant !== 'underline' ? styles.inputWithLabel : {},
-                    { borderRadius: getBorderRadius() }
+                    { borderRadius: getBorderRadius() },
                 ]}>
                     {icon && <Ionicons
                         name={icon} size={20}
-                        color={colors.GRAY_DARK} style={styles.icon} />}
+                        color={colors.GRAY_DARK} style={getIconStyles()} />}
                     <TextInput
+                        value={value}
+                        onChange={onChange}
                         style={inputStyles.input}
                         placeholder={placeholder}
                         placeholderTextColor={colors.GRAY_DARK}
@@ -70,6 +69,7 @@ export const Input: FC<Props> = ({
                         name={icons.CLOSE_CIRCLE} size={20}
                         onPress={onClearValue}
                         color={colors.GRAY_DARK} style={styles.clearableIcon} />}
+                    {children}
                 </View>
             </View>
         </View>
@@ -95,8 +95,5 @@ const styles = StyleSheet.create({
     },
     clearableIcon: {
         paddingRight: 10
-    },
-    icon: {
-        paddingLeft: 10
     }
 });
