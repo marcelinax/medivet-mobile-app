@@ -13,3 +13,11 @@ export interface ButtonProps extends TouchableHighlightProps {
     leftIcon?: any;
     rightIcon?: any;
 }
+
+export interface ButtonLoadingProps extends TouchableHighlightProps {
+    title: string;
+    variant: ButtonVariant;
+    color?: ButtonColor;
+    disabled?: boolean;
+    loading?: boolean;
+} 
