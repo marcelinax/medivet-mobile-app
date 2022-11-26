@@ -1,6 +1,6 @@
 import { ColorValue, StyleSheet } from "react-native";
 import colors from "themes/colors";
-import { ButtonColor, ButtonVariant } from "types/components/Buttons/types";
+import { ButtonColor, ButtonFontWeight, ButtonVariant } from "types/components/Buttons/types";
 
 export const buttonStyles = StyleSheet.create({
     container: {
@@ -11,7 +11,6 @@ export const buttonStyles = StyleSheet.create({
         flexDirection: 'row',
     },
     text: {
-        fontWeight: '500',
         fontSize: 16
     },
     disabled: {
@@ -31,6 +30,8 @@ export const getButtonBackgroundColor = (variant: ButtonVariant, color?: ButtonC
                     return colors.PRIMARY;
                 case 'secondary':
                     return colors.SECONDARY;
+                case 'light':
+                    return colors.GRAY_DARK;
             }
         }
         default:
@@ -45,6 +46,8 @@ export const getButtonBorderColor = (color?: ButtonColor): ColorValue => {
             return colors.PRIMARY;
         case 'secondary':
             return colors.SECONDARY;
+        case 'light':
+            return colors.GRAY_DARK;
     }
 };
 
@@ -54,6 +57,8 @@ export const getButtonTextColor = (variant: ButtonVariant, color?: ButtonColor):
             switch (color) {
                 case 'secondary':
                     return colors.SECONDARY;
+                case 'light':
+                    return colors.GRAY_DARK;
                 case 'primary':
                 default:
                     return colors.PRIMARY;
@@ -65,6 +70,8 @@ export const getButtonTextColor = (variant: ButtonVariant, color?: ButtonColor):
             switch (color) {
                 case 'secondary':
                     return colors.SECONDARY;
+                case 'light':
+                    return colors.GRAY_DARK;
                 case 'primary':
                 default:
                     return colors.PRIMARY;
@@ -73,4 +80,14 @@ export const getButtonTextColor = (variant: ButtonVariant, color?: ButtonColor):
         default:
             return colors.WHITE;
     };
+};
+
+export const getButtonFontWeight = (fontWeight?: ButtonFontWeight): '400' | '500' => {
+    switch (fontWeight) {
+        case 'light':
+            return '400';
+        case 'bold':
+        default:
+            return '500';
+    }
 };

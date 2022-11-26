@@ -4,7 +4,7 @@ import colors from 'themes/colors';
 export const inputStyles = StyleSheet.create({
     input: {
         height: '100%',
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: '400',
         flex: 1
     },

@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { Text, TouchableHighlight, View } from 'react-native';
 import colors from 'themes/colors';
 import { ButtonProps } from 'types/components/Buttons/types';
-import { buttonStyles, getButtonBorderColor, getButtonBackgroundColor, getButtonTextColor } from './utils/styles';
+import { buttonStyles, getButtonBackgroundColor, getButtonBorderColor, getButtonFontWeight, getButtonTextColor } from './utils/styles';
 
 export const Button: FC<ButtonProps> = ({
     title,
@@ -13,12 +13,13 @@ export const Button: FC<ButtonProps> = ({
     color,
     leftIcon,
     rightIcon,
+    fontWeight,
     ...props
 }) => {
 
     return (
         //zamienic dla androida na native
-        <TouchableHighlight {...props} onPress={() => console.log("saa")} disabled={disabled} underlayColor={colors.WHITE} >
+        <TouchableHighlight {...props} disabled={disabled} underlayColor={colors.WHITE}>
             <View style={[
                 {
                     backgroundColor: getButtonBackgroundColor(variant, color),
@@ -33,7 +34,10 @@ export const Button: FC<ButtonProps> = ({
                     name={leftIcon} size={20}
                     color={getButtonTextColor(variant, color)} style={{ marginRight: 10 }} />}
                 <Text style={[
-                    { color: getButtonTextColor(variant, color) },
+                    {
+                        color: getButtonTextColor(variant, color),
+                        fontWeight: getButtonFontWeight(fontWeight)
+                    },
                     buttonStyles.text
                 ]}>
                     {title}

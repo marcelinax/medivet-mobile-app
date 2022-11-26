@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { ActivityIndicator, Text, TouchableHighlight, View } from 'react-native';
 import colors from 'themes/colors';
 import { ButtonLoadingProps } from 'types/components/Buttons/types';
-import { buttonStyles, getButtonBackgroundColor, getButtonBorderColor, getButtonTextColor } from './utils/styles';
+import { buttonStyles, getButtonBackgroundColor, getButtonBorderColor, getButtonFontWeight, getButtonTextColor } from './utils/styles';
 
 export const LoadingButton: FC<ButtonLoadingProps> = ({
     title,
@@ -10,6 +10,7 @@ export const LoadingButton: FC<ButtonLoadingProps> = ({
     color,
     disabled,
     loading,
+    fontWeight,
     ...props
 }) => {
 
@@ -26,7 +27,10 @@ export const LoadingButton: FC<ButtonLoadingProps> = ({
                 props.style,
             ]}>
                 <Text style={[
-                    { color: getButtonTextColor(variant, color) },
+                    {
+                        color: getButtonTextColor(variant, color),
+                        fontWeight: getButtonFontWeight(fontWeight)
+                    },
                     buttonStyles.text
                 ]}>
                     {title}
