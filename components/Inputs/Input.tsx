@@ -1,5 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import sizes from 'constants/sizes';
+import errorsTranslations from 'constants/translations/errors.translations';
 import React, { FC } from 'react';
 import { StyleProp, StyleSheet, Text, TextInput, TextStyle, View } from 'react-native';
 import colors from 'themes/colors';
@@ -11,11 +12,12 @@ export const Input: FC<InputProps> = ({
     variant,
     placeholder,
     value,
-    onChange,
+    onChangeText,
     label,
     isClearable,
     rounded,
     icon,
+    errors,
     children,
     ...props
 }) => {
@@ -29,7 +31,7 @@ export const Input: FC<InputProps> = ({
     };
 
     const onClearValue = (): void => {
-        onChange('');
+        onChangeText('');
     };
 
     const getBorderRadius = (): number => {
@@ -41,6 +43,17 @@ export const Input: FC<InputProps> = ({
         if (icon) {
             if (variant === 'outline') return { paddingLeft: 0, paddingRight: 10 };
         }
+    };
+
+    const getErrorMessage = (): string => {
+        const errorMessage = errors[0]?.message;
+        const keys = Object.keys(errorsTranslations);
+        const values = Object.values(errorsTranslations);
+
+        const messageKey = keys.find(k => k === errorMessage);
+
+        if (messageKey) return values[keys.indexOf(messageKey)];
+        return '';
     };
 
     return (
@@ -58,7 +71,7 @@ export const Input: FC<InputProps> = ({
                         color={colors.GRAY_DARK} style={getIconStyles()} />}
                     <TextInput
                         value={value}
-                        onChange={onChange}
+                        onChangeText={onChangeText}
                         style={inputStyles.input}
                         placeholder={placeholder}
                         placeholderTextColor={colors.GRAY_DARK}
@@ -70,6 +83,11 @@ export const Input: FC<InputProps> = ({
                         color={colors.GRAY_DARK} style={styles.clearableIcon} />}
                     {children}
                 </View>
+                {
+                    errors?.length > 0 && <Text style={styles.error}>
+                        {getErrorMessage()}
+                    </Text>
+                }
             </View>
         </View>
     );
@@ -94,5 +112,11 @@ const styles = StyleSheet.create({
     },
     clearableIcon: {
         paddingRight: 10
+    },
+    error: {
+        color: colors.DANGER,
+        marginTop: 5,
+        fontSize: 13,
+        fontWeight: '500'
     }
 });
