@@ -1,6 +1,7 @@
 import { authUser } from 'api/auth/auth.api';
 import { getInputErrors, handleInputErrors, hasInternalError } from 'api/errors/services';
 import { Button } from 'components/Buttons/Button';
+import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { PasswordInput } from 'components/Inputs/PasswordInput';
 import { TextInput } from 'components/Inputs/TextInput';
 import apiErrors from 'constants/apiErrors';
@@ -9,6 +10,8 @@ import { inputsTranslations } from 'constants/translations/inputs.translations';
 import { useErrorAlert } from 'hooks/Modals/useErrorAlert';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { setToken } from 'store/auth/authSlice';
 import colors from 'themes/colors';
 import { AuthCredentials } from 'types/api/auth/types';
 import { FormError } from 'types/api/errors/types';
@@ -20,7 +23,9 @@ export const LoginForm = () => {
         password: ''
     });
     const [errors, setErrors] = useState<FormError[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
     const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
+    const dispatch = useDispatch();
 
     const onChange = (field: string, newValue: string): void => {
         setForm({
@@ -30,12 +35,13 @@ export const LoginForm = () => {
     };
 
     const onSignIn = async (): Promise<void> => {
+        setLoading(true);
         try {
             const res = await authUser(form);
+            dispatch(setToken(res.access_token));
         } catch (err: any) {
-            console.error(err);
             const errs = [err?.response?.data];
-            console.log(errs);
+
             if (hasInternalError(errs)) handleErrorAlert();
 
             const emailErrors = handleInputErrors(errs, [
@@ -51,6 +57,7 @@ export const LoginForm = () => {
 
             setErrors([emailErrors, passwordErrors]);
         }
+        setLoading(false);
     };
 
     const onSignUp = (): void => {
@@ -70,7 +77,7 @@ export const LoginForm = () => {
                     style={{ marginTop: 10 }} color='light'
                     fontWeight='light'
                 />
-                <Button variant='solid' title={buttonsTranslations.SIGN_IN}
+                <LoadingButton variant='solid' title={buttonsTranslations.SIGN_IN} loading={loading}
                     style={{ marginTop: 10 }} onPress={onSignIn} />
                 <View style={styles.signUpButtonContainer}>
                     <Text style={styles.signUpText}>
