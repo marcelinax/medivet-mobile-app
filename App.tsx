@@ -1,13 +1,18 @@
-import { SafeAreaView } from 'react-native';
+import { Navigator } from 'navigation/Navigator';
+import { SafeAreaView, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
-import { LoginScreen } from 'screens/Login.screen';
 import { store } from 'store/store';
+import { isAndroidPlatfrom } from 'utils/isAndroidPlatfrom';
 
 export default function App() {
   return (
     <Provider store={store}>
       <SafeAreaView style={{ flex: 1 }}>
-        <LoginScreen />
+        <StatusBar
+          networkActivityIndicatorVisible
+          barStyle={`${isAndroidPlatfrom() ? 'default' : 'dark-content'}`}
+        />
+        <Navigator />
       </SafeAreaView>
     </Provider>
   );
