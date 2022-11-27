@@ -32,6 +32,10 @@ export const getButtonBackgroundColor = (variant: ButtonVariant, color?: ButtonC
                     return colors.SECONDARY;
                 case 'light':
                     return colors.GRAY_DARK;
+                case 'success':
+                    return colors.SUCCESS;
+                case 'danger':
+                    return colors.DANGER;
             }
         }
         default:
@@ -48,6 +52,10 @@ export const getButtonBorderColor = (color?: ButtonColor): ColorValue => {
             return colors.SECONDARY;
         case 'light':
             return colors.GRAY_DARK;
+        case 'success':
+            return colors.SUCCESS;
+        case 'danger':
+            return colors.DANGER;
     }
 };
 
@@ -55,6 +63,10 @@ export const getButtonTextColor = (variant: ButtonVariant, color?: ButtonColor):
     switch (variant) {
         case 'link': {
             switch (color) {
+                case 'success':
+                    return colors.SUCCESS;
+                case 'danger':
+                    return colors.DANGER;
                 case 'secondary':
                     return colors.SECONDARY;
                 case 'light':
@@ -68,6 +80,10 @@ export const getButtonTextColor = (variant: ButtonVariant, color?: ButtonColor):
             return colors.WHITE;
         case 'outline': {
             switch (color) {
+                case 'success':
+                    return colors.SUCCESS;
+                case 'danger':
+                    return colors.DANGER;
                 case 'secondary':
                     return colors.SECONDARY;
                 case 'light':

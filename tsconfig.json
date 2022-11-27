@@ -13,6 +13,7 @@
       "layouts/*": ["./layouts/*"],
       "utils/*": ["./utils/*"],
       "types/*": ["./types/*"],
+      "hooks/*": ["./hooks/*"],
     } 
   }
 }

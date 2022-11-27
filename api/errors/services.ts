@@ -50,3 +50,7 @@ export const handleInputErrors = (allErrors: Error[], errorsMessages: string[], 
 export const getInputErrors = (errors: FormError[], field: string): Error[] => {
     return errors.find(error => error.field === field)?.errors.filter(err => err) || [];
 };
+
+export const hasInternalError = (errors: Error[]): boolean => {
+    return !!errors?.find(err => err?.statusCode === 500);
+};

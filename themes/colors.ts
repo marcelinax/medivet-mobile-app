@@ -7,5 +7,6 @@ export default {
     SECONDARY: '#DDAB74',
     DANGER: '#FF3B30',
     SUCCESS: '#34C759',
-    WARNING: '#FFCC00'
+    WARNING: '#FFCC00',
+    OVERLAY: 'rgba(0, 0, 0, 0.5)'
 };
