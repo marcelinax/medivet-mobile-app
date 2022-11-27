@@ -17,6 +17,7 @@ export const PasswordInput: FC<Props> = (props) => {
     return (
         <Input
             secureTextEntry={isValueHidden}
+            autoCapitalize='none'
             {...props}
         >
             <Ionicons

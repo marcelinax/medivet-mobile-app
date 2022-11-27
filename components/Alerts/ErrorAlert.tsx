@@ -28,7 +28,7 @@ export const ErrorAlert: FC<Props> = ({
                         {title || errorsTranslations.SOMETHING_WENT_WRONG}
                     </Text>
                     <Text>
-                        {message || errorsTranslations.SOMETHING_WENT_WRONG}
+                        {message}
                     </Text>
                     <View style={alertStyles.buttonsContainer}>
                         <Button title='OK' color='danger' onPress={onHide}

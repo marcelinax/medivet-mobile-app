@@ -10,6 +10,7 @@ export const TextInput: FC<Props> = (props) => {
     return (
         <Input
             keyboardType={props.keyboardType}
+            autoCapitalize={props.keyboardType === 'email-address' ? 'none' : 'sentences'}
             {...props}
         />
     );
