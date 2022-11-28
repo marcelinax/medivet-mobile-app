@@ -1,4 +1,4 @@
-import { authUser } from 'api/auth/auth.api';
+import { AuthApi } from 'api/auth/auth.api';
 import { getInputErrors, handleInputErrors, hasInternalError } from 'api/errors/services';
 import { Button } from 'components/Buttons/Button';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
@@ -38,7 +38,7 @@ export const LoginForm = () => {
     const onSignIn = async (): Promise<void> => {
         setLoading(true);
         try {
-            const res = await authUser(form);
+            const res = await AuthApi.authUser(form);
             SecureStore.setItemAsync('token', res.access_token);
             dispatch(setToken(res.access_token));
         } catch (err: any) {

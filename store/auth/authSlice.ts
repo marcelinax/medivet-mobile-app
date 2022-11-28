@@ -12,7 +12,7 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setToken: (state, action: PayloadAction<string>) => {
+        setToken: (state, action: PayloadAction<string | null>) => {
             state.token = action.payload;
         },
         removeToken: (state) => {

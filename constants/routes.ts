@@ -2,5 +2,6 @@ export default {
     LOGIN: 'Login',
     REGISTER: 'Register',
     HOME: 'Home',
-    AUTH_NAVIGATOR: 'Auth Navigator'
+    AUTH_NAVIGATOR: 'Auth Navigator',
+    GLOBAL_LOADER: 'Global Loader'
 };

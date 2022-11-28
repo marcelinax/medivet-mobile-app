@@ -1,3 +1,4 @@
 export const commonTranslations = {
-    logo: 'MediVet'
+    logo: 'MediVet',
+    loading: 'Ładowanie...'
 };
