@@ -40,7 +40,7 @@ export const Select: FC<SelectProps> = ({
                         <TextInput
                             editable={false}
                             value={selectedValue?.label}
-                            style={inputStyles.input}
+                            style={[inputStyles.input, { color: colors.BLACK }]}
                             placeholder={placeholder}
                             placeholderTextColor={colors.GRAY_DARK}
                             {...props}
@@ -57,7 +57,9 @@ export const Select: FC<SelectProps> = ({
                     </Text>
                 }
                 {showOptions && <SelectOptions options={options} visible={showOptions}
-                    selectedValue={selectedValue} setSelectedValue={onChange} />}
+                    selectedValue={selectedValue} setSelectedValue={onChange}
+                    onHide={() => setShowOptions(false)}
+                />}
             </View>
         </View >
     );

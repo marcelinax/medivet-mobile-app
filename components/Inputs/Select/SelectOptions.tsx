@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { FlatList, ListRenderItem, Modal, StyleSheet, View } from 'react-native';
+import { FlatList, ListRenderItem, Modal, StyleSheet, TouchableOpacity, View } from 'react-native';
 import colors from 'themes/colors';
 import { SelectOptionProps } from 'types/components/Inputs/types';
 import { SelectOption } from './SelectOption';
@@ -9,11 +9,13 @@ interface Props {
     visible: boolean;
     selectedValue: SelectOptionProps | null;
     setSelectedValue: (item: string) => void;
+    onHide: () => void;
 }
 
 export const SelectOptions: FC<Props> = ({
     options,
     visible,
+    onHide,
     selectedValue,
     setSelectedValue
 }) => {
@@ -25,10 +27,12 @@ export const SelectOptions: FC<Props> = ({
     );
     return (
 
-        <Modal visible={visible} transparent animationType="none">
-            <View style={styles.container}>
-                <FlatList data={options} renderItem={renderItem} contentContainerStyle={styles.optionsContainer} />
-            </View>
+        <Modal visible={visible} transparent animationType='slide' >
+            <TouchableOpacity activeOpacity={1} style={{ flex: 1 }} onPressOut={onHide}>
+                <View style={styles.container}>
+                    <FlatList data={options} renderItem={renderItem} contentContainerStyle={styles.optionsContainer} />
+                </View>
+            </TouchableOpacity>
         </Modal>
     );
 };
