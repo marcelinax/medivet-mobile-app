@@ -1,6 +1,6 @@
 export default {
     LOGIN: 'Login',
-    REGISTER: 'Register',
+    REGISTRAION: 'Registration',
     HOME: 'Home',
     AUTH_NAVIGATOR: 'Auth Navigator',
     GLOBAL_LOADER: 'Global Loader'

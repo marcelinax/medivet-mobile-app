@@ -1,12 +1,11 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import sizes from 'constants/sizes';
-import errorsTranslations from 'constants/translations/errors.translations';
 import React, { FC } from 'react';
-import { StyleProp, StyleSheet, Text, TextInput, TextStyle, View } from 'react-native';
+import { StyleProp, Text, TextInput, TextStyle, View } from 'react-native';
 import colors from 'themes/colors';
 import icons from 'themes/icons';
 import { InputProps } from 'types/components/Inputs/types';
-import { inputStyles } from './utils/styles';
+import { getErrorMessage } from './utils/services';
+import { getInputBorderRadius, getInputStylesDependingOnVariant, inputStyles } from './utils/styles';
 
 export const Input: FC<InputProps> = ({
     variant,
@@ -21,22 +20,9 @@ export const Input: FC<InputProps> = ({
     children,
     ...props
 }) => {
-    const getInputStylesDependingOnVariant = (): StyleProp<TextStyle> => {
-        switch (variant) {
-            case 'outline':
-                return inputStyles.outline;
-            case 'underline':
-                return inputStyles.underline;
-        }
-    };
 
     const onClearValue = (): void => {
         onChangeText('');
-    };
-
-    const getBorderRadius = (): number => {
-        if (variant === 'underline') return 0;
-        return rounded ? 20 : 10;
     };
 
     const getIconStyles = (): StyleProp<TextStyle> => {
@@ -45,26 +31,15 @@ export const Input: FC<InputProps> = ({
         }
     };
 
-    const getErrorMessage = (): string => {
-        const errorMessage = errors[0]?.message;
-        const keys = Object.keys(errorsTranslations);
-        const values = Object.values(errorsTranslations);
-
-        const messageKey = keys.find(k => k === errorMessage);
-
-        if (messageKey) return values[keys.indexOf(messageKey)];
-        return '';
-    };
-
     return (
-        <View style={styles.container}>
+        <View style={inputStyles.container}>
             <View>
-                <Text style={styles.label}>{label?.toUpperCase()}</Text>
+                <Text style={inputStyles.label}>{label?.toUpperCase()}</Text>
                 <View style={[
-                    styles.inputInnerContainer,
-                    getInputStylesDependingOnVariant(),
-                    label && variant !== 'underline' ? styles.inputWithLabel : {},
-                    { borderRadius: getBorderRadius() },
+                    inputStyles.inputInnerContainer,
+                    getInputStylesDependingOnVariant(variant),
+                    label && variant !== 'underline' ? inputStyles.inputWithLabel : {},
+                    { borderRadius: getInputBorderRadius(variant, rounded) },
                 ]}>
                     {icon && <Ionicons
                         name={icon} size={20}
@@ -80,43 +55,15 @@ export const Input: FC<InputProps> = ({
                     {isClearable && <Ionicons
                         name={icons.CLOSE_CIRCLE} size={20}
                         onPress={onClearValue}
-                        color={colors.GRAY_DARK} style={styles.clearableIcon} />}
+                        color={colors.GRAY_DARK} style={inputStyles.defaultIcon} />}
                     {children}
                 </View>
                 {
-                    errors?.length > 0 && <Text style={styles.error}>
-                        {getErrorMessage()}
+                    errors?.length > 0 && <Text style={inputStyles.error}>
+                        {getErrorMessage(errors)}
                     </Text>
                 }
             </View>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        maxWidth: sizes.FULL_WIDTH,
-        minWidth: '100%'
-    },
-    label: {
-        color: colors.GRAY_DARK,
-        fontWeight: '500'
-    },
-    inputWithLabel: {
-        marginTop: 8
-    },
-    inputInnerContainer: {
-        flexDirection: 'row',
-        height: 48,
-        alignItems: 'center'
-    },
-    clearableIcon: {
-        paddingRight: 10
-    },
-    error: {
-        color: colors.DANGER,
-        marginTop: 5,
-        fontSize: 13,
-        fontWeight: '500'
-    }
-});
