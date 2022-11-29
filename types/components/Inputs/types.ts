@@ -13,3 +13,20 @@ export interface InputProps extends TextInputProps {
     icon?: any;
     errors: Error[];
 }
+
+export interface SelectProps extends TextInputProps {
+    variant: InputVariant;
+    onChange: (e: any) => void;
+    value: any;
+    options: SelectOptionProps[];
+    defaultValue?: any;
+    placeholder?: string;
+    label?: string;
+    errors: Error[];
+    rounded?: boolean;
+}
+
+export interface SelectOptionProps {
+    id: any;
+    label: string;
+}
