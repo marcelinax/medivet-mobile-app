@@ -11,13 +11,13 @@ export const inputStyles = StyleSheet.create({
         flex: 1
     },
     outline: {
-        borderColor: colors.GRAY_LIGHTER,
+        borderColor: colors.GRAY,
         borderWidth: 1,
         paddingLeft: 10
     },
     underline: {
         borderBottomWidth: 1,
-        borderColor: colors.GRAY_LIGHTER
+        borderColor: colors.GRAY
     },
     container: {
         maxWidth: sizes.FULL_WIDTH,

@@ -11,7 +11,8 @@ interface Props {
 
 export const AuthLayout: FC<Props> = ({ image, children }) => {
     return (
-        <ScrollView style={{ flex: 1 }} automaticallyAdjustKeyboardInsets contentContainerStyle={styles.scrollViewContainer}>
+        <ScrollView style={{ flex: 1 }}
+            automaticallyAdjustKeyboardInsets contentContainerStyle={styles.scrollViewContainer}>
             <View style={styles.container}>
                 <Image source={{ uri: Image.resolveAssetSource(image).uri }}
                     style={{ width: 250, height: 200 }}
@@ -29,7 +30,7 @@ export const AuthLayout: FC<Props> = ({ image, children }) => {
 const styles = StyleSheet.create({
     scrollViewContainer: {
         flexGrow: 1,
-        backgroundColor: colors.WHITE
+        backgroundColor: colors.WHITE,
     },
     screen: {
         flex: 1
