@@ -8,6 +8,7 @@ import colors from 'themes/colors';
 import icons from 'themes/icons';
 import { Error } from 'types/api/errors/types';
 import { InputVariant } from 'types/components/Inputs/types';
+import { getErrorMessage } from './utils/services';
 import { getInputBorderRadius, getInputStylesDependingOnVariant, inputStyles } from './utils/styles';
 
 interface Props extends DateTimePickerProps {
@@ -34,8 +35,7 @@ export const DatePicker: FC<Props> = ({
     errors,
     shouldDisplayPlaceholder,
     label,
-    placeholder,
-    ...props
+    placeholder
 }) => {
     const [visible, setVisible] = useState<boolean>(false);
 
@@ -51,7 +51,7 @@ export const DatePicker: FC<Props> = ({
                 return moment(value).format('DD.MM.YYYY');
         }
     };
-    // poprawić typy
+
     return (
         <View>
             <Text style={inputStyles.label}>{label?.toUpperCase()}</Text>
@@ -74,6 +74,11 @@ export const DatePicker: FC<Props> = ({
                         color={colors.GRAY_DARK} style={inputStyles.defaultIcon} />
                 </View>
             </TouchableHighlight>
+            {
+                errors?.length > 0 && <Text style={inputStyles.error}>
+                    {getErrorMessage(errors)}
+                </Text>
+            }
             <DateTimePickerModal
                 cancelTextIOS={buttonsTranslations.CANCEL}
                 confirmTextIOS={buttonsTranslations.CHOOSE}
@@ -89,7 +94,6 @@ export const DatePicker: FC<Props> = ({
                     onCancel();
                 }}
                 date={value}
-                {...props}
             />
         </View >
     );

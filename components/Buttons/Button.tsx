@@ -1,7 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import React, { FC } from 'react';
 import { Text, TouchableHighlight, View } from 'react-native';
-import colors from 'themes/colors';
 import { ButtonProps } from 'types/components/Buttons/types';
 import { buttonStyles, getButtonBackgroundColor, getButtonBorderColor, getButtonFontWeight, getButtonTextColor } from './utils/styles';
 
@@ -19,7 +18,7 @@ export const Button: FC<ButtonProps> = ({
 
     return (
         //zamienic dla androida na native
-        <TouchableHighlight {...props} disabled={disabled} underlayColor={colors.WHITE}>
+        <TouchableHighlight {...props} disabled={disabled} underlayColor={getButtonBackgroundColor(variant, color)}>
             <View style={[
                 {
                     backgroundColor: getButtonBackgroundColor(variant, color),

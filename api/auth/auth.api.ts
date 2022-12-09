@@ -14,7 +14,6 @@ class AuthApi {
     static async validateToken(): Promise<AxiosResponse> {
         return await authClient.get('auth/validate-token');
     }
-
 }
 
 export { AuthApi };

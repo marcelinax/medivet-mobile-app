@@ -36,6 +36,8 @@ export const getButtonBackgroundColor = (variant: ButtonVariant, color?: ButtonC
                     return colors.SUCCESS;
                 case 'danger':
                     return colors.DANGER;
+                case 'info':
+                    return colors.INFO;
             }
         }
         default:
@@ -56,6 +58,8 @@ export const getButtonBorderColor = (color?: ButtonColor): ColorValue => {
             return colors.SUCCESS;
         case 'danger':
             return colors.DANGER;
+        case 'info':
+            return colors.INFO;
     }
 };
 
@@ -71,6 +75,8 @@ export const getButtonTextColor = (variant: ButtonVariant, color?: ButtonColor):
                     return colors.SECONDARY;
                 case 'light':
                     return colors.GRAY_DARK;
+                case 'info':
+                    return colors.INFO;
                 case 'primary':
                 default:
                     return colors.PRIMARY;
@@ -88,6 +94,8 @@ export const getButtonTextColor = (variant: ButtonVariant, color?: ButtonColor):
                     return colors.SECONDARY;
                 case 'light':
                     return colors.GRAY_DARK;
+                case 'info':
+                    return colors.INFO;
                 case 'primary':
                 default:
                     return colors.PRIMARY;
@@ -98,10 +106,12 @@ export const getButtonTextColor = (variant: ButtonVariant, color?: ButtonColor):
     };
 };
 
-export const getButtonFontWeight = (fontWeight?: ButtonFontWeight): '400' | '500' => {
+export const getButtonFontWeight = (fontWeight?: ButtonFontWeight): '400' | '500' | '600' => {
     switch (fontWeight) {
         case 'light':
             return '400';
+        case 'bolder':
+            return '600';
         case 'bold':
         default:
             return '500';

@@ -1,4 +1,6 @@
 export const commonTranslations = {
     logo: 'MediVet',
-    loading: 'Ładowanie...'
+    loading: 'Ładowanie...',
+    female: 'Kobieta',
+    male: 'Mężczyzna'
 };

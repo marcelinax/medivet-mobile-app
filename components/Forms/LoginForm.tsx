@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { AuthApi } from 'api/auth/auth.api';
 import { getInputErrors, handleInputErrors, hasInternalError } from 'api/errors/services';
 import { Button } from 'components/Buttons/Button';
@@ -5,6 +6,7 @@ import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { PasswordInput } from 'components/Inputs/PasswordInput';
 import { TextInput } from 'components/Inputs/TextInput';
 import apiErrors from 'constants/apiErrors';
+import routes from 'constants/routes';
 import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import { inputsTranslations } from 'constants/translations/inputs.translations';
 import * as SecureStore from 'expo-secure-store';
@@ -27,6 +29,7 @@ export const LoginForm = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
     const dispatch = useDispatch();
+    const navigation = useNavigation();
 
     const onChange = (field: string, newValue: string): void => {
         setForm({
@@ -63,7 +66,7 @@ export const LoginForm = () => {
     };
 
     const onSignUp = (): void => {
-        console.log('sign up');
+        navigation.navigate(routes.REGISTRAION as never);
     };
 
     return (
@@ -86,7 +89,7 @@ export const LoginForm = () => {
                         {buttonsTranslations.NO_ACCOUNT_YET}
                     </Text>
                     <Button variant='link' title={buttonsTranslations.SIGN_UP}
-                        color='secondary' fontWeight='bold' onPress={onSignUp}
+                        color='secondary' fontWeight='bolder' onPress={onSignUp}
                     />
                 </View>
             </View>

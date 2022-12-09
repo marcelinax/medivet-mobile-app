@@ -2,9 +2,9 @@ import { TouchableHighlightProps } from "react-native";
 
 export type ButtonVariant = 'solid' | 'outline' | 'link';
 
-export type ButtonColor = 'primary' | 'secondary' | 'light' | 'danger' | 'success';
+export type ButtonColor = 'primary' | 'secondary' | 'light' | 'danger' | 'success' | 'info';
 
-export type ButtonFontWeight = 'bold' | 'light';
+export type ButtonFontWeight = 'bolder' | 'bold' | 'light';
 
 export interface ButtonProps extends TouchableHighlightProps {
     title: string;
