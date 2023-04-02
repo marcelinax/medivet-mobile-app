@@ -5,5 +5,7 @@ export const buttonsTranslations = {
     FORGOT_PASSWORD: 'Zapomniałeś hasła?',
     HAVE_ACCOUNT_ALREADY: 'Masz już konto?',
     CHOOSE: 'Wybierz',
-    CANCEL: 'Anuluj'
+    CANCEL: 'Anuluj',
+    CHANGE: 'Zmień',
+    SAVE: 'Zapisz'
 };

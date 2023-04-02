@@ -16,7 +16,6 @@ import { registrationTranslations } from 'constants/translations/screens/registr
 import { useErrorAlert } from 'hooks/Modals/useErrorAlert';
 import React, { useState } from 'react';
 import { StyleSheet, Switch, Text, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import colors from 'themes/colors';
 import { FormError } from 'types/api/errors/types';
 import { RegistrationCredentials } from 'types/api/user/types';
@@ -44,10 +43,9 @@ export const RegistrationForm = () => {
     });
     const [errors, setErrors] = useState<FormError[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const dispatch = useDispatch();
     const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
     const navigation = useNavigation();
-    console.log(errors);
+
     const onChange = (field: string, newValue: any): void => {
         setForm({
             ...form,
@@ -66,7 +64,6 @@ export const RegistrationForm = () => {
         }
         catch (err: any) {
             const errs = [err?.response?.data];
-            console.log('errs', errs);
 
             if (hasInternalError(errs)) handleErrorAlert();
 

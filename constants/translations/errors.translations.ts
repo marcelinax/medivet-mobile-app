@@ -12,5 +12,7 @@ export default {
     BIRTHDATE_SHOULD_NOT_BE_EMPTY: 'Nieprawidłowa data urodzenia',
     BIRTHDATE_MUST_BE_A_DATE_INSTANCE: 'Nieprawidłowa data urodzenia',
     USER_HAS_TO_BE_AT_LEAST_18_YEARS_OF_AGE: 'Musisz mieć ukończone 18 lat',
-    BIRTH_DATE_CANNOT_BE_LATER_THAN_TODAY: 'Data urodzenia nie może być późniejsza niż dzisiejsza'
+    BIRTH_DATE_CANNOT_BE_LATER_THAN_TODAY: 'Data urodzenia nie może być późniejsza niż dzisiejsza',
+    PHONENUMBER_MUST_BE_A_VALID_PHONE_NUMBER: 'Nieprawidłowy numer telefon'
+
 };

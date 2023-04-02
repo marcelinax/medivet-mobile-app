@@ -19,7 +19,7 @@ export const AuthLayout: FC<Props> = ({ image, children }) => {
                     resizeMode='contain'
                 />
                 <Text style={styles.text}>
-                    {commonTranslations.logo}
+                    {commonTranslations.LOGO}
                 </Text>
                 {children}
             </View>
@@ -31,9 +31,6 @@ const styles = StyleSheet.create({
     scrollViewContainer: {
         flexGrow: 1,
         backgroundColor: colors.WHITE,
-    },
-    screen: {
-        flex: 1
     },
     container: {
         flexGrow: 1,

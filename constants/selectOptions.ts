@@ -5,10 +5,10 @@ import { commonTranslations } from './translations/common.translations';
 export const genderSelectOptions: SelectOptionProps[] = [
     {
         id: Gender.female,
-        label: commonTranslations.female
+        label: commonTranslations.FEMALE
     },
     {
         id: Gender.male,
-        label: commonTranslations.male
+        label: commonTranslations.MALE
     }
 ];

@@ -14,7 +14,7 @@ export const GlobalLoader = () => {
             />
             <ActivityIndicator size='large' color={colors.GRAY_DARK} />
             <Text style={styles.loadingText}>
-                {commonTranslations.loading}
+                {commonTranslations.LOADING}
             </Text>
         </View>
     );

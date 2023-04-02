@@ -1,3 +1,5 @@
+import { AddressApi } from "../types";
+
 export interface RegistrationCredentials {
     email: string;
     password: string;
@@ -9,5 +11,12 @@ export interface RegistrationCredentials {
 }
 
 export interface User {
-
+    name: string;
+    email: string;
+    birthDate: string;
+    role: string;
+    gender: string;
+    profilePhotoUrl?: string;
+    phoneNumber?: string;
+    address?: AddressApi;
 }
