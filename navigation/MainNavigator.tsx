@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import routes from 'constants/routes';
 import React from 'react';
+import { CreateAnimalScreen } from 'screens/Animals/CreateAnimal.screen';
 import { HomeScreen } from 'screens/Home.screen';
 import { EditUserAddressScreen } from 'screens/User/EditUserAddress.screen';
 import { EditUserProfileScreen } from 'screens/User/EditUserProfile.screen';
@@ -28,6 +29,10 @@ export const MainNavigator = () => {
             <Stack.Screen
                 name={routes.EDIT_USER_ADDRESS}
                 component={EditUserAddressScreen}
+            />
+            <Stack.Screen
+                name={routes.CREATE_ANIMAL}
+                component={CreateAnimalScreen}
             />
         </Stack.Navigator>
     );

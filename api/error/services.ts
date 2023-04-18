@@ -1,4 +1,4 @@
-import { Error, FormError } from "types/api/errors/types";
+import { Error, FormError } from "types/api/error/types";
 
 const parseErrorMessage = (errorMessage: string): string => {
     const words = errorMessage.replace('.', '').split(' ');

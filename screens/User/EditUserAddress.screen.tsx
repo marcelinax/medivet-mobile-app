@@ -1,4 +1,4 @@
-import { hasInternalError } from "api/errors/services";
+import { hasInternalError } from "api/error/services";
 import { UserApi } from "api/user/user.api";
 import { LoadingButton } from "components/Buttons/LoadingButton";
 import { NumberInput } from "components/Inputs/NumberInput";

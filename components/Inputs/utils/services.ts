@@ -1,5 +1,5 @@
 import errorsTranslations from 'constants/translations/errors.translations';
-import { Error } from 'types/api/errors/types';
+import { Error } from 'types/api/error/types';
 
 export const getErrorMessage = (errors: Error[]): string => {
     const errorMessage = errors[0]?.message;

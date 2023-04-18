@@ -6,13 +6,14 @@ export default {
     SOMETHING_WENT_WRONG: 'Coś poszło nie tak. Spróbuj ponownie później',
     WRONG_PASSWORD: 'Nieprawidłowe hasło',
     PASSWORD_MUST_BE_LONGER_THAN_OR_EQUAL_TO_6_CHARACTERS: 'Hasło powinno zawierać co najmniej 6 znaków',
-    NAME_SHOULD_NOT_BE_EMPTY: 'Wprowadź imię i nazwisko',
+    NAME_SHOULD_NOT_BE_EMPTY: 'Wprowadź imię',
     USER_WITH_THIS_EMAIL_ALREADY_EXISTS: 'Użytkownik o takim adresie email już istnieje',
     TERMS_ARE_NOT_ACCEPTED: 'Zaakceptuj regulamin',
     BIRTHDATE_SHOULD_NOT_BE_EMPTY: 'Nieprawidłowa data urodzenia',
     BIRTHDATE_MUST_BE_A_DATE_INSTANCE: 'Nieprawidłowa data urodzenia',
     USER_HAS_TO_BE_AT_LEAST_18_YEARS_OF_AGE: 'Musisz mieć ukończone 18 lat',
     BIRTH_DATE_CANNOT_BE_LATER_THAN_TODAY: 'Data urodzenia nie może być późniejsza niż dzisiejsza',
-    PHONENUMBER_MUST_BE_A_VALID_PHONE_NUMBER: 'Nieprawidłowy numer telefon'
-
+    PHONENUMBER_MUST_BE_A_VALID_PHONE_NUMBER: 'Nieprawidłowy numer telefon',
+    BREEDID_SHOULD_NOT_BE_EMPTY: 'Wybierz rasę',
+    TYPE_SHOULD_NOT_BE_EMPTY: 'Wybierz typ',
 };

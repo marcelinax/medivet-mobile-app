@@ -20,7 +20,8 @@ export const HomeScreen = () => {
         <View style={styles.centeredView}>
             <Text>Homescreen</Text>
             <Button title='Wyloguj' onPress={onLogout} />
-            <Button title='Profil' onPress={() => navigation.navigate(routes.USER) as never} />
+            <Button title='Profil' onPress={() => navigation.navigate(routes.USER as never)} />
+            <Button title='Dodaj zwierzę' onPress={() => navigation.navigate(routes.CREATE_ANIMAL as never)} />
         </View>
     );
 };

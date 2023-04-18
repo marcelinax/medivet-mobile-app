@@ -1,4 +1,4 @@
-import { getInputErrors, handleInputErrors, hasInternalError } from "api/errors/services";
+import { getInputErrors, handleInputErrors, hasInternalError } from "api/error/services";
 import { UserApi } from "api/user/user.api";
 import { LoadingButton } from "components/Buttons/LoadingButton";
 import { AvatarInput } from "components/Inputs/AvatarInput";
@@ -19,7 +19,7 @@ import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { setCurrentUser } from "store/user/userSlice";
-import { FormError } from "types/api/errors/types";
+import { FormError } from "types/api/error/types";
 import { User } from "types/api/user/types";
 import { appendFileToFormData } from "utils/appendFileToFormData";
 

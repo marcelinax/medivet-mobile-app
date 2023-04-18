@@ -6,7 +6,7 @@ import { Text, TextInput, TouchableHighlight, View } from 'react-native';
 import DateTimePickerModal, { DateTimePickerProps } from "react-native-modal-datetime-picker";
 import colors from 'themes/colors';
 import icons from 'themes/icons';
-import { Error } from 'types/api/errors/types';
+import { Error } from 'types/api/error/types';
 import { InputVariant } from 'types/components/Inputs/types';
 import { getErrorMessage } from './utils/services';
 import { getInputBorderRadius, getInputStylesDependingOnVariant, inputStyles } from './utils/styles';

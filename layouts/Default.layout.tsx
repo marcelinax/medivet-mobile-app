@@ -9,7 +9,8 @@ interface Props {
 
 export const DefaultLayout: FC<Props> = ({ children }) => {
     return (
-        <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.scrollViewContainer}>
+        <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.scrollViewContainer}
+            automaticallyAdjustKeyboardInsets>
             <View style={styles.container}>
                 {children}
             </View>

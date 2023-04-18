@@ -28,6 +28,7 @@ export const Select: FC<SelectProps> = ({
     // TO DO Szukanie po search 
     // TO DO usprawnić wybieranie opcji
     // TO DO Ustawić zmianę opcji dopiero w momencie naciśnięcia ok
+    // TO DO mozliwosc usuwania wybranej wartosci
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState<boolean>(false);

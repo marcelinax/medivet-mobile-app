@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { getInputErrors, handleInputErrors, hasInternalError } from 'api/errors/services';
+import { getInputErrors, handleInputErrors, hasInternalError } from 'api/error/services';
 import { UserApi } from 'api/user/user.api';
 import { Button } from 'components/Buttons/Button';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
@@ -17,7 +17,7 @@ import { useErrorAlert } from 'hooks/Modals/useErrorAlert';
 import React, { useState } from 'react';
 import { StyleSheet, Switch, Text, View } from 'react-native';
 import colors from 'themes/colors';
-import { FormError } from 'types/api/errors/types';
+import { FormError } from 'types/api/error/types';
 import { RegistrationCredentials } from 'types/api/user/types';
 import { isAndroidPlatfrom } from 'utils/isAndroidPlatfrom';
 

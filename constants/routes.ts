@@ -7,5 +7,6 @@ export default {
     USER: 'User',
     EDIT_USER: 'Edit User',
     MAIN_NAVIGATOR: 'Main Navigator',
-    EDIT_USER_ADDRESS: 'Edit User Address'
+    EDIT_USER_ADDRESS: 'Edit User Address',
+    CREATE_ANIMAL: 'Create Animal',
 };

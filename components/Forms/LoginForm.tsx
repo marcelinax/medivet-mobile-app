@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { AuthApi } from 'api/auth/auth.api';
-import { getInputErrors, handleInputErrors, hasInternalError } from 'api/errors/services';
+import { getInputErrors, handleInputErrors, hasInternalError } from 'api/error/services';
 import { Button } from 'components/Buttons/Button';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { PasswordInput } from 'components/Inputs/PasswordInput';
@@ -17,7 +17,7 @@ import { useDispatch } from 'react-redux';
 import { setToken } from 'store/auth/authSlice';
 import colors from 'themes/colors';
 import { AuthCredentials } from 'types/api/auth/types';
-import { FormError } from 'types/api/errors/types';
+import { FormError } from 'types/api/error/types';
 
 
 export const LoginForm = () => {

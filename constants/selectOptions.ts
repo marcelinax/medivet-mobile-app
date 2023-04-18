@@ -6,12 +6,23 @@ import { enumsTranslations } from './translations/enums.translations';
 
 export const genderSelectOptions: SelectOptionProps[] = [
     {
-        id: Gender.female,
+        id: Gender.FEMALE,
         label: commonTranslations.FEMALE
     },
     {
-        id: Gender.male,
+        id: Gender.MALE,
         label: commonTranslations.MALE
+    }
+];
+
+export const animalGenderSelectOptions: SelectOptionProps[] = [
+    {
+        id: Gender.FEMALE,
+        label: commonTranslations.ANIMAL_FEMALE
+    },
+    {
+        id: Gender.MALE,
+        label: commonTranslations.ANIMAL_MALE
     }
 ];
 
