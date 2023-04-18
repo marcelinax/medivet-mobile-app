@@ -26,6 +26,7 @@ export interface SelectProps extends TextInputProps {
     errors: Error[];
     rounded?: boolean;
     onFetchOptions?: (search?: string, params?: Record<string, any>) => Promise<SelectOptionProps[]>;
+    pageSize?: number;
 }
 
 export interface SelectOptionProps {

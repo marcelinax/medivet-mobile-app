@@ -22,6 +22,7 @@ export const Select: FC<SelectProps> = ({
     options,
     onChange,
     onFetchOptions,
+    pageSize,
     ...props
 }) => {
     // TO DO Szukanie po search 
@@ -51,7 +52,7 @@ export const Select: FC<SelectProps> = ({
             if (!hasNextPage) return;
             setLoading(true);
             try {
-                const opts = await onFetchOptions('', { pageSize: 1, offset });
+                const opts = await onFetchOptions('', { pageSize: pageSize ?? 10, offset });
                 setFetchedOptions([...fetchedOptions, ...opts]);
                 const newOffset = offset + opts.length;
                 if (opts.length <= 0) setHasNextPage(false);
@@ -70,7 +71,7 @@ export const Select: FC<SelectProps> = ({
     };
 
     const drawOptions = () => (
-        <SelectOptions options={fetchedOptions ? fetchedOptions : options || []} visible={showOptions}
+        <SelectOptions options={onFetchOptions ? fetchedOptions || [] : options || []} visible={showOptions}
             selectedValue={selectedValue} setSelectedValue={onChange} onLoadMoreOptions={onFetchOptions ? onFetch : undefined}
             onHide={() => setShowOptions(false)} loading={loading}
         />
