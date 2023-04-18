@@ -1,6 +1,7 @@
 export type InputVariant = 'underline' | 'outline';
+import { AxiosResponse } from 'axios';
 import { TextInputProps } from 'react-native';
-import { Error } from 'types/api/errors/types';
+import { Error } from 'types/api/error/types';
 
 export interface InputProps extends TextInputProps {
     variant: InputVariant;
@@ -18,15 +19,16 @@ export interface SelectProps extends TextInputProps {
     variant: InputVariant;
     onChange: (e: any) => void;
     value: any;
-    options: SelectOptionProps[];
+    options?: SelectOptionProps[];
     defaultValue?: any;
     placeholder?: string;
     label?: string;
     errors: Error[];
     rounded?: boolean;
+    onFetchOptions?: (search?: string, params?: Record<string, any>) => Promise<SelectOptionProps[]>;
 }
 
 export interface SelectOptionProps {
-    id: any;
+    id: string;
     label: string;
 }

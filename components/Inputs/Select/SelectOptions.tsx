@@ -1,6 +1,7 @@
 import { Button } from 'components/Buttons/Button';
+import { commonTranslations } from 'constants/translations/common.translations';
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { Animated, ListRenderItem, Modal, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Animated, ListRenderItem, Modal, StyleSheet, Text, View } from 'react-native';
 import colors from 'themes/colors';
 import { SelectOptionProps } from 'types/components/Inputs/types';
 import { SelectOption } from './SelectOption';
@@ -12,6 +13,8 @@ interface Props {
     selectedValue: SelectOptionProps | null;
     setSelectedValue: (item: string) => void;
     onHide: () => void;
+    onLoadMoreOptions?: () => void;
+    loading?: boolean;
 }
 
 export const SelectOptions: FC<Props> = ({
@@ -19,23 +22,19 @@ export const SelectOptions: FC<Props> = ({
     visible,
     onHide,
     selectedValue,
-    setSelectedValue
+    setSelectedValue,
+    onLoadMoreOptions,
+    loading
 }) => {
     const i = options.indexOf(selectedValue || options[0]);
     const [index, setIndex] = useState<number>(i);
     const listRef = useRef<any>();
     const scrollY = React.useRef(new Animated.Value(0)).current;
 
-    const onScroll = (ev: any) => {
-        const average = (((options.length - 1) * SELECT_OPTION_HEIGHT) + SELECTED_OPTION_HEIGHT) / options.length;
-        const newIndex = Math.round(ev.nativeEvent.contentOffset.y / average);
-        setIndex(newIndex);
-    };
-
     useEffect(() => {
-        setSelectedValue(options[index].id);
+        if (options[index])
+            setSelectedValue(options[index].id);
     }, [index]);
-
 
     useEffect(() => {
         scrollY.addListener((v) => {
@@ -48,11 +47,20 @@ export const SelectOptions: FC<Props> = ({
         });
     });
 
+    const onScroll = (ev: any) => {
+        const average = (((options.length - 1) * SELECT_OPTION_HEIGHT) + SELECTED_OPTION_HEIGHT) / options.length;
+        const newIndex = Math.round(ev.nativeEvent.contentOffset.y / average);
+        setIndex(newIndex);
+    };
+
     const renderItem: ListRenderItem<SelectOptionProps> = ({ item }): JSX.Element => {
-        if (item.id.includes('empty-option')) return renderEmptyOption();
-        return <SelectOption key={item.id}
-            isSelected={selectedValue?.id === item.id}
-            {...item} />;
+        if (item) {
+            if (item?.id?.includes('empty-option')) return renderEmptyOption();
+            return <SelectOption key={item.id}
+                isSelected={selectedValue?.id === item.id}
+                {...item} />;
+        }
+        return <></>;
     };
 
     const getEmptyOptions = (amount: number): SelectOptionProps[] => {
@@ -63,8 +71,16 @@ export const SelectOptions: FC<Props> = ({
     };
 
     // const renderEmptyOption = () => <View style={{ height: 60 }} />;
-    const renderEmptyOption = () => <View style={{ height: 50 }} />;
+    const renderEmptyOption = (): JSX.Element => <View style={{ height: 50 }} />;
 
+    const renderFooter = (): JSX.Element => {
+        if (loading) return (
+            <View style={styles.footerContainer}>
+                <ActivityIndicator size="large" color={colors.GRAY_DARK} />
+            </View>
+        );
+        return <></>;
+    };
 
     return (
         <Modal visible={visible} animationType='slide' transparent >
@@ -76,23 +92,38 @@ export const SelectOptions: FC<Props> = ({
                             color='info' fontWeight='bolder' />
                     </View>
                     <View style={{ paddingVertical: 30, height: 230 - TOOLBAR_HEIGHT }}>
-                        <Animated.FlatList data={[
-                            ...getEmptyOptions(1),
-                            ...options,
-                            ...getEmptyOptions(1),
-                        ]} renderItem={renderItem} ref={listRef}
-                            keyExtractor={item => item.id}
-                            showsVerticalScrollIndicator={false}
-                            automaticallyAdjustContentInsets={false}
-                            automaticallyAdjustKeyboardInsets
-                            scrollToOverflowEnabled
-                            keyboardShouldPersistTaps='always'
-                            bounces={false} scrollEnabled
-                            scrollEventThrottle={16}
-                            onScroll={onScroll}
-                            decelerationRate='normal'
-                            snapToInterval={25}
-                        />
+                        {
+                            options.length > 0 ? (
+                                <Animated.FlatList data={[
+                                    ...getEmptyOptions(1),
+                                    ...options,
+                                    ...getEmptyOptions(1),
+                                ]} renderItem={renderItem} ref={listRef}
+                                    keyExtractor={item => item.id}
+                                    showsVerticalScrollIndicator={false}
+                                    automaticallyAdjustContentInsets={false}
+                                    automaticallyAdjustKeyboardInsets
+                                    scrollToOverflowEnabled
+                                    keyboardShouldPersistTaps='always'
+                                    bounces={false} scrollEnabled
+                                    scrollEventThrottle={16}
+                                    onScroll={onScroll}
+                                    decelerationRate='normal'
+                                    snapToInterval={25}
+                                    onEndReachedThreshold={0.01}
+                                    onEndReached={(_) => {
+                                        onLoadMoreOptions && onLoadMoreOptions();
+                                    }}
+                                    ListFooterComponent={renderFooter}
+                                />
+                            ) : (
+                                <View style={styles.emptyList}>
+                                    <Text style={styles.emptyListText}>
+                                        {commonTranslations.NOT_FOUND_RESULTS}
+                                    </Text>
+                                </View>
+                            )
+                        }
                     </View>
                 </View>
             </View>
@@ -113,8 +144,6 @@ const styles = StyleSheet.create({
         maxHeight: 250,
         minHeight: 250,
         backgroundColor: colors.GRAY_LIGHT,
-        // paddingVertical: 50
-
     },
     toolbar: {
         backgroundColor: colors.GRAY_LIGHTER,
@@ -123,5 +152,17 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         paddingHorizontal: 20,
         minWidth: '100%',
+    },
+    footerContainer: {
+        alignItems: 'center',
+        marginTop: -25
+    },
+    emptyList: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1
+    },
+    emptyListText: {
+        fontSize: 17,
     }
 });
