@@ -26,19 +26,28 @@ export const Select: FC<SelectProps> = ({
     ...props
 }) => {
     // TO DO Szukanie po search 
+    // TO DO usprawnić wybieranie opcji
+    // TO DO Ustawić zmianę opcji dopiero w momencie naciśnięcia ok
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState<boolean>(false);
     const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
     const [fetchedOptions, setFetchedOptions] = useState<SelectOptionProps[]>([]);
     const allOptions = onFetchOptions ? fetchedOptions : options ? options : [];
-    const selectedValue = allOptions?.find(option => option.id === value) || null;
     const [offset, setOffset] = useState<number>(0);
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
+    const [selectedValue, setSelectedValue] = useState(allOptions?.find(option => option.id === value) || null);
 
     useEffect(() => {
-        if (showOptions) dispatch(setShowSelectInputOptionsModal(true));
-        else dispatch(setShowSelectInputOptionsModal(false));
+        if (showOptions) {
+            dispatch(setShowSelectInputOptionsModal(true));
+        }
+        else {
+            setOffset(0);
+            setHasNextPage(true);
+            setFetchedOptions([]);
+            dispatch(setShowSelectInputOptionsModal(false));
+        }
     }, [showOptions]);
 
     useEffect(() => {
@@ -46,6 +55,12 @@ export const Select: FC<SelectProps> = ({
             onFetch();
         }
     }, [showOptions]);
+
+    useEffect(() => {
+        if (!value) {
+            setSelectedValue(null);
+        }
+    }, [value]);
 
     const onFetch = async (): Promise<void> => {
         if (onFetchOptions) {
@@ -70,9 +85,14 @@ export const Select: FC<SelectProps> = ({
         setShowOptions(!showOptions);
     };
 
+    const onChangeOption = (e: any) => {
+        setSelectedValue(allOptions?.find(option => option.id === e) || null);
+        onChange(e);
+    };
+
     const drawOptions = () => (
         <SelectOptions options={onFetchOptions ? fetchedOptions || [] : options || []} visible={showOptions}
-            selectedValue={selectedValue} setSelectedValue={onChange} onLoadMoreOptions={onFetchOptions ? onFetch : undefined}
+            selectedValue={selectedValue} setSelectedValue={onChangeOption} onLoadMoreOptions={onFetchOptions ? onFetch : undefined}
             onHide={() => setShowOptions(false)} loading={loading}
         />
     );
@@ -83,7 +103,7 @@ export const Select: FC<SelectProps> = ({
             <View style={inputStyles.container}>
                 <View>
                     <Text style={inputStyles.label}>{label?.toUpperCase()}</Text>
-                    <TouchableHighlight onPress={onToggleShowOptions} underlayColor={colors.WHITE} >
+                    <TouchableHighlight onPress={onToggleShowOptions} underlayColor={colors.WHITE}>
                         <View style={[
                             inputStyles.inputInnerContainer,
                             getInputStylesDependingOnVariant(variant),
