@@ -65,6 +65,7 @@ export const AnimalForm: FC<Props> = ({ animal }) => {
 
     const onSubmit = async (): Promise<void> => {
         setLoading(true);
+        console.log(form);
         try {
             setErrors([]);
             let res;
@@ -121,9 +122,9 @@ export const AnimalForm: FC<Props> = ({ animal }) => {
             {
                 form?.type && (
                     <View style={styles.inputMargin}>
-                        <Select errors={getInputErrors(errors, 'breedId')} value={form?.breedId} variant='underline' onFetchOptions={onFetchAnimalBreeds}
+                        <Select errors={getInputErrors(errors, 'breedId')} value={+form?.breedId} variant='underline' onFetchOptions={onFetchAnimalBreeds}
                             label={inputsTranslations.BREED}
-                            onChange={(breed) => onChangeInput('breedId', breed)} />
+                            onChange={(breed) => onChangeInput('breedId', +breed)} />
                     </View>
                 )
             }
@@ -134,9 +135,9 @@ export const AnimalForm: FC<Props> = ({ animal }) => {
                     onChange={(gender) => onChangeInput('gender', gender)} />
             </View>
             <View style={styles.inputMargin}>
-                <Select errors={[]} value={form?.coatColorId} variant='underline' onFetchOptions={onFetchAnimaCoatColors}
+                <Select errors={[]} value={+form?.coatColorId} variant='underline' onFetchOptions={onFetchAnimaCoatColors}
                     label={inputsTranslations.COAT_COLOR}
-                    onChange={(coatColor) => onChangeInput('coatColorId', coatColor)} />
+                    onChange={(coatColor) => onChangeInput('coatColorId', +coatColor)} />
             </View>
             <View style={styles.inputMargin}>
                 <DatePicker
