@@ -1,11 +1,11 @@
-import { Button } from 'components/Buttons/Button';
-import { commonTranslations } from 'constants/translations/common.translations';
-import React, { FC, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Animated, ListRenderItem, Modal, StyleSheet, Text, View } from 'react-native';
+import {Button} from 'components/Buttons/Button';
+import React, {FC, useEffect, useRef, useState} from 'react';
+import {ActivityIndicator, Animated, ListRenderItem, Modal, StyleSheet, View} from 'react-native';
 import colors from 'themes/colors';
-import { SelectOptionProps } from 'types/components/Inputs/types';
-import { SelectOption } from './SelectOption';
-import { SELECTED_OPTION_HEIGHT, SELECT_OPTION_HEIGHT, TOOLBAR_HEIGHT } from './utils/constants';
+import {SelectOptionProps} from 'types/components/Inputs/types';
+import {SelectOption} from './SelectOption';
+import {SELECT_OPTION_HEIGHT, SELECTED_OPTION_HEIGHT, TOOLBAR_HEIGHT} from './utils/constants';
+import {EmptyList} from "components/Composition/EmptyList";
 
 interface Props {
     options: SelectOptionProps[];
@@ -18,14 +18,14 @@ interface Props {
 }
 
 export const SelectOptions: FC<Props> = ({
-    options,
-    visible,
-    onHide,
-    selectedValue,
-    setSelectedValue,
-    onLoadMoreOptions,
-    loading
-}) => {
+                                             options,
+                                             visible,
+                                             onHide,
+                                             selectedValue,
+                                             setSelectedValue,
+                                             onLoadMoreOptions,
+                                             loading
+                                         }) => {
     const i = options.indexOf(selectedValue || options[0]);
     const [index, setIndex] = useState<number>(i);
     const listRef = useRef<any>();
@@ -53,12 +53,12 @@ export const SelectOptions: FC<Props> = ({
         setIndex(newIndex);
     };
 
-    const renderItem: ListRenderItem<SelectOptionProps> = ({ item }): JSX.Element => {
+    const renderItem: ListRenderItem<SelectOptionProps> = ({item}): JSX.Element => {
         if (item) {
             if (item?.id?.includes('empty-option')) return renderEmptyOption();
             return <SelectOption key={item.id}
-                isSelected={selectedValue?.id === item.id}
-                {...item} />;
+                                 isSelected={selectedValue?.id === item.id}
+                                 {...item} />;
         }
         return <></>;
     };
@@ -71,27 +71,27 @@ export const SelectOptions: FC<Props> = ({
     };
 
     // const renderEmptyOption = () => <View style={{ height: 60 }} />;
-    const renderEmptyOption = (): JSX.Element => <View style={{ height: 50 }} />;
+    const renderEmptyOption = (): JSX.Element => <View style={{height: 50}}/>;
 
     const renderFooter = (): JSX.Element => {
         if (loading) return (
             <View style={styles.footerContainer}>
-                <ActivityIndicator size="large" color={colors.GRAY_DARK} />
+                <ActivityIndicator size="large" color={colors.GRAY_DARK}/>
             </View>
         );
         return <></>;
     };
 
     return (
-        <Modal visible={visible} animationType='slide' transparent >
-            <View style={{ flexGrow: 1 }}>
+        <Modal visible={visible} animationType='slide' transparent>
+            <View style={{flexGrow: 1}}>
                 <View style={styles.container}>
                     <View style={styles.toolbar}>
                         <Button title='OK' variant='link'
-                            onPress={onHide}
-                            color='info' fontWeight='bolder' />
+                                onPress={onHide}
+                                color='info' fontWeight='bolder'/>
                     </View>
-                    <View style={{ paddingVertical: 30, height: 230 - TOOLBAR_HEIGHT }}>
+                    <View style={{paddingVertical: 30, height: 230 - TOOLBAR_HEIGHT}}>
                         {
                             options.length > 0 ? (
                                 <Animated.FlatList data={[
@@ -99,29 +99,25 @@ export const SelectOptions: FC<Props> = ({
                                     ...options,
                                     ...getEmptyOptions(1),
                                 ]} renderItem={renderItem} ref={listRef}
-                                    keyExtractor={item => item.id}
-                                    showsVerticalScrollIndicator={false}
-                                    automaticallyAdjustContentInsets={false}
-                                    automaticallyAdjustKeyboardInsets
-                                    scrollToOverflowEnabled
-                                    keyboardShouldPersistTaps='always'
-                                    bounces={false} scrollEnabled
-                                    scrollEventThrottle={16}
-                                    onScroll={onScroll}
-                                    decelerationRate='normal'
-                                    snapToInterval={25}
-                                    onEndReachedThreshold={0.01}
-                                    onEndReached={(_) => {
-                                        onLoadMoreOptions && onLoadMoreOptions();
-                                    }}
-                                    ListFooterComponent={renderFooter}
+                                                   keyExtractor={item => item.id}
+                                                   showsVerticalScrollIndicator={false}
+                                                   automaticallyAdjustContentInsets={false}
+                                                   automaticallyAdjustKeyboardInsets
+                                                   scrollToOverflowEnabled
+                                                   keyboardShouldPersistTaps='always'
+                                                   bounces={false} scrollEnabled
+                                                   scrollEventThrottle={16}
+                                                   onScroll={onScroll}
+                                                   decelerationRate='normal'
+                                                   snapToInterval={25}
+                                                   onEndReachedThreshold={0.2}
+                                                   onEndReached={(_) => {
+                                                       onLoadMoreOptions && onLoadMoreOptions();
+                                                   }}
+                                                   ListFooterComponent={renderFooter}
                                 />
                             ) : (
-                                <View style={styles.emptyList}>
-                                    <Text style={styles.emptyListText}>
-                                        {commonTranslations.NOT_FOUND_RESULTS}
-                                    </Text>
-                                </View>
+                                <EmptyList/>
                             )
                         }
                     </View>
@@ -137,7 +133,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         shadowColor: colors.BLACK,
         shadowRadius: 4,
-        shadowOffset: { height: 4, width: 0 },
+        shadowOffset: {height: 4, width: 0},
         shadowOpacity: 0.5,
         elevation: 5,
         bottom: 0,
@@ -156,13 +152,5 @@ const styles = StyleSheet.create({
     footerContainer: {
         alignItems: 'center',
         marginTop: -25
-    },
-    emptyList: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1
-    },
-    emptyListText: {
-        fontSize: 17,
     }
 });

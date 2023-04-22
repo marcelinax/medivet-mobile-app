@@ -9,4 +9,5 @@ export default {
     MAIN_NAVIGATOR: 'Main Navigator',
     EDIT_USER_ADDRESS: 'Edit User Address',
     CREATE_ANIMAL: 'Create Animal',
+    USER_ANIMALS: 'User Animals'
 };

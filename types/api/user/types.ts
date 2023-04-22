@@ -1,4 +1,4 @@
-import { AddressApi } from "../types";
+import {AddressApi} from "../types";
 
 export interface RegistrationCredentials {
     email: string;
@@ -11,6 +11,7 @@ export interface RegistrationCredentials {
 }
 
 export interface User {
+    id: number;
     name: string;
     email: string;
     birthDate: string;

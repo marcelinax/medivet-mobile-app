@@ -1,11 +1,12 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import routes from 'constants/routes';
 import React from 'react';
-import { CreateAnimalScreen } from 'screens/Animals/CreateAnimal.screen';
-import { HomeScreen } from 'screens/Home.screen';
-import { EditUserAddressScreen } from 'screens/User/EditUserAddress.screen';
-import { EditUserProfileScreen } from 'screens/User/EditUserProfile.screen';
-import { UserProfileScreen } from 'screens/User/UserProfile.screen';
+import {CreateAnimalScreen} from 'screens/Animals/CreateAnimal.screen';
+import {UserAnimalsScreen} from 'screens/Animals/UserAnimals.screen';
+import {HomeScreen} from 'screens/Home.screen';
+import {EditUserAddressScreen} from 'screens/User/EditUserAddress.screen';
+import {EditUserProfileScreen} from 'screens/User/EditUserProfile.screen';
+import {UserProfileScreen} from 'screens/User/UserProfile.screen';
 
 export const MainNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -33,6 +34,14 @@ export const MainNavigator = () => {
             <Stack.Screen
                 name={routes.CREATE_ANIMAL}
                 component={CreateAnimalScreen}
+            />
+            <Stack.Screen
+                name={routes.USER_ANIMALS}
+                component={UserAnimalsScreen}
+                options={{
+                    headerTitle: 'Moje zwierzęta',
+                    headerShown: true
+                }}
             />
         </Stack.Navigator>
     );
