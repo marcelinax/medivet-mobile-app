@@ -1,4 +1,4 @@
-import {NativeStackNavigationProp} from "@react-navigation/native-stack";
+import {RouteProp} from "@react-navigation/native";
 
 export type RootStackParamList = {
     Login: undefined;
@@ -13,13 +13,13 @@ export type RootStackParamList = {
     User: undefined;
 }
 
-export type LoginScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Login'>;
-export type RegistrationScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Registration'>;
-export type EditAnimalScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Edit Animal'>;
-export type UserAnimalsScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'User Animals'>;
-export type CreateAnimalScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Create Animal'>;
-export type EditUserAddressScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Edit User Address'>;
-export type EditUserScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Edit User'>;
-export type UserScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'User'>;
-export type HomeScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+export type LoginScreenNavigationProps = RouteProp<RootStackParamList, 'Login'>;
+export type RegistrationScreenNavigationProps = RouteProp<RootStackParamList, 'Registration'>;
+export type EditAnimalScreenNavigationProps = RouteProp<RootStackParamList, 'Edit Animal'>;
+export type UserAnimalsScreenNavigationProps = RouteProp<RootStackParamList, 'User Animals'>;
+export type CreateAnimalScreenNavigationProps = RouteProp<RootStackParamList, 'Create Animal'>;
+export type EditUserAddressScreenNavigationProps = RouteProp<RootStackParamList, 'Edit User Address'>;
+export type EditUserScreenNavigationProps = RouteProp<RootStackParamList, 'Edit User'>;
+export type UserScreenNavigationProps = RouteProp<RootStackParamList, 'User'>;
+export type HomeScreenNavigationProps = RouteProp<RootStackParamList, 'Home'>;
 
