@@ -1,20 +1,21 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { AuthApi } from 'api/auth/auth.api';
-import { UserApi } from 'api/user/user.api';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {AuthApi} from 'api/auth/auth.api';
+import {UserApi} from 'api/user/user.api';
 import routes from 'constants/routes';
 import * as SecureStore from 'expo-secure-store';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { GlobalLoaderScreen } from 'screens/GlobalLoader.screen';
-import { removeToken, setToken } from 'store/auth/authSlice';
-import { RootState } from 'store/store';
-import { setCurrentUser } from 'store/user/userSlice';
-import { AuthNavigator } from './AuthNavigator';
-import { MainNavigator } from './MainNavigator';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {GlobalLoaderScreen} from 'screens/GlobalLoader.screen';
+import {removeToken, setToken} from 'store/auth/authSlice';
+import {RootState} from 'store/store';
+import {setCurrentUser} from 'store/user/userSlice';
+import {AuthNavigator} from './AuthNavigator';
+import {MainNavigator} from './MainNavigator';
+import {RootStackParamList} from "types/Navigation/types";
 
 export const Navigator = () => {
-    const Stack = createNativeStackNavigator();
+    const Stack = createNativeStackNavigator<RootStackParamList>();
     const token = useSelector((state: RootState) => state.auth.token);
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     const [globalLoading, setGlobalLoading] = useState<boolean>(true);
@@ -43,8 +44,7 @@ export const Navigator = () => {
     const onCheckTokenValidation = async (): Promise<void> => {
         try {
             await AuthApi.validateToken();
-        }
-        catch (err) {
+        } catch (err) {
             dispatch(removeToken());
         }
     };
@@ -59,9 +59,11 @@ export const Navigator = () => {
             <Stack.Navigator>
                 {
                     globalLoading ? <Stack.Screen name={routes.GLOBAL_LOADER}
-                        component={GlobalLoaderScreen} options={{ headerShown: false }} /> : (
-                        !token ? <Stack.Screen name={routes.AUTH_NAVIGATOR} component={AuthNavigator} options={{ headerShown: false }} /> :
-                            <Stack.Screen name={routes.MAIN_NAVIGATOR} component={MainNavigator} options={{ headerShown: false }} />
+                                                  component={GlobalLoaderScreen} options={{headerShown: false}}/> : (
+                        !token ? <Stack.Screen name={routes.AUTH_NAVIGATOR} component={AuthNavigator}
+                                               options={{headerShown: false}}/> :
+                            <Stack.Screen name={routes.MAIN_NAVIGATOR} component={MainNavigator}
+                                          options={{headerShown: false}}/>
                     )
                 }
             </Stack.Navigator>

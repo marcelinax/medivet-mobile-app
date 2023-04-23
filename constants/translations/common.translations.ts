@@ -3,7 +3,7 @@ export const commonTranslations = {
     LOADING: 'Ładowanie...',
     FEMALE: 'Kobieta',
     MALE: 'Mężczyzna',
-    ADRESS: 'Adres',
+    ADDRESS: 'Adres',
     NOT_FOUND_RESULTS: 'Nie znaleziono wyników.',
     ANIMAL_MALE: 'Samiec',
     ANIMAL_FEMALE: 'Samica'

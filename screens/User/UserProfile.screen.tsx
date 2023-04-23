@@ -1,23 +1,23 @@
-import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from '@react-navigation/native';
-import { WideButton } from "components/Buttons/WideButton";
-import { Avatar } from "components/Composition/Avatar";
-import routes from "constants/routes";
-import { commonTranslations } from "constants/translations/common.translations";
-import { DefaultLayout } from "layouts/Default.layout";
-import { StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
-import { useSelector } from 'react-redux';
-import { RootState } from 'store/store';
+import {Ionicons} from "@expo/vector-icons";
+import {useNavigation} from '@react-navigation/native';
+import {WideButton} from "components/Buttons/WideButton";
+import {Avatar} from "components/Composition/Avatar";
+import {commonTranslations} from "constants/translations/common.translations";
+import {DefaultLayout} from "layouts/Default.layout";
+import {StyleSheet, Text, TouchableWithoutFeedback, View} from "react-native";
+import {useSelector} from 'react-redux';
+import {RootState} from 'store/store';
 import colors from "themes/colors";
 import icons from 'themes/icons';
-import { User } from 'types/api/user/types';
+import {User} from 'types/api/user/types';
+import {UserScreenNavigationProps} from "types/Navigation/types";
 
 export const UserProfileScreen = () => {
     const user = useSelector((state: RootState) => state.user.currentUser) as User;
-    const navigation = useNavigation();
+    const navigation = useNavigation<UserScreenNavigationProps>();
 
     const onEditUserDetails = (): void => {
-        navigation.navigate(routes.EDIT_USER as never);
+        navigation.navigate('Edit User');
     };
 
     return (
@@ -25,17 +25,17 @@ export const UserProfileScreen = () => {
             <View>
                 <TouchableWithoutFeedback onPress={onEditUserDetails}>
                     <View style={styles.avatarContainer}>
-                        <Avatar size="medium" url={user?.profilePhotoUrl} />
+                        <Avatar size="medium" url={user?.profilePhotoUrl}/>
                         <View style={styles.nameContainer}>
                             <Text style={styles.name}>{user.name}</Text>
                             <Text style={styles.email}>{user.email}</Text>
                         </View>
-                        <Ionicons size={25} name={icons.CHEVRON_FORWARD_OUTLINE} style={styles.avatarContainerIcon} />
+                        <Ionicons size={25} name={icons.CHEVRON_FORWARD_OUTLINE} style={styles.avatarContainerIcon}/>
                     </View>
                 </TouchableWithoutFeedback>
                 <View style={styles.wideButtonsContainer}>
-                    <WideButton onPress={() => navigation.navigate(routes.EDIT_USER_ADDRESS as never)}
-                        title={commonTranslations.ADRESS} icon={icons.HOME_OUTLINE} />
+                    <WideButton onPress={() => navigation.navigate('Edit User Address')}
+                                title={commonTranslations.ADDRESS} icon={icons.HOME_OUTLINE}/>
                 </View>
             </View>
         </DefaultLayout>

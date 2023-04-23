@@ -1,7 +1,6 @@
 export type InputVariant = 'underline' | 'outline';
-import { AxiosResponse } from 'axios';
-import { TextInputProps } from 'react-native';
-import { Error } from 'types/api/error/types';
+import {TextInputProps} from 'react-native';
+import {Error} from 'types/api/error/types';
 
 export interface InputProps extends TextInputProps {
     variant: InputVariant;

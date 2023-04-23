@@ -1,23 +1,23 @@
-import { useNavigation } from '@react-navigation/native';
-import { AuthApi } from 'api/auth/auth.api';
-import { getInputErrors, handleInputErrors, hasInternalError } from 'api/error/services';
-import { Button } from 'components/Buttons/Button';
-import { LoadingButton } from 'components/Buttons/LoadingButton';
-import { PasswordInput } from 'components/Inputs/PasswordInput';
-import { TextInput } from 'components/Inputs/TextInput';
+import {useNavigation} from '@react-navigation/native';
+import {AuthApi} from 'api/auth/auth.api';
+import {getInputErrors, handleInputErrors, hasInternalError} from 'api/error/services';
+import {Button} from 'components/Buttons/Button';
+import {LoadingButton} from 'components/Buttons/LoadingButton';
+import {PasswordInput} from 'components/Inputs/PasswordInput';
+import {TextInput} from 'components/Inputs/TextInput';
 import apiErrors from 'constants/apiErrors';
-import routes from 'constants/routes';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
-import { inputsTranslations } from 'constants/translations/inputs.translations';
+import {buttonsTranslations} from 'constants/translations/buttons.translations';
+import {inputsTranslations} from 'constants/translations/inputs.translations';
 import * as SecureStore from 'expo-secure-store';
-import { useErrorAlert } from 'hooks/Modals/useErrorAlert';
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { setToken } from 'store/auth/authSlice';
+import {useErrorAlert} from 'hooks/Modals/useErrorAlert';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {setToken} from 'store/auth/authSlice';
 import colors from 'themes/colors';
-import { AuthCredentials } from 'types/api/auth/types';
-import { FormError } from 'types/api/error/types';
+import {AuthCredentials} from 'types/api/auth/types';
+import {FormError} from 'types/api/error/types';
+import {LoginScreenNavigationProps} from "types/Navigation/types";
 
 
 export const LoginForm = () => {
@@ -27,9 +27,9 @@ export const LoginForm = () => {
     });
     const [errors, setErrors] = useState<FormError[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
+    const {drawErrorAlert, handleErrorAlert} = useErrorAlert();
     const dispatch = useDispatch();
-    const navigation = useNavigation();
+    const navigation = useNavigation<LoginScreenNavigationProps>();
 
     const onChange = (field: string, newValue: string): void => {
         setForm({
@@ -66,7 +66,7 @@ export const LoginForm = () => {
     };
 
     const onSignUp = (): void => {
-        navigation.navigate(routes.REGISTRAION as never);
+        navigation.navigate('Registration');
     };
 
     return (
@@ -74,22 +74,22 @@ export const LoginForm = () => {
             {drawErrorAlert()}
             <View>
                 <TextInput value={form.email} onChangeText={(e) => onChange('email', e)}
-                    variant='underline' placeholder={inputsTranslations.EMAIL}
-                    isClearable keyboardType='email-address' errors={getInputErrors(errors, 'email')} />
+                           variant='underline' placeholder={inputsTranslations.EMAIL}
+                           isClearable keyboardType='email-address' errors={getInputErrors(errors, 'email')}/>
                 <PasswordInput variant='underline' value={form.password} errors={getInputErrors(errors, 'password')}
-                    onChangeText={(e) => onChange('password', e)} placeholder={inputsTranslations.PASSWORD} />
+                               onChangeText={(e) => onChange('password', e)} placeholder={inputsTranslations.PASSWORD}/>
                 <Button variant='link' title={buttonsTranslations.FORGOT_PASSWORD}
-                    style={{ marginTop: 10 }} color='light'
-                    fontWeight='light'
+                        style={{marginTop: 10}} color='light'
+                        fontWeight='light'
                 />
                 <LoadingButton variant='solid' title={buttonsTranslations.SIGN_IN} loading={loading}
-                    style={{ marginTop: 10 }} onPress={onSignIn} />
+                               style={{marginTop: 10}} onPress={onSignIn}/>
                 <View style={styles.signUpButtonContainer}>
                     <Text style={styles.signUpText}>
                         {buttonsTranslations.NO_ACCOUNT_YET}
                     </Text>
                     <Button variant='link' title={buttonsTranslations.SIGN_UP}
-                        color='secondary' fontWeight='bolder' onPress={onSignUp}
+                            color='secondary' fontWeight='bolder' onPress={onSignUp}
                     />
                 </View>
             </View>

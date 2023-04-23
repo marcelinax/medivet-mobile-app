@@ -1,25 +1,25 @@
-import { useNavigation } from '@react-navigation/native';
-import { getInputErrors, handleInputErrors, hasInternalError } from 'api/error/services';
-import { UserApi } from 'api/user/user.api';
-import { Button } from 'components/Buttons/Button';
-import { LoadingButton } from 'components/Buttons/LoadingButton';
-import { DatePicker } from 'components/Inputs/DatePicker';
-import { PasswordInput } from 'components/Inputs/PasswordInput';
-import { Select } from 'components/Inputs/Select/Select';
-import { TextInput } from 'components/Inputs/TextInput';
+import {useNavigation} from '@react-navigation/native';
+import {getInputErrors, handleInputErrors, hasInternalError} from 'api/error/services';
+import {UserApi} from 'api/user/user.api';
+import {Button} from 'components/Buttons/Button';
+import {LoadingButton} from 'components/Buttons/LoadingButton';
+import {DatePicker} from 'components/Inputs/DatePicker';
+import {PasswordInput} from 'components/Inputs/PasswordInput';
+import {Select} from 'components/Inputs/Select/Select';
+import {TextInput} from 'components/Inputs/TextInput';
 import apiErrors from 'constants/apiErrors';
-import routes from 'constants/routes';
-import { genderSelectOptions } from 'constants/selectOptions';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
-import { inputsTranslations } from 'constants/translations/inputs.translations';
-import { registrationTranslations } from 'constants/translations/screens/registration.translations';
-import { useErrorAlert } from 'hooks/Modals/useErrorAlert';
-import React, { useState } from 'react';
-import { StyleSheet, Switch, Text, View } from 'react-native';
+import {genderSelectOptions} from 'constants/selectOptions';
+import {buttonsTranslations} from 'constants/translations/buttons.translations';
+import {inputsTranslations} from 'constants/translations/inputs.translations';
+import {registrationTranslations} from 'constants/translations/screens/registration.translations';
+import {useErrorAlert} from 'hooks/Modals/useErrorAlert';
+import React, {useState} from 'react';
+import {StyleSheet, Switch, Text, View} from 'react-native';
 import colors from 'themes/colors';
-import { FormError } from 'types/api/error/types';
-import { RegistrationCredentials } from 'types/api/user/types';
-import { isAndroidPlatfrom } from 'utils/isAndroidPlatfrom';
+import {FormError} from 'types/api/error/types';
+import {RegistrationCredentials} from 'types/api/user/types';
+import {isAndroidPlatfrom} from 'utils/isAndroidPlatfrom';
+import {RegistrationScreenNavigationProps} from "types/Navigation/types";
 
 interface FormProps {
     email: string;
@@ -43,8 +43,8 @@ export const RegistrationForm = () => {
     });
     const [errors, setErrors] = useState<FormError[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
-    const navigation = useNavigation();
+    const {drawErrorAlert, handleErrorAlert} = useErrorAlert();
+    const navigation = useNavigation<RegistrationScreenNavigationProps>();
 
     const onChange = (field: string, newValue: any): void => {
         setForm({
@@ -54,15 +54,14 @@ export const RegistrationForm = () => {
     };
 
     const onSignIn = (): void => {
-        navigation.navigate(routes.LOGIN as never);
+        navigation.navigate('Login');
     };
 
     const onSignUp = async (): Promise<void> => {
         setLoading(true);
         try {
             const res = await UserApi.registerUser(form as unknown as RegistrationCredentials);
-        }
-        catch (err: any) {
+        } catch (err: any) {
             const errs = [err?.response?.data];
 
             if (hasInternalError(errs)) handleErrorAlert();
@@ -114,19 +113,20 @@ export const RegistrationForm = () => {
             {drawErrorAlert()}
             <View>
                 <TextInput value={form.email} onChangeText={(e) => onChange('email', e)}
-                    variant='underline' placeholder={inputsTranslations.EMAIL}
-                    isClearable keyboardType='email-address' errors={getInputErrors(errors, 'email')} />
+                           variant='underline' placeholder={inputsTranslations.EMAIL}
+                           isClearable keyboardType='email-address' errors={getInputErrors(errors, 'email')}/>
                 <PasswordInput variant='underline' value={form.password} errors={getInputErrors(errors, 'password')}
-                    onChangeText={(e) => onChange('password', e)} placeholder={inputsTranslations.PASSWORD} />
+                               onChangeText={(e) => onChange('password', e)} placeholder={inputsTranslations.PASSWORD}/>
                 <TextInput value={form.name} onChangeText={(e) => onChange('name', e)}
-                    variant='underline' placeholder={inputsTranslations.NAME}
-                    isClearable errors={getInputErrors(errors, 'name')} />
+                           variant='underline' placeholder={inputsTranslations.NAME}
+                           isClearable errors={getInputErrors(errors, 'name')}/>
                 <Select errors={[]} value={form.gender} variant='underline' options={genderSelectOptions}
-                    onChange={(gender) => onChange('gender', gender)} />
+                        onChange={(gender) => onChange('gender', gender)}/>
                 <DatePicker
                     value={form.birthDate ?? new Date()}
                     errors={getInputErrors(errors, 'birthDate')}
-                    onCancel={() => { }}
+                    onCancel={() => {
+                    }}
                     onConfirm={onDatePickerConfirm}
                     shouldDisplayPlaceholder={!form.birthDate}
                     placeholder={inputsTranslations.BIRTH_DATE}
@@ -135,19 +135,20 @@ export const RegistrationForm = () => {
                     <Switch
                         style={isAndroidPlatfrom() ? {} : styles.switch}
                         onValueChange={(e) => onChange('acceptTerms', e)}
-                        value={form.acceptTerms} />
-                    <Text style={[styles.acceptTermsText, areAcceptTermsFieldHasError() ? styles.acceptTermsTextError : {}]}>
+                        value={form.acceptTerms}/>
+                    <Text
+                        style={[styles.acceptTermsText, areAcceptTermsFieldHasError() ? styles.acceptTermsTextError : {}]}>
                         {registrationTranslations.ACCEPT_TERMS}
                     </Text>
                 </View>
                 <LoadingButton variant='solid' title={buttonsTranslations.SIGN_UP} loading={loading}
-                    style={{ marginTop: 10 }} onPress={onSignUp} />
+                               style={{marginTop: 10}} onPress={onSignUp}/>
                 <View style={styles.signUpButtonContainer}>
                     <Text style={styles.signUpText}>
                         {buttonsTranslations.HAVE_ACCOUNT_ALREADY}
                     </Text>
                     <Button variant='link' title={buttonsTranslations.SIGN_IN}
-                        color='secondary' fontWeight='bolder' onPress={onSignIn}
+                            color='secondary' fontWeight='bolder' onPress={onSignIn}
                     />
                 </View>
             </View>
@@ -180,6 +181,6 @@ const styles = StyleSheet.create({
         color: colors.DANGER
     },
     switch: {
-        transform: [{ scaleX: .8 }, { scaleY: .8 }]
+        transform: [{scaleX: .8}, {scaleY: .8}]
     }
 });

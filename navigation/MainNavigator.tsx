@@ -7,9 +7,10 @@ import {HomeScreen} from 'screens/Home.screen';
 import {EditUserAddressScreen} from 'screens/User/EditUserAddress.screen';
 import {EditUserProfileScreen} from 'screens/User/EditUserProfile.screen';
 import {UserProfileScreen} from 'screens/User/UserProfile.screen';
+import {RootStackParamList} from "types/Navigation/types";
 
 export const MainNavigator = () => {
-    const Stack = createNativeStackNavigator();
+    const Stack = createNativeStackNavigator<RootStackParamList>();
 
     return (
         <Stack.Navigator initialRouteName={routes.HOME} screenOptions={{
