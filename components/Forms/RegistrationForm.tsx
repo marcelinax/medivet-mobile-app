@@ -12,7 +12,7 @@ import {genderSelectOptions} from 'constants/selectOptions';
 import {buttonsTranslations} from 'constants/translations/buttons.translations';
 import {inputsTranslations} from 'constants/translations/inputs.translations';
 import {registrationTranslations} from 'constants/translations/screens/registration.translations';
-import {useErrorAlert} from 'hooks/Modals/useErrorAlert';
+import {useErrorAlert} from 'hooks/Alerts/useErrorAlert';
 import React, {useState} from 'react';
 import {StyleSheet, Switch, Text, View} from 'react-native';
 import colors from 'themes/colors';

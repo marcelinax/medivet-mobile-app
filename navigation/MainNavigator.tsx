@@ -8,6 +8,7 @@ import {EditUserAddressScreen} from 'screens/User/EditUserAddress.screen';
 import {EditUserProfileScreen} from 'screens/User/EditUserProfile.screen';
 import {UserProfileScreen} from 'screens/User/UserProfile.screen';
 import {RootStackParamList} from "types/Navigation/types";
+import {EditAnimalScreen} from "screens/Animals/EditAnimal.screen";
 
 export const MainNavigator = () => {
     const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -43,6 +44,10 @@ export const MainNavigator = () => {
                     headerTitle: 'Moje zwierzęta',
                     headerShown: true
                 }}
+            />
+            <Stack.Screen
+                name={routes.EDIT_ANIMAL}
+                component={EditAnimalScreen}
             />
         </Stack.Navigator>
     );

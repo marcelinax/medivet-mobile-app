@@ -6,7 +6,6 @@ import {Avatar} from "components/Composition/Avatar";
 import {useNavigation} from "@react-navigation/native";
 import {UserAnimalsScreenNavigationProps} from "types/Navigation/types";
 
-
 interface Props {
     animal: Animal;
 }

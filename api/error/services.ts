@@ -1,4 +1,4 @@
-import { Error, FormError } from "types/api/error/types";
+import {Error, FormError} from "types/api/error/types";
 
 const parseErrorMessage = (errorMessage: string): string => {
     const words = errorMessage.replace('.', '').split(' ');
@@ -52,5 +52,5 @@ export const getInputErrors = (errors: FormError[], field: string): Error[] => {
 };
 
 export const hasInternalError = (errors: Error[]): boolean => {
-    return !!errors?.find(err => err?.statusCode === 500);
+    return !!errors?.find(err => err?.statusCode === 500 || err?.statusCode === 404);
 };

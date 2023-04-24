@@ -6,5 +6,6 @@ export const commonTranslations = {
     ADDRESS: 'Adres',
     NOT_FOUND_RESULTS: 'Nie znaleziono wyników.',
     ANIMAL_MALE: 'Samiec',
-    ANIMAL_FEMALE: 'Samica'
+    ANIMAL_FEMALE: 'Samica',
+    EDIT: 'Edycja'
 };

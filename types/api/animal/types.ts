@@ -1,4 +1,3 @@
-
 export interface Animal {
     id: number;
     name: string;
@@ -17,6 +16,7 @@ export interface CreateAnimal {
     breedId?: number;
     coatColorId?: number;
     gender: string;
+    profilePhotoUrl?: string;
 }
 
 export interface AnimalBreed {

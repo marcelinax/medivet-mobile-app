@@ -1,9 +1,10 @@
-import { isAndroidPlatfrom } from './isAndroidPlatfrom';
+import {isAndroidPlatfrom} from './isAndroidPlatfrom';
 
-export const appendFileToFormData = (photo: any, name: string) => {
+export const appendFileToFormData = (photo: string, name: string) => {
     const formData = new FormData();
+    console.log(photo)
     formData.append('file', {
-        uri: isAndroidPlatfrom() ? photo.uri : photo.uri.replace('file://', ''),
+        uri: isAndroidPlatfrom() ? photo : photo.replace('file://', ''),
         name,
         type: 'image/jpeg'
     } as any);

@@ -1,7 +1,6 @@
 import {AnimalApi} from "api/animal/animal.api";
 import {getInputErrors, handleInputErrors, hasInternalError} from "api/error/services";
 import {LoadingButton} from "components/Buttons/LoadingButton";
-import {AvatarInput} from "components/Inputs/AvatarInput";
 import {DatePicker} from "components/Inputs/DatePicker";
 import {Select} from "components/Inputs/Select/Select";
 import {TextInput} from "components/Inputs/TextInput";
@@ -9,12 +8,15 @@ import apiErrors from "constants/apiErrors";
 import {animalGenderSelectOptions, animalTypeSelectOptions} from "constants/selectOptions";
 import {buttonsTranslations} from "constants/translations/buttons.translations";
 import {inputsTranslations} from "constants/translations/inputs.translations";
-import {useErrorAlert} from "hooks/Modals/useErrorAlert";
+import {useErrorAlert} from "hooks/Alerts/useErrorAlert";
 import {FC, useEffect, useState} from "react";
 import {StyleSheet, View} from "react-native";
 import {Animal, CreateAnimal} from "types/api/animal/types";
 import {FormError} from "types/api/error/types";
 import {SelectOptionProps} from "types/components/Inputs/types";
+import {AvatarInput} from "components/Inputs/AvatarInput";
+import {appendFileToFormData} from "utils/appendFileToFormData";
+import {useSuccessAlert} from "hooks/Alerts/useSuccessAlert";
 
 interface Props {
     animal?: Animal;
@@ -24,6 +26,8 @@ export const AnimalForm: FC<Props> = ({animal}) => {
     const [errors, setErrors] = useState<FormError[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const {drawErrorAlert, handleErrorAlert} = useErrorAlert();
+    const {drawSuccessAlert, handleSuccessAlert} = useSuccessAlert();
+    const [firstRender, setFirstRender] = useState<boolean>(true);
     const [form, setForm] = useState<CreateAnimal>({
         name: animal?.name ?? '',
         type: animal?.type ?? '',
@@ -31,11 +35,17 @@ export const AnimalForm: FC<Props> = ({animal}) => {
         breedId: animal?.breed?.id,
         gender: animal?.gender ?? animalGenderSelectOptions[0].id,
         coatColorId: animal?.coatColor?.id,
+        profilePhotoUrl: animal?.profilePhotoUrl
     });
 
     useEffect(() => {
+        setFirstRender(false);
+    }, []);
+
+    useEffect(() => {
+        if (firstRender) return;
         if (form?.breedId) {
-            onChangeInput('breedId', null);
+            onChangeInput('breedId', undefined);
         }
     }, [form.type]);
 
@@ -63,14 +73,17 @@ export const AnimalForm: FC<Props> = ({animal}) => {
         }));
     };
 
-    const onSubmit = async (): Promise<void> => {
+    const onChangeBasicInformation = async () => {
         setLoading(true);
-        console.log(form);
         try {
             setErrors([]);
             let res;
             if (animal?.id) {
-            } else res = await AnimalApi.createAnimal(form);
+                res = await AnimalApi.updateAnimal(Number(animal?.id), form);
+            } else {
+                res = await AnimalApi.createAnimal(form);
+            }
+            handleSuccessAlert();
         } catch (err: any) {
             const errs = [err?.response?.data];
 
@@ -96,14 +109,36 @@ export const AnimalForm: FC<Props> = ({animal}) => {
             setErrors([birthDateErrors, nameErrors, typeErrors, breedErrors]);
         }
         setLoading(false);
+    }
+
+    const onChangeProfilePhoto = async (): Promise<void> => {
+        if (form?.profilePhotoUrl) {
+            setLoading(true);
+            try {
+                const formData = appendFileToFormData(form.profilePhotoUrl, 'animal-profile-image.jpg');
+                const res = await AnimalApi.uploadNewAnimalProfilePhoto(Number(animal?.id), formData);
+            } catch (err: any) {
+                const errs = [err?.response?.data];
+                if (hasInternalError(errs)) handleErrorAlert();
+            }
+            setLoading(false);
+        }
+    };
+
+    const onSubmit = async (): Promise<void> => {
+        await onChangeBasicInformation();
+        await onChangeProfilePhoto();
     };
 
     return (
         <View>
             {drawErrorAlert()}
+            {drawSuccessAlert()}
             {animal?.id && (
                 <View style={styles.avatarContainer}>
-                    <AvatarInput url={animal?.profilePhotoUrl} onChange={(e) => onChangeInput('profilePhotoUrl', e)}/>
+                    <AvatarInput
+                        url={animal?.profilePhotoUrl}
+                        onChange={(e) => onChangeInput('profilePhotoUrl', e)}/>
                 </View>
             )}
             <View>
@@ -123,6 +158,7 @@ export const AnimalForm: FC<Props> = ({animal}) => {
                     <View style={styles.inputMargin}>
                         <Select errors={getInputErrors(errors, 'breedId')} value={Number(form?.breedId)} variant='underline'
                                 onFetchOptions={onFetchAnimalBreeds}
+                                defaultValue={form?.breedId ? animal?.breed?.name : null}
                                 label={inputsTranslations.BREED}
                                 onChange={(breed) => onChangeInput('breedId', +breed)}/>
                     </View>
@@ -136,6 +172,7 @@ export const AnimalForm: FC<Props> = ({animal}) => {
             </View>
             <View style={styles.inputMargin}>
                 <Select errors={[]} value={Number(form?.coatColorId)} variant='underline'
+                        defaultValue={animal?.coatColor?.name}
                         onFetchOptions={onFetchAnimaCoatColors}
                         label={inputsTranslations.COAT_COLOR}
                         onChange={(coatColor) => onChangeInput('coatColorId', +coatColor)}/>
@@ -163,6 +200,6 @@ const styles = StyleSheet.create({
     },
     avatarContainer: {
         alignItems: 'center',
-        marginBottom: 15
+        marginVertical: 15,
     },
 });

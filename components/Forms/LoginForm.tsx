@@ -9,7 +9,7 @@ import apiErrors from 'constants/apiErrors';
 import {buttonsTranslations} from 'constants/translations/buttons.translations';
 import {inputsTranslations} from 'constants/translations/inputs.translations';
 import * as SecureStore from 'expo-secure-store';
-import {useErrorAlert} from 'hooks/Modals/useErrorAlert';
+import {useErrorAlert} from 'hooks/Alerts/useErrorAlert';
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {useDispatch} from 'react-redux';

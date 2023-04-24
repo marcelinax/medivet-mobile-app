@@ -1,38 +1,39 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { hasInternalError } from 'api/error/services';
-import { useErrorAlert } from 'hooks/Modals/useErrorAlert';
-import React, { FC, useEffect, useState } from 'react';
-import { Text, TextInput, TouchableHighlight, View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { setShowSelectInputOptionsModal } from 'store/layout/layoutSlice';
+import {hasInternalError} from 'api/error/services';
+import {useErrorAlert} from 'hooks/Alerts/useErrorAlert';
+import React, {FC, useEffect, useState} from 'react';
+import {Text, TextInput, TouchableHighlight, View} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {setShowSelectInputOptionsModal} from 'store/layout/layoutSlice';
 import colors from 'themes/colors';
 import icons from 'themes/icons';
-import { SelectOptionProps, SelectProps } from 'types/components/Inputs/types';
-import { getErrorMessage } from '../utils/services';
-import { getInputBorderRadius, getInputStylesDependingOnVariant, inputStyles } from '../utils/styles';
-import { SelectOptions } from './SelectOptions';
+import {SelectOptionProps, SelectProps} from 'types/components/Inputs/types';
+import {getErrorMessage} from '../utils/services';
+import {getInputBorderRadius, getInputStylesDependingOnVariant, inputStyles} from '../utils/styles';
+import {SelectOptions} from './SelectOptions';
 
 export const Select: FC<SelectProps> = ({
-    variant,
-    placeholder,
-    value,
-    label,
-    rounded,
-    errors,
-    options,
-    onChange,
-    onFetchOptions,
-    pageSize,
-    ...props
-}) => {
-    // TO DO Szukanie po search 
+                                            variant,
+                                            placeholder,
+                                            value,
+                                            label,
+                                            rounded,
+                                            errors,
+                                            options,
+                                            onChange,
+                                            onFetchOptions,
+                                            pageSize,
+                                            defaultValue,
+                                            ...props
+                                        }) => {
+    // TO DO Szukanie po search
     // TO DO usprawnić wybieranie opcji
     // TO DO Ustawić zmianę opcji dopiero w momencie naciśnięcia ok
     // TO DO mozliwosc usuwania wybranej wartosci
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState<boolean>(false);
-    const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
+    const {drawErrorAlert, handleErrorAlert} = useErrorAlert();
     const [fetchedOptions, setFetchedOptions] = useState<SelectOptionProps[]>([]);
     const allOptions = onFetchOptions ? fetchedOptions : options ? options : [];
     const [offset, setOffset] = useState<number>(0);
@@ -42,8 +43,7 @@ export const Select: FC<SelectProps> = ({
     useEffect(() => {
         if (showOptions) {
             dispatch(setShowSelectInputOptionsModal(true));
-        }
-        else {
+        } else {
             setOffset(0);
             setHasNextPage(true);
             setFetchedOptions([]);
@@ -68,7 +68,7 @@ export const Select: FC<SelectProps> = ({
             if (!hasNextPage) return;
             setLoading(true);
             try {
-                const opts = await onFetchOptions('', { pageSize: pageSize ?? 10, offset });
+                const opts = await onFetchOptions('', {pageSize: pageSize ?? 10, offset});
                 setFetchedOptions([...fetchedOptions, ...opts]);
                 const newOffset = offset + opts.length;
                 if (opts.length <= 0) setHasNextPage(false);
@@ -93,8 +93,9 @@ export const Select: FC<SelectProps> = ({
 
     const drawOptions = () => (
         <SelectOptions options={onFetchOptions ? fetchedOptions || [] : options || []} visible={showOptions}
-            selectedValue={selectedValue} setSelectedValue={onChangeOption} onLoadMoreOptions={onFetchOptions ? onFetch : undefined}
-            onHide={() => setShowOptions(false)} loading={loading}
+                       selectedValue={selectedValue} setSelectedValue={onChangeOption}
+                       onLoadMoreOptions={onFetchOptions ? onFetch : undefined}
+                       onHide={() => setShowOptions(false)} loading={loading}
         />
     );
 
@@ -109,19 +110,20 @@ export const Select: FC<SelectProps> = ({
                             inputStyles.inputInnerContainer,
                             getInputStylesDependingOnVariant(variant),
                             label && variant !== 'underline' ? inputStyles.inputWithLabel : {},
-                            { borderRadius: getInputBorderRadius(variant, rounded) },
+                            {borderRadius: getInputBorderRadius(variant, rounded)},
                         ]} pointerEvents='none'>
                             <TextInput
+                                defaultValue={defaultValue}
                                 editable={false}
                                 value={selectedValue?.label}
-                                style={[inputStyles.input, { color: colors.BLACK }]}
+                                style={[inputStyles.input, {color: colors.BLACK}]}
                                 placeholder={placeholder}
                                 placeholderTextColor={colors.GRAY_DARK}
                                 {...props}
                             />
                             <Ionicons
                                 name={showOptions ? icons.CHEVRON_UP : icons.CHEVRON_DOWN} size={20}
-                                color={colors.GRAY_DARK} style={inputStyles.defaultIcon} />
+                                color={colors.GRAY_DARK} style={inputStyles.defaultIcon}/>
                         </View>
                     </TouchableHighlight>
                     {
@@ -130,7 +132,7 @@ export const Select: FC<SelectProps> = ({
                         </Text>
                     }
                 </View>
-            </View >
+            </View>
             {showOptions && drawOptions()}
         </>
     );

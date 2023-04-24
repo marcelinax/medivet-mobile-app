@@ -3,7 +3,7 @@ import {ActivityIndicator, FlatList, ListRenderItem, StyleSheet, View} from "rea
 import {Animal} from "types/api/animal/types";
 import {useEffect, useState} from "react";
 import {hasInternalError} from "../../../api/error/services";
-import {useErrorAlert} from "hooks/Modals/useErrorAlert";
+import {useErrorAlert} from "hooks/Alerts/useErrorAlert";
 import {AnimalApi} from "../../../api/animal/animal.api";
 import colors from "themes/colors";
 import {EmptyList} from "components/Composition/EmptyList";

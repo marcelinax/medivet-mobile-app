@@ -17,6 +17,11 @@ export class AnimalApi {
         return res.data;
     }
 
+    static async updateAnimal(animalId: number, data: CreateAnimal): Promise<Animal> {
+        const res = await authClient.put(`animals/update/${animalId}`, {...data});
+        return res.data;
+    }
+
     static async uploadNewAnimalProfilePhoto(animalId: number, data: FormData): Promise<Animal> {
         const res = await authClient.post(`animals/upload-profile-photo/${animalId}`, data, {
             headers: {
@@ -28,6 +33,11 @@ export class AnimalApi {
 
     static async getOwnerAnimals(params?: Record<string, any>): Promise<Animal[]> {
         const res = await authClient.get('animals/search/my', {params});
+        return res.data;
+    }
+
+    static async getOwnerAnimal(animalId: number, params?: Record<string, any>): Promise<Animal> {
+        const res = await authClient.get(`animals/my/${animalId}`, {params});
         return res.data;
     }
 }
