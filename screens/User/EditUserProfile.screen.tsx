@@ -50,6 +50,7 @@ export const EditUserProfileScreen = () => {
 
             if (!form.address) delete form.address;
             const res = await UserApi.updateUser(form);
+            handleSuccessAlert();
             dispatch(setCurrentUser(res));
         } catch (err: any) {
             const errs = [err?.response?.data];
@@ -72,14 +73,8 @@ export const EditUserProfileScreen = () => {
         setLoading(false);
     };
 
-    const onSubmit = async (): Promise<void> => {
-        await onChangeBasicInformation();
-        await onChangeProfilePhoto();
-        handleSuccessAlert();
-    };
-
     const onChangeProfilePhoto = async (): Promise<void> => {
-        if (form?.profilePhotoUrl) {
+        if (form?.profilePhotoUrl !== user?.profilePhotoUrl && form?.profilePhotoUrl) {
             setLoading(true);
             try {
                 const formData = appendFileToFormData(form.profilePhotoUrl, 'profile-user-image.jpg');
@@ -94,13 +89,34 @@ export const EditUserProfileScreen = () => {
         }
     };
 
+    const onRemoveProfilePhoto = async (): Promise<void> => {
+        if (!form?.profilePhotoUrl && user?.profilePhotoUrl) {
+            setLoading(true);
+            try {
+                await UserApi.removeUserProfilePhoto();
+            } catch (err: any) {
+                const errs = [err?.response?.data];
+                if (hasInternalError(errs)) handleErrorAlert();
+            }
+            setLoading(false);
+        }
+    }
+
+    const onSubmit = async (): Promise<void> => {
+        await onChangeBasicInformation();
+        await onRemoveProfilePhoto();
+        await onChangeProfilePhoto();
+    };
+
     return (
         <DefaultLayout>
             <View>
                 {drawErrorAlert()}
                 {drawSuccessAlert(successAlertTranslations.SAVED)}
                 <View style={styles.avatarContainer}>
-                    <AvatarInput url={user?.profilePhotoUrl} onChange={(e) => onChangeInput('profilePhotoUrl', e)}/>
+                    <AvatarInput url={user?.profilePhotoUrl}
+                                 onRemove={() => onChangeInput('profilePhotoUrl', '')}
+                                 onChange={(e) => onChangeInput('profilePhotoUrl', e)}/>
                 </View>
                 <View>
                     <TextInput value={user.name} variant='underline' isClearable={false}

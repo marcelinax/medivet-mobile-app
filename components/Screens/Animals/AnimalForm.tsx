@@ -112,11 +112,11 @@ export const AnimalForm: FC<Props> = ({animal}) => {
     }
 
     const onChangeProfilePhoto = async (): Promise<void> => {
-        if (form?.profilePhotoUrl) {
+        if (form?.profilePhotoUrl !== animal?.profilePhotoUrl && form?.profilePhotoUrl) {
             setLoading(true);
             try {
                 const formData = appendFileToFormData(form.profilePhotoUrl, 'animal-profile-image.jpg');
-                const res = await AnimalApi.uploadNewAnimalProfilePhoto(Number(animal?.id), formData);
+                await AnimalApi.uploadNewAnimalProfilePhoto(Number(animal?.id), formData);
             } catch (err: any) {
                 const errs = [err?.response?.data];
                 if (hasInternalError(errs)) handleErrorAlert();
@@ -125,8 +125,22 @@ export const AnimalForm: FC<Props> = ({animal}) => {
         }
     };
 
+    const onRemoveProfilePhoto = async (): Promise<void> => {
+        if (!form?.profilePhotoUrl && animal?.profilePhotoUrl) {
+            setLoading(true);
+            try {
+                await AnimalApi.removeAnimalProfilePhoto(Number(animal?.id));
+            } catch (err: any) {
+                const errs = [err?.response?.data];
+                if (hasInternalError(errs)) handleErrorAlert();
+            }
+            setLoading(false);
+        }
+    }
+
     const onSubmit = async (): Promise<void> => {
         await onChangeBasicInformation();
+        await onRemoveProfilePhoto();
         await onChangeProfilePhoto();
     };
 
@@ -137,6 +151,7 @@ export const AnimalForm: FC<Props> = ({animal}) => {
             {animal?.id && (
                 <View style={styles.avatarContainer}>
                     <AvatarInput
+                        onRemove={() => onChangeInput('profilePhotoUrl', '')}
                         url={animal?.profilePhotoUrl}
                         onChange={(e) => onChangeInput('profilePhotoUrl', e)}/>
                 </View>

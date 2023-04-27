@@ -1,5 +1,5 @@
-import { authClient, noAuthClient } from "api/services";
-import { RegistrationCredentials, User } from "types/api/user/types";
+import {authClient, noAuthClient} from "api/services";
+import {RegistrationCredentials, User} from "types/api/user/types";
 
 class UserApi {
     static async registerUser(data: RegistrationCredentials): Promise<User> {
@@ -23,10 +23,15 @@ class UserApi {
         return res.data;
     }
 
+    static async removeUserProfilePhoto(): Promise<User> {
+        const res = await authClient.delete(`users/me/remove-profile-photo`);
+        return res.data;
+    }
+
     static async updateUser(data: User): Promise<User> {
         const res = await authClient.put('users/me', data);
         return res.data;
     }
 }
 
-export { UserApi };
+export {UserApi};

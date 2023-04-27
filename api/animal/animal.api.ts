@@ -31,6 +31,11 @@ export class AnimalApi {
         return res.data;
     }
 
+    static async removeAnimalProfilePhoto(animalId: number): Promise<Animal> {
+        const res = await authClient.delete(`animals/remove-profile-photo/${animalId}`);
+        return res.data;
+    }
+
     static async getOwnerAnimals(params?: Record<string, any>): Promise<Animal[]> {
         const res = await authClient.get('animals/search/my', {params});
         return res.data;
