@@ -7,5 +7,7 @@ export const buttonsTranslations = {
     CHOOSE: 'Wybierz',
     CANCEL: 'Anuluj',
     CHANGE: 'Zmień',
-    SAVE: 'Zapisz'
+    SAVE: 'Zapisz',
+    REMOVE: 'Usuń',
+    CONFIRM: 'Potwierdź'
 };

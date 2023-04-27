@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from "react-native";
 import colors from "themes/colors";
 
 export const alertStyles = StyleSheet.create({
@@ -30,9 +30,13 @@ export const alertStyles = StyleSheet.create({
         textAlign: 'center'
     },
     buttonsContainer: {
-        marginTop: 20
+        marginTop: 20,
+        flexDirection: 'row',
     },
     button: {
-        minWidth: '100%',
+        flexGrow: 1
+    },
+    secondButton: {
+        marginLeft: 5
     }
 });
