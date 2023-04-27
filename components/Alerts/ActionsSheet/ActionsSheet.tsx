@@ -18,11 +18,10 @@ export const ActionsSheet: FC<Props> = ({visible, onHide, buttons}) => {
     const drawButtons = (): JSX.Element[] => visibleButtons.map((button, index) => (
         <View style={index !== buttons.length - 1 ? styles.withSeparator : {}}
               key={`actions-sheet-button-${index}`}>
-            <ActionsSheetButton onPress={() => {
-                button.onPress();
+            <ActionsSheetButton onPress={async () => {
+                await button.onPress();
                 onHide();
-            }}
-                                title={button.title} variant={button.variant}
+            }} title={button.title} variant={button.variant}
             />
         </View>
     ));
