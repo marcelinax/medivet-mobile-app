@@ -22,6 +22,7 @@ interface Props {
     animal?: Animal;
 }
 
+// w momencie cofania na liste powinien byc zaktualiozwany zwierzak
 export const AnimalForm: FC<Props> = ({animal}) => {
     const [errors, setErrors] = useState<FormError[]>([]);
     const [loading, setLoading] = useState<boolean>(false);

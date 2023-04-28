@@ -1,16 +1,16 @@
-import { FC } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import {FC} from "react";
+import {ScrollView, StyleSheet, View} from "react-native";
 import colors from "themes/colors";
-import { isAndroidPlatfrom } from "utils/isAndroidPlatfrom";
+import {isAndroidPlatfrom} from "utils/isAndroidPlatfrom";
 
 interface Props {
     children: JSX.Element;
 }
 
-export const DefaultLayout: FC<Props> = ({ children }) => {
+export const DefaultLayout: FC<Props> = ({children}) => {
     return (
-        <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.scrollViewContainer}
-            automaticallyAdjustKeyboardInsets>
+        <ScrollView style={{flex: 1}} contentContainerStyle={styles.scrollViewContainer}
+                    automaticallyAdjustKeyboardInsets>
             <View style={styles.container}>
                 {children}
             </View>
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flexGrow: 1,
-        paddingVertical: isAndroidPlatfrom() ? 30 : 0,
+        paddingVertical: isAndroidPlatfrom() ? 30 : 15,
         paddingHorizontal: 30,
     }
 });

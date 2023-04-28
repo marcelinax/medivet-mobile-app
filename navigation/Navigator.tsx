@@ -11,8 +11,8 @@ import {removeToken, setToken} from 'store/auth/authSlice';
 import {RootState} from 'store/store';
 import {setCurrentUser} from 'store/user/userSlice';
 import {AuthNavigator} from './AuthNavigator';
-import {MainNavigator} from './MainNavigator';
 import {RootStackParamList} from "types/Navigation/types";
+import {BottomTabNavigator} from "./BottomTab/BottomTabNavigator";
 
 export const Navigator = () => {
     const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -62,7 +62,7 @@ export const Navigator = () => {
                                                   component={GlobalLoaderScreen} options={{headerShown: false}}/> : (
                         !token ? <Stack.Screen name={routes.AUTH_NAVIGATOR} component={AuthNavigator}
                                                options={{headerShown: false}}/> :
-                            <Stack.Screen name={routes.MAIN_NAVIGATOR} component={MainNavigator}
+                            <Stack.Screen name={routes.BOTTOM_TAB_NAVIGATOR} component={BottomTabNavigator}
                                           options={{headerShown: false}}/>
                     )
                 }

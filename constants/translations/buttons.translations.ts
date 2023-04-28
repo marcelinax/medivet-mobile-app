@@ -9,5 +9,6 @@ export const buttonsTranslations = {
     CHANGE: 'Zmień',
     SAVE: 'Zapisz',
     REMOVE: 'Usuń',
-    CONFIRM: 'Potwierdź'
+    CONFIRM: 'Potwierdź',
+    LOGOUT: 'Wyloguj się'
 };

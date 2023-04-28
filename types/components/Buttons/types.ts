@@ -1,10 +1,12 @@
-import { TouchableHighlightProps } from "react-native";
+import {TouchableHighlightProps, TouchableWithoutFeedbackProps} from "react-native";
 
 export type ButtonVariant = 'solid' | 'outline' | 'link';
 
 export type ButtonColor = 'primary' | 'secondary' | 'light' | 'danger' | 'success' | 'info';
 
 export type ButtonFontWeight = 'bolder' | 'bold' | 'light';
+
+export type ButtonIconSize = 'large' | 'medium' | 'small';
 
 export interface ButtonProps extends TouchableHighlightProps {
     title: string;
@@ -24,4 +26,10 @@ export interface ButtonLoadingProps extends TouchableHighlightProps {
     disabled?: boolean;
     loading?: boolean;
     fontWeight?: ButtonFontWeight;
-} 
+}
+
+export interface ButtonIconProps extends TouchableWithoutFeedbackProps {
+    icon: any;
+    size: ButtonIconSize;
+    color?: string;
+}

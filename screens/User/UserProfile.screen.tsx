@@ -5,19 +5,28 @@ import {Avatar} from "components/Composition/Avatar";
 import {commonTranslations} from "constants/translations/common.translations";
 import {DefaultLayout} from "layouts/Default.layout";
 import {StyleSheet, Text, TouchableWithoutFeedback, View} from "react-native";
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from 'store/store';
 import colors from "themes/colors";
 import icons from 'themes/icons';
 import {User} from 'types/api/user/types';
 import {UserScreenNavigationProps} from "types/Navigation/types";
+import * as SecureStore from "expo-secure-store";
+import {removeToken} from "store/auth/authSlice";
+import {buttonsTranslations} from "constants/translations/buttons.translations";
 
 export const UserProfileScreen = () => {
     const user = useSelector((state: RootState) => state.user.currentUser) as User;
     const navigation = useNavigation<UserScreenNavigationProps>();
+    const dispatch = useDispatch();
 
     const onEditUserDetails = (): void => {
         navigation.navigate('Edit User');
+    };
+
+    const onLogout = async (): Promise<void> => {
+        await SecureStore.deleteItemAsync('token');
+        dispatch(removeToken());
     };
 
     return (
@@ -36,6 +45,8 @@ export const UserProfileScreen = () => {
                 <View style={styles.wideButtonsContainer}>
                     <WideButton onPress={() => navigation.navigate('Edit User Address')}
                                 title={commonTranslations.ADDRESS} icon={icons.HOME_OUTLINE}/>
+                    <WideButton onPress={onLogout}
+                                title={buttonsTranslations.LOGOUT} icon={icons.LOG_OUT_OUTLINE}/>
                 </View>
             </View>
         </DefaultLayout>
