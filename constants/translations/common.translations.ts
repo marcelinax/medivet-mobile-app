@@ -7,5 +7,7 @@ export const commonTranslations = {
     NOT_FOUND_RESULTS: 'Nie znaleziono wyników.',
     ANIMAL_MALE: 'Samiec',
     ANIMAL_FEMALE: 'Samica',
-    EDIT: 'Edycja'
+    EDIT: 'Edycja',
+    PATIENT: 'Pacjent',
+    VET: 'Weterynarz'
 };

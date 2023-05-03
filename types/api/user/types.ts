@@ -6,7 +6,7 @@ export interface RegistrationCredentials {
     name: string;
     gender: string;
     birthDate: string;
-    role: string;
+    role: UserRoleType;
     acceptTerms: boolean;
 }
 
@@ -15,9 +15,11 @@ export interface User {
     name: string;
     email: string;
     birthDate: string;
-    role: string;
+    role: UserRoleType;
     gender: string;
     profilePhotoUrl?: string;
     phoneNumber?: string;
     address?: AddressApi;
 }
+
+export type UserRoleType = 'patient' | 'vet';

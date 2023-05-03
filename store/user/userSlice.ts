@@ -1,12 +1,14 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {User} from 'types/api/user/types';
+import {User, UserRoleType} from 'types/api/user/types';
 
 interface UserSlice {
     currentUser: User | undefined;
+    userRole: UserRoleType | undefined;
 }
 
 const initialState: UserSlice = {
-    currentUser: undefined
+    currentUser: undefined,
+    userRole: undefined
 };
 
 export const userSlice = createSlice({
@@ -15,9 +17,12 @@ export const userSlice = createSlice({
     reducers: {
         setCurrentUser: (state, action: PayloadAction<User | undefined>) => {
             state.currentUser = action.payload;
+        },
+        setUserRole: (state, action: PayloadAction<UserRoleType>) => {
+            state.userRole = action.payload;
         }
     }
 });
 
-export const {setCurrentUser} = userSlice.actions;
+export const {setCurrentUser, setUserRole} = userSlice.actions;
 export default userSlice.reducer;

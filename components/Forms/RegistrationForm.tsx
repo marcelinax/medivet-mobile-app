@@ -17,9 +17,11 @@ import React, {useState} from 'react';
 import {StyleSheet, Switch, Text, View} from 'react-native';
 import colors from 'themes/colors';
 import {FormError} from 'types/api/error/types';
-import {RegistrationCredentials} from 'types/api/user/types';
+import {RegistrationCredentials, UserRoleType} from 'types/api/user/types';
 import {isAndroidPlatfrom} from 'utils/isAndroidPlatfrom';
 import {RegistrationScreenNavigationProps} from "types/Navigation/types";
+import {useSelector} from "react-redux";
+import {RootState} from "store/store";
 
 interface FormProps {
     email: string;
@@ -28,10 +30,15 @@ interface FormProps {
     gender: string;
     birthDate?: Date;
     acceptTerms: boolean;
-    role: string;
+    role: UserRoleType;
 }
 
 export const RegistrationForm = () => {
+    const [errors, setErrors] = useState<FormError[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+    const {drawErrorAlert, handleErrorAlert} = useErrorAlert();
+    const navigation = useNavigation<RegistrationScreenNavigationProps>();
+    const selectedUserRole = useSelector((state: RootState) => state.user.userRole) as UserRoleType;
     const [form, setForm] = useState<FormProps>({
         email: '',
         password: '',
@@ -39,12 +46,8 @@ export const RegistrationForm = () => {
         gender: genderSelectOptions[0].id,
         birthDate: undefined,
         acceptTerms: false,
-        role: 'vet'
+        role: selectedUserRole
     });
-    const [errors, setErrors] = useState<FormError[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
-    const {drawErrorAlert, handleErrorAlert} = useErrorAlert();
-    const navigation = useNavigation<RegistrationScreenNavigationProps>();
 
     const onChange = (field: string, newValue: any): void => {
         setForm({

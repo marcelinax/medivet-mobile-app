@@ -6,12 +6,17 @@ import {EditUserProfileScreen} from "screens/User/EditUserProfile.screen";
 import {EditUserAddressScreen} from "screens/User/EditUserAddress.screen";
 import {navigationTranslations} from "constants/translations/navigation.translations";
 import {getDefaultScreenOptions} from "./utils/screenOptions";
+import colors from "themes/colors";
 
 export const UserNavigator = () => {
     const Stack = createNativeStackNavigator<RootStackParamList>();
-    
+
     return (
-        <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Navigator screenOptions={{
+            headerShown: false,
+            headerBackTitle: '',
+            headerTintColor: colors.BLACK
+        }}>
             <Stack.Screen name={routes.USER} component={UserProfileScreen}
                           options={() => getDefaultScreenOptions(navigationTranslations.USER_PROFILE)}/>
             <Stack.Screen name={routes.EDIT_USER} component={EditUserProfileScreen}

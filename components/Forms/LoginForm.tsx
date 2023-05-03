@@ -42,7 +42,7 @@ export const LoginForm = () => {
         setLoading(true);
         try {
             const res = await AuthApi.authUser(form);
-            SecureStore.setItemAsync('token', res.access_token);
+            await SecureStore.setItemAsync('token', res.access_token);
             dispatch(setToken(res.access_token));
         } catch (err: any) {
             const errs = [err?.response?.data];
@@ -66,7 +66,7 @@ export const LoginForm = () => {
     };
 
     const onSignUp = (): void => {
-        navigation.navigate('Registration');
+        navigation.navigate('Pre Registration');
     };
 
     return (

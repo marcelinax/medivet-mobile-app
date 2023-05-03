@@ -26,7 +26,11 @@ export const AnimalsNavigator = () => {
     };
 
     return (
-        <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Navigator screenOptions={{
+            headerShown: false,
+            headerBackTitle: '',
+            headerTintColor: colors.BLACK
+        }}>
             <Stack.Screen name={routes.USER_ANIMALS} component={UserAnimalsScreen}
                           options={animalsScreenOptions}/>
             <Stack.Screen name={routes.EDIT_ANIMAL} component={EditAnimalScreen}/>

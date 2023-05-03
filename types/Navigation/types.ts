@@ -4,6 +4,7 @@ import {RouteProp} from "@react-navigation/native";
 export type RootStackParamList = {
     Login: undefined;
     Registration: undefined;
+    'Pre Registration': undefined;
     Home: undefined;
     'Global Loader': undefined;
     'Edit Animal': { animalId: number };
@@ -16,6 +17,7 @@ export type RootStackParamList = {
 
 export type LoginScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 export type RegistrationScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Registration'>;
+export type PreRegistrationScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Pre Registration'>;
 export type EditAnimalScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Edit Animal'>;
 export type UserAnimalsScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'User Animals'>;
 export type CreateAnimalScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Create Animal'>;

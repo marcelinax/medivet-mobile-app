@@ -12,6 +12,7 @@ export default {
     // SCREENS
     LOGIN: 'Login' as keyof RootStackParamList,
     REGISTRATION: 'Registration' as keyof RootStackParamList,
+    PRE_REGISTRATION: 'Pre Registration' as keyof RootStackParamList,
     HOME: 'Home' as keyof RootStackParamList,
     GLOBAL_LOADER: 'Global Loader' as keyof RootStackParamList,
     USER: 'User' as keyof RootStackParamList,
