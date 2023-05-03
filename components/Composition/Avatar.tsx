@@ -7,9 +7,10 @@ import icons from "themes/icons";
 interface Props {
     url?: string;
     size: 'medium' | 'large';
+    isAnimal?: boolean;
 }
 
-export const Avatar: FC<Props> = ({url, size}) => {
+export const Avatar: FC<Props> = ({url, size, isAnimal}) => {
     const sizeStyles = size === 'large' ? styles.large : styles.medium;
     const borderRadius = size === 'large' ? 100 / 2 : 80 / 2;
     const iconSize = size === 'large' ? 100 / 2 : 80 / 2;
@@ -18,7 +19,7 @@ export const Avatar: FC<Props> = ({url, size}) => {
         <View style={[styles.container, sizeStyles, {borderRadius}, url ? {} : styles.withoutImage]}>
             {url ? <ImageBackground source={{uri: url}} resizeMode='cover' style={styles.image}/> :
                 <Ionicons
-                    name={icons.PERSON_OUTLINE} size={iconSize}
+                    name={isAnimal ? icons.PAW_OUTLINE : icons.PERSON_OUTLINE} size={iconSize}
                     color={colors.WHITE}/>
             }
         </View>

@@ -19,7 +19,7 @@ export const AnimalListItem: FC<Props> = ({animal}) => {
             <View style={styles.container}>
                 <Card>
                     <View style={styles.innerContainer}>
-                        <Avatar size='medium' url={animal?.profilePhotoUrl}/>
+                        <Avatar size='medium' url={animal?.profilePhotoUrl} isAnimal/>
                         <Text style={styles.name}>{animal.name}</Text>
                     </View>
                 </Card>

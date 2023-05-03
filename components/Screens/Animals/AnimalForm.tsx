@@ -153,7 +153,7 @@ export const AnimalForm: FC<Props> = ({animal}) => {
                 <View style={styles.avatarContainer}>
                     <AvatarInput
                         onRemove={() => onChangeInput('profilePhotoUrl', '')}
-                        url={animal?.profilePhotoUrl}
+                        url={animal?.profilePhotoUrl} isAnimal
                         onChange={(e) => onChangeInput('profilePhotoUrl', e)}/>
                 </View>
             )}

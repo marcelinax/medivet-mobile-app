@@ -10,4 +10,5 @@ export default {
     HOME_OUTLINE: 'home-outline' as 'home-outline',
     LOG_OUT_OUTLINE: 'log-out-outline' as 'log-out-outline',
     ADD_OUTLINE: 'add-outline' as 'add-outline',
+    PAW_OUTLINE: 'paw-outline' as 'paw-outline'
 };
