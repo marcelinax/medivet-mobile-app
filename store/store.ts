@@ -1,13 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authSlice from './auth/authSlice';
-import layoutSlice from './layout/layoutSlice';
-import userSlice from './user/userSlice';
+import {configureStore} from '@reduxjs/toolkit';
+import authSlice from 'store/auth/authSlice';
+import layoutSlice from 'store//layout/layoutSlice';
+import userSlice from 'store/user/userSlice';
+import animalSlice from "store/animal/animalSlice";
 
 export const store = configureStore({
     reducer: {
         layout: layoutSlice,
         auth: authSlice,
-        user: userSlice
+        user: userSlice,
+        animal: animalSlice
     }
 });
 

@@ -17,18 +17,22 @@ import {SelectOptionProps} from "types/components/Inputs/types";
 import {AvatarInput} from "components/Inputs/AvatarInput";
 import {appendFileToFormData} from "utils/appendFileToFormData";
 import {useSuccessAlert} from "hooks/Alerts/useSuccessAlert";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "store/store";
+import {setAnimalToUpdate} from "store/animal/animalSlice";
 
 interface Props {
     animal?: Animal;
 }
 
-// w momencie cofania na liste powinien byc zaktualiozwany zwierzak
 export const AnimalForm: FC<Props> = ({animal}) => {
     const [errors, setErrors] = useState<FormError[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const {drawErrorAlert, handleErrorAlert} = useErrorAlert();
     const {drawSuccessAlert, handleSuccessAlert} = useSuccessAlert();
     const [firstRender, setFirstRender] = useState<boolean>(true);
+    const dispatch = useDispatch();
+    const animalToUpdate = useSelector((state: RootState) => state.animal.animalToUpdate);
     const [form, setForm] = useState<CreateAnimal>({
         name: animal?.name ?? '',
         type: animal?.type ?? '',
@@ -66,7 +70,7 @@ export const AnimalForm: FC<Props> = ({animal}) => {
         }));
     };
 
-    const onFetchAnimaCoatColors = async (search?: string, params?: Record<string, any>): Promise<SelectOptionProps[]> => {
+    const onFetchAnimalCoatColors = async (search?: string, params?: Record<string, any>): Promise<SelectOptionProps[]> => {
         const res = await AnimalApi.getAnimalCoatColors(params);
         return res.map(x => ({
             id: x.id.toString(),
@@ -85,6 +89,7 @@ export const AnimalForm: FC<Props> = ({animal}) => {
                 res = await AnimalApi.createAnimal(form);
             }
             handleSuccessAlert();
+            onSetAnimalToUpdate(res);
         } catch (err: any) {
             const errs = [err?.response?.data];
 
@@ -117,7 +122,8 @@ export const AnimalForm: FC<Props> = ({animal}) => {
             setLoading(true);
             try {
                 const formData = appendFileToFormData(form.profilePhotoUrl, 'animal-profile-image.jpg');
-                await AnimalApi.uploadNewAnimalProfilePhoto(Number(animal?.id), formData);
+                const res = await AnimalApi.uploadNewAnimalProfilePhoto(Number(animal?.id), formData);
+                onSetAnimalToUpdate(res);
             } catch (err: any) {
                 const errs = [err?.response?.data];
                 if (hasInternalError(errs)) handleErrorAlert();
@@ -130,7 +136,8 @@ export const AnimalForm: FC<Props> = ({animal}) => {
         if (!form?.profilePhotoUrl && animal?.profilePhotoUrl) {
             setLoading(true);
             try {
-                await AnimalApi.removeAnimalProfilePhoto(Number(animal?.id));
+                const res = await AnimalApi.removeAnimalProfilePhoto(Number(animal?.id));
+                onSetAnimalToUpdate(res);
             } catch (err: any) {
                 const errs = [err?.response?.data];
                 if (hasInternalError(errs)) handleErrorAlert();
@@ -143,6 +150,10 @@ export const AnimalForm: FC<Props> = ({animal}) => {
         await onChangeBasicInformation();
         await onRemoveProfilePhoto();
         await onChangeProfilePhoto();
+    };
+
+    const onSetAnimalToUpdate = (newAnimal: Animal): void => {
+        if (!animalToUpdate) dispatch(setAnimalToUpdate(newAnimal));
     };
 
     return (
@@ -189,7 +200,7 @@ export const AnimalForm: FC<Props> = ({animal}) => {
             <View style={styles.inputMargin}>
                 <Select errors={[]} value={Number(form?.coatColorId)} variant='underline'
                         defaultValue={animal?.coatColor?.name}
-                        onFetchOptions={onFetchAnimaCoatColors}
+                        onFetchOptions={onFetchAnimalCoatColors}
                         label={inputsTranslations.COAT_COLOR}
                         onChange={(coatColor) => onChangeInput('coatColorId', +coatColor)}/>
             </View>

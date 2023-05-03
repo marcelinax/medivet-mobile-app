@@ -7,6 +7,9 @@ import {useErrorAlert} from "hooks/Alerts/useErrorAlert";
 import {AnimalApi} from "../../../api/animal/animal.api";
 import colors from "themes/colors";
 import {EmptyList} from "components/Composition/EmptyList";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "store/store";
+import {setAnimalToUpdate} from "store/animal/animalSlice";
 
 export const AnimalList = () => {
     const [loading, setLoading] = useState<boolean>(false);
@@ -15,10 +18,32 @@ export const AnimalList = () => {
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
     const {handleErrorAlert, drawErrorAlert} = useErrorAlert();
     const pageSize = 10;
+    const animalToUpdate = useSelector((state: RootState) => state.animal.animalToUpdate);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         onFetchAnimals();
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if (animalToUpdate) {
+            onUpdateAnimal();
+        }
+    }, [animalToUpdate]);
+
+    const onUpdateAnimal = (): void => {
+        if (animalToUpdate) {
+            const index = data.findIndex(animal => animal.id === animalToUpdate.id);
+            let newData = [...data];
+            if (index || index === 0) {
+                newData[index] = {...animalToUpdate};
+            } else {
+                newData = [...newData, animalToUpdate];
+            }
+            setData([...newData]);
+            dispatch(setAnimalToUpdate(undefined));
+        }
+    };
 
     const renderAnimal: ListRenderItem<Animal> = ({item}) => <AnimalListItem animal={item}/>;
 
