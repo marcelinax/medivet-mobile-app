@@ -15,10 +15,10 @@ interface Props {
     onChange: (url?: string) => void;
     onRemove: () => void;
     url?: string;
-    isAnimal?: boolean;
+    icon?: any;
 }
 
-export const AvatarInput: FC<Props> = ({url, onChange, onRemove, isAnimal}) => {
+export const AvatarInput: FC<Props> = ({url, onChange, onRemove, icon}) => {
     const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
     const [image, setImage] = useState<string>(url || '');
     const {drawErrorAlert, handleErrorAlert} = useErrorAlert();
@@ -75,7 +75,7 @@ export const AvatarInput: FC<Props> = ({url, onChange, onRemove, isAnimal}) => {
             {drawActionsSheet(actions)}
             <View style={styles.container}>
                 {drawErrorAlert(errorAlertTranslations.NO_MEDIA_LIBRARY_PERMISSION_TITLE, errorAlertTranslations.NO_MEDIA_LIBRARY_PERMISSION_MESSAGE)}
-                <Avatar size="large" url={image} isAnimal={isAnimal}/>
+                <Avatar size="large" url={image} icon={icon}/>
                 <Button variant="link" title={buttonsTranslations.CHANGE.toUpperCase()} color='light'
                         onPress={handleActionsSheet}/>
 
