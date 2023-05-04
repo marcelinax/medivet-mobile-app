@@ -4,23 +4,33 @@ import {hasInternalError} from "../../api/error/services";
 import {ActivityIndicator, FlatList, ListRenderItem, StyleSheet, View} from "react-native";
 import colors from "themes/colors";
 import {EmptyList} from "components/Composition/EmptyList";
+import {setAnimalToUpdate} from "store/animal/animalSlice";
+import {useDispatch} from "react-redux";
 
 interface Props {
     onFetch: (params: Record<string, any>) => Promise<any[]>;
     renderItem: ListRenderItem<any>;
+    itemToUpdate?: any;
 }
 
-export const List: FC<Props> = ({onFetch, renderItem}) => {
+export const List: FC<Props> = ({onFetch, renderItem, itemToUpdate}) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [offset, setOffset] = useState<number>(0);
     const [data, setData] = useState<any[]>([]);
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
     const {handleErrorAlert, drawErrorAlert} = useErrorAlert();
     const pageSize = 10;
+    const dispatch = useDispatch();
 
     useEffect(() => {
         onFetchData();
     }, []);
+
+    useEffect(() => {
+        if (itemToUpdate) {
+            onUpdateItem();
+        }
+    }, [itemToUpdate]);
 
     const onFetchData = async (): Promise<void | undefined> => {
         if (!hasNextPage) return;
@@ -40,6 +50,19 @@ export const List: FC<Props> = ({onFetch, renderItem}) => {
         setLoading(false);
     };
 
+    const onUpdateItem = (): void => {
+        if (itemToUpdate) {
+            const index = data.findIndex(item => item.id === itemToUpdate.id);
+            let newData = [...data];
+            if (index || index === 0) {
+                newData[index] = {...itemToUpdate};
+            } else {
+                newData = [...newData, itemToUpdate];
+            }
+            setData([...newData]);
+            dispatch(setAnimalToUpdate(undefined));
+        }
+    };
 
     const drawFooter = (): JSX.Element => loading ? <ActivityIndicator size='large' color={colors.GRAY_DARK}/> : <></>;
 
@@ -53,7 +76,7 @@ export const List: FC<Props> = ({onFetch, renderItem}) => {
                     data={data}
                     ItemSeparatorComponent={() => <View style={styles.separator}/>}
                     renderItem={renderItem}
-                    keyExtractor={(item, index) => item.id}
+                    keyExtractor={(item) => item.id}
                     style={styles.list}
                     contentContainerStyle={{flexGrow: 1}}
                     onEndReachedThreshold={0.2}

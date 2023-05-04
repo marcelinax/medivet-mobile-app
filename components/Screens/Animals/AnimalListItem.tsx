@@ -5,6 +5,7 @@ import {Animal} from "types/api/animal/types";
 import {Avatar} from "components/Composition/Avatar";
 import {useNavigation} from "@react-navigation/native";
 import {UserAnimalsScreenNavigationProps} from "types/Navigation/types";
+import icons from "themes/icons";
 
 interface Props {
     animal: Animal;
@@ -19,7 +20,7 @@ export const AnimalListItem: FC<Props> = ({animal}) => {
             <View style={styles.container}>
                 <Card>
                     <View style={styles.innerContainer}>
-                        <Avatar size='medium' url={animal?.profilePhotoUrl} isAnimal/>
+                        <Avatar size='medium' url={animal?.profilePhotoUrl} icon={icons.PAW_OUTLINE}/>
                         <Text style={styles.name}>{animal.name}</Text>
                     </View>
                 </Card>

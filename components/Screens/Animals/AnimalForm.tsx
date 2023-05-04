@@ -20,6 +20,7 @@ import {useSuccessAlert} from "hooks/Alerts/useSuccessAlert";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "store/store";
 import {setAnimalToUpdate} from "store/animal/animalSlice";
+import icons from "themes/icons";
 
 interface Props {
     animal?: Animal;
@@ -164,7 +165,7 @@ export const AnimalForm: FC<Props> = ({animal}) => {
                 <View style={styles.avatarContainer}>
                     <AvatarInput
                         onRemove={() => onChangeInput('profilePhotoUrl', '')}
-                        url={animal?.profilePhotoUrl} isAnimal
+                        url={animal?.profilePhotoUrl} icon={icons.PAW_OUTLINE}
                         onChange={(e) => onChangeInput('profilePhotoUrl', e)}/>
                 </View>
             )}
