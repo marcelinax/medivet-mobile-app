@@ -78,8 +78,9 @@ export const List: FC<Props> = ({onFetch, renderItem, itemToUpdate}) => {
                     renderItem={renderItem}
                     keyExtractor={(item) => item.id}
                     style={styles.list}
+                    bounces={false}
                     contentContainerStyle={{flexGrow: 1}}
-                    onEndReachedThreshold={0.2}
+                    onEndReachedThreshold={0.1}
                     onEndReached={onFetchData}
                     ListFooterComponent={drawFooter}
                     showsVerticalScrollIndicator={false}

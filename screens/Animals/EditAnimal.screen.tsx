@@ -22,7 +22,8 @@ export const EditAnimalScreen = () => {
 
     const onFetchAnimal = async () => {
         try {
-            const res = await AnimalApi.getOwnerAnimal(route.params.animalId);
+            const params = {include: 'breed,coatColor'};
+            const res = await AnimalApi.getOwnerAnimal(route.params.animalId, params);
             navigation.setOptions({
                 headerShown: true,
                 headerTitle: `${commonTranslations.EDIT} "${res.name}"`
