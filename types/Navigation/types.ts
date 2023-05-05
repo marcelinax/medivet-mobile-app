@@ -25,6 +25,7 @@ export type EditUserAddressScreenNavigationProps = NativeStackNavigationProp<Roo
 export type EditUserScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Edit User'>;
 export type UserScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'User'>;
 export type HomeScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+export type VetClinicsScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export type LoginScreenRouteProps = RouteProp<RootStackParamList, 'Login'>;
 export type RegistrationScreenRouteProps = RouteProp<RootStackParamList, 'Registration'>;

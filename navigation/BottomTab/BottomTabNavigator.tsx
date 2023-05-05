@@ -6,9 +6,16 @@ import {AnimalsNavigator} from "./StackNavigator/AnimalsNavigator";
 import {Ionicons} from "@expo/vector-icons";
 import icons from "themes/icons";
 import colors from "themes/colors";
+import {useSelector} from "react-redux";
+import {RootState} from "store/store";
+import {User} from "types/api/user/types";
+import {hasVetRole} from "utils/hasVetRole";
+import {ClinicsNavigator} from "./StackNavigator/ClinicsNavigator";
 
 export const BottomTabNavigator = () => {
     const Tab = createBottomTabNavigator();
+    const user = useSelector((state: RootState) => state.user.currentUser) as User;
+    const isVet = hasVetRole(user);
 
     const getTabIcon = (focused: boolean, name: any) => <Ionicons name={name} size={focused ? 28 : 24}
                                                                   color={focused ? colors.PRIMARY : colors.GRAY}/>;
@@ -22,9 +29,20 @@ export const BottomTabNavigator = () => {
             <Tab.Screen name={routes.USER_NAVIGATOR} component={UserNavigator} options={{
                 tabBarIcon: ({focused}) => getTabIcon(focused, icons.PERSON_OUTLINE),
             }}/>
-            <Tab.Screen name={routes.ANIMALS_NAVIGATOR} component={AnimalsNavigator} options={{
-                tabBarIcon: ({focused}) => getTabIcon(focused, icons.PAW_OUTLINE),
-            }}/>
+            {
+                !isVet && (
+                    <Tab.Screen name={routes.ANIMALS_NAVIGATOR} component={AnimalsNavigator} options={{
+                        tabBarIcon: ({focused}) => getTabIcon(focused, icons.PAW_OUTLINE),
+                    }}/>
+                )
+            }
+            {
+                isVet && (
+                    <Tab.Screen name={routes.CLINICS_NAVIGATOR} component={ClinicsNavigator} options={{
+                        tabBarIcon: ({focused}) => getTabIcon(focused, icons.FITNESS_OUTLINE),
+                    }}/>
+                )
+            }
         </Tab.Navigator>
     )
 }

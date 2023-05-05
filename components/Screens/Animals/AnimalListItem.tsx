@@ -1,11 +1,12 @@
 import {Card} from "components/Composition/Card";
 import {FC} from "react";
-import {StyleSheet, Text, TouchableWithoutFeedback, View} from "react-native";
+import {Text, TouchableWithoutFeedback, View} from "react-native";
 import {Animal} from "types/api/animal/types";
 import {Avatar} from "components/Composition/Avatar";
 import {useNavigation} from "@react-navigation/native";
 import {UserAnimalsScreenNavigationProps} from "types/Navigation/types";
 import icons from "themes/icons";
+import {listItemStyles} from "screens/utils/styles";
 
 interface Props {
     animal: Animal;
@@ -17,32 +18,16 @@ export const AnimalListItem: FC<Props> = ({animal}) => {
     return (
         <TouchableWithoutFeedback
             onPress={() => navigation.navigate('Edit Animal', {animalId: animal.id})}>
-            <View style={styles.container}>
+            <View style={listItemStyles.container}>
                 <Card>
-                    <View style={styles.innerContainer}>
+                    <View style={listItemStyles.innerContainer}>
                         <Avatar size='medium' url={animal?.profilePhotoUrl} icon={icons.PAW_OUTLINE}/>
-                        <Text style={styles.name}>{animal.name}</Text>
+                        <View style={listItemStyles.nameContainer}>
+                            <Text style={listItemStyles.name}>{animal.name}</Text>
+                        </View>
                     </View>
                 </Card>
             </View>
         </TouchableWithoutFeedback>
     )
 };
-
-const styles = StyleSheet.create({
-    container: {
-        height: 100,
-        width: '100%',
-        paddingHorizontal: 5
-    },
-    name: {
-        fontWeight: '500',
-        fontSize: 17,
-        marginLeft: 10
-    },
-    innerContainer: {
-        height: '100%',
-        flexDirection: 'row',
-        alignItems: 'center'
-    }
-});

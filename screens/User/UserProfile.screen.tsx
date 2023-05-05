@@ -14,11 +14,13 @@ import {UserScreenNavigationProps} from "types/Navigation/types";
 import * as SecureStore from "expo-secure-store";
 import {removeToken} from "store/auth/authSlice";
 import {buttonsTranslations} from "constants/translations/buttons.translations";
+import {hasVetRole} from "utils/hasVetRole";
 
 export const UserProfileScreen = () => {
     const user = useSelector((state: RootState) => state.user.currentUser) as User;
     const navigation = useNavigation<UserScreenNavigationProps>();
     const dispatch = useDispatch();
+    const isVet = hasVetRole(user);
 
     const onEditUserDetails = (): void => {
         navigation.navigate('Edit User');
@@ -43,8 +45,10 @@ export const UserProfileScreen = () => {
                     </View>
                 </TouchableWithoutFeedback>
                 <View style={styles.wideButtonsContainer}>
-                    <WideButton onPress={() => navigation.navigate('Edit User Address')}
-                                title={commonTranslations.ADDRESS} icon={icons.HOME_OUTLINE}/>
+                    {!isVet && (
+                        <WideButton onPress={() => navigation.navigate('Edit User Address')}
+                                    title={commonTranslations.ADDRESS} icon={icons.HOME_OUTLINE}/>
+                    )}
                     <WideButton onPress={onLogout}
                                 title={buttonsTranslations.LOGOUT} icon={icons.LOG_OUT_OUTLINE}/>
                 </View>

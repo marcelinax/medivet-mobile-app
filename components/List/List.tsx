@@ -8,7 +8,7 @@ import {setAnimalToUpdate} from "store/animal/animalSlice";
 import {useDispatch} from "react-redux";
 
 interface Props {
-    onFetch: (params: Record<string, any>) => Promise<any[]>;
+    onFetch: (params: Record<string, any>, id?: number) => Promise<any[]>;
     renderItem: ListRenderItem<any>;
     itemToUpdate?: any;
 }
