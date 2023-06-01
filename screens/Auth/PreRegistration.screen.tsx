@@ -4,11 +4,11 @@ import {StyleSheet, Text, View} from "react-native";
 import {commonTranslations} from "constants/translations/common.translations";
 import {useDispatch} from "react-redux";
 import {UserRoleType} from "types/api/user/types";
-import {registrationTranslations} from "constants/translations/screens/registration.translations";
 import colors from "themes/colors";
 import {setUserRole} from "store/user/userSlice";
 import {useNavigation} from "@react-navigation/native";
 import {PreRegistrationScreenNavigationProps} from "types/Navigation/types";
+import {otherTranslations} from "constants/translations/other.translations";
 
 export const PreRegistrationScreen = () => {
     const dispatch = useDispatch();
@@ -23,7 +23,7 @@ export const PreRegistrationScreen = () => {
         <DefaultLayout>
             <View style={styles.container}>
                 <Text style={styles.text}>
-                    {registrationTranslations.CHOOSE_ROLE}
+                    {otherTranslations.CHOOSE_ROLE}
                 </Text>
                 <View style={styles.buttonContainer}>
                     <Button title={commonTranslations.PATIENT} variant='outline'

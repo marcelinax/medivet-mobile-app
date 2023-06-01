@@ -13,5 +13,6 @@ export const inputsTranslations = {
     SINGLE_NAME: 'Imię',
     TYPE: 'Typ',
     BREED: 'Rasa',
-    COAT_COLOR: 'Umaszczenie'
+    COAT_COLOR: 'Umaszczenie',
+    SEARCH: 'Szukaj...'
 };

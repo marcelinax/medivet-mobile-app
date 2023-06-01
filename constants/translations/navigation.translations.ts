@@ -3,5 +3,6 @@ export const navigationTranslations = {
     USER_PROFILE: 'Profil',
     EDIT_USER_PROFILE: 'Edycja profilu',
     USER_ANIMALS: 'Moje zwierzęta',
-    NEW_ANIMAL: 'Dodaj zwierzę'
+    NEW_ANIMAL: 'Dodaj zwierzę',
+    YOUR_SPECIALIZATIONS: 'Twoje specializacje',
 }

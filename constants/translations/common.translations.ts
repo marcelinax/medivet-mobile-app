@@ -9,5 +9,6 @@ export const commonTranslations = {
     ANIMAL_FEMALE: 'Samica',
     EDIT: 'Edycja',
     PATIENT: 'Pacjent',
-    VET: 'Weterynarz'
+    VET: 'Weterynarz',
+    SPECIALIZATIONS: 'Specjalizacje',
 };
