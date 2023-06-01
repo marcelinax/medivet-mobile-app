@@ -1,11 +1,12 @@
 import {Button} from 'components/Buttons/Button';
 import React, {FC, useEffect, useRef, useState} from 'react';
-import {ActivityIndicator, Animated, ListRenderItem, Modal, StyleSheet, View} from 'react-native';
+import {Animated, ListRenderItem, Modal, StyleSheet, View} from 'react-native';
 import colors from 'themes/colors';
 import {SelectOptionProps} from 'types/components/Inputs/types';
 import {SelectOption} from './SelectOption';
 import {SELECT_OPTION_HEIGHT, SELECTED_OPTION_HEIGHT, TOOLBAR_HEIGHT} from './utils/constants';
 import {EmptyList} from "components/Composition/EmptyList";
+import {Loading} from "components/Composition/Loading";
 
 interface Props {
     options: SelectOptionProps[];
@@ -76,7 +77,7 @@ export const SelectOptions: FC<Props> = ({
     const renderFooter = (): JSX.Element => {
         if (loading) return (
             <View style={styles.footerContainer}>
-                <ActivityIndicator size="large" color={colors.GRAY_DARK}/>
+                <Loading/>
             </View>
         );
         return <></>;

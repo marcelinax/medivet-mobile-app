@@ -11,7 +11,6 @@ import apiErrors from 'constants/apiErrors';
 import {genderSelectOptions} from 'constants/selectOptions';
 import {buttonsTranslations} from 'constants/translations/buttons.translations';
 import {inputsTranslations} from 'constants/translations/inputs.translations';
-import {registrationTranslations} from 'constants/translations/screens/registration.translations';
 import {useErrorAlert} from 'hooks/Alerts/useErrorAlert';
 import React, {useState} from 'react';
 import {StyleSheet, Switch, Text, View} from 'react-native';
@@ -22,6 +21,7 @@ import {isAndroidPlatfrom} from 'utils/isAndroidPlatfrom';
 import {RegistrationScreenNavigationProps} from "types/Navigation/types";
 import {useSelector} from "react-redux";
 import {RootState} from "store/store";
+import {otherTranslations} from "constants/translations/other.translations";
 
 interface FormProps {
     email: string;
@@ -141,7 +141,7 @@ export const RegistrationForm = () => {
                         value={form.acceptTerms}/>
                     <Text
                         style={[styles.acceptTermsText, areAcceptTermsFieldHasError() ? styles.acceptTermsTextError : {}]}>
-                        {registrationTranslations.ACCEPT_TERMS}
+                        {otherTranslations.ACCEPT_TERMS}
                     </Text>
                 </View>
                 <LoadingButton variant='solid' title={buttonsTranslations.SIGN_UP} loading={loading}

@@ -12,5 +12,7 @@ export default {
     ADD_OUTLINE: 'add-outline' as 'add-outline',
     PAW_OUTLINE: 'paw-outline' as 'paw-outline',
     FITNESS_OUTLINE: 'fitness-outline' as 'fitness-outline',
-    BUSINESS_OUTLINE: 'business-outline' as 'business-outline'
+    BUSINESS_OUTLINE: 'business-outline' as 'business-outline',
+    MEDKIT_OUTLINE: 'medkit-outline' as 'medkit-outline',
+    CHECKMARK_OUTLINE: 'checkmark-outline' as 'checkmark-outline',
 };

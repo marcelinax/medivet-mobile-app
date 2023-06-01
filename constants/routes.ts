@@ -19,8 +19,10 @@ export default {
     USER: 'User' as keyof RootStackParamList,
     EDIT_USER: 'Edit User' as keyof RootStackParamList,
     EDIT_USER_ADDRESS: 'Edit User Address' as keyof RootStackParamList,
+    USER_SPECIALIZATIONS: 'User Specializations' as keyof RootStackParamList,
     CREATE_ANIMAL: 'Create Animal' as keyof RootStackParamList,
     USER_ANIMALS: 'User Animals' as keyof RootStackParamList,
     EDIT_ANIMAL: 'Edit Animal' as keyof RootStackParamList,
     VET_CLINICS: 'Vet Clinics' as keyof RootStackParamList,
+    MULTI_SELECT: 'Multi Select' as keyof RootStackParamList
 };
