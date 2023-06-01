@@ -1,11 +1,11 @@
 import {FC, useEffect, useState} from "react";
 import {useErrorAlert} from "hooks/Alerts/useErrorAlert";
 import {hasInternalError} from "../../api/error/services";
-import {ActivityIndicator, FlatList, ListRenderItem, StyleSheet, View} from "react-native";
-import colors from "themes/colors";
+import {FlatList, ListRenderItem, StyleSheet, View} from "react-native";
 import {EmptyList} from "components/Composition/EmptyList";
 import {setAnimalToUpdate} from "store/animal/animalSlice";
 import {useDispatch} from "react-redux";
+import {Loading} from "components/Composition/Loading";
 
 interface Props {
     onFetch: (params: Record<string, any>, id?: number) => Promise<any[]>;
@@ -64,7 +64,7 @@ export const List: FC<Props> = ({onFetch, renderItem, itemToUpdate}) => {
         }
     };
 
-    const drawFooter = (): JSX.Element => loading ? <ActivityIndicator size='large' color={colors.GRAY_DARK}/> : <></>;
+    const drawFooter = (): JSX.Element => loading ? <Loading/> : <></>;
 
     return (
         <>

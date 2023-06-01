@@ -1,18 +1,19 @@
 import images from 'constants/images';
-import { commonTranslations } from 'constants/translations/common.translations';
+import {commonTranslations} from 'constants/translations/common.translations';
 import React from 'react';
-import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import colors from 'themes/colors';
+import {Loading} from "components/Composition/Loading";
 
 export const GlobalLoader = () => {
     return (
         <View style={styles.logoContainer}>
             <Image
                 style={styles.logo}
-                source={{ uri: Image.resolveAssetSource(images.LOGO()).uri }}
+                source={{uri: Image.resolveAssetSource(images.LOGO()).uri}}
                 resizeMode='contain'
             />
-            <ActivityIndicator size='large' color={colors.GRAY_DARK} />
+            <Loading/>
             <Text style={styles.loadingText}>
                 {commonTranslations.LOADING}
             </Text>
