@@ -3,13 +3,15 @@ import authSlice from 'store/auth/authSlice';
 import layoutSlice from 'store//layout/layoutSlice';
 import userSlice from 'store/user/userSlice';
 import animalSlice from "store/animal/animalSlice";
+import multiSelectSlice from "store/multiSelect/multiSelectSlice";
 
 export const store = configureStore({
     reducer: {
         layout: layoutSlice,
         auth: authSlice,
         user: userSlice,
-        animal: animalSlice
+        animal: animalSlice,
+        multiSelect: multiSelectSlice
     }
 });
 

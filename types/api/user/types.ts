@@ -23,3 +23,8 @@ export interface User {
 }
 
 export type UserRoleType = 'patient' | 'vet';
+
+export interface VetSpecialization {
+    namePl: string;
+    id: number;
+}

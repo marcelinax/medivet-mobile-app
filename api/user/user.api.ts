@@ -1,5 +1,5 @@
 import {authClient, noAuthClient} from "api/services";
-import {RegistrationCredentials, User} from "types/api/user/types";
+import {RegistrationCredentials, User, VetSpecialization} from "types/api/user/types";
 
 class UserApi {
     static async registerUser(data: RegistrationCredentials): Promise<User> {
@@ -31,6 +31,14 @@ class UserApi {
     static async updateUser(data: User): Promise<User> {
         const res = await authClient.put('users/me', data);
         return res.data;
+    }
+
+    static async getVetSpecializations(params?: Record<string, any>): Promise<VetSpecialization[]> {
+        const res = await authClient.get('vet-specializations', {params});
+        return res.data.map((item: VetSpecialization) => ({
+            ...item,
+            label: item.namePl
+        }));
     }
 }
 

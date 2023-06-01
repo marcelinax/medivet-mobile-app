@@ -49,6 +49,10 @@ export const UserProfileScreen = () => {
                         <WideButton onPress={() => navigation.navigate('Edit User Address')}
                                     title={commonTranslations.ADDRESS} icon={icons.HOME_OUTLINE}/>
                     )}
+                    {isVet && (
+                        <WideButton onPress={() => navigation.navigate('User Specializations')}
+                                    title={commonTranslations.SPECIALIZATIONS} icon={icons.MEDKIT_OUTLINE}/>
+                    )}
                     <WideButton onPress={onLogout}
                                 title={buttonsTranslations.LOGOUT} icon={icons.LOG_OUT_OUTLINE}/>
                 </View>
