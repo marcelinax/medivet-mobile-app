@@ -10,6 +10,7 @@ import {RootState} from "store/store";
 import {List} from "components/List/List";
 import colors from "themes/colors";
 
+// dorobić na dole sticky button "continue/choose"
 export const MultiSelect = () => {
     const route = useRoute<MultiSelectScreenRouteProps>();
     const selectedOptions = useSelector((state: RootState) => state.multiSelect.selectedOptions);

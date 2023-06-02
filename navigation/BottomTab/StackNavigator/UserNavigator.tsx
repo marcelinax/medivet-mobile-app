@@ -34,7 +34,7 @@ export const UserNavigator = () => {
             {
                 isVet && (
                     <Stack.Screen name={routes.USER_SPECIALIZATIONS} component={UserSpecializationsScreen}
-                                  options={() => getDefaultScreenOptions(navigationTranslations.YOUR_SPECIALIZATIONS)}/>
+                                  options={() => getDefaultScreenOptions(navigationTranslations.USER_SPECIALIZATIONS)}/>
                 )
             }
             <Stack.Group screenOptions={({route}) => {

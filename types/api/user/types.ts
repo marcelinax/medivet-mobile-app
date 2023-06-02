@@ -20,11 +20,12 @@ export interface User {
     profilePhotoUrl?: string;
     phoneNumber?: string;
     address?: AddressApi;
+    specializations?: VetSpecialization[];
 }
 
 export type UserRoleType = 'patient' | 'vet';
 
 export interface VetSpecialization {
-    namePl: string;
+    name: string;
     id: number;
 }

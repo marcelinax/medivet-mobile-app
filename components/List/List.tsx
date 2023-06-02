@@ -111,7 +111,7 @@ export const List: FC<Props> = ({
     return (
         <>
             {drawErrorAlert()}
-            <View style={[listStyles.container, {backgroundColor: listBackground ?? ''}]}>
+            <View style={[listStyles.container]}>
                 <FlatList data={data} renderItem={renderItem}
                           ListHeaderComponent={withSearch ? headerComponent : <></>}
                           bounces={false}

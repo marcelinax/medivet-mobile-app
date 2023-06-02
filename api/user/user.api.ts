@@ -37,7 +37,7 @@ class UserApi {
         const res = await authClient.get('vet-specializations', {params});
         return res.data.map((item: VetSpecialization) => ({
             ...item,
-            label: item.namePl
+            label: item.name
         }));
     }
 }

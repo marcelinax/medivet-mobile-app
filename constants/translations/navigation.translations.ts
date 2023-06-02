@@ -4,5 +4,6 @@ export const navigationTranslations = {
     EDIT_USER_PROFILE: 'Edycja profilu',
     USER_ANIMALS: 'Moje zwierzęta',
     NEW_ANIMAL: 'Dodaj zwierzę',
-    YOUR_SPECIALIZATIONS: 'Twoje specializacje',
+    USER_SPECIALIZATIONS: 'Moje specializacje',
+    USER_CLINICS: 'Moje kliniki'
 }

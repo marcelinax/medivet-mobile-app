@@ -5,7 +5,8 @@ export const listItemStyles = StyleSheet.create({
     container: {
         height: 100,
         width: '100%',
-        paddingHorizontal: 5
+        paddingHorizontal: 5,
+        paddingTop: 1
     },
     name: {
         fontWeight: '500',
@@ -25,4 +26,6 @@ export const listItemStyles = StyleSheet.create({
     nameContainer: {
         marginLeft: 10
     }
-})
+});
+
+export const simpleListItemStyles = StyleSheet.create({});
