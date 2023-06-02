@@ -21,12 +21,16 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "store/store";
 import {setAnimalToUpdate} from "store/animal/animalSlice";
 import icons from "themes/icons";
+import {useNavigation} from "@react-navigation/native";
+import {EditAnimalScreenNavigationProps} from "types/Navigation/types";
+import {commonTranslations} from "constants/translations/common.translations";
 
 interface Props {
     animal?: Animal;
 }
 
 export const AnimalForm: FC<Props> = ({animal}) => {
+    const navigation = useNavigation<EditAnimalScreenNavigationProps>();
     const [errors, setErrors] = useState<FormError[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const {drawErrorAlert, handleErrorAlert} = useErrorAlert();
@@ -86,8 +90,12 @@ export const AnimalForm: FC<Props> = ({animal}) => {
             let res;
             if (animal?.id) {
                 res = await AnimalApi.updateAnimal(Number(animal?.id), form);
+                navigation.setOptions({
+                    headerTitle: `${commonTranslations.EDIT} "${res.name}"`
+                });
             } else {
                 res = await AnimalApi.createAnimal(form);
+                // navigate to preview
             }
             handleSuccessAlert();
             onSetAnimalToUpdate(res);

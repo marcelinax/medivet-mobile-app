@@ -37,7 +37,7 @@ export class AnimalApi {
     }
 
     static async getOwnerAnimals(params?: Record<string, any>): Promise<Animal[]> {
-        const res = await authClient.get('animals/search/my', {params});
+        const res = await authClient.get('animals/my', {params});
         return res.data;
     }
 

@@ -8,7 +8,7 @@ import {setShowSelectInputOptionsModal} from 'store/layout/layoutSlice';
 import colors from 'themes/colors';
 import icons from 'themes/icons';
 import {SelectOptionProps, SelectProps} from 'types/components/Inputs/types';
-import {getErrorMessage} from '../utils/services';
+import {getErrorMessage} from '../utils';
 import {getInputBorderRadius, getInputStylesDependingOnVariant, inputStyles} from '../utils/styles';
 import {SelectOptions} from './SelectOptions';
 
@@ -30,6 +30,7 @@ export const Select: FC<SelectProps> = ({
     // TO DO usprawnić wybieranie opcji
     // TO DO Ustawić zmianę opcji dopiero w momencie naciśnięcia ok
     // TO DO mozliwosc usuwania wybranej wartosci
+    // THING przerobić na wygląd multiselect?
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const dispatch = useDispatch();
     const [loading, setLoading] = useState<boolean>(false);
