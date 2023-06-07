@@ -8,7 +8,7 @@ import {navigationTranslations} from "constants/translations/navigation.translat
 
 export const ClinicsNavigator = () => {
     const Stack = createNativeStackNavigator<RootStackParamList>();
-// dodac u gory przycisk ołówka z mozliwocia edycji specializacji
+
     return (
         <Stack.Navigator screenOptions={{
             headerShown: false,

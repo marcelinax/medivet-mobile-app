@@ -7,6 +7,7 @@ import {Loading} from "components/Composition/Loading";
 import {TextInput} from "components/Inputs/TextInput";
 import {inputsTranslations} from "constants/translations/inputs.translations";
 import {listStyles} from "components/List/utils/styles";
+import {LoadingButton} from "components/Buttons/LoadingButton";
 
 interface Props {
     onFetch: (params: Record<string, any>, id?: number) => Promise<any[]>;
@@ -15,14 +16,19 @@ interface Props {
     onSuccessUpdatingItem?: () => void;
     withSearch?: boolean;
     separateOptions?: boolean;
-    listBackground?: string;
+    stickyFooterButtonTitle?: string;
+    stickyFooterButtonAction?: () => void;
+    stickyButtonLoading?: boolean;
 }
 
 export const List: FC<Props> = ({
                                     onFetch, renderItem, itemToUpdate,
                                     withSearch,
-                                    separateOptions, listBackground,
-                                    onSuccessUpdatingItem
+                                    separateOptions,
+                                    onSuccessUpdatingItem,
+                                    stickyFooterButtonTitle,
+                                    stickyFooterButtonAction,
+                                    stickyButtonLoading
                                 }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [offset, setOffset] = useState<number>(0);
@@ -112,19 +118,31 @@ export const List: FC<Props> = ({
         <>
             {drawErrorAlert()}
             <View style={[listStyles.container]}>
-                <FlatList data={data} renderItem={renderItem}
-                          ListHeaderComponent={withSearch ? headerComponent : <></>}
-                          bounces={false}
-                          ItemSeparatorComponent={itemSeparator}
-                          keyExtractor={(item) => item.id}
-                          ListEmptyComponent={emptyComponent}
-                          ListFooterComponent={footerComponent}
-                          showsVerticalScrollIndicator={false}
-                          onEndReachedThreshold={0.001}
-                          onEndReached={onFetchData}
-                          contentContainerStyle={{flexGrow: 1}}
-                          style={listStyles.list}
-                          stickyHeaderIndices={withSearch ? [0] : undefined}/>
+                <View
+                    style={stickyFooterButtonTitle && stickyFooterButtonAction ? listStyles.listContainer : listStyles.list}>
+                    <FlatList data={data}
+                              renderItem={renderItem}
+                              ListHeaderComponent={withSearch ? headerComponent : <></>}
+                              bounces={false}
+                              ItemSeparatorComponent={itemSeparator}
+                              keyExtractor={(item) => item.id}
+                              ListEmptyComponent={emptyComponent}
+                              ListFooterComponent={footerComponent}
+                              showsVerticalScrollIndicator={false}
+                              onEndReachedThreshold={0.001}
+                              onEndReached={onFetchData}
+                              contentContainerStyle={{flexGrow: 1}}
+                              style={listStyles.list}
+                              stickyHeaderIndices={withSearch ? [0] : undefined}/>
+                </View>
+                {
+                    stickyFooterButtonTitle && stickyFooterButtonAction && (
+                        <View style={listStyles.footerButtonContainer}>
+                            <LoadingButton loading={stickyButtonLoading} title={stickyFooterButtonTitle} variant='solid'
+                                           onPress={stickyFooterButtonAction}/>
+                        </View>
+                    )
+                }
             </View>
         </>
     )

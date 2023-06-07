@@ -16,4 +16,6 @@ export default {
     PHONENUMBER_MUST_BE_A_VALID_PHONE_NUMBER: 'Nieprawidłowy numer telefon',
     BREEDID_SHOULD_NOT_BE_EMPTY: 'Wybierz rasę',
     TYPE_SHOULD_NOT_BE_EMPTY: 'Wybierz typ',
-};
+    SPECIALIZATIONIDS_SHOULD_NOT_BE_EMPTY: 'Musisz wybrać przynajmniej jedną specjalizację',
+    CANNOT_REMOVE_VET_SPECIALIZATION_WHICH_IS_ALREADY_IN_USE: 'Nie możesz usunąć specjalizacji, która przypisana jest do jednej z Twoich klinik',
+} as Record<string, string>;

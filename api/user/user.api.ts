@@ -40,6 +40,11 @@ class UserApi {
             label: item.name
         }));
     }
+
+    static async updateUserVetSpecializations(specializationIds: string[]): Promise<User> {
+        const res = await authClient.put('users/me/vet-specializations', {specializationIds});
+        return res.data;
+    }
 }
 
 export {UserApi};

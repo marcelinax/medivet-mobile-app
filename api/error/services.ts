@@ -5,7 +5,7 @@ const parseErrorMessage = (errorMessage: string): string => {
     return words.map(word => word.toUpperCase()).join('_');
 };
 
-const getParsedErrors = (errors: Error[]): Error[] => {
+export const getParsedErrors = (errors: Error[]): Error[] => {
     const newErrors: Error[] = [];
     errors?.filter(err => err)?.map(err => {
         let newError = err;

@@ -23,23 +23,8 @@ export type RegistrationScreenNavigationProps = NativeStackNavigationProp<RootSt
 export type PreRegistrationScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Pre Registration'>;
 export type EditAnimalScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Edit Animal'>;
 export type UserAnimalsScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'User Animals'>;
-export type CreateAnimalScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Create Animal'>;
-export type EditUserAddressScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Edit User Address'>;
-export type EditUserScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Edit User'>;
 export type UserScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'User'>;
-export type UserSpecializationsScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'User Specializations'>;
-export type HomeScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 export type VetClinicsScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 export type MultiSelectScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Multi Select'>;
 
-export type LoginScreenRouteProps = RouteProp<RootStackParamList, 'Login'>;
-export type RegistrationScreenRouteProps = RouteProp<RootStackParamList, 'Registration'>;
 export type EditAnimalScreenRouteProps = RouteProp<RootStackParamList, 'Edit Animal'>;
-export type UserAnimalsScreenRouteProps = RouteProp<RootStackParamList, 'User Animals'>;
-export type CreateAnimalScreenRouteProps = RouteProp<RootStackParamList, 'Create Animal'>;
-export type EditUserAddressScreenRouteProps = RouteProp<RootStackParamList, 'Edit User Address'>;
-export type EditUserScreenRouteProps = RouteProp<RootStackParamList, 'Edit User'>;
-export type UserScreenRouteProps = RouteProp<RootStackParamList, 'User'>;
-export type HomeScreenRouteProps = RouteProp<RootStackParamList, 'Home'>;
-export type MultiSelectScreenRouteProps = RouteProp<RootStackParamList, 'Multi Select'>;
-

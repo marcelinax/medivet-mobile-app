@@ -15,5 +15,13 @@ export const listStyles = StyleSheet.create({
     },
     list: {
         flex: 1
+    },
+    listContainer: {
+        flex: 0.9
+    },
+    footerButtonContainer: {
+        flex: 0.1,
+        marginTop: 10,
+        paddingHorizontal: 10
     }
 })

@@ -1,27 +1,26 @@
 import {ListRenderItem} from "react-native";
 import {SelectOptionProps} from "types/components/Inputs/types";
 import {MultiSelectOption} from "components/Inputs/MultiSelect/MultiSelectOption";
-import {useEffect, useState} from "react";
-import {useRoute} from "@react-navigation/native";
-import {MultiSelectScreenRouteProps} from "types/Navigation/types";
-import {useDispatch, useSelector} from "react-redux";
-import {setSelectedOptions} from "store/multiSelect/multiSelectSlice";
-import {RootState} from "store/store";
+import {useRef, useState} from "react";
+import {useNavigation} from "@react-navigation/native";
+import {MultiSelectScreenNavigationProps} from "types/Navigation/types";
 import {List} from "components/List/List";
-import colors from "themes/colors";
+import {buttonsTranslations} from "constants/translations/buttons.translations";
+import {getParsedErrors} from "../../../api/error/services";
+import {useErrorAlert} from "hooks/Alerts/useErrorAlert";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "store/store";
+import {setMultiSelectButtonLoading} from "store/multiSelect/multiSelectSlice";
+import errorsTranslations from "constants/translations/errors.translations";
 
-// dorobić na dole sticky button "continue/choose"
 export const MultiSelect = () => {
-    const route = useRoute<MultiSelectScreenRouteProps>();
-    const selectedOptions = useSelector((state: RootState) => state.multiSelect.selectedOptions);
+    const multiSelectState = useSelector((state: RootState) => state.multiSelect);
+    const navigation = useNavigation<MultiSelectScreenNavigationProps>();
+    const selectedOptions = [...multiSelectState.selectedOptions];
     const [selectedOptionIds, setSelectedOptionIds] = useState<string[]>([...selectedOptions.map(({id}) => id)]);
+    const {handleErrorAlert, drawErrorAlert} = useErrorAlert();
+    const errorMessage = useRef<string>('');
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        return () => {
-            dispatch(setSelectedOptions([]))
-        };
-    }, []);
 
     const onChangeSelectedOptions = (newOptionId: string): void => {
         let newSelectedOptions = [...selectedOptionIds];
@@ -34,6 +33,22 @@ export const MultiSelect = () => {
         setSelectedOptionIds(newSelectedOptions);
     };
 
+    const onChoose = async (): Promise<void> => {
+        dispatch(setMultiSelectButtonLoading(true));
+        try {
+            await multiSelectState.onChoose(selectedOptionIds);
+            navigation.goBack();
+        } catch (err: any) {
+            const errs = [err?.response?.data];
+            const errors = getParsedErrors(errs);
+            if (errors.length > 0) {
+                handleErrorAlert();
+                errorMessage.current = errors[0].message;
+            }
+        }
+        dispatch(setMultiSelectButtonLoading(false));
+    };
+
     const isOptionSelected = (optionId: string): boolean => selectedOptionIds.includes(optionId);
 
     const renderOption: ListRenderItem<SelectOptionProps> = ({item}) => <MultiSelectOption
@@ -42,5 +57,14 @@ export const MultiSelect = () => {
         label={item.label}
         id={item.id}/>;
 
-    return <List onFetch={route.params.onFetch} renderItem={renderOption} withSearch listBackground={colors.WHITE}/>
+    return (
+        <>
+            {drawErrorAlert(errorsTranslations[errorMessage.current])}
+            <List onFetch={multiSelectState.fetch} renderItem={renderOption} withSearch
+                  stickyFooterButtonAction={onChoose}
+                  stickyButtonLoading={multiSelectState.loading}
+                  stickyFooterButtonTitle={buttonsTranslations.CHOOSE}
+            />
+        </>
+    )
 }

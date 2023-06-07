@@ -15,4 +15,5 @@ export default {
     BUSINESS_OUTLINE: 'business-outline' as 'business-outline',
     MEDKIT_OUTLINE: 'medkit-outline' as 'medkit-outline',
     CHECKMARK_OUTLINE: 'checkmark-outline' as 'checkmark-outline',
+    PENCIL_OUTLINE: 'pencil-outline' as 'pencil-outline',
 };

@@ -4,6 +4,7 @@ import layoutSlice from 'store//layout/layoutSlice';
 import userSlice from 'store/user/userSlice';
 import animalSlice from "store/animal/animalSlice";
 import multiSelectSlice from "store/multiSelect/multiSelectSlice";
+import thunk from "redux-thunk";
 
 export const store = configureStore({
     reducer: {
@@ -12,7 +13,8 @@ export const store = configureStore({
         user: userSlice,
         animal: animalSlice,
         multiSelect: multiSelectSlice
-    }
+    },
+    middleware: [thunk]
 });
 
 export type RootState = ReturnType<typeof store.getState>;
