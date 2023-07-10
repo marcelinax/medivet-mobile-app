@@ -1,4 +1,5 @@
-import {TouchableHighlightProps, TouchableWithoutFeedbackProps} from "react-native";
+import { TouchableHighlightProps, TouchableWithoutFeedbackProps } from 'react-native';
+import { ReactNode } from 'react';
 
 export type ButtonVariant = 'solid' | 'outline' | 'link';
 
@@ -31,5 +32,20 @@ export interface ButtonLoadingProps extends TouchableHighlightProps {
 export interface ButtonIconProps extends TouchableWithoutFeedbackProps {
     icon: any;
     size: ButtonIconSize;
+    color?: string;
+}
+
+export interface SwipeButtonProps {
+    children: ReactNode;
+    leftActions?: SwipeButtonActionProps[];
+    rightActions?: SwipeButtonActionProps[];
+}
+
+export interface SwipeButtonActionProps {
+    id: string;
+    backgroundColor: string;
+    onPress: () => void;
+    icon: any;
+    visible?: boolean;
     color?: string;
 }

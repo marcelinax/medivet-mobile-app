@@ -2,12 +2,22 @@ import {AppWrapper} from 'components/App/AppWrapper';
 import {Provider} from 'react-redux';
 import {store} from 'store/store';
 import {ConfirmationAlertContextProvider} from "hooks/Alerts/useConfirmationAlert";
+import {SwipeButtonContext} from "./contexts/buttons/SwipeButtonContext";
+import {useRef} from "react";
+import Swipeable from "react-native-gesture-handler/Swipeable";
 
 export default function App() {
+    const currentSwipeButton = useRef<Swipeable | null>(null);
+    
     return (
         <Provider store={store}>
             <ConfirmationAlertContextProvider>
-                <AppWrapper/>
+                <SwipeButtonContext.Provider value={{
+                    currentSwipeButton,
+                    setCurrentSwipeButton: (swipeButton) => currentSwipeButton.current = swipeButton
+                }}>
+                    <AppWrapper/>
+                </SwipeButtonContext.Provider>
             </ConfirmationAlertContextProvider>
         </Provider>
     );
