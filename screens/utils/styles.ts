@@ -24,8 +24,26 @@ export const listItemStyles = StyleSheet.create({
         alignItems: 'center'
     },
     nameContainer: {
-        marginLeft: 10
+        marginHorizontal: 10
     }
 });
 
-export const simpleListItemStyles = StyleSheet.create({});
+export const simpleListItemStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        height: 'auto',
+    },
+    innerContainer: {
+        paddingVertical: 30,
+        height: '100%',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    nameContainer: {
+        marginHorizontal: 10
+    },
+    name: {
+        fontWeight: '500',
+        fontSize: 17,
+    },
+});

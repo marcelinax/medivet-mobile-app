@@ -4,11 +4,17 @@ import colors from "themes/colors";
 
 interface Props {
     children: JSX.Element;
+    withoutHorizontalPadding?: boolean;
+    withoutVerticalPadding?: boolean;
 }
 
-export const ListLayout: FC<Props> = ({children}) => {
+export const ListLayout: FC<Props> = ({children, withoutHorizontalPadding, withoutVerticalPadding}) => {
     return (
-        <View style={styles.container}>
+        <View style={[styles.container,
+            {
+                paddingHorizontal: !withoutHorizontalPadding ? 10 : 0,
+                paddingVertical: !withoutVerticalPadding ? 20 : 0
+            }]}>
             {children}
         </View>
     )
@@ -17,8 +23,6 @@ export const ListLayout: FC<Props> = ({children}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingVertical: 20,
-        paddingHorizontal: 10,
         backgroundColor: colors.WHITE
     }
 })

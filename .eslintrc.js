@@ -18,7 +18,7 @@ module.exports = {
       'error',
       {
         ArrayExpression: 'consistent',
-        ArrayPattern: {minItems: 2},
+        ArrayPattern: {minItems: 3},
       },
     ],
     'object-property-newline': [

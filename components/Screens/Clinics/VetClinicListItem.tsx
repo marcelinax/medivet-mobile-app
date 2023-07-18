@@ -1,7 +1,7 @@
 import {FC} from "react";
 import {Clinic} from "types/api/clinic/types";
 import {useNavigation} from "@react-navigation/native";
-import {VetClinicsScreenNavigationProps} from "types/Navigation/types";
+import {VetClinicScreenNavigationProps} from "types/Navigation/types";
 import {Text, TouchableWithoutFeedback, View} from "react-native";
 import {Card} from "components/Composition/Card";
 import {Avatar} from "components/Composition/Avatar";
@@ -14,12 +14,11 @@ interface Props {
 }
 
 export const VetClinicListItem: FC<Props> = ({clinic}) => {
-    const navigation = useNavigation<VetClinicsScreenNavigationProps>();
+    const navigation = useNavigation<VetClinicScreenNavigationProps>();
 
     return (
         <TouchableWithoutFeedback
-            onPress={() => {
-            }}>
+            onPress={() => navigation.navigate('Vet Clinic', {clinicId: clinic.id})}>
             <View style={listItemStyles.container}>
                 <Card>
                     <View style={listItemStyles.innerContainer}>

@@ -36,6 +36,12 @@
       ],
       "contexts/*": [
         "./contexts/*"
+      ],
+      "api/*": [
+        "./api/*"
+      ],
+      "navigation/*": [
+        "./navigation/*"
       ]
     }
   }

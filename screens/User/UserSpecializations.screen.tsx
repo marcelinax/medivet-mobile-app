@@ -3,7 +3,7 @@ import {UserSpecializationList} from "components/Screens/User/UserSpecialization
 
 export const UserSpecializationsScreen = () => {
     return (
-        <ListLayout>
+        <ListLayout withoutHorizontalPadding withoutVerticalPadding>
             <UserSpecializationList/>
         </ListLayout>
     )
