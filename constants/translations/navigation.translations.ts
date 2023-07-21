@@ -8,4 +8,5 @@ export const navigationTranslations = {
   USER_CLINICS: 'Moje kliniki',
   CLINIC: 'Klinika',
   CLINIC_AVAILABILITIES: 'Dostępności',
+  ADD_CLINIC: 'Dodaj klinikę',
 };

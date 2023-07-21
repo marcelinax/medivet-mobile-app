@@ -1,10 +1,8 @@
-import {ListLayout} from "layouts/List.layout";
-import {VetClinicList} from "components/Screens/Clinics/VetClinicList";
+import { ListLayout } from 'layouts/List.layout';
+import { VetClinicList } from 'components/Screens/Clinics/UserClinics/VetClinicList';
 
-export const VetClinicsScreen = () => {
-    return (
-        <ListLayout>
-            <VetClinicList/>
-        </ListLayout>
-    )
-}
+export const VetClinicsScreen = () => (
+  <ListLayout>
+    <VetClinicList />
+  </ListLayout>
+);

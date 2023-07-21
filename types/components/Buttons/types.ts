@@ -12,7 +12,6 @@ export type ButtonIconSize = 'large' | 'medium' | 'small';
 export interface ButtonProps extends TouchableHighlightProps {
   title: string;
   variant: ButtonVariant;
-  icon?: any;
   color?: ButtonColor;
   disabled?: boolean;
   leftIcon?: any;

@@ -12,7 +12,9 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'react'],
   rules: {
-    '@typescript-eslint/no-undef': 'error',
+    '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/explicit-member-accessibility': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     'func-names': 'off',
     'array-element-newline': [
       'error',
@@ -57,9 +59,28 @@ module.exports = {
     'consistent-return': 'off',
     'import/prefer-default-export': 'off',
     'array-bracket-newline': ['error', {multiline: true}],
-    '@typescript-eslint/no-implicit-any-catch': 'error',
     'react/function-component-definition': 'off',
     'react/require-default-props': 'off',
-    '@typescript-eslint/no-explicit-any': 'off'
+    'react/jsx-props-no-spreading': 'off',
+    'curly': [
+      'error',
+      'multi-line'
+    ],
+    'array-bracket-spacing': [
+      'error',
+      'always'
+    ],
+    'no-multiple-empty-lines': [
+      'error',
+      {
+        'max': 1
+      }
+    ],
+    'no-undef': 'off',
+    'react/jsx-no-useless-fragment': 'off'
+  },
+  globals: {
+    React: true,
+    JSX: true
   },
 };

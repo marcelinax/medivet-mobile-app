@@ -23,6 +23,7 @@ export type RootStackParamList = {
   'Multi Select': MultiSelectScreenParams;
   'Vet Clinic': VetClinicScreenParams;
   'Vet Clinic Availabilities': VetClinicAvailabilitiesScreenParams;
+  'Add Vet Clinic': undefined;
 }
 
 export type LoginScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Login'>;
@@ -34,6 +35,7 @@ export type UserScreenNavigationProps = NativeStackNavigationProp<RootStackParam
 export type VetClinicScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Vet Clinic'>;
 export type VetClinicAvailabilitiesScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Vet Clinic Availabilities'>;
 export type MultiSelectScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Multi Select'>;
+export type AddVetClinicScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Add Vet Clinic'>;
 
 export type EditAnimalScreenRouteProps = RouteProp<RootStackParamList, 'Edit Animal'>;
 export type VetClinicScreenRouteProps = RouteProp<RootStackParamList, 'Vet Clinic'>;

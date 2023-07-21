@@ -1,21 +1,29 @@
-import { SuccessAlert } from "components/Alerts/SuccessAlert";
-import { useState } from "react";
+import { SuccessAlert } from 'components/Alerts/SuccessAlert';
+import { useState } from 'react';
 
-export const useSuccessAlert = () => {
-    const [show, setShow] = useState<boolean>(false);
+export const useSuccessAlert = (additionalHideAction?: () => void) => {
+  const [ show, setShow ] = useState<boolean>(false);
 
-    const drawSuccessAlert = (title?: string, message?: string): JSX.Element => (
-        <SuccessAlert isShown={show} onHide={() => setShow(false)}
-            title={title} message={message}
-        />
-    );
+  const handleOnHideSuccessAlert = (): void => {
+    if (additionalHideAction) additionalHideAction();
+    setShow(false);
+  };
 
-    const handleSuccessAlert = () => {
-        !show && setShow(true);
-    };
+  const drawSuccessAlert = (title?: string, message?: string): JSX.Element => (
+    <SuccessAlert
+      isShown={show}
+      onHide={handleOnHideSuccessAlert}
+      title={title}
+      message={message}
+    />
+  );
 
-    return {
-        drawSuccessAlert,
-        handleSuccessAlert
-    };
+  const handleSuccessAlert = (): void => {
+    if (!show) setShow(true);
+  };
+
+  return {
+    drawSuccessAlert,
+    handleSuccessAlert,
+  };
 };

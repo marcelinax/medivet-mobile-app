@@ -7,8 +7,8 @@ import { SwipeButton } from 'components/Buttons/SwipeButton/SwipeButton';
 import { BreakLine } from 'components/Composition/BreakLine';
 
 interface Props {
-    vetSpecialization: VetSpecialization;
-    actions?: SwipeButtonActionProps[];
+  vetSpecialization: VetSpecialization;
+  actions?: SwipeButtonActionProps[];
 }
 
 // przekazać opcjonalne akcji wykorzystujaca swipeable action button
@@ -20,7 +20,6 @@ export const UserSpecializationListItem: FC<Props> = ({ vetSpecialization, actio
   >
     <SwipeButton
       rightActions={actions}
-      key={1}
     >
       <View style={simpleListItemStyles.innerContainer}>
         <View style={simpleListItemStyles.nameContainer}>

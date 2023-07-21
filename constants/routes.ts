@@ -27,4 +27,5 @@ export default {
   MULTI_SELECT: 'Multi Select' as keyof RootStackParamList,
   VET_CLINIC: 'Vet Clinic' as keyof RootStackParamList,
   VET_CLINIC_AVAILABILITIES: 'Vet Clinic Availabilities' as keyof RootStackParamList,
+  ADD_VET_CLINIC: 'Add Vet Clinic' as keyof RootStackParamList,
 };
