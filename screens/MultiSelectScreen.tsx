@@ -1,3 +1,3 @@
-import {MultiSelect} from "components/Inputs/MultiSelect/MultiSelect";
+import { MultiSelect } from 'components/Inputs/SelectInput/MultiSelect';
 
-export const MultiSelectScreen = () => <MultiSelect/>;
+export const MultiSelectScreen = () => <MultiSelect />;

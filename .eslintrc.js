@@ -77,7 +77,9 @@ module.exports = {
       }
     ],
     'no-undef': 'off',
-    'react/jsx-no-useless-fragment': 'off'
+    'react/jsx-no-useless-fragment': 'off',
+    'no-param-reassign': 'off',
+    'no-nested-ternary': 'off'
   },
   globals: {
     React: true,

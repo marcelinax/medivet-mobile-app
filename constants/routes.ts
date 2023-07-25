@@ -25,7 +25,10 @@ export default {
   EDIT_ANIMAL: 'Edit Animal' as keyof RootStackParamList,
   VET_CLINICS: 'Vet Clinics' as keyof RootStackParamList,
   MULTI_SELECT: 'Multi Select' as keyof RootStackParamList,
+  SELECT: 'Select' as keyof RootStackParamList,
   VET_CLINIC: 'Vet Clinic' as keyof RootStackParamList,
   VET_CLINIC_AVAILABILITIES: 'Vet Clinic Availabilities' as keyof RootStackParamList,
   ADD_VET_CLINIC: 'Add Vet Clinic' as keyof RootStackParamList,
+  CREATE_VET_CLINIC_AVAILABILITY: 'Create Vet Clinic Availability' as keyof RootStackParamList,
+  CREATE_VET_CLINIC_AVAILABILITY_RECEPTION_HOURS: 'Create Vet Clinic Availability Reception Hours' as keyof RootStackParamList,
 };

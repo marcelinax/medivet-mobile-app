@@ -3,7 +3,7 @@ import { RouteProp } from '@react-navigation/native';
 import {
   EditAnimalScreenParams,
   MultiSelectScreenParams,
-  VetClinicAvailabilitiesScreenParams,
+  SelectScreenParams,
   VetClinicScreenParams,
 } from 'types/Navigation/screenParamsTypes';
 
@@ -22,8 +22,11 @@ export type RootStackParamList = {
   'User Specializations': undefined;
   'Multi Select': MultiSelectScreenParams;
   'Vet Clinic': VetClinicScreenParams;
-  'Vet Clinic Availabilities': VetClinicAvailabilitiesScreenParams;
+  'Vet Clinic Availabilities': undefined;
   'Add Vet Clinic': undefined;
+  'Select': SelectScreenParams;
+  'Create Vet Clinic Availability': undefined;
+  'Create Vet Clinic Availability Reception Hours': undefined;
 }
 
 export type LoginScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Login'>;
@@ -35,8 +38,13 @@ export type UserScreenNavigationProps = NativeStackNavigationProp<RootStackParam
 export type VetClinicScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Vet Clinic'>;
 export type VetClinicAvailabilitiesScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Vet Clinic Availabilities'>;
 export type MultiSelectScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Multi Select'>;
+export type SelectScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Select'>;
 export type AddVetClinicScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Add Vet Clinic'>;
+export type CreateVetClinicAvailabilityScreenNavigationProps = NativeStackNavigationProp<RootStackParamList,
+  'Create Vet Clinic Availability'>;
+export type CreateVetClinicAvailabilityReceptionHoursScreenNavigationProps = NativeStackNavigationProp<RootStackParamList,
+  'Create Vet Clinic Availability Reception Hours'>;
 
 export type EditAnimalScreenRouteProps = RouteProp<RootStackParamList, 'Edit Animal'>;
 export type VetClinicScreenRouteProps = RouteProp<RootStackParamList, 'Vet Clinic'>;
-export type VetClinicAvailabilitiesScreenRouteProps = RouteProp<RootStackParamList, 'Vet Clinic Availabilities'>;
+export type SelectScreenRouteProps = RouteProp<RootStackParamList, 'Select'>;

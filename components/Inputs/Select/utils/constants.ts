@@ -1,4 +1,0 @@
-export const SELECT_OPTION_HEIGHT = 25;
-export const SELECTED_OPTION_HEIGHT = 41;
-export const TOOLBAR_HEIGHT = 46;
-export const SELECT_OPTIONS_MODAL_HEIGHT = 250;

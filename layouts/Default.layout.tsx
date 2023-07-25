@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import colors from 'themes/colors';
-import { isAndroidPlatfrom } from 'utils/isAndroidPlatfrom';
+import { isAndroidPlatform } from 'utils/isAndroidPlatfrom';
 
 interface Props {
   children: JSX.Element;
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexGrow: 1,
-    paddingVertical: isAndroidPlatfrom() ? 30 : 15,
+    paddingVertical: isAndroidPlatform() ? 30 : 15,
     paddingHorizontal: 30,
   },
 });

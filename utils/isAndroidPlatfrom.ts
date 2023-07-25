@@ -1,5 +1,3 @@
-import { Platform } from "react-native";
+import { Platform } from 'react-native';
 
-export const isAndroidPlatfrom = () => {
-    return Platform.OS === 'android';
-};
+export const isAndroidPlatform = () => Platform.OS === 'android';

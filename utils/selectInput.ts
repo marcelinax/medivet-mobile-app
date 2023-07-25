@@ -1,8 +1,10 @@
-import {SelectOptionProps} from "types/components/Inputs/types";
+import { SelectOptionProps } from 'types/components/Inputs/types';
 
-export const parseDataToSelectOptions = (data: Record<string, any>, fieldAsLabel: string, fieldAsId: string): SelectOptionProps[] => {
-    return data.map((item: Record<string, any>) => ({
-        id: item[fieldAsId],
-        label: item[fieldAsLabel],
-    }));
-};
+export const parseDataToSelectOptions = (
+  data: Record<string, any>,
+  fieldAsLabel: string,
+  fieldAsId: string,
+): SelectOptionProps[] => data.map((item: Record<string, any>) => ({
+  id: item[fieldAsId].toString(),
+  label: item[fieldAsLabel],
+}));

@@ -9,4 +9,6 @@ export const navigationTranslations = {
   CLINIC: 'Klinika',
   CLINIC_AVAILABILITIES: 'Dostępności',
   ADD_CLINIC: 'Dodaj klinikę',
+  CREATE_AVAILABILITY: 'Utwórz dostępność',
+  CREATE_AVAILABILITY_RECEPTION_HOURS: 'Utwórz godziny przyjmowania',
 };

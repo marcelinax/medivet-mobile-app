@@ -1,10 +1,8 @@
-import { AnimalForm } from "components/Screens/Animals/AnimalForm";
-import { DefaultLayout } from "layouts/Default.layout";
+import { AnimalForm } from 'components/Forms/AnimalForm';
+import { DefaultLayout } from 'layouts/Default.layout';
 
-export const CreateAnimalScreen = () => {
-    return (
-        <DefaultLayout>
-            <AnimalForm />
-        </DefaultLayout>
-    );
-};
+export const CreateAnimalScreen = () => (
+  <DefaultLayout>
+    <AnimalForm />
+  </DefaultLayout>
+);
