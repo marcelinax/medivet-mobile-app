@@ -4,7 +4,6 @@ import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { AvatarInput } from 'components/Inputs/AvatarInput';
 import { DatePicker } from 'components/Inputs/DatePicker';
 import { PhoneNumberInput } from 'components/Inputs/PhoneNumberInput';
-import { Select } from 'components/Inputs/SelectInput/Select';
 import { TextInput } from 'components/Inputs/TextInput';
 import apiErrors from 'constants/apiErrors';
 import { genderSelectOptions } from 'constants/selectOptions';
@@ -14,7 +13,7 @@ import { inputsTranslations } from 'constants/translations/inputs.translations';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 import { DefaultLayout } from 'layouts/Default.layout';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
@@ -22,15 +21,38 @@ import { setCurrentUser } from 'store/user/userSlice';
 import { FormError } from 'types/api/error/types';
 import { User } from 'types/api/user/types';
 import { appendFileToFormData } from 'utils/appendFileToFormData';
+import { SelectId } from 'constants/enums/selectId.enum';
+import { SelectInput } from 'components/Inputs/SelectInput/SelectInput';
+import { AddressApi } from 'types/api/types';
+import { SelectOptionProps } from 'types/components/Inputs/types';
+import { removeSingleSelect } from 'store/select/selectSlice';
+
+interface FormProps {
+  name: string;
+  birthDate: string;
+  gender: SelectOptionProps;
+  phoneNumber?: string;
+  address?: AddressApi;
+  profilePhotoUrl?: string;
+}
 
 export const EditUserProfileScreen = () => {
   const user = useSelector((state: RootState) => state.user.currentUser) as User;
-  const [ form, setForm ] = useState<User>(user);
+  const [ form, setForm ] = useState<FormProps>({
+    ...user,
+    gender: genderSelectOptions.find((gender) => gender.id === user.gender) || genderSelectOptions[0],
+  });
   const [ errors, setErrors ] = useState<FormError[]>([]);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
   const [ loading, setLoading ] = useState<boolean>(false);
   const dispatch = useDispatch();
+
+  useEffect(() => () => handleClearSelectInputs(), []);
+
+  const handleClearSelectInputs = () => {
+    dispatch(removeSingleSelect(SelectId.GENDER));
+  };
 
   const onChangeInput = (field: string, newValue: any): void => {
     setForm({
@@ -43,13 +65,18 @@ export const EditUserProfileScreen = () => {
     onChangeInput('birthDate', e);
   };
 
+  const getParsedBasicInformationData = () => ({
+    ...user,
+    gender: form.gender.id,
+  });
+
   const onChangeBasicInformation = async (): Promise<void> => {
     setLoading(true);
     try {
       setErrors([]);
 
       if (!form.address) delete form.address;
-      const res = await UserApi.updateUser(form);
+      const res = await UserApi.updateUser(getParsedBasicInformationData());
       handleSuccessAlert();
       dispatch(setCurrentUser(res));
     } catch (err: any) {
@@ -138,13 +165,15 @@ export const EditUserProfileScreen = () => {
             />
           </View>
           <View style={styles.inputMargin}>
-            <Select
-              errors={[]}
-              value={form.gender}
+            <SelectInput
+              onChoose={(gender) => onChangeInput('gender', gender)}
               variant="underline"
-              label={inputsTranslations.GENDER}
               options={genderSelectOptions}
-              onChange={(gender) => onChangeInput('gender', gender)}
+              label={inputsTranslations.GENDER}
+              errors={[]}
+              id={SelectId.GENDER}
+              defaultValue={form.gender}
+              selectScreenHeaderTitle={inputsTranslations.GENDER}
             />
           </View>
           <View style={styles.inputMargin}>

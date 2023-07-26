@@ -3,4 +3,6 @@ export enum SelectId {
   ANIMAL_BREED = 'animalBreed',
   ANIMAL_GENDER = 'animalGender',
   ANIMAL_COAT_COLOR = 'animalCoatColor',
+  VET_SPECIALIZATION = 'vetSpecialization',
+  GENDER = 'gender'
 }

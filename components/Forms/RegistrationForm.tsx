@@ -5,31 +5,34 @@ import { Button } from 'components/Buttons/Button';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { DatePicker } from 'components/Inputs/DatePicker';
 import { PasswordInput } from 'components/Inputs/PasswordInput';
-import { Select } from 'components/Inputs/SelectInput/Select';
 import { TextInput } from 'components/Inputs/TextInput';
 import apiErrors from 'constants/apiErrors';
 import { genderSelectOptions } from 'constants/selectOptions';
 import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import { inputsTranslations } from 'constants/translations/inputs.translations';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet, Switch, Text, View,
 } from 'react-native';
 import colors from 'themes/colors';
 import { FormError } from 'types/api/error/types';
-import { RegistrationCredentials, UserRoleType } from 'types/api/user/types';
+import { UserRoleType } from 'types/api/user/types';
 import { RegistrationScreenNavigationProps } from 'types/Navigation/types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { otherTranslations } from 'constants/translations/other.translations';
 import { isAndroidPlatform } from 'utils/isAndroidPlatfrom';
+import { SelectId } from 'constants/enums/selectId.enum';
+import { SelectInput } from 'components/Inputs/SelectInput/SelectInput';
+import { removeSingleSelect } from 'store/select/selectSlice';
+import { SelectOptionProps } from 'types/components/Inputs/types';
 
 interface FormProps {
   email: string;
   password: string;
   name: string;
-  gender: string;
+  gender: SelectOptionProps;
   birthDate?: Date;
   acceptTerms: boolean;
   role: UserRoleType;
@@ -41,15 +44,22 @@ export const RegistrationForm = () => {
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const navigation = useNavigation<RegistrationScreenNavigationProps>();
   const selectedUserRole = useSelector((state: RootState) => state.user.userRole) as UserRoleType;
+  const dispatch = useDispatch();
   const [ form, setForm ] = useState<FormProps>({
     email: '',
     password: '',
     name: '',
-    gender: genderSelectOptions[0].id,
+    gender: genderSelectOptions[0],
     birthDate: undefined,
     acceptTerms: false,
     role: selectedUserRole,
   });
+
+  useEffect(() => () => handleClearSelectInputs(), []);
+
+  const handleClearSelectInputs = () => {
+    dispatch(removeSingleSelect(SelectId.GENDER));
+  };
 
   const onChange = (field: string, newValue: any): void => {
     setForm({
@@ -62,10 +72,16 @@ export const RegistrationForm = () => {
     navigation.navigate('Login');
   };
 
+  const getParsedFormData = () => ({
+    ...form,
+    gender: form.gender.id,
+  });
+
   const onSignUp = async (): Promise<void> => {
     setLoading(true);
     try {
-      const res = await UserApi.registerUser(form as unknown as RegistrationCredentials);
+      const res = await UserApi.registerUser(getParsedFormData());
+      // powinno przenieść do logowania albo zalogować
     } catch (err: any) {
       const errs = [ err?.response?.data ];
 
@@ -135,12 +151,15 @@ export const RegistrationForm = () => {
           isClearable
           errors={getInputErrors(errors, 'name')}
         />
-        <Select
-          errors={[]}
-          value={form.gender}
+        <SelectInput
+          onChoose={(gender) => onChange('gender', gender)}
           variant="underline"
           options={genderSelectOptions}
-          onChange={(gender) => onChange('gender', gender)}
+          label={inputsTranslations.GENDER}
+          errors={[]}
+          id={SelectId.GENDER}
+          defaultValue={form.gender}
+          selectScreenHeaderTitle={inputsTranslations.GENDER}
         />
         <DatePicker
           value={form.birthDate ?? new Date()}
