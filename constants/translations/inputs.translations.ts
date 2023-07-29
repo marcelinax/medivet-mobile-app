@@ -17,4 +17,7 @@ export const inputsTranslations = {
   SEARCH: 'Szukaj...',
   SPECIALIZATION: 'Specjalizacja',
   CHOOSE: 'Wybierz',
+  DAY_OF_WEEK: 'Dzień tygodnia',
+  HOUR_FROM: 'Od',
+  HOUR_TO: 'Do',
 };

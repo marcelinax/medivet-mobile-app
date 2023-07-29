@@ -12,4 +12,5 @@ export const commonTranslations = {
   VET: 'Weterynarz',
   SPECIALIZATIONS: 'Specjalizacje',
   AVAILABILITIES: 'Dostępności',
+  RECEPTION_HOURS: 'Godziny przyjmowania',
 };

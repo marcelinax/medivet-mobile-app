@@ -17,4 +17,5 @@ export default {
   CHECKMARK_OUTLINE: 'checkmark-outline' as const,
   PENCIL_OUTLINE: 'pencil-outline' as const,
   TIME_OUTLINE: 'time-outline' as const,
+  TRASH_OUTLINE: 'trash-outline' as const,
 };

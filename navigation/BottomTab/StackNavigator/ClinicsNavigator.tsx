@@ -11,12 +11,17 @@ import { IconButton } from 'components/Buttons/IconButton';
 import icons from 'themes/icons';
 import { useNavigation } from '@react-navigation/native';
 import { AddVetClinicScreen } from 'screens/Clinics/AddVetClinic.screen';
+import { CreateVetClinicAvailabilityScreen } from 'screens/Clinics/CreateVetClinicAvailability.screen';
+import {
+  CreateVetClinicAvailabilityReceptionHoursScreen,
+} from 'screens/Clinics/CreateVetClinicAvailabilityReceptionHours.screen';
 
 export const ClinicsNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const navigation = useNavigation<VetClinicScreenNavigationProps>();
 
   const navigateToAddVetClinicScreen = () => navigation.navigate('Add Vet Clinic');
+  const navigateToCreateVetClinicAvailabilityScreen = () => navigation.navigate('Create Vet Clinic Availability');
 
   const vetClinicsScreenHeaderRight = () => (
     <IconButton
@@ -27,9 +32,23 @@ export const ClinicsNavigator = () => {
     />
   );
 
+  const vetClinicAvailabilitiesScreenHeaderRight = () => (
+    <IconButton
+      icon={icons.ADD_OUTLINE}
+      size="large"
+      color={colors.PRIMARY}
+      onPress={navigateToCreateVetClinicAvailabilityScreen}
+    />
+  );
+
   const vetClinicsScreenOptions: NativeStackNavigationOptions = {
     ...getDefaultScreenOptions(navigationTranslations.USER_CLINICS),
     headerRight: () => vetClinicsScreenHeaderRight(),
+  };
+
+  const vetClinicAvailabilitiesScreenOptions: NativeStackNavigationOptions = {
+    ...getDefaultScreenOptions(navigationTranslations.CLINIC_AVAILABILITIES),
+    headerRight: () => vetClinicAvailabilitiesScreenHeaderRight(),
   };
 
   return (
@@ -57,7 +76,20 @@ export const ClinicsNavigator = () => {
       <Stack.Screen
         name={routes.VET_CLINIC_AVAILABILITIES}
         component={VetClinicAvailabilitiesScreen}
-        options={getDefaultScreenOptions(navigationTranslations.CLINIC_AVAILABILITIES)}
+        options={vetClinicAvailabilitiesScreenOptions}
+      />
+      <Stack.Screen
+        name={routes.CREATE_VET_CLINIC_AVAILABILITY}
+        component={CreateVetClinicAvailabilityScreen}
+        options={getDefaultScreenOptions(navigationTranslations.CREATE_AVAILABILITY)}
+      />
+      <Stack.Screen
+        name={routes.CREATE_VET_CLINIC_AVAILABILITY_RECEPTION_HOURS}
+        component={CreateVetClinicAvailabilityReceptionHoursScreen}
+        options={{
+          ...getDefaultScreenOptions(navigationTranslations.CREATE_AVAILABILITY_RECEPTION_HOURS),
+          presentation: 'modal',
+        }}
       />
     </Stack.Navigator>
   );

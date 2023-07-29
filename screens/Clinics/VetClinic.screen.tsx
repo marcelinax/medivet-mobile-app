@@ -11,12 +11,15 @@ import { hasInternalError } from 'api/error/services';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'components/Buttons/Button';
 import { commonTranslations } from 'constants/translations/common.translations';
+import { useDispatch } from 'react-redux';
+import { setCurrentClinic } from 'store/clinic/clinicSlice';
 
 export const VetClinicScreen = () => {
   const route = useRoute<VetClinicScreenRouteProps>();
   const navigation = useNavigation<VetClinicScreenNavigationProps>();
-  const [clinic, setClinic] = useState<Clinic | undefined>();
+  const [ clinic, setClinic ] = useState<Clinic | undefined>();
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchVetClinic();
@@ -28,14 +31,15 @@ export const VetClinicScreen = () => {
         headerTitle: `${navigationTranslations.CLINIC} "${clinic.name}"`,
       });
     }
-  }, [clinic, navigation]);
+  }, [ clinic, navigation ]);
 
   const fetchVetClinic = async (): Promise<void> => {
     try {
       const res = await ClinicApi.getClinic(route.params.clinicId);
       setClinic(res);
+      dispatch(setCurrentClinic(res));
     } catch (err: any) {
-      const errs = [err?.response?.data];
+      const errs = [ err?.response?.data ];
 
       if (hasInternalError(errs)) handleErrorAlert();
     }
@@ -54,13 +58,7 @@ export const VetClinicScreen = () => {
                     title={commonTranslations.AVAILABILITIES}
                     variant="outline"
                     color="light"
-                    onPress={() => navigation.navigate('Vet Clinic Availabilities', {
-                      clinic:
-                        {
-                          id: route.params.clinicId,
-                          name: clinic!.name,
-                        },
-                    })}
+                    onPress={() => navigation.navigate('Vet Clinic Availabilities')}
                   />
                 </View>
               </View>

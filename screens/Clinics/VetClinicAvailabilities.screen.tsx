@@ -6,22 +6,19 @@ import { hasInternalError } from 'api/error/services';
 import { VetAvailabilityApi } from 'api/vetAvailability/vetAvailability.api';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import {
-  VetClinicAvailabilitiesScreenNavigationProps,
-  VetClinicAvailabilitiesScreenRouteProps,
-} from 'types/Navigation/types';
+import { useNavigation } from '@react-navigation/native';
+import { VetClinicAvailabilitiesScreenNavigationProps } from 'types/Navigation/types';
 import { LoadingContainer } from 'components/Composition/LoadingContainer';
 import { View } from 'react-native';
 import { navigationTranslations } from 'constants/translations/navigation.translations';
 import { VetClinicAvailabilityCard } from 'components/Screens/Clinics/VetClinicAvailabilities/VetClinicAvailabilityCard';
 
 export const VetClinicAvailabilitiesScreen = () => {
-  const route = useRoute<VetClinicAvailabilitiesScreenRouteProps>();
   const navigation = useNavigation<VetClinicAvailabilitiesScreenNavigationProps>();
-  const [availabilities, setAvailabilities] = useState<VetAvailability[] | undefined>();
+  const [ availabilities, setAvailabilities ] = useState<VetAvailability[] | undefined>();
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const user = useSelector((state: RootState) => state.user.currentUser);
+  const clinic = useSelector((state: RootState) => state.clinic.currentClinic);
 
   useEffect(() => {
     fetchVetClinicAvailabilities();
@@ -29,21 +26,21 @@ export const VetClinicAvailabilitiesScreen = () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: `${navigationTranslations.CLINIC_AVAILABILITIES} "${route.params.clinic.name}"`,
+      headerTitle: `${navigationTranslations.CLINIC_AVAILABILITIES} "${clinic!.name}"`,
     });
-  }, [navigation]);
+  }, [ navigation ]);
 
   const fetchVetClinicAvailabilities = async (): Promise<void> => {
     try {
       const params = {
         vetId: user!.id,
-        clinicId: route.params.clinic.id,
+        clinicId: clinic!.id,
         include: 'receptionHours,specialization',
       };
       const res = await VetAvailabilityApi.getVetAvailabilities(params);
       setAvailabilities(res);
     } catch (err: any) {
-      const errs = [err?.response?.data];
+      const errs = [ err?.response?.data ];
 
       if (hasInternalError(errs)) handleErrorAlert();
     }

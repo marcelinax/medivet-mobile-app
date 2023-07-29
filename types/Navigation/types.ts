@@ -1,6 +1,7 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 import {
+  CreateVetClinicAvailabilityReceptionHourScreenParams,
   EditAnimalScreenParams,
   MultiSelectScreenParams,
   SelectScreenParams,
@@ -26,7 +27,7 @@ export type RootStackParamList = {
   'Add Vet Clinic': undefined;
   'Select': SelectScreenParams;
   'Create Vet Clinic Availability': undefined;
-  'Create Vet Clinic Availability Reception Hours': undefined;
+  'Create Vet Clinic Availability Reception Hours': CreateVetClinicAvailabilityReceptionHourScreenParams;
 }
 
 export type LoginScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Login'>;
@@ -48,3 +49,5 @@ export type CreateVetClinicAvailabilityReceptionHoursScreenNavigationProps = Nat
 export type EditAnimalScreenRouteProps = RouteProp<RootStackParamList, 'Edit Animal'>;
 export type VetClinicScreenRouteProps = RouteProp<RootStackParamList, 'Vet Clinic'>;
 export type SelectScreenRouteProps = RouteProp<RootStackParamList, 'Select'>;
+export type CreateVetClinicAvailabilityReceptionHoursScreenRouteProps =
+  RouteProp<RootStackParamList, 'Create Vet Clinic Availability Reception Hours'>;

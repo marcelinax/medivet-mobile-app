@@ -10,4 +10,11 @@ export const enumsTranslations = {
   FRIDAY_SHORTCUT: 'Pt',
   SATURDAY_SHORTCUT: 'Sob',
   SUNDAY_SHORTCUT: 'Niedz',
+  MONDAY: 'Poniedziałek',
+  TUESDAY: 'Wtorek',
+  WEDNESDAY: 'Środa',
+  THURSDAY: 'Czwartek',
+  FRIDAY: 'Piątek',
+  SATURDAY: 'Sobota',
+  SUNDAY: 'Niedziela',
 };

@@ -1,4 +1,5 @@
 import { SelectOptionProps } from 'types/components/Inputs/types';
+import { DayWeek } from 'constants/enums/dayWeek.enum';
 import { AnimalType } from './enums/animalType.enum';
 import { Gender } from './enums/gender.enum';
 import { commonTranslations } from './translations/common.translations';
@@ -42,5 +43,30 @@ export const animalTypeSelectOptions: SelectOptionProps[] = [
   {
     id: AnimalType.FUR_ANIMAL,
     label: enumsTranslations.FUR_ANIMAL,
+  },
+];
+
+export const dayOfWeekSelectOptions: SelectOptionProps[] = [
+  {
+    id: DayWeek.MONDAY,
+    label: enumsTranslations.MONDAY,
+  }, {
+    id: DayWeek.TUESDAY,
+    label: enumsTranslations.TUESDAY,
+  }, {
+    id: DayWeek.WEDNESDAY,
+    label: enumsTranslations.WEDNESDAY,
+  }, {
+    id: DayWeek.THURSDAY,
+    label: enumsTranslations.THURSDAY,
+  }, {
+    id: DayWeek.FRIDAY,
+    label: enumsTranslations.FRIDAY,
+  }, {
+    id: DayWeek.SATURDAY,
+    label: enumsTranslations.SATURDAY,
+  }, {
+    id: DayWeek.SUNDAY,
+    label: enumsTranslations.SUNDAY,
   },
 ];

@@ -4,5 +4,6 @@ export enum SelectId {
   ANIMAL_GENDER = 'animalGender',
   ANIMAL_COAT_COLOR = 'animalCoatColor',
   VET_SPECIALIZATION = 'vetSpecialization',
-  GENDER = 'gender'
+  GENDER = 'gender',
+  DAY_OF_WEEK = 'dayOfWeek'
 }

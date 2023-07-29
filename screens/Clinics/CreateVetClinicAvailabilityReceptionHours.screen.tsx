@@ -1,7 +1,10 @@
 import {
   VetClinicAvailabilityReceptionHourForm,
 } from 'components/Forms/VetClinicAvailability/VetClinicAvailabilityReceptionHourForm';
+import { DefaultLayout } from 'layouts/Default.layout';
 
 export const CreateVetClinicAvailabilityReceptionHoursScreen = () => (
-  <VetClinicAvailabilityReceptionHourForm />
+  <DefaultLayout>
+    <VetClinicAvailabilityReceptionHourForm />
+  </DefaultLayout>
 );
