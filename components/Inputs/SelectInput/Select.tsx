@@ -1,6 +1,5 @@
-import { getParsedErrors } from 'api/error/services';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { ListRenderItem } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { SelectOptionProps } from 'types/components/Inputs/types';
@@ -8,11 +7,11 @@ import { RootState } from 'store/store';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { SelectScreenNavigationProps, SelectScreenRouteProps } from 'types/Navigation/types';
 import { SelectOption } from 'components/Inputs/SelectInput/SelectOption';
-import errorsTranslations from 'constants/translations/errors.translations';
 import { List } from 'components/List/List';
 import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import { SimpleList } from 'components/List/SimpleList';
 import { setSingleSelectButtonLoading, setSingleSelectSelectedOption } from 'store/select/selectSlice';
+import { ApiError } from 'types/api/error/types';
 
 export const Select = () => {
   const route = useRoute<SelectScreenRouteProps>();
@@ -20,8 +19,8 @@ export const Select = () => {
   const selectState = useSelector((state: RootState) => state.select.selects.find((select) => select.id === selectId));
   const navigation = useNavigation<SelectScreenNavigationProps>();
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
-  const errorMessage = useRef<string>('');
   const dispatch = useDispatch();
+  const [ errors, setErrors ] = useState<ApiError[]>([]);
   const [ internalSelectedOption, setInternalSelectedOption ] = useState<SelectOptionProps | undefined>(selectState?.selectedOption);
 
   const handleChangeSelectedOption = (option: SelectOptionProps): void => {
@@ -42,11 +41,8 @@ export const Select = () => {
       navigation.goBack();
     } catch (err: any) {
       const errs = [ err?.response?.data ];
-      const errors = getParsedErrors(errs);
-      if (errors.length > 0) {
-        handleErrorAlert();
-        errorMessage.current = errors[0].message;
-      }
+      setErrors([ ...errs ]);
+      handleErrorAlert(errs);
     }
     dispatch(setSingleSelectButtonLoading({
       loading: false,
@@ -66,7 +62,7 @@ export const Select = () => {
 
   return (
     <>
-      {drawErrorAlert(errorsTranslations[errorMessage.current])}
+      {drawErrorAlert(errors)}
       {
         selectState?.fetch ? (
           <List

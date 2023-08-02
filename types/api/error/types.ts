@@ -1,10 +1,11 @@
-export interface Error {
-    error: string;
-    message: string;
-    statusCode: number;
+export interface ApiError {
+  error: string;
+  message: ErrorMessage[];
+  statusCode: number;
 }
 
-export interface FormError {
-    errors: Error[];
-    field: string;
+export interface ErrorMessage {
+  message: string;
+  property: string;
+  resource?: Record<string, any>;
 }

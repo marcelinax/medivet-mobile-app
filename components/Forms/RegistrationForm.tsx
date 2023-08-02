@@ -1,12 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import { getInputErrors, handleInputErrors, hasInternalError } from 'api/error/services';
+import { getInputErrors } from 'api/error/services';
 import { UserApi } from 'api/user/user.api';
 import { Button } from 'components/Buttons/Button';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { DatePicker } from 'components/Inputs/DatePicker';
 import { PasswordInput } from 'components/Inputs/PasswordInput';
 import { TextInput } from 'components/Inputs/TextInput';
-import apiErrors from 'constants/apiErrors';
 import { genderSelectOptions } from 'constants/selectOptions';
 import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import { inputsTranslations } from 'constants/translations/inputs.translations';
@@ -16,7 +15,7 @@ import {
   StyleSheet, Switch, Text, View,
 } from 'react-native';
 import colors from 'themes/colors';
-import { FormError } from 'types/api/error/types';
+import { ApiError } from 'types/api/error/types';
 import { UserRoleType } from 'types/api/user/types';
 import { RegistrationScreenNavigationProps } from 'types/Navigation/types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -39,7 +38,7 @@ interface FormProps {
 }
 
 export const RegistrationForm = () => {
-  const [ errors, setErrors ] = useState<FormError[]>([]);
+  const [ errors, setErrors ] = useState<ApiError[]>([]);
   const [ loading, setLoading ] = useState<boolean>(false);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const navigation = useNavigation<RegistrationScreenNavigationProps>();
@@ -84,33 +83,8 @@ export const RegistrationForm = () => {
       // powinno przenieść do logowania albo zalogować
     } catch (err: any) {
       const errs = [ err?.response?.data ];
-
-      if (hasInternalError(errs)) handleErrorAlert();
-
-      const emailErrors = handleInputErrors(errs, [
-        apiErrors.EMAIL_MUST_BE_AN_EMAIL,
-        apiErrors.EMAIL_SHOULD_NOT_BE_EMPTY,
-        apiErrors.USER_WITH_THIS_EMAIL_ALREADY_EXISTS,
-      ], 'email');
-
-      const passwordErrors = handleInputErrors(errs, [
-        apiErrors.PASSWORD_SHOULD_NOT_BE_EMPTY,
-        apiErrors.WRONG_PASSWORD,
-        apiErrors.PASSWORD_MUST_BE_LONGER_THAN_OR_EQUAL_TO_6_CHARACTERS,
-      ], 'password');
-
-      const nameErrors = handleInputErrors(errs, [ apiErrors.NAME_SHOULD_NOT_BE_EMPTY ], 'name');
-
-      const termsAcceptErrors = handleInputErrors(errs, [ apiErrors.TERMS_ARE_NOT_ACCEPTED ], 'termsAccept');
-
-      const birthDateErrors = handleInputErrors(errs, [
-        apiErrors.BIRTHDATE_MUST_BE_A_DATE_INSTANCE,
-        apiErrors.BIRTHDATE_SHOULD_NOT_BE_EMPTY,
-        apiErrors.BIRTH_DATE_CANNOT_BE_LATER_THAN_TODAY,
-        apiErrors.USER_HAS_TO_BE_AT_LEAST_18_YEARS_OF_AGE,
-      ], 'birthDate');
-
-      setErrors([ emailErrors, passwordErrors, nameErrors, termsAcceptErrors, birthDateErrors ]);
+      handleErrorAlert(errs);
+      setErrors([ ...errs ]);
     }
     setLoading(false);
   };
@@ -119,13 +93,13 @@ export const RegistrationForm = () => {
     onChange('birthDate', e);
   };
 
-  const areAcceptTermsFieldHasError = () => errors?.find((err) => err.field === 'termsAccept')?.errors.length;
+  const areAcceptTermsFieldHasError = () => !!getInputErrors(errors, 'acceptTerms').length;
   // obsłuzyc rolę
   // animacja "shake" kiedy regulamin nie został zaakceptowany
 
   return (
     <>
-      {drawErrorAlert()}
+      {drawErrorAlert(errors)}
       <View>
         <TextInput
           value={form.email}
@@ -155,7 +129,6 @@ export const RegistrationForm = () => {
           onChoose={(gender) => onChange('gender', gender)}
           variant="underline"
           options={genderSelectOptions}
-          label={inputsTranslations.GENDER}
           errors={[]}
           id={SelectId.GENDER}
           defaultValue={form.gender}

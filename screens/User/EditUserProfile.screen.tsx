@@ -1,11 +1,10 @@
-import { getInputErrors, handleInputErrors, hasInternalError } from 'api/error/services';
+import { getInputErrors } from 'api/error/services';
 import { UserApi } from 'api/user/user.api';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { AvatarInput } from 'components/Inputs/AvatarInput';
 import { DatePicker } from 'components/Inputs/DatePicker';
 import { PhoneNumberInput } from 'components/Inputs/PhoneNumberInput';
 import { TextInput } from 'components/Inputs/TextInput';
-import apiErrors from 'constants/apiErrors';
 import { genderSelectOptions } from 'constants/selectOptions';
 import { successAlertTranslations } from 'constants/translations/alerts/successAlert.translations';
 import { buttonsTranslations } from 'constants/translations/buttons.translations';
@@ -18,7 +17,7 @@ import { StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { setCurrentUser } from 'store/user/userSlice';
-import { FormError } from 'types/api/error/types';
+import { ApiError } from 'types/api/error/types';
 import { User } from 'types/api/user/types';
 import { appendFileToFormData } from 'utils/appendFileToFormData';
 import { SelectId } from 'constants/enums/selectId.enum';
@@ -42,7 +41,7 @@ export const EditUserProfileScreen = () => {
     ...user,
     gender: genderSelectOptions.find((gender) => gender.id === user.gender) || genderSelectOptions[0],
   });
-  const [ errors, setErrors ] = useState<FormError[]>([]);
+  const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
   const [ loading, setLoading ] = useState<boolean>(false);
@@ -81,19 +80,8 @@ export const EditUserProfileScreen = () => {
       dispatch(setCurrentUser(res));
     } catch (err: any) {
       const errs = [ err?.response?.data ];
-
-      if (hasInternalError(errs)) handleErrorAlert();
-
-      const birthDateErrors = handleInputErrors(errs, [
-        apiErrors.BIRTHDATE_MUST_BE_A_DATE_INSTANCE,
-        apiErrors.BIRTHDATE_SHOULD_NOT_BE_EMPTY,
-        apiErrors.BIRTH_DATE_CANNOT_BE_LATER_THAN_TODAY,
-        apiErrors.USER_HAS_TO_BE_AT_LEAST_18_YEARS_OF_AGE,
-      ], 'birthDate');
-
-      const phoneNumberErrors = handleInputErrors(errs, [ apiErrors.PHONENUMBER_MUST_BE_A_VALID_PHONE_NUMBER ], 'phoneNumber');
-
-      setErrors([ birthDateErrors, phoneNumberErrors ]);
+      handleErrorAlert(errs);
+      setErrors([ ...errs ]);
     }
     setLoading(false);
   };
@@ -107,8 +95,8 @@ export const EditUserProfileScreen = () => {
         dispatch(setCurrentUser(res));
       } catch (err: any) {
         const errs = [ err?.response?.data ];
-
-        if (hasInternalError(errs)) handleErrorAlert();
+        handleErrorAlert(errs);
+        setErrors([ ...errs ]);
       }
       setLoading(false);
     }
@@ -121,7 +109,8 @@ export const EditUserProfileScreen = () => {
         await UserApi.removeUserProfilePhoto();
       } catch (err: any) {
         const errs = [ err?.response?.data ];
-        if (hasInternalError(errs)) handleErrorAlert();
+        handleErrorAlert(errs);
+        setErrors([ ...errs ]);
       }
       setLoading(false);
     }
@@ -136,7 +125,7 @@ export const EditUserProfileScreen = () => {
   return (
     <DefaultLayout>
       <View>
-        {drawErrorAlert()}
+        {drawErrorAlert(errors)}
         {drawSuccessAlert(successAlertTranslations.SAVED)}
         <View style={styles.avatarContainer}>
           <AvatarInput

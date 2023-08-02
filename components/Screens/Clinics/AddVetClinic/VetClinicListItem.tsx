@@ -7,7 +7,6 @@ import {
 import { BreakLine } from 'components/Composition/BreakLine';
 import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
-import { hasInternalError } from 'api/error/services';
 import { confirmationAlertTranslations } from 'constants/translations/alerts/confirmationAlert.translations';
 import { FormatAddress } from 'components/Formatters/FormatAddress';
 import colors from 'themes/colors';
@@ -22,6 +21,7 @@ import icons from 'themes/icons';
 import { otherTranslations } from 'constants/translations/other.translations';
 import { FullScreenLoading } from 'components/Composition/FullScreenLoading';
 import { ClinicApi } from 'api/clinic/clinic.api';
+import { ApiError } from 'types/api/error/types';
 
 interface Props {
   clinic: Clinic;
@@ -34,6 +34,7 @@ export const VetClinicListItem: FC<Props> = ({ clinic }) => {
   const user = useSelector((state: RootState) => state.user.currentUser);
   const [ loading, setLoading ] = useState<boolean>(false);
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert(() => navigation.goBack());
+  const [ errors, setErrors ] = useState<ApiError[]>([]);
 
   const handleAddClinic = async () => {
     if (isClinicWaitingForAssignment()) return;
@@ -49,7 +50,8 @@ export const VetClinicListItem: FC<Props> = ({ clinic }) => {
     } catch (err: any) {
       setLoading(false);
       const errs = [ err?.response?.data ];
-      if (hasInternalError(errs)) handleErrorAlert();
+      setErrors([ ...errs ]);
+      handleErrorAlert(errs);
     }
   };
 
@@ -67,7 +69,7 @@ export const VetClinicListItem: FC<Props> = ({ clinic }) => {
     <TouchableWithoutFeedback onPress={handleAddClinic}>
       <View>
         <FullScreenLoading loading={loading} />
-        {drawErrorAlert()}
+        {drawErrorAlert(errors)}
         {drawSuccessAlert()}
         <View style={simpleListItemStyles.container}>
           <View style={simpleListItemStyles.innerContainer}>

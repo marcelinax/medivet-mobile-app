@@ -1,9 +1,8 @@
 import { AnimalApi } from 'api/animal/animal.api';
-import { getInputErrors, handleInputErrors, hasInternalError } from 'api/error/services';
+import { getInputErrors } from 'api/error/services';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { DatePicker } from 'components/Inputs/DatePicker';
 import { TextInput } from 'components/Inputs/TextInput';
-import apiErrors from 'constants/apiErrors';
 import { animalGenderSelectOptions, animalTypeSelectOptions } from 'constants/selectOptions';
 import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import { inputsTranslations } from 'constants/translations/inputs.translations';
@@ -11,7 +10,6 @@ import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { FC, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Animal, CreateAnimal } from 'types/api/animal/types';
-import { FormError } from 'types/api/error/types';
 import { SelectOptionProps } from 'types/components/Inputs/types';
 import { AvatarInput } from 'components/Inputs/AvatarInput';
 import { appendFileToFormData } from 'utils/appendFileToFormData';
@@ -27,6 +25,7 @@ import { SelectInput } from 'components/Inputs/SelectInput/SelectInput';
 import { parseDataToSelectOptions } from 'utils/selectInput';
 import { removeSingleSelect, setSingleSelectSelectedOption } from 'store/select/selectSlice';
 import { SelectId } from 'constants/enums/selectId.enum';
+import { ApiError } from 'types/api/error/types';
 
 interface Props {
   animal?: Animal;
@@ -44,7 +43,7 @@ interface FormProps {
 
 export const AnimalForm: FC<Props> = ({ animal }) => {
   const navigation = useNavigation<EditAnimalScreenNavigationProps>();
-  const [ errors, setErrors ] = useState<FormError[]>([]);
+  const [ errors, setErrors ] = useState<ApiError[]>([]);
   const [ loading, setLoading ] = useState<boolean>(false);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
@@ -127,6 +126,7 @@ export const AnimalForm: FC<Props> = ({ animal }) => {
     try {
       setErrors([]);
       let res;
+
       if (animal?.id) {
         res = await AnimalApi.updateAnimal(Number(animal?.id), getParsedDataForm());
         navigation.setOptions({
@@ -140,21 +140,8 @@ export const AnimalForm: FC<Props> = ({ animal }) => {
       handleSetAnimalToUpdate(res);
     } catch (err: any) {
       const errs = [ err?.response?.data ];
-
-      if (hasInternalError(errs)) handleErrorAlert();
-
-      const nameErrors = handleInputErrors(errs, [ apiErrors.NAME_SHOULD_NOT_BE_EMPTY ], 'name');
-
-      const typeErrors = handleInputErrors(errs, [ apiErrors.TYPE_SHOULD_NOT_BE_EMPTY ], 'type');
-
-      const breedErrors = handleInputErrors(errs, [ apiErrors.BREEDID_SHOULD_NOT_BE_EMPTY ], 'breed');
-
-      const birthDateErrors = handleInputErrors(errs, [
-        apiErrors.BIRTHDATE_SHOULD_NOT_BE_EMPTY,
-        apiErrors.BIRTH_DATE_CANNOT_BE_LATER_THAN_TODAY,
-      ], 'birthDate');
-
-      setErrors([ birthDateErrors, nameErrors, typeErrors, breedErrors ]);
+      setErrors([ ...errs ]);
+      handleErrorAlert(errs);
     }
     setLoading(false);
   };
@@ -168,7 +155,8 @@ export const AnimalForm: FC<Props> = ({ animal }) => {
         handleSetAnimalToUpdate(res);
       } catch (err: any) {
         const errs = [ err?.response?.data ];
-        if (hasInternalError(errs)) handleErrorAlert();
+        handleErrorAlert(errs);
+        setErrors([ ...errs ]);
       }
       setLoading(false);
     }
@@ -182,7 +170,8 @@ export const AnimalForm: FC<Props> = ({ animal }) => {
         handleSetAnimalToUpdate(res);
       } catch (err: any) {
         const errs = [ err?.response?.data ];
-        if (hasInternalError(errs)) handleErrorAlert();
+        handleErrorAlert(errs);
+        setErrors([ ...errs ]);
       }
       setLoading(false);
     }
@@ -200,7 +189,7 @@ export const AnimalForm: FC<Props> = ({ animal }) => {
 
   return (
     <View>
-      {drawErrorAlert()}
+      {drawErrorAlert(errors)}
       {drawSuccessAlert()}
       {animal?.id && (
         <View style={styles.avatarContainer}>
@@ -241,7 +230,7 @@ export const AnimalForm: FC<Props> = ({ animal }) => {
               variant="underline"
               fetchOptions={fetchAnimalBreeds}
               label={inputsTranslations.BREED}
-              errors={getInputErrors(errors, 'breed')}
+              errors={getInputErrors(errors, 'breedId')}
               id={SelectId.ANIMAL_BREED}
               defaultValue={form?.breed}
               selectScreenHeaderTitle={inputsTranslations.BREED}

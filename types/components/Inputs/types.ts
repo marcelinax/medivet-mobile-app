@@ -1,5 +1,5 @@
 import { TextInputProps } from 'react-native';
-import { Error } from 'types/api/error/types';
+import { ErrorMessage } from 'types/api/error/types';
 
 export type InputVariant = 'underline' | 'outline';
 
@@ -12,7 +12,7 @@ export interface InputProps extends TextInputProps {
   isClearable?: boolean;
   rounded?: boolean;
   icon?: any;
-  errors: Error[];
+  errors: ErrorMessage[];
 }
 
 export interface SelectProps {
@@ -22,7 +22,7 @@ export interface SelectProps {
   defaultValue?: SelectOptionProps;
   placeholder?: string;
   label?: string;
-  errors: Error[];
+  errors: ErrorMessage[];
   rounded?: boolean;
   onChoose: (option: SelectOptionProps) => Promise<void> | void;
   fetchOptions?: (params?: Record<string, any>) => Promise<any[]>;

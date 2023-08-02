@@ -10,8 +10,7 @@ import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { setMultiSelectButtonLoading } from 'store/multiSelect/multiSelectSlice';
-import errorsTranslations from 'constants/translations/errors.translations';
-import { getParsedErrors } from 'api/error/services';
+import { ApiError } from 'types/api/error/types';
 
 export const MultiSelect = () => {
   const multiSelectState = useSelector((state: RootState) => state.multiSelect);
@@ -21,6 +20,7 @@ export const MultiSelect = () => {
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const errorMessage = useRef<string>('');
   const dispatch = useDispatch();
+  const [ errors, setErrors ] = useState<ApiError[]>([]);
 
   const onChangeSelectedOptions = (newOption: SelectOptionProps): void => {
     const newSelectedOptions = [ ...internalSelectedOptions ];
@@ -40,11 +40,8 @@ export const MultiSelect = () => {
       navigation.goBack();
     } catch (err: any) {
       const errs = [ err?.response?.data ];
-      const errors = getParsedErrors(errs);
-      if (errors.length > 0) {
-        handleErrorAlert();
-        errorMessage.current = errors[0].message;
-      }
+      setErrors([ ...errs ]);
+      handleErrorAlert(errs);
     }
     dispatch(setMultiSelectButtonLoading(false));
   };
@@ -64,7 +61,7 @@ export const MultiSelect = () => {
 
   return (
     <>
-      {drawErrorAlert(errorsTranslations[errorMessage.current])}
+      {drawErrorAlert(errors)}
       <List
         onFetch={multiSelectState.fetch}
         renderItem={renderOption}

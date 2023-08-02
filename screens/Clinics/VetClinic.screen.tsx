@@ -7,12 +7,12 @@ import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { LoadingContainer } from 'components/Composition/LoadingContainer';
 import { DefaultLayout } from 'layouts/Default.layout';
 import { ClinicApi } from 'api/clinic/clinic.api';
-import { hasInternalError } from 'api/error/services';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'components/Buttons/Button';
 import { commonTranslations } from 'constants/translations/common.translations';
 import { useDispatch } from 'react-redux';
 import { setCurrentClinic } from 'store/clinic/clinicSlice';
+import { ApiError } from 'types/api/error/types';
 
 export const VetClinicScreen = () => {
   const route = useRoute<VetClinicScreenRouteProps>();
@@ -20,6 +20,7 @@ export const VetClinicScreen = () => {
   const [ clinic, setClinic ] = useState<Clinic | undefined>();
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const dispatch = useDispatch();
+  const [ errors, setErrors ] = useState<ApiError[]>([]);
 
   useEffect(() => {
     fetchVetClinic();
@@ -40,15 +41,15 @@ export const VetClinicScreen = () => {
       dispatch(setCurrentClinic(res));
     } catch (err: any) {
       const errs = [ err?.response?.data ];
-
-      if (hasInternalError(errs)) handleErrorAlert();
+      setErrors([ ...errs ]);
+      handleErrorAlert(errs);
     }
   };
 
   return (
     <DefaultLayout>
       <>
-        {drawErrorAlert()}
+        {drawErrorAlert(errors)}
         {
           !clinic ? <LoadingContainer />
             : (

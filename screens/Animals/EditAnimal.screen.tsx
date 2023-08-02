@@ -7,14 +7,15 @@ import { Animal } from 'types/api/animal/types';
 import { AnimalForm } from 'components/Forms/AnimalForm';
 import { LoadingContainer } from 'components/Composition/LoadingContainer';
 import { commonTranslations } from 'constants/translations/common.translations';
-import { AnimalApi } from '../../api/animal/animal.api';
-import { hasInternalError } from '../../api/error/services';
+import { AnimalApi } from 'api/animal/animal.api';
+import { ApiError } from 'types/api/error/types';
 
 export const EditAnimalScreen = () => {
   const route = useRoute<EditAnimalScreenRouteProps>();
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const [ animal, setAnimal ] = useState<Animal | undefined>(undefined);
   const navigation = useNavigation<EditAnimalScreenNavigationProps>();
+  const [ errors, setErrors ] = useState<ApiError[]>([]);
 
   useEffect(() => {
     onFetchAnimal();
@@ -31,15 +32,15 @@ export const EditAnimalScreen = () => {
       setAnimal(res);
     } catch (err: any) {
       const errs = [ err?.response?.data ];
-
-      if (hasInternalError(errs)) handleErrorAlert();
+      setErrors([ ...errs ]);
+      handleErrorAlert(errs);
     }
   };
 
   return (
     <DefaultLayout>
       <>
-        {drawErrorAlert()}
+        {drawErrorAlert(errors)}
         {
           !animal ? <LoadingContainer />
             : <AnimalForm animal={animal} />

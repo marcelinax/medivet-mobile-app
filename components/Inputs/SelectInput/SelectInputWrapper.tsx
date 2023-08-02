@@ -5,10 +5,10 @@ import { getInputBorderRadius, getInputStylesDependingOnVariant, inputStyles } f
 import colors from 'themes/colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import icons from 'themes/icons';
-import { getErrorMessage } from 'components/Inputs/utils';
 import React, { FC } from 'react';
 import { InputVariant, SelectOptionProps } from 'types/components/Inputs/types';
-import { Error } from 'types/api/error/types';
+import { ErrorMessage } from 'types/api/error/types';
+import { getErrorMessage } from 'api/error/services';
 
 interface Props {
   handleShowOptions: () => void;
@@ -17,7 +17,7 @@ interface Props {
   rounded?: boolean;
   placeholder?: string;
   selectedValue?: SelectOptionProps;
-  errors: Error[];
+  errors: ErrorMessage[];
 }
 
 export const SelectInputWrapper: FC<Props> = ({
