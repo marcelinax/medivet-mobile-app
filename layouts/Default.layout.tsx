@@ -1,22 +1,41 @@
 import { FC } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import {
+  ScrollView, StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
 import colors from 'themes/colors';
 import { isAndroidPlatform } from 'utils/isAndroidPlatfrom';
+import { StickyFooter } from 'components/Composition/StickyFooter';
 
 interface Props {
   children: JSX.Element;
+  stickyFooterChildren?: JSX.Element;
+  stickyFooterStyles?: StyleProp<ViewStyle>;
 }
 
-export const DefaultLayout: FC<Props> = ({ children }) => (
-  <ScrollView
-    style={{ flex: 1 }}
-    contentContainerStyle={styles.scrollViewContainer}
-    automaticallyAdjustKeyboardInsets
-  >
-    <View style={styles.container}>
-      {children}
-    </View>
-  </ScrollView>
+export const DefaultLayout: FC<Props> = ({
+  children,
+  stickyFooterChildren,
+  stickyFooterStyles,
+}) => (
+  <>
+    <ScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={styles.scrollViewContainer}
+      automaticallyAdjustKeyboardInsets
+      bounces={false}
+    >
+      <View style={styles.container}>
+        {children}
+      </View>
+    </ScrollView>
+    {
+      stickyFooterChildren && (
+        <StickyFooter style={stickyFooterStyles}>
+          {stickyFooterChildren}
+        </StickyFooter>
+      )
+    }
+  </>
 );
 
 const styles = StyleSheet.create({
