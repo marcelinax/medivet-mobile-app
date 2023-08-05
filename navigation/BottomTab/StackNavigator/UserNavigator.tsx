@@ -55,7 +55,7 @@ export const UserNavigator = () => {
 
   const onChangeUserSpecializations = async (specializations: SelectOptionProps[]): Promise<void> => {
     try {
-      const specializationIds = specializations.map((specialization) => specialization.id.toString());
+      const specializationIds = specializations.map((specialization) => Number(specialization.id));
       const res = await UserApi.updateUserVetSpecializations(specializationIds);
       dispatch(setCurrentUser({
         ...user,

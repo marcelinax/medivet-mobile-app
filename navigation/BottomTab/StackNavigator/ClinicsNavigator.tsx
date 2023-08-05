@@ -88,7 +88,7 @@ export const ClinicsNavigator = () => {
         component={CreateVetClinicAvailabilityReceptionHoursScreen}
         options={{
           ...getDefaultScreenOptions(navigationTranslations.CREATE_AVAILABILITY_RECEPTION_HOURS),
-          presentation: 'modal',
+          presentation: 'card',
         }}
       />
     </Stack.Navigator>

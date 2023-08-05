@@ -19,4 +19,9 @@ export default {
   SPECIALIZATIONIDS_SHOULD_NOT_BE_EMPTY: 'Musisz wybrać przynajmniej jedną specjalizację',
   CANNOT_REMOVE_VET_SPECIALIZATION_WHICH_IS_ALREADY_IN_USE: 'Nie możesz usunąć specjalizacji, która przypisana jest do jednej z Twoich klinik',
   VET_AVAILABILITY_FOR_CLINIC_AND_SPECIALIZATION_ALREADY_EXISTS: 'Dostępność dla Twojej wybranej specjalizacji dla tej kliniki została już utworzona.',
+  SPECIALIZATIONID_SHOULD_NOT_BE_EMPTY: 'Wybierz specjalizację',
+  RECEPTIONHOURS_SHOULD_NOT_BE_EMPTY: 'Dodaj co najmniej jedną godzinę przyjmowania',
+  RECEPTION_HOUR_COLLIDES_WITH_EXISTING_ONE: 'Godzina przyjmowania koliduje z już istniejącą',
+  RECEPTION_HOUR_COLLIDES_WITH_ANOTHER_ONE: 'Godzina przyjmowania koliduje z wcześniej dodaną',
+  HOUR_TO_CANNOT_BE_EARLIER_THAN_HOUR_FROM: 'Godzina "od" nie może być późniejsza niż godzina "do"',
 } as Record<string, string>;

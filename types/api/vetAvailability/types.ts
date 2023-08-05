@@ -35,6 +35,19 @@ export interface VetAvailabilityFormProps {
   receptionHours: VetAvailabilityReceptionHourFormProps[];
 }
 
+export interface CreateVetAvailability {
+  clinicId: number;
+  userId: number;
+  specializationId: number;
+  receptionHours: CreateVetAvailabilityReceptionHour[];
+}
+
+export interface CreateVetAvailabilityReceptionHour {
+  day: DayWeek;
+  hourFrom: string;
+  hourTo: string;
+}
+
 export interface VetAvailabilityReceptionHourFormProps {
   day: SelectOptionProps;
   hourFrom: string;

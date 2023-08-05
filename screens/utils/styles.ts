@@ -36,6 +36,9 @@ export const simpleListItemStyles = StyleSheet.create({
   innerContainer: {
     paddingVertical: 15,
     height: '100%',
+  },
+  rowContainer: {
+    height: 'auto',
     flexDirection: 'row',
     alignItems: 'center',
   },

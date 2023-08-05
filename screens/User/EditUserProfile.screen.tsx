@@ -147,8 +147,6 @@ export const EditUserProfileScreen = () => {
             <DatePicker
               value={new Date(form.birthDate)}
               errors={getInputErrors(errors, 'birthDate')}
-              onCancel={() => {
-              }}
               onConfirm={onDatePickerConfirm}
               label={inputsTranslations.BIRTH_DATE}
             />

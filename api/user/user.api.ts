@@ -41,7 +41,7 @@ class UserApi {
     }));
   }
 
-  static async updateUserVetSpecializations(specializationIds: string[]): Promise<User> {
+  static async updateUserVetSpecializations(specializationIds: number[]): Promise<User> {
     const res = await authClient.put('users/me/vet-specializations', { specializationIds });
     return res.data;
   }

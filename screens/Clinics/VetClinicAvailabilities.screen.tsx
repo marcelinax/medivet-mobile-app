@@ -31,6 +31,10 @@ export const VetClinicAvailabilitiesScreen = () => {
     });
   }, [ navigation ]);
 
+  useEffect(() => {
+    fetchVetClinicAvailabilities();
+  }, [ navigation ]);
+
   const fetchVetClinicAvailabilities = async (): Promise<void> => {
     try {
       const params = {

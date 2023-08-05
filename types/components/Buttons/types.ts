@@ -24,7 +24,7 @@ export interface ButtonLoadingProps extends TouchableHighlightProps {
   variant: ButtonVariant;
   color?: ButtonColor;
   disabled?: boolean;
-  loading?: boolean;
+  loading: boolean;
   fontWeight?: ButtonFontWeight;
 }
 

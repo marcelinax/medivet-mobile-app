@@ -5,30 +5,31 @@ import React, { FC, useState } from 'react';
 import {
   Text, TextInput, TouchableHighlight, View,
 } from 'react-native';
-import DateTimePickerModal, { DateTimePickerProps } from 'react-native-modal-datetime-picker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import colors from 'themes/colors';
 import icons from 'themes/icons';
 import { ErrorMessage } from 'types/api/error/types';
 import { InputVariant } from 'types/components/Inputs/types';
 import { getErrorMessage } from 'api/error/services';
 import { getInputBorderRadius, getInputStylesDependingOnVariant, inputStyles } from 'components/Inputs/utils/styles';
+import { parseDateFormatToTime } from 'utils/formatDate';
 
-interface Props extends DateTimePickerProps {
-  onCancel: () => void;
-  onConfirm: (e?: any) => void;
+interface Props {
+  handleCancel?: () => void;
+  onConfirm: (e: Date) => void;
   errors: ErrorMessage[];
-  value: Date;
+  value?: Date;
   shouldDisplayPlaceholder?: boolean;
-  variant?: InputVariant;
   mode?: 'date' | 'time' | 'datetime';
   inputVariant?: InputVariant;
   inputRounded?: boolean;
   label?: string;
   placeholder?: string;
+  showSeconds?: boolean;
 }
 
 export const DatePicker: FC<Props> = ({
-  onCancel,
+  handleCancel,
   onConfirm,
   mode,
   value,
@@ -38,16 +39,17 @@ export const DatePicker: FC<Props> = ({
   shouldDisplayPlaceholder,
   label,
   placeholder,
+  showSeconds,
 }) => {
   const [ visible, setVisible ] = useState<boolean>(false);
 
   const parseDateToString = (): string => {
-    if (shouldDisplayPlaceholder) return '';
+    if (shouldDisplayPlaceholder || !value) return '';
     switch (mode) {
     case 'datetime':
       return moment(value).format('DD.MM.YYYY : HH.mm.ss');
     case 'time':
-      return moment(value).format('HH:mm:ss');
+      return parseDateFormatToTime(value, showSeconds);
     case 'date':
     default:
       return moment(value).format('DD.MM.YYYY');
@@ -78,7 +80,7 @@ export const DatePicker: FC<Props> = ({
             placeholder={(shouldDisplayPlaceholder || placeholder) && placeholder}
           />
           <Ionicons
-            name={icons.CALENDAR}
+            name={mode === 'time' ? icons.TIME_OUTLINE : icons.CALENDAR}
             size={20}
             color={colors.GRAY_DARK}
             style={inputStyles.defaultIcon}
@@ -96,6 +98,7 @@ export const DatePicker: FC<Props> = ({
         cancelTextIOS={buttonsTranslations.CANCEL}
         confirmTextIOS={buttonsTranslations.CHOOSE}
         isVisible={visible}
+        is24Hour
         locale="pl_PL"
         mode={mode ?? 'date'}
         onConfirm={(e) => {
@@ -104,9 +107,9 @@ export const DatePicker: FC<Props> = ({
         }}
         onCancel={() => {
           setVisible(false);
-          onCancel();
+          if (handleCancel) handleCancel();
         }}
-        date={value}
+        date={value || new Date()}
       />
     </View>
   );

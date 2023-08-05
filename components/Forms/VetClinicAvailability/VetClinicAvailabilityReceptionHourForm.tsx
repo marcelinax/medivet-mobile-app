@@ -8,7 +8,6 @@ import {
   CreateVetClinicAvailabilityReceptionHoursScreenNavigationProps,
   CreateVetClinicAvailabilityReceptionHoursScreenRouteProps,
 } from 'types/Navigation/types';
-import { TextInput } from 'components/Inputs/TextInput';
 import { SelectInput } from 'components/Inputs/SelectInput/SelectInput';
 import { dayOfWeekSelectOptions } from 'constants/selectOptions';
 import { inputsTranslations } from 'constants/translations/inputs.translations';
@@ -18,6 +17,8 @@ import { Button } from 'components/Buttons/Button';
 import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import { updateCurrentVetClinicAvailabilityReceptionHours } from 'store/clinic/clinicSlice';
 import { removeSingleSelect } from 'store/select/selectSlice';
+import { DatePicker } from 'components/Inputs/DatePicker';
+import { parseDateFormatToTime, parseTimeStringToDate } from 'utils/formatDate';
 
 export const VetClinicAvailabilityReceptionHourForm = () => {
   const dispatch = useDispatch();
@@ -68,23 +69,25 @@ export const VetClinicAvailabilityReceptionHourForm = () => {
         />
       </View>
       <View style={styles.inputMargin}>
-        <TextInput
-          variant="underline"
-          value={form?.hourFrom}
-          onChangeText={(hourFrom) => handleChangeInput('hourFrom', hourFrom)}
+        <DatePicker
+          value={form?.hourFrom ? parseTimeStringToDate(form.hourFrom) : undefined}
           errors={[]}
+          mode="time"
+          onConfirm={(hourFrom) => {
+            handleChangeInput('hourFrom', parseDateFormatToTime(hourFrom));
+          }}
           label={inputsTranslations.HOUR_FROM}
-          placeholder="10:00"
         />
       </View>
       <View style={styles.inputMargin}>
-        <TextInput
-          variant="underline"
-          value={form?.hourTo}
-          onChangeText={(hourTo) => handleChangeInput('hourTo', hourTo)}
+        <DatePicker
+          value={form?.hourTo ? parseTimeStringToDate(form.hourTo) : undefined}
           errors={[]}
+          mode="time"
+          onConfirm={(hourTo) => {
+            handleChangeInput('hourTo', parseDateFormatToTime(hourTo));
+          }}
           label={inputsTranslations.HOUR_TO}
-          placeholder="15:10"
         />
       </View>
       <Button

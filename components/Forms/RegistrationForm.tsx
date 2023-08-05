@@ -137,8 +137,6 @@ export const RegistrationForm = () => {
         <DatePicker
           value={form.birthDate ?? new Date()}
           errors={getInputErrors(errors, 'birthDate')}
-          onCancel={() => {
-          }}
           onConfirm={onDatePickerConfirm}
           shouldDisplayPlaceholder={!form.birthDate}
           placeholder={inputsTranslations.BIRTH_DATE}

@@ -1,5 +1,5 @@
 import { VetAvailabilityReceptionHourFormProps } from 'types/api/vetAvailability/types';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { simpleListItemStyles } from 'screens/utils/styles';
 import React from 'react';
 import { enumsTranslations } from 'constants/translations/enums.translations';
@@ -11,13 +11,19 @@ import colors from 'themes/colors';
 import icons from 'themes/icons';
 import { useDispatch } from 'react-redux';
 import { removeCurrentVetClinicAvailabilityReceptionHour } from 'store/clinic/clinicSlice';
+import { ErrorMessage } from 'types/api/error/types';
+import { ErrorText } from 'components/Composition/ErrorText';
 
 interface Props {
   receptionHour: VetAvailabilityReceptionHourFormProps;
   index: number;
+  error?: ErrorMessage;
+  onRemove: () => void;
 }
 
-export const VetClinicAvailabilityReceptionHourFormItem = ({ receptionHour, index }: Props) => {
+export const VetClinicAvailabilityReceptionHourFormItem = ({
+  receptionHour, index, error, onRemove,
+}: Props) => {
   const dispatch = useDispatch();
 
   const getReceptionHourTitle = () => {
@@ -28,6 +34,7 @@ export const VetClinicAvailabilityReceptionHourFormItem = ({ receptionHour, inde
 
   const handleRemove = () => {
     dispatch(removeCurrentVetClinicAvailabilityReceptionHour(index));
+    onRemove();
   };
 
   const actions = [
@@ -46,12 +53,28 @@ export const VetClinicAvailabilityReceptionHourFormItem = ({ receptionHour, inde
         rightActions={actions}
       >
         <View style={simpleListItemStyles.innerContainer}>
-          <View style={simpleListItemStyles.nameContainer}>
-            <Text style={simpleListItemStyles.name}>{getReceptionHourTitle()}</Text>
+          <View style={simpleListItemStyles.rowContainer}>
+            <View style={simpleListItemStyles.nameContainer}>
+              <Text style={simpleListItemStyles.name}>{getReceptionHourTitle()}</Text>
+            </View>
           </View>
+          {error && (
+            <ErrorText
+              errorMessages={[ error ]}
+              styles={styles.error}
+            />
+          )}
         </View>
       </SwipeButton>
+
       <BreakLine />
+
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  error: {
+    marginLeft: 10,
+  },
+});

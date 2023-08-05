@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { getInputErrors } from 'api/error/services';
-import React, { FC, useEffect, useState } from 'react';
-import { FormError } from 'types/api/error/types';
+import { getInputErrors, getNotOmittedErrors } from 'api/error/services';
+import React, {
+  forwardRef, useEffect, useImperativeHandle, useState,
+} from 'react';
+import { ApiError } from 'types/api/error/types';
 import { VetAvailability, VetAvailabilityFormProps } from 'types/api/vetAvailability/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
@@ -22,13 +24,25 @@ import { buttonsTranslations } from 'constants/translations/buttons.translations
 import {
   VetClinicAvailabilityReceptionHourFormList,
 } from 'components/Forms/VetClinicAvailability/VetClinicAvailabilityReceptionHourFormList';
+import { VetAvailabilityApi } from 'api/vetAvailability/vetAvailability.api';
+import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
+import { DayWeek } from 'constants/enums/dayWeek.enum';
+import { ErrorText } from 'components/Composition/ErrorText';
 
 interface Props {
   availability?: VetAvailability;
 }
 
-export const VetClinicAvailabilityForm: FC<Props> = ({ availability }) => {
-  const [ errors, setErrors ] = useState<FormError[]>([]);
+export interface HandleSubmitVetClinicAvailabilityForm {
+  submit: () => void;
+  loading: boolean;
+}
+
+export const VetClinicAvailabilityForm = forwardRef<HandleSubmitVetClinicAvailabilityForm, Props>((
+  { availability },
+  ref,
+) => {
+  const [ errors, setErrors ] = useState<ApiError[]>([]);
   const user = useSelector((state: RootState) => state.user.currentUser);
   const clinic = useSelector((state: RootState) => state.clinic.currentClinic);
   const [ form, setForm ] = useState<VetAvailabilityFormProps>({
@@ -47,8 +61,28 @@ export const VetClinicAvailabilityForm: FC<Props> = ({ availability }) => {
   const navigation = useNavigation<CreateVetClinicAvailabilityScreenNavigationProps>();
   const parsedUserVetSpecializations = parseDataToSelectOptions(user?.specializations || [], 'name', 'id');
   const currentAvailability = useSelector((state: RootState) => state.clinic.currentVetClinicAvailability);
+  const [ loading, setLoading ] = useState(false);
+  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
+  const receptionHoursAsString = JSON.stringify(currentAvailability?.receptionHours || []);
 
-  useEffect(() => () => handleClearSelectInputs(), []);
+  useEffect(() => () => {
+    handleClearSelectInputs();
+    dispatch(setCurrentVetClinicAvailability(undefined));
+  }, []);
+
+  useEffect(() => {
+    setForm({
+      ...form,
+      receptionHours: [ ...(currentAvailability?.receptionHours || []) ],
+    });
+  }, [ receptionHoursAsString ]);
+
+  useImperativeHandle(ref, () => ({
+    submit() {
+      handleSubmitForm();
+    },
+    loading,
+  }));
 
   const handleClearSelectInputs = () => {
     dispatch(removeSingleSelect(SelectId.VET_SPECIALIZATION));
@@ -59,8 +93,41 @@ export const VetClinicAvailabilityForm: FC<Props> = ({ availability }) => {
     navigation.push('Create Vet Clinic Availability Reception Hours', {});
   };
 
+  const getParsedFormData = () => {
+    const receptionHours = form.receptionHours.map((receptionHour) => ({
+      ...receptionHour,
+      day: receptionHour.day.id as DayWeek,
+    }));
+    return ({
+      ...form,
+      specializationId: Number(form.specialization?.id),
+      receptionHours,
+    });
+  };
+
+  const handleSubmitForm = async () => {
+    setLoading(true);
+    try {
+      await VetAvailabilityApi.createVetAvailabilities(getParsedFormData());
+      navigation.navigate('Vet Clinic Availabilities');
+    } catch (err: any) {
+      const errs = [ err?.response?.data ];
+      handleErrorAlert(errs);
+      setErrors([ ...errs ]);
+    }
+    setLoading(false);
+  };
+
+  const receptionHoursErrors = getInputErrors(errors, 'receptionHours');
+
+  const handleUpdateReceptionHourErrors = () => {
+    const errorsWithoutReceptionHourErrors = getNotOmittedErrors(errors, 'receptionHour');
+    setErrors([ ...errorsWithoutReceptionHourErrors ]);
+  };
+
   return (
     <View>
+      {drawErrorAlert(errors)}
       <View>
         <SelectInput
           onChoose={(specialization) => setForm({
@@ -71,7 +138,7 @@ export const VetClinicAvailabilityForm: FC<Props> = ({ availability }) => {
           id={SelectId.VET_SPECIALIZATION}
           options={parsedUserVetSpecializations}
           label={inputsTranslations.SPECIALIZATION}
-          errors={getInputErrors(errors, 'specialization')}
+          errors={getInputErrors(errors, 'specializationId')}
           selectScreenHeaderTitle={commonTranslations.SPECIALIZATIONS}
         />
       </View>
@@ -81,16 +148,28 @@ export const VetClinicAvailabilityForm: FC<Props> = ({ availability }) => {
         >
           {commonTranslations.RECEPTION_HOURS.toUpperCase()}
         </Text>
-        <VetClinicAvailabilityReceptionHourFormList receptionHours={currentAvailability?.receptionHours || []} />
-        <Button
-          title={buttonsTranslations.ADD}
-          variant="solid"
-          onPress={handleAddVetClinicAvailability}
+        {
+          receptionHoursErrors.length > 0
+          && (
+            <ErrorText errorMessages={receptionHoursErrors} />
+          )
+        }
+        <VetClinicAvailabilityReceptionHourFormList
+          receptionHours={currentAvailability?.receptionHours || []}
+          onRemoveReceptionHour={handleUpdateReceptionHourErrors}
+          errors={errors}
         />
+        <View style={{ marginTop: 10 }}>
+          <Button
+            title={buttonsTranslations.ADD}
+            variant="outline"
+            onPress={handleAddVetClinicAvailability}
+          />
+        </View>
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   receptionHoursContainer: {
