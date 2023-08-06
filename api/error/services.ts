@@ -2,8 +2,17 @@ import { ApiError, ErrorMessage } from 'types/api/error/types';
 import errorsTranslations from 'constants/translations/errors.translations';
 
 export const getAlertError = (errors: ApiError[]): ErrorMessage | undefined => {
+  if (errors.length === 0) return undefined;
+
+  if (errors[0].statusCode === 500) {
+    return {
+      message: 'Internal server error',
+      property: 'all',
+    };
+  }
+
   const errorMessages = errors.map((error) => error?.message).flat();
-  return errorMessages.find((errorMessage) => errorMessage.property === 'all');
+  return errorMessages.find((errorMessage) => errorMessage!.property === 'all');
 };
 
 export const getInputErrors = (errors: ApiError[], field: string): ErrorMessage[] => {
@@ -18,4 +27,8 @@ export const getErrorMessage = (errors: ErrorMessage[]): string => {
   return errorsTranslations[parseErrorMessageToTranslationKey(errorMessage)];
 };
 
-export const getNotOmittedErrors = (errors: ApiError[], fieldToOmit: string) => errors.filter((error) => error.message?.find((errorMessage) => errorMessage.property !== fieldToOmit));
+export const getNotOmittedErrors = (errors: ApiError[], fieldToOmit: string) => errors.filter(
+  (error) => error.message?.find((errorMessage) => errorMessage.property !== fieldToOmit),
+);
+
+// const isInternalError = (errors: ApiError[]): ApiError | undefined => errors.find((error) => error.statusCode === 500);

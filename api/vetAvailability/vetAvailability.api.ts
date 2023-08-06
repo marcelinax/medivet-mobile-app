@@ -21,4 +21,8 @@ export class VetAvailabilityApi {
     const res = await authClient.put(`vet-availabilities/${id}`, data);
     return res.data;
   }
+
+  static async removeVetAvailability(id: number): Promise<void> {
+    await authClient.delete(`vet-availabilities/${id}`);
+  }
 }

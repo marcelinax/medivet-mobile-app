@@ -13,13 +13,24 @@ import { OutlineCard } from 'components/Composition/OutlineCard';
 import { parseDateFormatToTime, parseTimeStringToDate } from 'utils/formatDate';
 import { useNavigation } from '@react-navigation/native';
 import { VetClinicAvailabilitiesScreenNavigationProps } from 'types/Navigation/types';
+import { useState } from 'react';
+import { ApiError } from 'types/api/error/types';
+import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
+import { VetAvailabilityApi } from 'api/vetAvailability/vetAvailability.api';
+import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
+import { confirmationAlertTranslations } from 'constants/translations/alerts/confirmationAlert.translations';
 
 interface Props {
   availability: VetAvailability;
+  onSuccessRemove: () => void;
+  setRemoveLoading: (loading: boolean) => void;
 }
 
-export const VetClinicAvailabilityCard = ({ availability }: Props) => {
+export const VetClinicAvailabilityCard = ({ availability, onSuccessRemove, setRemoveLoading }: Props) => {
   const navigation = useNavigation<VetClinicAvailabilitiesScreenNavigationProps>();
+  const [ errors, setErrors ] = useState<ApiError[]>([]);
+  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
+  const confirmation = useConfirmationAlert();
 
   const sortSingleGroupedReceptionHours = (groupedReceptionHours: GroupedVetAvailabilityReceptionHour[]) => {
     groupedReceptionHours.forEach((groupedReceptionHour) => groupedReceptionHour.hours.sort((a, b) => {
@@ -85,6 +96,23 @@ export const VetClinicAvailabilityCard = ({ availability }: Props) => {
 
   const handleEditVetClinicAvailability = () => navigation.navigate('Edit Vet Clinic Availability', { availabilityId: availability.id });
 
+  const handleRemoveVetClinicAvailability = async () => {
+    await confirmation({
+      title: '',
+      message: confirmationAlertTranslations.REMOVING_CONFIRMATION,
+    });
+    setRemoveLoading(true);
+    try {
+      await VetAvailabilityApi.removeVetAvailability(availability.id);
+      onSuccessRemove();
+    } catch (err: any) {
+      const errs = [ err?.response?.data ];
+      setErrors([ ...errs ]);
+      handleErrorAlert(errs);
+    }
+    setRemoveLoading(false);
+  };
+
   const rightActions: SwipeButtonActionProps[] = [
     {
       icon: icons.PENCIL_OUTLINE,
@@ -96,28 +124,31 @@ export const VetClinicAvailabilityCard = ({ availability }: Props) => {
     {
       icon: 'trash-outline',
       color: colors.DANGER,
-      onPress: () => console.log(1),
+      onPress: handleRemoveVetClinicAvailability,
       id: 'home',
       backgroundColor: 'transparent',
     },
   ];
 
   return (
-    <View>
-      <SwipeButton
-        size="small"
-        rightActions={rightActions}
-      >
-        <OutlineCard style={styles.card}>
-          <Text style={styles.name}>
-            {availability.specialization.name}
-          </Text>
-          <Text style={styles.hours}>
-            {renderReceptionHours(availability.receptionHours)}
-          </Text>
-        </OutlineCard>
-      </SwipeButton>
-    </View>
+    <>
+      {drawErrorAlert(errors)}
+      <View>
+        <SwipeButton
+          size="small"
+          rightActions={rightActions}
+        >
+          <OutlineCard style={styles.card}>
+            <Text style={styles.name}>
+              {availability.specialization.name}
+            </Text>
+            <Text style={styles.hours}>
+              {renderReceptionHours(availability.receptionHours)}
+            </Text>
+          </OutlineCard>
+        </SwipeButton>
+      </View>
+    </>
   );
 };
 

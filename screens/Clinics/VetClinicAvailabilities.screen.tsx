@@ -12,6 +12,8 @@ import { View } from 'react-native';
 import { navigationTranslations } from 'constants/translations/navigation.translations';
 import { VetClinicAvailabilityCard } from 'components/Screens/Clinics/VetClinicAvailabilities/VetClinicAvailabilityCard';
 import { ApiError } from 'types/api/error/types';
+import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
+import { FullScreenLoading } from 'components/Composition/FullScreenLoading';
 
 export const VetClinicAvailabilitiesScreen = () => {
   const navigation = useNavigation<VetClinicAvailabilitiesScreenNavigationProps>();
@@ -20,7 +22,9 @@ export const VetClinicAvailabilitiesScreen = () => {
   const user = useSelector((state: RootState) => state.user.currentUser);
   const clinic = useSelector((state: RootState) => state.clinic.currentClinic);
   const [ errors, setErrors ] = useState<ApiError[]>([]);
+  const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
   const isFocused = useIsFocused();
+  const [ removeLoading, setRemoveLoading ] = useState(false);
 
   useEffect(() => {
     fetchVetClinicAvailabilities();
@@ -76,17 +80,26 @@ export const VetClinicAvailabilitiesScreen = () => {
     return groupedAvailabilities;
   };
 
+  const handleRemoveAvailability = () => {
+    handleSuccessAlert();
+    fetchVetClinicAvailabilities();
+  };
+
   const drawAvailabilities = () => getAvailabilitiesGroupedBySpecialization().map((availability) => (
     <VetClinicAvailabilityCard
       availability={availability}
       key={`availability-${availability.id}`}
+      onSuccessRemove={handleRemoveAvailability}
+      setRemoveLoading={setRemoveLoading}
     />
   ));
 
   return (
     <DefaultLayout>
       <>
+        <FullScreenLoading loading={removeLoading} />
         {drawErrorAlert(errors)}
+        {drawSuccessAlert()}
         {
           !availabilities ? <LoadingContainer /> : (
             <View>

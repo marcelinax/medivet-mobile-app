@@ -7,21 +7,26 @@ interface Props {
 }
 
 export const FullScreenLoading = ({ loading }: Props) => (loading ? (
-  <View style={styles.centeredView}>
-    <Modal
-      animationType="none"
-      transparent
-      visible={false}
-      statusBarTranslucent
-    >
-      <View style={styles.centeredView}>
-        <Loading />
-      </View>
-    </Modal>
-  </View>
-) : <></>);
+  <Modal
+    animationType="none"
+    transparent
+    visible={false}
+    statusBarTranslucent
+  >
+    <View style={styles.centeredView}>
+      <Loading />
+    </View>
+  </Modal>
+) : <></>
+);
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    position: 'absolute',
+    left: 0,
+    top: 0,
+  },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
