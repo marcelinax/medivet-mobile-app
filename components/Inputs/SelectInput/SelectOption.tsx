@@ -4,7 +4,6 @@ import {
 import colors from 'themes/colors';
 import { Ionicons } from '@expo/vector-icons';
 import icons from 'themes/icons';
-import { FC } from 'react';
 import { SelectOptionProps } from 'types/components/Inputs/types';
 
 interface Props extends SelectOptionProps {
@@ -12,9 +11,9 @@ interface Props extends SelectOptionProps {
   onSelect: (option: SelectOptionProps) => void;
 }
 
-export const SelectOption: FC<Props> = ({
+export const SelectOption = ({
   isSelected, label, onSelect, id,
-}) => (
+}: Props) => (
   <TouchableWithoutFeedback onPress={() => onSelect({
     id,
     label,

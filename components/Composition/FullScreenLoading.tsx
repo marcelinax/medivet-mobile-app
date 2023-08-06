@@ -1,13 +1,12 @@
 import { Modal, StyleSheet, View } from 'react-native';
 import { Loading } from 'components/Composition/Loading';
 import colors from 'themes/colors';
-import { FC } from 'react';
 
 interface Props {
   loading: boolean;
 }
 
-export const FullScreenLoading: FC<Props> = ({ loading }) => (loading ? (
+export const FullScreenLoading = ({ loading }: Props) => (loading ? (
   <View style={styles.centeredView}>
     <Modal
       animationType="none"

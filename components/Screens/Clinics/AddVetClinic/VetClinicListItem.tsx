@@ -1,5 +1,5 @@
 import { Clinic } from 'types/api/clinic/types';
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import { simpleListItemStyles } from 'screens/utils/styles';
 import {
   StyleSheet, Text, TouchableWithoutFeedback, View,
@@ -27,7 +27,7 @@ interface Props {
   clinic: Clinic;
 }
 
-export const VetClinicListItem: FC<Props> = ({ clinic }) => {
+export const VetClinicListItem = ({ clinic }: Props) => {
   const confirmation = useConfirmationAlert();
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const navigation = useNavigation<AddVetClinicScreenNavigationProps>();

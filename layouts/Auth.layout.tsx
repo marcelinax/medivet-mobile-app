@@ -1,5 +1,5 @@
 import { commonTranslations } from 'constants/translations/common.translations';
-import React, { FC } from 'react';
+import React from 'react';
 import {
   Image, ImageResolvedAssetSource, ScrollView, StyleSheet, Text, View,
 } from 'react-native';
@@ -11,7 +11,7 @@ interface Props {
   image: ImageResolvedAssetSource;
 }
 
-export const AuthLayout: FC<Props> = ({ image, children }) => (
+export const AuthLayout = ({ image, children }: Props) => (
   <ScrollView
     style={{ flex: 1 }}
     automaticallyAdjustKeyboardInsets

@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import {
   ScrollView, StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
@@ -12,11 +11,11 @@ interface Props {
   stickyFooterStyles?: StyleProp<ViewStyle>;
 }
 
-export const DefaultLayout: FC<Props> = ({
+export const DefaultLayout = ({
   children,
   stickyFooterChildren,
   stickyFooterStyles,
-}) => (
+}: Props) => (
   <>
     <ScrollView
       style={{ flex: 1 }}

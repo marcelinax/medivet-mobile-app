@@ -1,7 +1,7 @@
 import { VetSpecialization } from 'types/api/user/types';
 import { simpleListItemStyles } from 'screens/utils/styles';
 import { Text, View } from 'react-native';
-import React, { FC } from 'react';
+import React from 'react';
 import { SwipeButtonActionProps } from 'types/components/Buttons/types';
 import { SwipeButton } from 'components/Buttons/SwipeButton/SwipeButton';
 import { BreakLine } from 'components/Composition/BreakLine';
@@ -14,7 +14,7 @@ interface Props {
 // przekazać opcjonalne akcji wykorzystujaca swipeable action button
 // preview button? (strzalka)
 // dorobić akcje usuwania/edycji/podgladu
-export const UserSpecializationListItem: FC<Props> = ({ vetSpecialization, actions }) => (
+export const UserSpecializationListItem = ({ vetSpecialization, actions }: Props) => (
   <View
     style={simpleListItemStyles.container}
   >

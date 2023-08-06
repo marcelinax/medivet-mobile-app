@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { FlatList, ListRenderItem, View } from 'react-native';
 import { EmptyList } from 'components/Composition/EmptyList';
@@ -21,7 +21,7 @@ interface Props {
   stickyButtonLoading?: boolean;
 }
 
-export const List: FC<Props> = ({
+export const List = ({
   onFetch, renderItem, itemToUpdate,
   withSearch,
   separateOptions,
@@ -29,7 +29,7 @@ export const List: FC<Props> = ({
   stickyFooterButtonTitle,
   stickyFooterButtonAction,
   stickyButtonLoading,
-}) => {
+}: Props) => {
   const [ loading, setLoading ] = useState<boolean>(false);
   const [ offset, setOffset ] = useState<number>(0);
   const [ data, setData ] = useState<any[]>([]);
@@ -152,7 +152,7 @@ export const List: FC<Props> = ({
           stickyFooterButtonTitle && stickyFooterButtonAction && (
             <View style={listStyles.footerButtonContainer}>
               <LoadingButton
-                loading={stickyButtonLoading}
+                loading={!!stickyButtonLoading}
                 title={stickyFooterButtonTitle}
                 variant="solid"
                 onPress={stickyFooterButtonAction}

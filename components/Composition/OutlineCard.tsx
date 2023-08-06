@@ -2,15 +2,15 @@ import colors from 'themes/colors';
 import {
   StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
-import { FC, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
   style?: StyleProp<ViewStyle>;
 }
 
-export const OutlineCard: FC<Props> = ({ children, style }) => (
-  <View style={[styles.card, style]}>
+export const OutlineCard = ({ children, style }: Props) => (
+  <View style={[ styles.card, style ]}>
     {children}
   </View>
 );

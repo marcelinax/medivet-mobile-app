@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import React, { FC } from 'react';
+import React from 'react';
 import { Text, TouchableHighlight, View } from 'react-native';
 import { ButtonProps } from 'types/components/Buttons/types';
 import colors from 'themes/colors';
@@ -11,7 +11,7 @@ import {
   getButtonTextColor,
 } from './utils/styles';
 
-export const Button: FC<ButtonProps> = ({
+export const Button = ({
   title,
   variant,
   disabled,
@@ -20,7 +20,7 @@ export const Button: FC<ButtonProps> = ({
   rightIcon,
   fontWeight,
   ...props
-}) => (
+}: ButtonProps) => (
   // zamienic dla androida na native
   <TouchableHighlight
     {...props}

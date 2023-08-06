@@ -5,7 +5,7 @@ import { getInputBorderRadius, getInputStylesDependingOnVariant, inputStyles } f
 import colors from 'themes/colors';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import icons from 'themes/icons';
-import React, { FC } from 'react';
+import React from 'react';
 import { InputVariant, SelectOptionProps } from 'types/components/Inputs/types';
 import { ErrorMessage } from 'types/api/error/types';
 import { getErrorMessage } from 'api/error/services';
@@ -20,7 +20,7 @@ interface Props {
   errors: ErrorMessage[];
 }
 
-export const SelectInputWrapper: FC<Props> = ({
+export const SelectInputWrapper = ({
   label,
   handleShowOptions,
   variant,
@@ -28,7 +28,7 @@ export const SelectInputWrapper: FC<Props> = ({
   errors,
   selectedValue,
   placeholder,
-}) => (
+}: Props) => (
   <View style={inputStyles.container}>
     <View>
       <Text style={inputStyles.label}>{label?.toUpperCase()}</Text>

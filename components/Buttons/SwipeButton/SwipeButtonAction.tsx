@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { SwipeButtonActionProps, SwipeButtonSize } from 'types/components/Buttons/types';
 import { Animated, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,19 +12,19 @@ interface Props extends SwipeButtonActionProps {
 export const SWIPE_BUTTON_ACTION_DEFAULT_SIZE = 80;
 export const SWIPE_BUTTON_ACTION_SMALL_SIZE = 50;
 
-export const SwipeButtonAction: FC<Props> = ({
+export const SwipeButtonAction = ({
   icon,
   backgroundColor,
   onPress,
   color,
   translateX,
   size,
-}) => {
+}: Props) => {
   const contentColor = color ?? colors.WHITE;
   const width = size === 'small' ? SWIPE_BUTTON_ACTION_SMALL_SIZE : SWIPE_BUTTON_ACTION_DEFAULT_SIZE;
 
   return (
-    <Animated.View style={{ transform: [{ translateX }] }}>
+    <Animated.View style={{ transform: [ { translateX } ] }}>
       <RectButton
         onPress={onPress}
         style={{

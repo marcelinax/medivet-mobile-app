@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { SelectInputWrapper } from 'components/Inputs/SelectInput/SelectInputWrapper';
 import { SelectProps } from 'types/components/Inputs/types';
@@ -14,7 +14,7 @@ import {
 } from 'store/select/selectSlice';
 import { inputsTranslations } from 'constants/translations/inputs.translations';
 
-export const SelectInput: FC<SelectProps> = ({
+export const SelectInput = ({
   variant,
   defaultValue,
   placeholder,
@@ -26,7 +26,7 @@ export const SelectInput: FC<SelectProps> = ({
   options,
   fetchOptions,
   id,
-}) => {
+}: SelectProps) => {
   const navigation = useNavigation<SelectScreenNavigationProps>();
   const selectState = useSelector((state: RootState) => state.select.selects.find((select) => select.id === id));
   const dispatch = useDispatch();

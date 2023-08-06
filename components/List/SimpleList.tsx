@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { FlatList, ListRenderItem, View } from 'react-native';
 import { listStyles } from 'components/List/utils/styles';
 import colors from 'themes/colors';
@@ -15,14 +14,14 @@ interface Props {
 }
 
 // dorobić wyszukiwanie tej liście jako opcjonalne
-export const SimpleList: FC<Props> = ({
+export const SimpleList = ({
   data,
   renderItem,
   separateOptions,
   stickyButtonLoading,
   stickyFooterButtonTitle,
   stickyFooterButtonAction,
-}) => {
+}: Props) => {
   const itemSeparator = separateOptions ? () => <View style={listStyles.separator} /> : undefined;
 
   const emptyComponent: JSX.Element = data.length === 0 ? <EmptyList /> : <></>;
@@ -44,7 +43,7 @@ export const SimpleList: FC<Props> = ({
         stickyFooterButtonTitle && stickyFooterButtonAction && (
           <View style={listStyles.footerButtonContainer}>
             <LoadingButton
-              loading={stickyButtonLoading}
+              loading={!!stickyButtonLoading}
               title={stickyFooterButtonTitle}
               variant="solid"
               onPress={stickyFooterButtonAction}

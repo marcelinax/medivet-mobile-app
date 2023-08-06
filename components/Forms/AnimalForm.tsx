@@ -7,7 +7,7 @@ import { animalGenderSelectOptions, animalTypeSelectOptions } from 'constants/se
 import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import { inputsTranslations } from 'constants/translations/inputs.translations';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Animal, CreateAnimal } from 'types/api/animal/types';
 import { SelectOptionProps } from 'types/components/Inputs/types';
@@ -41,7 +41,7 @@ interface FormProps {
   profilePhotoUrl?: string;
 }
 
-export const AnimalForm: FC<Props> = ({ animal }) => {
+export const AnimalForm = ({ animal }: Props) => {
   const navigation = useNavigation<EditAnimalScreenNavigationProps>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const [ loading, setLoading ] = useState<boolean>(false);

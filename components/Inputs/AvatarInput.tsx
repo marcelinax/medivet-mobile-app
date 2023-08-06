@@ -4,7 +4,7 @@ import { errorAlertTranslations } from 'constants/translations/alerts/errorAlert
 import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import * as ImagePicker from 'expo-image-picker';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useActionsSheet } from 'hooks/Alerts/useActionsSheet';
 import { ActionsSheetButtonProps } from 'types/components/Alerts/types';
@@ -18,9 +18,9 @@ interface Props {
   icon?: any;
 }
 
-export const AvatarInput: FC<Props> = ({
+export const AvatarInput = ({
   url, onChange, onRemove, icon,
-}) => {
+}: Props) => {
   const [ status, requestPermission ] = ImagePicker.useMediaLibraryPermissions();
   const [ image, setImage ] = useState<string>(url || '');
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();

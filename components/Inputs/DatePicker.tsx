@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import moment from 'moment';
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Text, TextInput, TouchableHighlight, View,
 } from 'react-native';
@@ -28,7 +28,7 @@ interface Props {
   showSeconds?: boolean;
 }
 
-export const DatePicker: FC<Props> = ({
+export const DatePicker = ({
   handleCancel,
   onConfirm,
   mode,
@@ -40,7 +40,7 @@ export const DatePicker: FC<Props> = ({
   label,
   placeholder,
   showSeconds,
-}) => {
+}: Props) => {
   const [ visible, setVisible ] = useState<boolean>(false);
 
   const parseDateToString = (): string => {

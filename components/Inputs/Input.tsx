@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import React, { FC } from 'react';
+import React from 'react';
 import {
   StyleProp, Text, TextInput, TextStyle, View,
 } from 'react-native';
@@ -9,7 +9,7 @@ import { InputProps } from 'types/components/Inputs/types';
 import { getInputBorderRadius, getInputStylesDependingOnVariant, inputStyles } from 'components/Inputs/utils/styles';
 import { getErrorMessage } from 'api/error/services';
 
-export const Input: FC<InputProps> = ({
+export const Input = ({
   variant,
   placeholder,
   value,
@@ -21,7 +21,7 @@ export const Input: FC<InputProps> = ({
   errors,
   children,
   ...props
-}) => {
+}: InputProps) => {
   const onClearValue = (): void => {
     onChangeText('');
   };

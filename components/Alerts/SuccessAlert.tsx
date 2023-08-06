@@ -1,5 +1,5 @@
 import { Button } from 'components/Buttons/Button';
-import React, { FC } from 'react';
+import React from 'react';
 import { Modal, Text, View } from 'react-native';
 import { successAlertTranslations } from 'constants/translations/alerts/successAlert.translations';
 import { alertStyles } from 'components/Alerts/utils/styles';
@@ -11,12 +11,12 @@ interface Props {
   message?: string;
 }
 
-export const SuccessAlert: FC<Props> = ({
+export const SuccessAlert = ({
   isShown,
   title,
   onHide,
   message,
-}) => (
+}: Props) => (
   <Modal
     visible={isShown}
     transparent

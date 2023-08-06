@@ -1,5 +1,5 @@
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { FC, useContext, useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { SwipeButtonActionProps, SwipeButtonProps } from 'types/components/Buttons/types';
 import {
   SWIPE_BUTTON_ACTION_DEFAULT_SIZE,
@@ -9,9 +9,9 @@ import {
 import { Animated, View } from 'react-native';
 import { SwipeButtonContext } from 'contexts/buttons/SwipeButtonContext';
 
-export const SwipeButton: FC<SwipeButtonProps> = ({
+export const SwipeButton = ({
   leftActions, rightActions, children, size,
-}) => {
+}: SwipeButtonProps) => {
   const ref = useRef<Swipeable>(null);
   const visibleRightActions = (rightActions || []).filter((action) => action.visible !== false);
   const visibleLeftActions = (leftActions || []).filter((action) => action.visible !== false);
@@ -26,8 +26,8 @@ export const SwipeButton: FC<SwipeButtonProps> = ({
     outputRangeValue: number,
   ) => {
     const translateX = progress.interpolate({
-      inputRange: [0, 1],
-      outputRange: [outputRangeValue, 0],
+      inputRange: [ 0, 1 ],
+      outputRange: [ outputRangeValue, 0 ],
     });
     return (
       <SwipeButtonAction

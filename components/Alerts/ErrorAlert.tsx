@@ -1,6 +1,6 @@
 import { Button } from 'components/Buttons/Button';
 import errorsTranslations from 'constants/translations/errors.translations';
-import React, { FC } from 'react';
+import React from 'react';
 import { Modal, Text, View } from 'react-native';
 import { alertStyles } from 'components/Alerts/utils/styles';
 
@@ -11,12 +11,12 @@ interface Props {
   message?: string;
 }
 
-export const ErrorAlert: FC<Props> = ({
+export const ErrorAlert = ({
   isShown,
   title,
   onHide,
   message,
-}) => (
+}: Props) => (
   <Modal
     visible={isShown}
     transparent
