@@ -18,3 +18,7 @@ export type VetClinicScreenParams = {
 export type CreateVetClinicAvailabilityReceptionHourScreenParams = {
   index?: number;
 };
+
+export type EditVetClinicAvailabilityScreenParams = {
+  availabilityId: number;
+};

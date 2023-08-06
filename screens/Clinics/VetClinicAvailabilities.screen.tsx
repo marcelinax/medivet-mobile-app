@@ -5,7 +5,7 @@ import { DefaultLayout } from 'layouts/Default.layout';
 import { VetAvailabilityApi } from 'api/vetAvailability/vetAvailability.api';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { VetClinicAvailabilitiesScreenNavigationProps } from 'types/Navigation/types';
 import { LoadingContainer } from 'components/Composition/LoadingContainer';
 import { View } from 'react-native';
@@ -20,6 +20,7 @@ export const VetClinicAvailabilitiesScreen = () => {
   const user = useSelector((state: RootState) => state.user.currentUser);
   const clinic = useSelector((state: RootState) => state.clinic.currentClinic);
   const [ errors, setErrors ] = useState<ApiError[]>([]);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     fetchVetClinicAvailabilities();
@@ -33,7 +34,7 @@ export const VetClinicAvailabilitiesScreen = () => {
 
   useEffect(() => {
     fetchVetClinicAvailabilities();
-  }, [ navigation ]);
+  }, [ isFocused ]);
 
   const fetchVetClinicAvailabilities = async (): Promise<void> => {
     try {
@@ -43,7 +44,7 @@ export const VetClinicAvailabilitiesScreen = () => {
         include: 'receptionHours,specialization',
       };
       const res = await VetAvailabilityApi.getVetAvailabilities(params);
-      setAvailabilities(res);
+      setAvailabilities([ ...res ]);
     } catch (err: any) {
       const errs = [ err?.response?.data ];
       setErrors([ ...errs ]);

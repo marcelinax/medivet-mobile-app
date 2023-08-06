@@ -77,6 +77,12 @@ export const VetClinicAvailabilityForm = forwardRef<HandleSubmitVetClinicAvailab
     });
   }, [ receptionHoursAsString ]);
 
+  useEffect(() => {
+    if (availability) {
+      dispatch(setCurrentVetClinicAvailability(form));
+    }
+  }, [ availability?.id ]);
+
   useImperativeHandle(ref, () => ({
     submit() {
       handleSubmitForm();
@@ -108,7 +114,11 @@ export const VetClinicAvailabilityForm = forwardRef<HandleSubmitVetClinicAvailab
   const handleSubmitForm = async () => {
     setLoading(true);
     try {
-      await VetAvailabilityApi.createVetAvailabilities(getParsedFormData());
+      if (availability) {
+        await VetAvailabilityApi.editVetAvailability(availability.id, getParsedFormData());
+      } else {
+        await VetAvailabilityApi.createVetAvailability(getParsedFormData());
+      }
       navigation.navigate('Vet Clinic Availabilities');
     } catch (err: any) {
       const errs = [ err?.response?.data ];
@@ -134,6 +144,8 @@ export const VetClinicAvailabilityForm = forwardRef<HandleSubmitVetClinicAvailab
             ...form,
             specialization,
           })}
+          isEditable={!availability}
+          defaultValue={form?.specialization}
           variant="underline"
           id={SelectId.VET_SPECIALIZATION}
           options={parsedUserVetSpecializations}

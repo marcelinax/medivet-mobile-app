@@ -26,6 +26,7 @@ export const SelectInput = ({
   options,
   fetchOptions,
   id,
+  isEditable,
 }: SelectProps) => {
   const navigation = useNavigation<SelectScreenNavigationProps>();
   const selectState = useSelector((state: RootState) => state.select.selects.find((select) => select.id === id));
@@ -76,6 +77,7 @@ export const SelectInput = ({
       placeholder={placeholder ?? inputsTranslations.CHOOSE}
       selectedValue={selectState?.selectedOption}
       rounded={rounded}
+      isEditable={isEditable}
     />
   );
 };

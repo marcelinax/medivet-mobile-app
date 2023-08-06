@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { removeCurrentVetClinicAvailabilityReceptionHour } from 'store/clinic/clinicSlice';
 import { ErrorMessage } from 'types/api/error/types';
 import { ErrorText } from 'components/Composition/ErrorText';
+import { parseDateFormatToTime, parseTimeStringToDate } from 'utils/formatDate';
 
 interface Props {
   receptionHour: VetAvailabilityReceptionHourFormProps;
@@ -29,7 +30,9 @@ export const VetClinicAvailabilityReceptionHourFormItem = ({
   const getReceptionHourTitle = () => {
     const dayId = dayOfWeekSelectOptions!.find((day) => day.id === receptionHour.day.id)!.id as DayWeek;
     const weekDayTranslation = enumsTranslations[`${dayId}_SHORTCUT`];
-    return `${weekDayTranslation}: ${receptionHour.hourFrom} - ${receptionHour.hourTo}`;
+    const hourFrom = parseDateFormatToTime(parseTimeStringToDate(receptionHour.hourFrom), false);
+    const hourTo = parseDateFormatToTime(parseTimeStringToDate(receptionHour.hourTo), false);
+    return `${weekDayTranslation}: ${hourFrom} - ${hourTo}`;
   };
 
   const handleRemove = () => {
@@ -66,9 +69,7 @@ export const VetClinicAvailabilityReceptionHourFormItem = ({
           )}
         </View>
       </SwipeButton>
-
       <BreakLine />
-
     </View>
   );
 };

@@ -3,6 +3,7 @@ import { RouteProp } from '@react-navigation/native';
 import {
   CreateVetClinicAvailabilityReceptionHourScreenParams,
   EditAnimalScreenParams,
+  EditVetClinicAvailabilityScreenParams,
   MultiSelectScreenParams,
   SelectScreenParams,
   VetClinicScreenParams,
@@ -28,26 +29,43 @@ export type RootStackParamList = {
   'Select': SelectScreenParams;
   'Create Vet Clinic Availability': undefined;
   'Create Vet Clinic Availability Reception Hours': CreateVetClinicAvailabilityReceptionHourScreenParams;
+  'Edit Vet Clinic Availability': EditVetClinicAvailabilityScreenParams;
 }
 
+// AUTH
 export type LoginScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 export type RegistrationScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Registration'>;
 export type PreRegistrationScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Pre Registration'>;
+
+// ANIMAL
 export type EditAnimalScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Edit Animal'>;
 export type UserAnimalsScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'User Animals'>;
+
+// USER
 export type UserScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'User'>;
+
+// CLINIC
 export type VetClinicScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Vet Clinic'>;
-export type VetClinicAvailabilitiesScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Vet Clinic Availabilities'>;
-export type MultiSelectScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Multi Select'>;
-export type SelectScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Select'>;
 export type AddVetClinicScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Add Vet Clinic'>;
+
+// CLINIC AVAILABILITY
 export type CreateVetClinicAvailabilityScreenNavigationProps = NativeStackNavigationProp<RootStackParamList,
   'Create Vet Clinic Availability'>;
+export type VetClinicAvailabilitiesScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Vet Clinic Availabilities'>;
 export type CreateVetClinicAvailabilityReceptionHoursScreenNavigationProps = NativeStackNavigationProp<RootStackParamList,
   'Create Vet Clinic Availability Reception Hours'>;
+export type EditVetClinicAvailabilityScreenNavigationProps = NativeStackNavigationProp<RootStackParamList,
+  'Edit Vet Clinic Availability'>;
 
-export type EditAnimalScreenRouteProps = RouteProp<RootStackParamList, 'Edit Animal'>;
+// SELECTS
+export type MultiSelectScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Multi Select'>;
+export type SelectScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Select'>;
+
+// ROUTES
 export type VetClinicScreenRouteProps = RouteProp<RootStackParamList, 'Vet Clinic'>;
+export type EditAnimalScreenRouteProps = RouteProp<RootStackParamList, 'Edit Animal'>;
 export type SelectScreenRouteProps = RouteProp<RootStackParamList, 'Select'>;
 export type CreateVetClinicAvailabilityReceptionHoursScreenRouteProps =
   RouteProp<RootStackParamList, 'Create Vet Clinic Availability Reception Hours'>;
+export type EditVetClinicAvailabilityScreenRouteProps = RouteProp<RootStackParamList, 'Edit Vet Clinic Availability'>;
+

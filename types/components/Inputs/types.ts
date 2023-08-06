@@ -27,6 +27,7 @@ export interface SelectProps {
   onChoose: (option: SelectOptionProps) => Promise<void> | void;
   fetchOptions?: (params?: Record<string, any>) => Promise<any[]>;
   selectScreenHeaderTitle?: string;
+  isEditable?: boolean;
 }
 
 export interface SelectOptionProps {

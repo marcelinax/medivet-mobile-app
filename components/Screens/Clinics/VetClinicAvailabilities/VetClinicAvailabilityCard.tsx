@@ -2,7 +2,6 @@ import { SwipeButton } from 'components/Buttons/SwipeButton/SwipeButton';
 import icons from 'themes/icons';
 import colors from 'themes/colors';
 import { StyleSheet, Text, View } from 'react-native';
-import { FC } from 'react';
 import {
   GroupedVetAvailabilityReceptionHour,
   VetAvailability,
@@ -11,12 +10,17 @@ import {
 import { enumsTranslations } from 'constants/translations/enums.translations';
 import { SwipeButtonActionProps } from 'types/components/Buttons/types';
 import { OutlineCard } from 'components/Composition/OutlineCard';
+import { parseDateFormatToTime, parseTimeStringToDate } from 'utils/formatDate';
+import { useNavigation } from '@react-navigation/native';
+import { VetClinicAvailabilitiesScreenNavigationProps } from 'types/Navigation/types';
 
 interface Props {
   availability: VetAvailability;
 }
 
-export const VetClinicAvailabilityCard: FC<Props> = ({ availability }) => {
+export const VetClinicAvailabilityCard = ({ availability }: Props) => {
+  const navigation = useNavigation<VetClinicAvailabilitiesScreenNavigationProps>();
+
   const sortSingleGroupedReceptionHours = (groupedReceptionHours: GroupedVetAvailabilityReceptionHour[]) => {
     groupedReceptionHours.forEach((groupedReceptionHour) => groupedReceptionHour.hours.sort((a, b) => {
       if (a.hourFrom > b.hourFrom) return 1;
@@ -66,7 +70,11 @@ export const VetClinicAvailabilityCard: FC<Props> = ({ availability }) => {
   const renderReceptionHours = (receptionHours: VetAvailabilityReceptionHour[]): string => {
     const result: string[] = [];
     getReceptionHoursGroupedByDay(receptionHours).forEach((receptionHour) => {
-      const joinedHours = receptionHour.hours.map((hour) => `${hour.hourFrom}-${hour.hourTo}`).join(', ');
+      const joinedHours = receptionHour.hours.map((hour) => {
+        const hourFrom = parseDateFormatToTime(parseTimeStringToDate(hour.hourFrom), false);
+        const hourTo = parseDateFormatToTime(parseTimeStringToDate(hour.hourTo), false);
+        return `${hourFrom}-${hourTo}`;
+      }).join(', ');
       const { day } = receptionHour;
       const weekDayTranslation = enumsTranslations[`${day}_SHORTCUT`];
       const receptionHourString = `${weekDayTranslation}: ${joinedHours}`;
@@ -75,11 +83,13 @@ export const VetClinicAvailabilityCard: FC<Props> = ({ availability }) => {
     return result.join('\n');
   };
 
+  const handleEditVetClinicAvailability = () => navigation.navigate('Edit Vet Clinic Availability', { availabilityId: availability.id });
+
   const rightActions: SwipeButtonActionProps[] = [
     {
       icon: icons.PENCIL_OUTLINE,
       color: colors.WARNING,
-      onPress: () => console.log(1),
+      onPress: handleEditVetClinicAvailability,
       id: 'edit',
       backgroundColor: 'transparent',
     },

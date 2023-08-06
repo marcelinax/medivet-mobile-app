@@ -7,8 +7,18 @@ export class VetAvailabilityApi {
     return res.data;
   }
 
-  static async createVetAvailabilities(data: CreateVetAvailability): Promise<VetAvailability> {
+  static async createVetAvailability(data: CreateVetAvailability): Promise<VetAvailability> {
     const res = await authClient.post('vet-availabilities', data);
+    return res.data;
+  }
+
+  static async getVetAvailability(id: number, params?: Record<string, any>): Promise<VetAvailability> {
+    const res = await authClient.get(`vet-availabilities/${id}`, { params });
+    return res.data;
+  }
+
+  static async editVetAvailability(id: number, data: CreateVetAvailability): Promise<VetAvailability> {
+    const res = await authClient.put(`vet-availabilities/${id}`, data);
     return res.data;
   }
 }

@@ -32,6 +32,7 @@ export const SwipeButtonAction = ({
           ...styles.container,
           width,
         }}
+        activeOpacity={0}
       >
         <Ionicons
           name={icon}

@@ -15,6 +15,7 @@ import { CreateVetClinicAvailabilityScreen } from 'screens/Clinics/CreateVetClin
 import {
   CreateVetClinicAvailabilityReceptionHoursScreen,
 } from 'screens/Clinics/CreateVetClinicAvailabilityReceptionHours.screen';
+import { EditVetClinicAvailabilityScreen } from 'screens/Clinics/EditVetClinicAvailability.screen';
 
 export const ClinicsNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -90,6 +91,11 @@ export const ClinicsNavigator = () => {
           ...getDefaultScreenOptions(navigationTranslations.CREATE_AVAILABILITY_RECEPTION_HOURS),
           presentation: 'card',
         }}
+      />
+      <Stack.Screen
+        name={routes.EDIT_VET_CLINIC_AVAILABILITY}
+        component={EditVetClinicAvailabilityScreen}
+        options={getDefaultScreenOptions(navigationTranslations.EDIT_AVAILABILITY)}
       />
     </Stack.Navigator>
   );

@@ -18,6 +18,7 @@ interface Props {
   placeholder?: string;
   selectedValue?: SelectOptionProps;
   errors: ErrorMessage[];
+  isEditable?: boolean;
 }
 
 export const SelectInputWrapper = ({
@@ -28,13 +29,16 @@ export const SelectInputWrapper = ({
   errors,
   selectedValue,
   placeholder,
+  isEditable,
 }: Props) => (
   <View style={inputStyles.container}>
     <View>
       <Text style={inputStyles.label}>{label?.toUpperCase()}</Text>
       <TouchableHighlight
-        onPress={handleShowOptions}
+        onPress={() => (isEditable !== false ? handleShowOptions() : () => {
+        })}
         underlayColor={colors.WHITE}
+        style={{ opacity: isEditable !== false ? 1 : 0.5 }}
       >
         <View
           style={[
@@ -53,12 +57,14 @@ export const SelectInputWrapper = ({
             placeholder={placeholder}
             placeholderTextColor={colors.GRAY_DARK}
           />
-          <Ionicons
-            name={icons.CHEVRON_DOWN}
-            size={20}
-            color={colors.GRAY_DARK}
-            style={inputStyles.defaultIcon}
-          />
+          {isEditable !== false && (
+            <Ionicons
+              name={icons.CHEVRON_DOWN}
+              size={20}
+              color={colors.GRAY_DARK}
+              style={inputStyles.defaultIcon}
+            />
+          )}
         </View>
       </TouchableHighlight>
       {

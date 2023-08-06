@@ -31,4 +31,5 @@ export default {
   ADD_VET_CLINIC: 'Add Vet Clinic' as keyof RootStackParamList,
   CREATE_VET_CLINIC_AVAILABILITY: 'Create Vet Clinic Availability' as keyof RootStackParamList,
   CREATE_VET_CLINIC_AVAILABILITY_RECEPTION_HOURS: 'Create Vet Clinic Availability Reception Hours' as keyof RootStackParamList,
+  EDIT_VET_CLINIC_AVAILABILITY: 'Edit Vet Clinic Availability' as keyof RootStackParamList,
 };
