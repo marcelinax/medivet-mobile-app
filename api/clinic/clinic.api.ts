@@ -21,4 +21,9 @@ export class ClinicApi {
     const res = await authClient.post(`clinic-assignment-requests/${clinicId}/assignment-request`);
     return res.data;
   }
+
+  static async removeClinic(clinicId: number): Promise<{}> {
+    const res = await authClient.post(`clinic-assignment-requests/${clinicId}/unassignment-request`);
+    return res.data;
+  }
 }
