@@ -30,9 +30,9 @@ export const VetClinicScreen = () => {
   const dispatch = useDispatch();
   const confirmation = useConfirmationAlert();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
-  const isClinicAboutToRemove = clinic?.clinicAssignmentRequests?.find(
+  const isClinicAboutToRemove = !!clinic?.clinicAssignmentRequests?.find(
     (request) => request.status === ClinicAssignmentRequestStatus.TO_UNASSIGN
-      && Number(request.clinic.id) === Number(clinic!.id),
+      && request.clinic.id === clinic?.id,
   );
 
   useEffect(() => {
@@ -49,7 +49,8 @@ export const VetClinicScreen = () => {
 
   const fetchVetClinic = async (): Promise<void> => {
     try {
-      const res = await ClinicApi.getClinic(route.params.clinicId, { include: 'clinicAssignmentRequests,clinicAssignmentRequests.clinic' });
+      const params = { include: 'clinicAssignmentRequests,clinicAssignmentRequests.clinic' };
+      const res = await ClinicApi.getClinic(route.params.clinicId, params);
       setClinic(res);
       dispatch(setCurrentClinic(res));
     } catch (err: any) {
@@ -66,6 +67,22 @@ export const VetClinicScreen = () => {
         message: `${confirmationAlertTranslations.REMOVE_CLINIC_CONFIRMATION} "${clinic!.name}"?`,
       });
       await ClinicApi.removeClinic(clinic!.id);
+      handleSuccessAlert();
+      fetchVetClinic();
+    } catch (err: any) {
+      const errs = [ err?.response?.data ];
+      setErrors([ ...errs ]);
+      handleErrorAlert(errs);
+    }
+  };
+
+  const handleCancelVetClinicRemoval = async (): Promise<void> => {
+    try {
+      await confirmation({
+        title: '',
+        message: confirmationAlertTranslations.CONFIRMATION_MESSAGE,
+      });
+      await ClinicApi.cancelClinicRemoval(clinic!.id);
       handleSuccessAlert();
       fetchVetClinic();
     } catch (err: any) {
@@ -100,7 +117,16 @@ export const VetClinicScreen = () => {
                   />
                 </View>
                 {
-                  !isClinicAboutToRemove && (
+                  isClinicAboutToRemove ? (
+                    <View style={styles.buttonContainer}>
+                      <Button
+                        title={buttonsTranslations.CANCEL_REMOVAL}
+                        variant="outline"
+                        color="primary"
+                        onPress={handleCancelVetClinicRemoval}
+                      />
+                    </View>
+                  ) : (
                     <View style={styles.buttonContainer}>
                       <Button
                         title={buttonsTranslations.REMOVE}

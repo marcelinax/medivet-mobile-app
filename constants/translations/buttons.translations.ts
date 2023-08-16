@@ -12,4 +12,5 @@ export const buttonsTranslations = {
   CONFIRM: 'Potwierdź',
   LOGOUT: 'Wyloguj się',
   ADD: 'Dodaj',
+  CANCEL_REMOVAL: 'Anuluj usunięcie',
 };
