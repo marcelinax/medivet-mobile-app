@@ -1,5 +1,5 @@
-import Swipeable from "react-native-gesture-handler/Swipeable";
-import {createContext, RefObject} from "react";
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { createContext, RefObject } from 'react';
 
 interface SwipeButtonContextType {
     currentSwipeButton: RefObject<Swipeable | null>;
@@ -7,7 +7,7 @@ interface SwipeButtonContextType {
 }
 
 export const SwipeButtonContext = createContext<SwipeButtonContextType>({
-    currentSwipeButton: {current: null},
-    setCurrentSwipeButton: (swipeButton: Swipeable | null) => {
-    }
+  currentSwipeButton: { current: null },
+  setCurrentSwipeButton: (swipeButton: Swipeable | null) => {
+  },
 });

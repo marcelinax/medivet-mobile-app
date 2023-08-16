@@ -3,10 +3,8 @@ import images from 'constants/images';
 import { AuthLayout } from 'layouts/Auth.layout';
 import React from 'react';
 
-export const RegistrationScreen = () => {
-    return (
-        <AuthLayout image={images.CAT()}>
-            <RegistrationForm />
-        </AuthLayout>
-    );
-};
+export const RegistrationScreen = () => (
+  <AuthLayout image={images.CAT()}>
+    <RegistrationForm />
+  </AuthLayout>
+);

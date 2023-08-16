@@ -3,19 +3,17 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import colors from 'themes/colors';
 
-export const GlobalLoaderScreen = () => {
-    return (
-        <View style={styles.screen}>
-            <GlobalLoader />
-        </View>
-    );
-};
+export const GlobalLoaderScreen = () => (
+  <View style={styles.screen}>
+    <GlobalLoader />
+  </View>
+);
 
 const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        backgroundColor: colors.WHITE,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
+  screen: {
+    flex: 1,
+    backgroundColor: colors.WHITE,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
