@@ -12,4 +12,5 @@ export const navigationTranslations = {
   CREATE_AVAILABILITY: 'Utwórz dostępność',
   CREATE_AVAILABILITY_RECEPTION_HOURS: 'Utwórz godziny przyjmowania',
   EDIT_AVAILABILITY: 'Edycja dostępności',
+  VET_CLINIC_PROVIDED_MEDICAL_SERVICES: 'Świadczone usługi',
 };

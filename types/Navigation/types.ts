@@ -30,6 +30,7 @@ export type RootStackParamList = {
   'Create Vet Clinic Availability': undefined;
   'Create Vet Clinic Availability Reception Hours': CreateVetClinicAvailabilityReceptionHourScreenParams;
   'Edit Vet Clinic Availability': EditVetClinicAvailabilityScreenParams;
+  'Vet Clinic Provided Medical Services': undefined;
 }
 
 // AUTH
@@ -56,6 +57,10 @@ export type CreateVetClinicAvailabilityReceptionHoursScreenNavigationProps = Nat
   'Create Vet Clinic Availability Reception Hours'>;
 export type EditVetClinicAvailabilityScreenNavigationProps = NativeStackNavigationProp<RootStackParamList,
   'Edit Vet Clinic Availability'>;
+
+// CLINIC PROVIDED MEDICAL SERVICES
+export type VetClinicProvidedMedicalServicesScreenNavigationProps = NativeStackNavigationProp<RootStackParamList,
+  'Vet Clinic Provided Medical Services'>;
 
 // SELECTS
 export type MultiSelectScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Multi Select'>;

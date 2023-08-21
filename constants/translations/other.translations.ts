@@ -3,4 +3,5 @@ export const otherTranslations = {
   CHOOSE_ROLE: 'Kontynuuj jako',
   PENDING_APPROVAL: 'Oczekuje na zatwierdzenie',
   PENDING_CLINIC_REMOVAL: 'W oczekiwaniu na zatwierdzenie usunięcia przez Admina',
+  AVERAGE_DURATION_TIME: 'Średni czas trwania',
 };

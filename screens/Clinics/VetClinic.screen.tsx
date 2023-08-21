@@ -116,6 +116,14 @@ export const VetClinicScreen = () => {
                     onPress={() => navigation.navigate('Vet Clinic Availabilities')}
                   />
                 </View>
+                <View style={styles.buttonContainer}>
+                  <Button
+                    title={commonTranslations.VET_CLINIC_PROVIDED_MEDICAL_SERVICES}
+                    variant="outline"
+                    color="light"
+                    onPress={() => navigation.navigate('Vet Clinic Provided Medical Services')}
+                  />
+                </View>
                 {
                   isClinicAboutToRemove ? (
                     <View style={styles.buttonContainer}>

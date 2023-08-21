@@ -13,4 +13,7 @@ export const commonTranslations = {
   SPECIALIZATIONS: 'Specjalizacje',
   AVAILABILITIES: 'Dostępności',
   RECEPTION_HOURS: 'Godziny przyjmowania',
+  VET_CLINIC_PROVIDED_MEDICAL_SERVICES: 'Świadczone usługi',
+  MINUTES: 'minut',
+  PRICE: 'Cena',
 };
