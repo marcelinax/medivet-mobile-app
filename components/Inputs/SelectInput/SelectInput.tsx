@@ -32,16 +32,17 @@ export const SelectInput = ({
   const selectState = useSelector((state: RootState) => state.select.selects.find((select) => select.id === id));
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    handleNavigateToSelectScreen();
+  }, []);
+
   const handleShowOptions = () => {
+    handleNavigateToSelectScreen();
     navigation.navigate('Select', {
       title: selectScreenHeaderTitle ?? '',
       id,
     });
   };
-
-  useEffect(() => {
-    handleNavigateToSelectScreen();
-  }, []);
 
   const handleNavigateToSelectScreen = (): void => {
     dispatch(initSingleSelect(id));
