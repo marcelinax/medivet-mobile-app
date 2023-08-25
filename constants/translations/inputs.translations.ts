@@ -20,4 +20,5 @@ export const inputsTranslations = {
   DAY_OF_WEEK: 'Dzień tygodnia',
   HOUR_FROM: 'Od',
   HOUR_TO: 'Do',
+  SERVICE: 'Usługa',
 };

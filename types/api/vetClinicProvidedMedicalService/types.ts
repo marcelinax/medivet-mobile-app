@@ -14,3 +14,16 @@ export interface VetClinicMedicalService {
   name: string;
   specialization: VetSpecialization;
 }
+
+export interface VetSpecializationMedicalService {
+  id: number;
+  specialization: VetSpecialization;
+  name: string;
+}
+
+export interface CreateVetClinicProvidedMedicalService {
+  specializationMedicalServiceId: number;
+  price: string;
+  duration: number;
+  clinicId: number;
+}

@@ -24,4 +24,7 @@ export default {
   RECEPTION_HOUR_COLLIDES_WITH_EXISTING_ONE: 'Godzina przyjmowania koliduje z już istniejącą',
   RECEPTION_HOUR_COLLIDES_WITH_ANOTHER_ONE: 'Godzina przyjmowania koliduje z wcześniej dodaną',
   HOUR_TO_CANNOT_BE_EARLIER_THAN_HOUR_FROM: 'Godzina "od" nie może być późniejsza niż godzina "do"',
+  PRICE_SHOULD_NOT_BE_EMPTY: 'Nieprawidłowa cena',
+  DURATION_SHOULD_NOT_BE_EMPTY: 'Nieprawidłowy czas trwania',
+  SPECIALIZATIONMEDICALSERVICEID_SHOULD_NOT_BE_EMPTY: 'Wybierz usługę',
 } as Record<string, string>;

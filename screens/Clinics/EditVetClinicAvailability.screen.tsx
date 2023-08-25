@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   HandleSubmitVetClinicAvailabilityForm,
   VetClinicAvailabilityForm,
-} from 'components/Forms/VetClinicAvailabilityForm';
+} from 'components/Forms/VetClinicAvailability/VetClinicAvailabilityForm';
 import { DefaultLayout } from 'layouts/Default.layout';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { buttonsTranslations } from 'constants/translations/buttons.translations';

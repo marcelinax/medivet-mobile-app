@@ -29,7 +29,13 @@ export const DefaultLayout = ({
     </ScrollView>
     {
       stickyFooterChildren && (
-        <StickyFooter style={stickyFooterStyles}>
+        <StickyFooter style={[
+          stickyFooterStyles, {
+            paddingHorizontal: 20,
+            paddingBottom: 10,
+          },
+        ]}
+        >
           {stickyFooterChildren}
         </StickyFooter>
       )

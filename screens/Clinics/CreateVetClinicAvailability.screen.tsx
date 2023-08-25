@@ -2,16 +2,15 @@ import { DefaultLayout } from 'layouts/Default.layout';
 import {
   HandleSubmitVetClinicAvailabilityForm,
   VetClinicAvailabilityForm,
-} from 'components/Forms/VetClinicAvailabilityForm';
+} from 'components/Forms/VetClinicAvailability/VetClinicAvailabilityForm';
 import React, { useRef } from 'react';
 import { buttonsTranslations } from 'constants/translations/buttons.translations';
-import { StyleSheet } from 'react-native';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 
 export const CreateVetClinicAvailabilityScreen = () => {
   const formRef = useRef<HandleSubmitVetClinicAvailabilityForm>(null);
-  return (
 
+  return (
     <DefaultLayout
       stickyFooterChildren={(
         <LoadingButton
@@ -21,16 +20,8 @@ export const CreateVetClinicAvailabilityScreen = () => {
           onPress={() => formRef.current?.submit()}
         />
       )}
-      stickyFooterStyles={styles.footer}
     >
       <VetClinicAvailabilityForm ref={formRef} />
     </DefaultLayout>
   );
 };
-
-const styles = StyleSheet.create({
-  footer: {
-    paddingHorizontal: 20,
-    paddingBottom: 10,
-  },
-});

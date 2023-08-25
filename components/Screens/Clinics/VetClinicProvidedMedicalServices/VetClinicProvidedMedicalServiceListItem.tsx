@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import { OutlineCard } from 'components/Composition/OutlineCard';
 import colors from 'themes/colors';
 import { commonTranslations } from 'constants/translations/common.translations';
-import { otherTranslations } from 'constants/translations/other.translations';
 
 interface Props {
   medicalService: VetClinicProvidedMedicalService;
@@ -27,7 +26,7 @@ export const VetClinicProvidedMedicalServiceListItem = ({ medicalService }: Prop
         </View>
         <View style={styles.otherInformationContainer}>
           <Text style={styles.otherInformationLabel}>
-            {`${otherTranslations.AVERAGE_DURATION_TIME}: `}
+            {`${commonTranslations.AVERAGE_DURATION_TIME}: `}
           </Text>
           <Text style={styles.otherInformationValue}>
             {`${medicalService.duration} ${commonTranslations.MINUTES}`}

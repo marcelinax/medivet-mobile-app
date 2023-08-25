@@ -16,4 +16,5 @@ export const commonTranslations = {
   VET_CLINIC_PROVIDED_MEDICAL_SERVICES: 'Świadczone usługi',
   MINUTES: 'minut',
   PRICE: 'Cena',
+  AVERAGE_DURATION_TIME: 'Średni czas trwania',
 };

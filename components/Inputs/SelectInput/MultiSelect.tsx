@@ -1,7 +1,7 @@
 import { ListRenderItem } from 'react-native';
 import { SelectOptionProps } from 'types/components/Inputs/types';
 import { SelectOption } from 'components/Inputs/SelectInput/SelectOption';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { MultiSelectScreenNavigationProps } from 'types/Navigation/types';
 import { List } from 'components/List/List';
@@ -18,7 +18,6 @@ export const MultiSelect = () => {
   const selectedOptions = [ ...multiSelectState.selectedOptions ];
   const [ internalSelectedOptions, setInternalSelectedOptions ] = useState<SelectOptionProps[]>(selectedOptions);
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
-  const errorMessage = useRef<string>('');
   const dispatch = useDispatch();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
 
