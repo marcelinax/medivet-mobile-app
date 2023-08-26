@@ -25,6 +25,7 @@ import { commonTranslations } from 'constants/translations/common.translations';
 import { useNavigation } from '@react-navigation/native';
 import { CreateVetClinicProvidedMedicalServiceScreenNavigationProps } from 'types/Navigation/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
+import { MoneyInput } from 'components/Inputs/MoneyInput';
 
 interface Props {
   providedMedicalService?: VetClinicProvidedMedicalService;
@@ -180,12 +181,11 @@ export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitVetCli
         )
       }
       <View style={styles.inputMargin}>
-        <NumberInput
+        <MoneyInput
           variant="underline"
           value={form?.price}
           onChangeText={(price) => handleChangeInput('price', price)}
           errors={getInputErrors(errors, 'price')}
-          keyboardType="decimal-pad"
           label={`${commonTranslations.PRICE} (PLN)`}
         />
       </View>

@@ -2,11 +2,7 @@ import { useEffect, useState } from 'react';
 import { InputProps } from 'types/components/Inputs/types';
 import { Input } from './Input';
 
-interface Props extends InputProps {
-  keyboardType?: 'number-pad' | 'decimal-pad' | 'numeric' | 'phone-pad';
-}
-
-export const ZipCodeInput = ({ ...props }: Props) => {
+export const ZipCodeInput = ({ ...props }: InputProps) => {
   const [ value, setValue ] = useState<string>(props.value);
 
   useEffect(() => {
@@ -26,9 +22,9 @@ export const ZipCodeInput = ({ ...props }: Props) => {
 
   return (
     <Input
+      {...props}
       keyboardType="number-pad"
       maxLength={6}
-      {...props}
     />
   );
 };
