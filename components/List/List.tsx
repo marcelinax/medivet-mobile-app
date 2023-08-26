@@ -8,12 +8,11 @@ import { inputsTranslations } from 'constants/translations/inputs.translations';
 import { listStyles } from 'components/List/utils/styles';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { ApiError } from 'types/api/error/types';
+import { useIsFocused } from '@react-navigation/native';
 
 interface Props {
   onFetch: (params: Record<string, any>, id?: number) => Promise<any[]>;
   renderItem: ListRenderItem<any>;
-  itemToUpdate?: any;
-  onSuccessUpdatingItem?: () => void;
   withSearch?: boolean;
   separateOptions?: boolean;
   stickyFooterButtonTitle?: string;
@@ -22,10 +21,10 @@ interface Props {
 }
 
 export const List = ({
-  onFetch, renderItem, itemToUpdate,
+  onFetch,
+  renderItem,
   withSearch,
   separateOptions,
-  onSuccessUpdatingItem,
   stickyFooterButtonTitle,
   stickyFooterButtonAction,
   stickyButtonLoading,
@@ -38,10 +37,15 @@ export const List = ({
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const pageSize = 10;
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     onFetchData();
   }, []);
+
+  useEffect(() => {
+    onFetchData(true);
+  }, [ isFocused ]);
 
   useEffect(() => {
     setLoading(true);
@@ -52,25 +56,22 @@ export const List = ({
     return () => clearTimeout(searchTimeout);
   }, [ search ]);
 
-  useEffect(() => {
-    if (itemToUpdate) {
-      onUpdateItem();
-    }
-  }, [ itemToUpdate ]);
-
-  const onFetchData = async (): Promise<void | undefined> => {
-    if (!hasNextPage) return;
+  const onFetchData = async (forceReset?: boolean): Promise<void | undefined> => {
+    if (!hasNextPage && !forceReset) return;
     setLoading(true);
     try {
-      const res = await onFetch({
+      const params = {
         pageSize,
-        offset,
+        offset: forceReset ? 0 : offset,
         search,
-      });
-      setData([ ...data, ...res ]);
+      };
+      const res = await onFetch(params);
+      if (forceReset) {
+        setData([ ...res ]);
+      } else setData([ ...data, ...res ]);
       if (res.length <= 0) setHasNextPage(false);
       else {
-        setOffset(offset + res.length);
+        setOffset((forceReset ? 0 : offset) + res.length);
       }
     } catch (err: any) {
       const errs = [ err?.response?.data ];
@@ -78,20 +79,6 @@ export const List = ({
       handleErrorAlert(errs);
     }
     setLoading(false);
-  };
-
-  const onUpdateItem = (): void => {
-    if (itemToUpdate) {
-      const index = data.findIndex((item) => item.id === itemToUpdate.id);
-      let newData = [ ...data ];
-      if (index || index === 0) {
-        newData[index] = { ...itemToUpdate };
-      } else {
-        newData = [ ...newData, itemToUpdate ];
-      }
-      setData([ ...newData ]);
-      if (onSuccessUpdatingItem) onSuccessUpdatingItem();
-    }
   };
 
   const reset = (): void => {
@@ -142,7 +129,7 @@ export const List = ({
             ListFooterComponent={footerComponent}
             showsVerticalScrollIndicator={false}
             onEndReachedThreshold={0.001}
-            onEndReached={onFetchData}
+            onEndReached={() => onFetchData()}
             contentContainerStyle={{ flexGrow: 1 }}
             style={listStyles.list}
             stickyHeaderIndices={withSearch ? [ 0 ] : undefined}

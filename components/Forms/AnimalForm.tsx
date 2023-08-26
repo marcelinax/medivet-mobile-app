@@ -14,9 +14,7 @@ import { SelectOptionProps } from 'types/components/Inputs/types';
 import { AvatarInput } from 'components/Inputs/AvatarInput';
 import { appendFileToFormData } from 'utils/appendFileToFormData';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store/store';
-import { setAnimalToUpdate } from 'store/animal/animalSlice';
+import { useDispatch } from 'react-redux';
 import icons from 'themes/icons';
 import { useNavigation } from '@react-navigation/native';
 import { EditAnimalScreenNavigationProps } from 'types/Navigation/types';
@@ -49,7 +47,6 @@ export const AnimalForm = ({ animal }: Props) => {
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
   const [ firstRender, setFirstRender ] = useState<boolean>(true);
   const dispatch = useDispatch();
-  const animalToUpdate = useSelector((state: RootState) => state.animal.animalToUpdate);
   const [ form, setForm ] = useState<FormProps>({
     name: animal?.name ?? '',
     type: animalTypeSelectOptions.find((type) => animal?.type === type.id),
@@ -137,7 +134,6 @@ export const AnimalForm = ({ animal }: Props) => {
         // navigate to preview
       }
       handleSuccessAlert();
-      handleSetAnimalToUpdate(res);
     } catch (err: any) {
       const errs = [ err?.response?.data ];
       setErrors([ ...errs ]);
@@ -152,7 +148,6 @@ export const AnimalForm = ({ animal }: Props) => {
       try {
         const formData = appendFileToFormData(form.profilePhotoUrl, 'animal-profile-image.jpg');
         const res = await AnimalApi.uploadNewAnimalProfilePhoto(Number(animal?.id), formData);
-        handleSetAnimalToUpdate(res);
       } catch (err: any) {
         const errs = [ err?.response?.data ];
         handleErrorAlert(errs);
@@ -167,7 +162,6 @@ export const AnimalForm = ({ animal }: Props) => {
       setLoading(true);
       try {
         const res = await AnimalApi.removeAnimalProfilePhoto(Number(animal?.id));
-        handleSetAnimalToUpdate(res);
       } catch (err: any) {
         const errs = [ err?.response?.data ];
         handleErrorAlert(errs);
@@ -181,10 +175,6 @@ export const AnimalForm = ({ animal }: Props) => {
     await onChangeBasicInformation();
     await onRemoveProfilePhoto();
     await onChangeProfilePhoto();
-  };
-
-  const handleSetAnimalToUpdate = (newAnimal: Animal): void => {
-    if (!animalToUpdate) dispatch(setAnimalToUpdate(newAnimal));
   };
 
   return (
