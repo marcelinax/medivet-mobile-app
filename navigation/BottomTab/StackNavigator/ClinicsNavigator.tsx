@@ -20,6 +20,7 @@ import { VetClinicProvidedMedicalServicesScreen } from 'screens/Clinics/VetClini
 import {
   CreateVetClinicProvidedMedicalServiceScreen,
 } from 'screens/Clinics/CreateVetClinicProvidedMedicalService.screen';
+import { EditVetClinicProvidedMedicalServiceScreen } from 'screens/Clinics/EditVetClinicProvidedMedicalService.screen';
 
 export const ClinicsNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -125,6 +126,11 @@ export const ClinicsNavigator = () => {
         name={routes.CREATE_VET_CLINIC_PROVIDED_MEDICAL_SERVICE}
         component={CreateVetClinicProvidedMedicalServiceScreen}
         options={getDefaultScreenOptions(navigationTranslations.CREATE_VET_CLINIC_PROVIDED_MEDICAL_SERVICES)}
+      />
+      <Stack.Screen
+        name={routes.EDIT_VET_CLINIC_PROVIDED_MEDICAL_SERVICE}
+        component={EditVetClinicProvidedMedicalServiceScreen}
+        options={getDefaultScreenOptions(navigationTranslations.EDIT_VET_CLINIC_PROVIDED_MEDICAL_SERVICES)}
       />
     </Stack.Navigator>
   );

@@ -1,6 +1,7 @@
 import { authClient } from 'api/services';
 import {
   CreateVetClinicProvidedMedicalService,
+  UpdateVetClinicProvidedMedicalService,
   VetClinicProvidedMedicalService,
   VetSpecializationMedicalService,
 } from 'types/api/vetClinicProvidedMedicalService/types';
@@ -25,6 +26,22 @@ export class VetClinicProvidedMedicalServiceApi {
     data: CreateVetClinicProvidedMedicalService,
   ): Promise<VetClinicProvidedMedicalService> {
     const res = await authClient.post('vet-provided-medical-services', data);
+    return res.data;
+  }
+
+  static async updateVetClinicProvidedMedicalService(
+    vetClinicProvidedMedicalServiceId: number,
+    data: UpdateVetClinicProvidedMedicalService,
+  ): Promise<VetClinicProvidedMedicalService> {
+    const res = await authClient.put(`vet-provided-medical-services/${vetClinicProvidedMedicalServiceId}`, data);
+    return res.data;
+  }
+
+  static async getVetClinicProvidedMedicalService(
+    vetClinicProvidedMedicalServiceId: number,
+    params?: Record<string, any>,
+  ): Promise<VetClinicProvidedMedicalService> {
+    const res = await authClient.get(`vet-provided-medical-services/${vetClinicProvidedMedicalServiceId}`, { params });
     return res.data;
   }
 }

@@ -30,5 +30,3 @@ export const getErrorMessage = (errors: ErrorMessage[]): string => {
 export const getNotOmittedErrors = (errors: ApiError[], fieldToOmit: string) => errors.filter(
   (error) => error.message?.find((errorMessage) => errorMessage.property !== fieldToOmit),
 );
-
-// const isInternalError = (errors: ApiError[]): ApiError | undefined => errors.find((error) => error.statusCode === 500);

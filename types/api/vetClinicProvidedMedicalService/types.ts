@@ -27,3 +27,8 @@ export interface CreateVetClinicProvidedMedicalService {
   duration: number;
   clinicId: number;
 }
+
+export interface UpdateVetClinicProvidedMedicalService {
+  price: string;
+  duration: number;
+}

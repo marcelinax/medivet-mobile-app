@@ -1,5 +1,6 @@
 import {
   CreateVetClinicProvidedMedicalService,
+  UpdateVetClinicProvidedMedicalService,
   VetClinicProvidedMedicalService,
 } from 'types/api/vetClinicProvidedMedicalService/types';
 import {
@@ -91,7 +92,7 @@ export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitVetCli
     loading,
   }));
 
-  const handleChangeInput = (field: string, value: string | SelectOptionProps | undefined): void => {
+  const handleChangeInput = (field: string, value: string | SelectOptionProps | undefined | number): void => {
     setForm({
       ...form,
       [field]: value,
@@ -113,25 +114,34 @@ export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitVetCli
     return parseDataToSelectOptions(res, 'name', 'id');
   };
 
-  const getParsedFormData = (): CreateVetClinicProvidedMedicalService => ({
-    price: form?.price?.toString() || '',
-    duration: Number(form?.duration),
-    specializationMedicalServiceId: Number(form.specializationMedicalService?.id),
-    clinicId: clinic!.id,
-  });
+  const getParsedFormData = (): CreateVetClinicProvidedMedicalService | UpdateVetClinicProvidedMedicalService => {
+    if (!providedMedicalService) {
+      return {
+        price: form?.price?.toString() || '',
+        duration: Number(form?.duration),
+        specializationMedicalServiceId: Number(form.specializationMedicalService?.id),
+        clinicId: clinic!.id,
+      };
+    }
+    return {
+      price: form?.price?.toString() || '',
+      duration: Number(form?.duration),
+    };
+  };
 
   const handleSubmitForm = async () => {
     setLoading(true);
     try {
       if (providedMedicalService) {
-        console.log('edit');
+        await VetClinicProvidedMedicalServiceApi.updateVetClinicProvidedMedicalService(providedMedicalService.id, getParsedFormData());
       } else {
-        await VetClinicProvidedMedicalServiceApi.createVetClinicProvidedMedicalService(getParsedFormData());
+        await VetClinicProvidedMedicalServiceApi.createVetClinicProvidedMedicalService(
+          getParsedFormData() as CreateVetClinicProvidedMedicalService,
+        );
       }
       navigation.navigate('Vet Clinic Provided Medical Services');
     } catch (err: any) {
       const errs = [ err?.response?.data ];
-      console.log(errs.map((err) => err.message));
       handleErrorAlert(errs);
       setErrors([ ...errs ]);
     }
@@ -182,7 +192,7 @@ export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitVetCli
       <View style={styles.inputMargin}>
         <NumberInput
           variant="underline"
-          value={form?.duration}
+          value={form?.duration?.toString()}
           onChangeText={(duration) => handleChangeInput('duration', duration)}
           errors={getInputErrors(errors, 'duration')}
           label={`${commonTranslations.AVERAGE_DURATION_TIME} (min)`}

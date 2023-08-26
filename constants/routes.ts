@@ -34,4 +34,5 @@ export default {
   EDIT_VET_CLINIC_AVAILABILITY: 'Edit Vet Clinic Availability' as keyof RootStackParamList,
   VET_CLINIC_PROVIDED_MEDICAL_SERVICES: 'Vet Clinic Provided Medical Services' as keyof RootStackParamList,
   CREATE_VET_CLINIC_PROVIDED_MEDICAL_SERVICE: 'Create Vet Clinic Provided Medical Service' as keyof RootStackParamList,
+  EDIT_VET_CLINIC_PROVIDED_MEDICAL_SERVICE: 'Edit Vet Clinic Provided Medical Service' as keyof RootStackParamList,
 };

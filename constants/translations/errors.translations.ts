@@ -27,4 +27,6 @@ export default {
   PRICE_SHOULD_NOT_BE_EMPTY: 'Nieprawidłowa cena',
   DURATION_SHOULD_NOT_BE_EMPTY: 'Nieprawidłowy czas trwania',
   SPECIALIZATIONMEDICALSERVICEID_SHOULD_NOT_BE_EMPTY: 'Wybierz usługę',
+  CANNOT_CREATE_MORE_THAN_ONE_VET_PROVIDED_MEDICAL_SERVICE_FOR_SAME_SPECIALIZATION_IN_ONE_CLINIC:
+    'Usługa już istnieje dla tej kliniki i specjalizacji.',
 } as Record<string, string>;

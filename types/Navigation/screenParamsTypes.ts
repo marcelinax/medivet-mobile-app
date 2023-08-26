@@ -22,3 +22,7 @@ export type CreateVetClinicAvailabilityReceptionHourScreenParams = {
 export type EditVetClinicAvailabilityScreenParams = {
   availabilityId: number;
 };
+
+export type EditVetClinicProvidedMedicalServiceScreenParams = {
+  medicalServiceId: number;
+};
