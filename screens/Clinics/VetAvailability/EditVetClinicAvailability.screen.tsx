@@ -1,9 +1,5 @@
-import { StyleSheet } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  HandleSubmitVetClinicAvailabilityForm,
-  VetClinicAvailabilityForm,
-} from 'components/Forms/VetClinicAvailability/VetClinicAvailabilityForm';
+import { VetClinicAvailabilityForm } from 'components/Forms/VetClinicAvailability/VetClinicAvailabilityForm';
 import { DefaultLayout } from 'layouts/Default.layout';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { buttonsTranslations } from 'constants/translations/buttons.translations';
@@ -14,9 +10,10 @@ import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { VetAvailability } from 'types/api/vetAvailability/types';
 import { VetAvailabilityApi } from 'api/vetAvailability/vetAvailability.api';
 import { LoadingContainer } from 'components/Composition/LoadingContainer';
+import { HandleSubmitForm } from 'types/components/Forms/types';
 
 export const EditVetClinicAvailabilityScreen = () => {
-  const formRef = useRef<HandleSubmitVetClinicAvailabilityForm>(null);
+  const formRef = useRef<HandleSubmitForm>(null);
   const route = useRoute<EditVetClinicAvailabilityScreenRouteProps>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
@@ -48,7 +45,6 @@ export const EditVetClinicAvailabilityScreen = () => {
           onPress={() => formRef.current?.submit()}
         />
       )}
-      stickyFooterStyles={styles.footer}
     >
       <>
         {drawErrorAlert(errors)}
@@ -65,10 +61,3 @@ export const EditVetClinicAvailabilityScreen = () => {
     </DefaultLayout>
   );
 };
-
-const styles = StyleSheet.create({
-  footer: {
-    paddingHorizontal: 20,
-    paddingBottom: 10,
-  },
-});

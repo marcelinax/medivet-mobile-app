@@ -28,17 +28,13 @@ import { VetAvailabilityApi } from 'api/vetAvailability/vetAvailability.api';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { DayWeek } from 'constants/enums/dayWeek.enum';
 import { ErrorText } from 'components/Composition/ErrorText';
+import { HandleSubmitForm } from 'types/components/Forms/types';
 
 interface Props {
   availability?: VetAvailability;
 }
 
-export interface HandleSubmitVetClinicAvailabilityForm {
-  submit: () => void;
-  loading: boolean;
-}
-
-export const VetClinicAvailabilityForm = forwardRef<HandleSubmitVetClinicAvailabilityForm, Props>((
+export const VetClinicAvailabilityForm = forwardRef<HandleSubmitForm, Props>((
   { availability },
   ref,
 ) => {

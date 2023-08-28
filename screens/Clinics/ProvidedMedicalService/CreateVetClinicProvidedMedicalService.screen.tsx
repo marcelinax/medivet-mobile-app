@@ -1,14 +1,12 @@
-import {
-  HandleSubmitVetClinicProvidedMedicalServiceForm,
-  VetClinicProvidedMedicalServiceForm,
-} from 'components/Forms/VetClinicProvidedMedicalServiceForm';
+import { VetClinicProvidedMedicalServiceForm } from 'components/Forms/VetClinicProvidedMedicalServiceForm';
 import { DefaultLayout } from 'layouts/Default.layout';
 import React, { useRef } from 'react';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { buttonsTranslations } from 'constants/translations/buttons.translations';
+import { HandleSubmitForm } from 'types/components/Forms/types';
 
 export const CreateVetClinicProvidedMedicalServiceScreen = () => {
-  const formRef = useRef<HandleSubmitVetClinicProvidedMedicalServiceForm>(null);
+  const formRef = useRef<HandleSubmitForm>(null);
 
   return (
     <DefaultLayout stickyFooterChildren={(

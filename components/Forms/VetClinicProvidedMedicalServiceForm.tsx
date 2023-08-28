@@ -26,6 +26,7 @@ import { useNavigation } from '@react-navigation/native';
 import { CreateVetClinicProvidedMedicalServiceScreenNavigationProps } from 'types/Navigation/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { MoneyInput } from 'components/Inputs/MoneyInput';
+import { HandleSubmitForm } from 'types/components/Forms/types';
 
 interface Props {
   providedMedicalService?: VetClinicProvidedMedicalService;
@@ -38,12 +39,7 @@ interface FormProps {
   duration?: number;
 }
 
-export interface HandleSubmitVetClinicProvidedMedicalServiceForm {
-  submit: () => void;
-  loading: boolean;
-}
-
-export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitVetClinicProvidedMedicalServiceForm, Props>((
+export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitForm, Props>((
   { providedMedicalService },
   ref,
 ) => {

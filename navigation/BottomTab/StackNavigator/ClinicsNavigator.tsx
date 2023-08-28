@@ -2,25 +2,29 @@ import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react
 import { RootStackParamList, VetClinicScreenNavigationProps } from 'types/Navigation/types';
 import colors from 'themes/colors';
 import routes from 'constants/routes';
-import { VetClinicsScreen } from 'screens/Clinics/VetClinics.screen';
+import { VetClinicsScreen } from 'screens/Clinics/Clinic/VetClinics.screen';
 import { navigationTranslations } from 'constants/translations/navigation.translations';
-import { VetClinicScreen } from 'screens/Clinics/VetClinic.screen';
-import { VetClinicAvailabilitiesScreen } from 'screens/Clinics/VetClinicAvailabilities.screen';
+import { VetClinicScreen } from 'screens/Clinics/Clinic/VetClinic.screen';
+import { VetClinicAvailabilitiesScreen } from 'screens/Clinics/VetAvailability/VetClinicAvailabilities.screen';
 import { getDefaultScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
 import { IconButton } from 'components/Buttons/IconButton';
 import icons from 'themes/icons';
 import { useNavigation } from '@react-navigation/native';
-import { AddVetClinicScreen } from 'screens/Clinics/AddVetClinic.screen';
-import { CreateVetClinicAvailabilityScreen } from 'screens/Clinics/CreateVetClinicAvailability.screen';
+import { AddVetClinicScreen } from 'screens/Clinics/Clinic/AddVetClinic.screen';
+import { CreateVetClinicAvailabilityScreen } from 'screens/Clinics/VetAvailability/CreateVetClinicAvailability.screen';
 import {
   CreateVetClinicAvailabilityReceptionHoursScreen,
-} from 'screens/Clinics/CreateVetClinicAvailabilityReceptionHours.screen';
-import { EditVetClinicAvailabilityScreen } from 'screens/Clinics/EditVetClinicAvailability.screen';
-import { VetClinicProvidedMedicalServicesScreen } from 'screens/Clinics/VetClinicProvidedMedicalServices.screen';
+} from 'screens/Clinics/VetAvailability/CreateVetClinicAvailabilityReceptionHours.screen';
+import { EditVetClinicAvailabilityScreen } from 'screens/Clinics/VetAvailability/EditVetClinicAvailability.screen';
+import {
+  VetClinicProvidedMedicalServicesScreen,
+} from 'screens/Clinics/ProvidedMedicalService/VetClinicProvidedMedicalServices.screen';
 import {
   CreateVetClinicProvidedMedicalServiceScreen,
-} from 'screens/Clinics/CreateVetClinicProvidedMedicalService.screen';
-import { EditVetClinicProvidedMedicalServiceScreen } from 'screens/Clinics/EditVetClinicProvidedMedicalService.screen';
+} from 'screens/Clinics/ProvidedMedicalService/CreateVetClinicProvidedMedicalService.screen';
+import {
+  EditVetClinicProvidedMedicalServiceScreen,
+} from 'screens/Clinics/ProvidedMedicalService/EditVetClinicProvidedMedicalService.screen';
 
 export const ClinicsNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();

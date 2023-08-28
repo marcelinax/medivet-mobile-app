@@ -3,10 +3,7 @@ import { useRoute } from '@react-navigation/native';
 import { EditVetClinicProvidedMedicalServiceScreenRouteProps } from 'types/Navigation/types';
 import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
-import {
-  HandleSubmitVetClinicProvidedMedicalServiceForm,
-  VetClinicProvidedMedicalServiceForm,
-} from 'components/Forms/VetClinicProvidedMedicalServiceForm';
+import { VetClinicProvidedMedicalServiceForm } from 'components/Forms/VetClinicProvidedMedicalServiceForm';
 import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedicalService/types';
 import {
   VetClinicProvidedMedicalServiceApi,
@@ -16,9 +13,10 @@ import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import { LoadingContainer } from 'components/Composition/LoadingContainer';
 import { StyleSheet } from 'react-native';
+import { HandleSubmitForm } from 'types/components/Forms/types';
 
 export const EditVetClinicProvidedMedicalServiceScreen = () => {
-  const formRef = useRef<HandleSubmitVetClinicProvidedMedicalServiceForm>(null);
+  const formRef = useRef<HandleSubmitForm>(null);
   const route = useRoute<EditVetClinicProvidedMedicalServiceScreenRouteProps>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();

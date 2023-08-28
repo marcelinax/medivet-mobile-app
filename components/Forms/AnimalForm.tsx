@@ -7,7 +7,9 @@ import { animalGenderSelectOptions, animalTypeSelectOptions } from 'constants/se
 import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import { inputsTranslations } from 'constants/translations/inputs.translations';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
-import { useEffect, useState } from 'react';
+import {
+  forwardRef, useEffect, useImperativeHandle, useState,
+} from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Animal, CreateAnimal } from 'types/api/animal/types';
 import { SelectOptionProps } from 'types/components/Inputs/types';
@@ -24,6 +26,7 @@ import { parseDataToSelectOptions } from 'utils/selectInput';
 import { removeSingleSelect, setSingleSelectSelectedOption } from 'store/select/selectSlice';
 import { SelectId } from 'constants/enums/selectId.enum';
 import { ApiError } from 'types/api/error/types';
+import { HandleSubmitForm } from 'types/components/Forms/types';
 
 interface Props {
   animal?: Animal;
@@ -39,7 +42,10 @@ interface FormProps {
   profilePhotoUrl?: string;
 }
 
-export const AnimalForm = ({ animal }: Props) => {
+export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
+  { animal },
+  ref,
+) => {
   const navigation = useNavigation<EditAnimalScreenNavigationProps>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const [ loading, setLoading ] = useState<boolean>(false);
@@ -68,6 +74,13 @@ export const AnimalForm = ({ animal }: Props) => {
   }, []);
 
   useEffect(() => () => handleClearSelectInputs(), []);
+
+  useImperativeHandle(ref, () => ({
+    submit() {
+      onSubmit();
+    },
+    loading,
+  }));
 
   useEffect(() => {
     if (firstRender) return;
@@ -270,7 +283,7 @@ export const AnimalForm = ({ animal }: Props) => {
       />
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   inputMargin: {

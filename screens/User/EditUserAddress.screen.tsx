@@ -9,7 +9,7 @@ import { inputsTranslations } from 'constants/translations/inputs.translations';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 import { DefaultLayout } from 'layouts/Default.layout';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
@@ -52,7 +52,15 @@ export const EditUserAddressScreen = () => {
   };
 
   return (
-    <DefaultLayout>
+    <DefaultLayout stickyFooterChildren={(
+      <LoadingButton
+        title={buttonsTranslations.SAVE}
+        variant="solid"
+        loading={loading}
+        onPress={onSubmit}
+      />
+    )}
+    >
       <View>
         {drawErrorAlert(errors)}
         {drawSuccessAlert(successAlertTranslations.SAVED)}
@@ -106,13 +114,6 @@ export const EditUserAddressScreen = () => {
             isClearable
           />
         </View>
-        <LoadingButton
-          variant="solid"
-          title={buttonsTranslations.SAVE}
-          loading={loading}
-          style={styles.inputMargin}
-          onPress={onSubmit}
-        />
       </View>
     </DefaultLayout>
   );
