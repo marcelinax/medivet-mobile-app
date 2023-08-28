@@ -44,4 +44,8 @@ export class VetClinicProvidedMedicalServiceApi {
     const res = await authClient.get(`vet-provided-medical-services/${vetClinicProvidedMedicalServiceId}`, { params });
     return res.data;
   }
+
+  static async removeVetClinicProvidedMedicalService(vetClinicProvidedMedicalServiceId: number): Promise<void> {
+    await authClient.delete(`vet-provided-medical-services/${vetClinicProvidedMedicalServiceId}`);
+  }
 }

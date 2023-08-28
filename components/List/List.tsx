@@ -18,6 +18,8 @@ interface Props {
   stickyFooterButtonTitle?: string;
   stickyFooterButtonAction?: () => void;
   stickyButtonLoading?: boolean;
+  forceFetching?: boolean;
+  setForceFetching?: (forceFetching: boolean) => void;
 }
 
 export const List = ({
@@ -28,6 +30,8 @@ export const List = ({
   stickyFooterButtonTitle,
   stickyFooterButtonAction,
   stickyButtonLoading,
+  forceFetching,
+  setForceFetching,
 }: Props) => {
   const [ loading, setLoading ] = useState<boolean>(false);
   const [ offset, setOffset ] = useState<number>(0);
@@ -44,8 +48,15 @@ export const List = ({
   }, []);
 
   useEffect(() => {
-    onFetchData(true);
+    if (isFocused) onFetchData(true);
   }, [ isFocused ]);
+
+  useEffect(() => {
+    if (forceFetching) {
+      onFetchData(true);
+      if (setForceFetching) setForceFetching(false);
+    }
+  }, [ forceFetching ]);
 
   useEffect(() => {
     setLoading(true);
