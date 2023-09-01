@@ -14,13 +14,19 @@ import { UserSpecializationsScreen } from 'screens/User/UserSpecializations.scre
 import { useNavigation } from '@react-navigation/native';
 import { IconButton } from 'components/Buttons/IconButton';
 import icons from 'themes/icons';
-import { fetchMultiSelectOptions, onChooseSelectedOptions, setSelectedOptions } from 'store/multiSelect/multiSelectSlice';
-import { commonTranslations } from 'constants/translations/common.translations';
-import { parseDataToSelectOptions } from 'utils/selectInput';
 import { SelectOptionProps } from 'types/components/Inputs/types';
 import { setCurrentUser } from 'store/user/userSlice';
 import { getDefaultScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
 import { UserApi } from 'api/user/user.api';
+import { MultiSelectId } from 'constants/enums/multiSelectId.enum';
+import { commonTranslations } from 'constants/translations/common.translations';
+import {
+  fetchSingleMultiSelectOptions,
+  handleChooseSingleMultiSelectSelectedOptions,
+  initSingleMultiSelect,
+  setSingleMultiSelectSelectedOptions,
+} from 'store/multiSelect/multiSelectSlice';
+import { parseDataToSelectOptions } from 'utils/selectInput';
 
 export const UserNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -33,24 +39,37 @@ export const UserNavigator = () => {
 
   const onNavigateToUserSpecializationsScreen = (): void => {
     const parsedUserVetSpecializations = parseDataToSelectOptions(user.specializations || [], 'name', 'id');
-    dispatch(fetchMultiSelectOptions(fetchVetSpecializations));
-    dispatch(setSelectedOptions(parsedUserVetSpecializations));
-    dispatch(onChooseSelectedOptions(onChangeUserSpecializations));
+    dispatch(initSingleMultiSelect(MultiSelectId.VET_SPECIALIZATIONS));
+    dispatch(fetchSingleMultiSelectOptions({
+      fetch: (params) => fetchVetSpecializations(params),
+      id: MultiSelectId.VET_SPECIALIZATIONS,
+    }));
+    dispatch(setSingleMultiSelectSelectedOptions({
+      options: [ ...parsedUserVetSpecializations ],
+      id: MultiSelectId.VET_SPECIALIZATIONS,
+    }));
+    dispatch(handleChooseSingleMultiSelectSelectedOptions({
+      onChoose: onChangeUserSpecializations,
+      id: MultiSelectId.VET_SPECIALIZATIONS,
+    }));
     navigation.navigate('Multi Select', {
       title: commonTranslations.SPECIALIZATIONS,
+      id: MultiSelectId.VET_SPECIALIZATIONS,
     });
   };
 
+  const userSpecializationsScreenHeaderRight = () => (
+    <IconButton
+      icon={icons.PENCIL_OUTLINE}
+      size="large"
+      color={colors.PRIMARY}
+      onPress={onNavigateToUserSpecializationsScreen}
+    />
+  );
+
   const userSpecializationsScreenOptions: NativeStackNavigationOptions = {
     ...getDefaultScreenOptions(navigationTranslations.USER_SPECIALIZATIONS),
-    headerRight: () => (
-      <IconButton
-        icon={icons.PENCIL_OUTLINE}
-        size="large"
-        color={colors.PRIMARY}
-        onPress={onNavigateToUserSpecializationsScreen}
-      />
-    ),
+    headerRight: () => userSpecializationsScreenHeaderRight(),
   };
 
   const onChangeUserSpecializations = async (specializations: SelectOptionProps[]): Promise<void> => {

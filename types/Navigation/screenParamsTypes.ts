@@ -1,5 +1,6 @@
 export type MultiSelectScreenParams = {
   title: string;
+  id: string;
 };
 
 export type SelectScreenParams = {

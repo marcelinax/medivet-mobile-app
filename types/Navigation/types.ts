@@ -34,6 +34,7 @@ export type RootStackParamList = {
   'Vet Clinic Provided Medical Services': undefined;
   'Create Vet Clinic Provided Medical Service': undefined;
   'Edit Vet Clinic Provided Medical Service': EditVetClinicProvidedMedicalServiceScreenParams;
+  'Vet Clinic Provided Medical Service List Filters': undefined;
 }
 
 // AUTH
@@ -75,6 +76,7 @@ export type SelectScreenNavigationProps = NativeStackNavigationProp<RootStackPar
 export type VetClinicScreenRouteProps = RouteProp<RootStackParamList, 'Vet Clinic'>;
 export type EditAnimalScreenRouteProps = RouteProp<RootStackParamList, 'Edit Animal'>;
 export type SelectScreenRouteProps = RouteProp<RootStackParamList, 'Select'>;
+export type MultiSelectScreenRouteProps = RouteProp<RootStackParamList, 'Multi Select'>;
 export type CreateVetClinicAvailabilityReceptionHoursScreenRouteProps =
   RouteProp<RootStackParamList, 'Create Vet Clinic Availability Reception Hours'>;
 export type EditVetClinicAvailabilityScreenRouteProps = RouteProp<RootStackParamList, 'Edit Vet Clinic Availability'>;

@@ -11,10 +11,10 @@ import { removeToken, setToken } from 'store/auth/authSlice';
 import { RootState } from 'store/store';
 import { setCurrentUser } from 'store/user/userSlice';
 import { RootStackParamList } from 'types/Navigation/types';
-import { SelectScreen } from 'screens/SelectScreen';
+import { SelectScreen } from 'screens/Select.screen';
 import { AuthNavigator } from 'navigation/AuthNavigator';
 import { BottomTabNavigator } from 'navigation/BottomTab/BottomTabNavigator';
-import { MultiSelectScreen } from 'screens/MultiSelectScreen';
+import { MultiSelectScreen } from 'screens/MultiSelect.screen';
 
 export const Navigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();

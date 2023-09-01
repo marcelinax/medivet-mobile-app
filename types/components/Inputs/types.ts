@@ -30,6 +30,20 @@ export interface SelectProps {
   isEditable?: boolean;
 }
 
+export interface MultiSelectProps {
+  id: string;
+  variant: InputVariant;
+  defaultValues?: SelectOptionProps[];
+  placeholder?: string;
+  label?: string;
+  errors: ErrorMessage[];
+  rounded?: boolean;
+  onChoose: (options: SelectOptionProps[]) => Promise<void> | void;
+  fetchOptions: (params?: Record<string, any>) => Promise<any[]>;
+  multiSelectScreenHeaderTitle?: string;
+  isEditable?: boolean;
+}
+
 export interface SelectOptionProps {
   id: string;
   label: string;
