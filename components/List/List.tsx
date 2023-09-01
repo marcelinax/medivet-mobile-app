@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react';
-import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
-import { FlatList, ListRenderItem, View } from 'react-native';
-import { EmptyList } from 'components/Composition/EmptyList';
-import { Loading } from 'components/Composition/Loading';
-import { TextInput } from 'components/Inputs/TextInput';
-import { inputsTranslations } from 'constants/translations/inputs.translations';
-import { listStyles } from 'components/List/utils/styles';
-import { LoadingButton } from 'components/Buttons/LoadingButton';
-import { ApiError } from 'types/api/error/types';
-import { useIsFocused } from '@react-navigation/native';
+import {useEffect, useState} from 'react';
+import {useErrorAlert} from 'hooks/Alerts/useErrorAlert';
+import {FlatList, ListRenderItem, View} from 'react-native';
+import {EmptyList} from 'components/Composition/EmptyList';
+import {Loading} from 'components/Composition/Loading';
+import {TextInput} from 'components/Inputs/TextInput';
+import {inputsTranslations} from 'constants/translations/inputs.translations';
+import {listStyles} from 'components/List/utils/styles';
+import {LoadingButton} from 'components/Buttons/LoadingButton';
+import {ApiError} from 'types/api/error/types';
+import {useIsFocused} from '@react-navigation/native';
+import {useSelector} from "react-redux";
+import {RootState} from "store/store";
 
 interface Props {
   onFetch: (params: Record<string, any>, id?: number) => Promise<any[]>;
@@ -23,25 +25,26 @@ interface Props {
 }
 
 export const List = ({
-  onFetch,
-  renderItem,
-  withSearch,
-  separateOptions,
-  stickyFooterButtonTitle,
-  stickyFooterButtonAction,
-  stickyButtonLoading,
-  forceFetching,
-  setForceFetching,
-}: Props) => {
-  const [ loading, setLoading ] = useState<boolean>(false);
-  const [ offset, setOffset ] = useState<number>(0);
-  const [ data, setData ] = useState<any[]>([]);
-  const [ hasNextPage, setHasNextPage ] = useState<boolean>(true);
-  const [ search, setSearch ] = useState<string>('');
-  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
+                       onFetch,
+                       renderItem,
+                       withSearch,
+                       separateOptions,
+                       stickyFooterButtonTitle,
+                       stickyFooterButtonAction,
+                       stickyButtonLoading,
+                       forceFetching,
+                       setForceFetching,
+                     }: Props) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [offset, setOffset] = useState<number>(0);
+  const [data, setData] = useState<any[]>([]);
+  const [hasNextPage, setHasNextPage] = useState<boolean>(true);
+  const [search, setSearch] = useState<string>('');
+  const {handleErrorAlert, drawErrorAlert} = useErrorAlert();
+  const [errors, setErrors] = useState<ApiError[]>([]);
   const pageSize = 10;
   const isFocused = useIsFocused();
+  const filters = useSelector((state: RootState) => state.listFilters.selectedFilters);
 
   useEffect(() => {
     onFetchData();
@@ -49,14 +52,14 @@ export const List = ({
 
   useEffect(() => {
     if (isFocused) onFetchData(true);
-  }, [ isFocused ]);
+  }, [isFocused]);
 
   useEffect(() => {
     if (forceFetching) {
       onFetchData(true);
       if (setForceFetching) setForceFetching(false);
     }
-  }, [ forceFetching ]);
+  }, [forceFetching]);
 
   useEffect(() => {
     setLoading(true);
@@ -65,7 +68,14 @@ export const List = ({
     }, 300);
 
     return () => clearTimeout(searchTimeout);
-  }, [ search ]);
+  }, [search]);
+
+  const getParsedFilters = (): Record<string, any> => {
+    return filters.reduce((acc: Record<string, any>, cur) => {
+      acc[cur.id] = cur.value.map(singleValue => singleValue.id)
+      return acc;
+    }, {})
+  }
 
   const onFetchData = async (forceReset?: boolean): Promise<void | undefined> => {
     if (!hasNextPage && !forceReset) return;
@@ -75,18 +85,19 @@ export const List = ({
         pageSize,
         offset: forceReset ? 0 : offset,
         search,
+        ...getParsedFilters()
       };
       const res = await onFetch(params);
       if (forceReset) {
-        setData([ ...res ]);
-      } else setData([ ...data, ...res ]);
+        setData([...res]);
+      } else setData([...data, ...res]);
       if (res.length <= 0) setHasNextPage(false);
       else {
         setOffset((forceReset ? 0 : offset) + res.length);
       }
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      setErrors([ ...errs ]);
+      const errs = [err?.response?.data];
+      setErrors([...errs]);
       handleErrorAlert(errs);
     }
     setLoading(false);
@@ -116,16 +127,16 @@ export const List = ({
     </View>
   );
 
-  const emptyComponent: JSX.Element = !loading && data.length === 0 ? <EmptyList /> : <></>;
+  const emptyComponent: JSX.Element = !loading && data.length === 0 ? <EmptyList/> : <></>;
 
-  const footerComponent: JSX.Element = loading && data.length === 0 ? <Loading /> : <></>;
+  const footerComponent: JSX.Element = loading && data.length === 0 ? <Loading/> : <></>;
 
-  const itemSeparator = separateOptions ? () => <View style={listStyles.separator} /> : undefined;
+  const itemSeparator = separateOptions ? () => <View style={listStyles.separator}/> : undefined;
 
   return (
     <>
       {drawErrorAlert(errors)}
-      <View style={[ listStyles.container ]}>
+      <View style={[listStyles.container]}>
         <View
           style={stickyFooterButtonTitle && stickyFooterButtonAction ? listStyles.listContainer : listStyles.list}
         >
@@ -141,9 +152,9 @@ export const List = ({
             showsVerticalScrollIndicator={false}
             onEndReachedThreshold={0.001}
             onEndReached={() => onFetchData()}
-            contentContainerStyle={{ flexGrow: 1 }}
+            contentContainerStyle={{flexGrow: 1}}
             style={listStyles.list}
-            stickyHeaderIndices={withSearch ? [ 0 ] : undefined}
+            stickyHeaderIndices={withSearch ? [0] : undefined}
           />
         </View>
         {

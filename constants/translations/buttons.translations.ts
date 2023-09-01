@@ -13,4 +13,6 @@ export const buttonsTranslations = {
   LOGOUT: 'Wyloguj się',
   ADD: 'Dodaj',
   CANCEL_REMOVAL: 'Anuluj usunięcie',
+  APPLY: 'Zastosuj',
+  CLEAR: 'Wyczyść'
 };

@@ -18,4 +18,5 @@ export default {
   PENCIL_OUTLINE: 'pencil-outline' as const,
   TIME_OUTLINE: 'time-outline' as const,
   TRASH_OUTLINE: 'trash-outline' as const,
+  OPTIONS_OUTLINE: 'options-outline' as const,
 };

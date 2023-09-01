@@ -36,7 +36,6 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'global-require': 'off',
     'max-len': [
-      'error',
       {
         code: 140,
         tabWidth: 2,
@@ -79,7 +78,8 @@ module.exports = {
     'no-undef': 'off',
     'react/jsx-no-useless-fragment': 'off',
     'no-param-reassign': 'off',
-    'no-nested-ternary': 'off'
+    'no-nested-ternary': 'off',
+    'no-empty-pattern': 'off'
   },
   globals: {
     React: true,

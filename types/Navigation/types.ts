@@ -1,5 +1,5 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RouteProp } from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RouteProp} from '@react-navigation/native';
 import {
   CreateVetClinicAvailabilityReceptionHourScreenParams,
   EditAnimalScreenParams,
@@ -67,6 +67,8 @@ export type VetClinicProvidedMedicalServicesScreenNavigationProps = NativeStackN
   'Vet Clinic Provided Medical Services'>;
 export type CreateVetClinicProvidedMedicalServiceScreenNavigationProps = NativeStackNavigationProp<RootStackParamList,
   'Create Vet Clinic Provided Medical Service'>;
+export type VetClinicProvidedMedicalServiceListFiltersScreenNavigationProps = NativeStackNavigationProp<RootStackParamList,
+  'Vet Clinic Provided Medical Service List Filters'>;
 
 // SELECTS
 export type MultiSelectScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Multi Select'>;

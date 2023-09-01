@@ -15,4 +15,5 @@ export const navigationTranslations = {
   VET_CLINIC_PROVIDED_MEDICAL_SERVICES: 'Świadczone usługi',
   CREATE_VET_CLINIC_PROVIDED_MEDICAL_SERVICES: 'Tworzenie świadczonej usługi',
   EDIT_VET_CLINIC_PROVIDED_MEDICAL_SERVICES: 'Edycja świadczonej usługi',
+  FILTERS: 'Filtrowanie',
 };
