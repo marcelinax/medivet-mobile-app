@@ -31,6 +31,7 @@ export const SimpleList = ({
   const [loading, setLoading] = useState(false);
   const withSearch = searchKeys && searchKeys.length > 0;
   const [internalData, setInternalData] = useState<any[]>([...data]);
+  const dataAsString = JSON.stringify(data);
 
   const itemSeparator = separateOptions ? () => <View style={listStyles.separator}/> : undefined;
   const emptyComponent: JSX.Element = !loading && internalData.length === 0 ? <EmptyList/> : <></>;
@@ -44,6 +45,10 @@ export const SimpleList = ({
 
     return () => clearTimeout(searchTimeout);
   }, [search]);
+
+  useEffect(() => {
+    handleSearchData()
+  }, [dataAsString])
 
   const handleSearchData = () => {
     if (!withSearch) return internalData;
