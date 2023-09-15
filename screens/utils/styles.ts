@@ -5,7 +5,7 @@ export const listItemStyles = StyleSheet.create({
   container: {
     height: 100,
     width: '100%',
-    paddingHorizontal: 5,
+    paddingHorizontal: 15,
     paddingTop: 1,
   },
   name: {

@@ -1,12 +1,12 @@
-import {FlatList, ListRenderItem, View} from 'react-native';
-import {listStyles} from 'components/List/utils/styles';
+import { FlatList, ListRenderItem, View } from 'react-native';
+import { listStyles } from 'components/List/utils/styles';
 import colors from 'themes/colors';
-import {EmptyList} from 'components/Composition/EmptyList';
-import {LoadingButton} from 'components/Buttons/LoadingButton';
-import {useEffect, useState} from "react";
-import {Loading} from "components/Composition/Loading";
-import {TextInput} from "components/Inputs/TextInput";
-import {inputsTranslations} from "constants/translations/inputs.translations";
+import { EmptyList } from 'components/Composition/EmptyList';
+import { LoadingButton } from 'components/Buttons/LoadingButton';
+import { useEffect, useState } from 'react';
+import { Loading } from 'components/Composition/Loading';
+import { TextInput } from 'components/Inputs/TextInput';
+import { inputsTranslations } from 'constants/translations/inputs.translations';
 
 interface Props {
   data: any[];
@@ -19,23 +19,23 @@ interface Props {
 }
 
 export const SimpleList = ({
-                             data,
-                             renderItem,
-                             separateOptions,
-                             stickyButtonLoading,
-                             stickyFooterButtonTitle,
-                             stickyFooterButtonAction,
-                             searchKeys
-                           }: Props) => {
-  const [search, setSearch] = useState<string>('');
-  const [loading, setLoading] = useState(false);
+  data,
+  renderItem,
+  separateOptions,
+  stickyButtonLoading,
+  stickyFooterButtonTitle,
+  stickyFooterButtonAction,
+  searchKeys,
+}: Props) => {
+  const [ search, setSearch ] = useState<string>('');
+  const [ loading, setLoading ] = useState(false);
   const withSearch = searchKeys && searchKeys.length > 0;
-  const [internalData, setInternalData] = useState<any[]>([...data]);
+  const [ internalData, setInternalData ] = useState<any[]>([ ...data ]);
   const dataAsString = JSON.stringify(data);
 
-  const itemSeparator = separateOptions ? () => <View style={listStyles.separator}/> : undefined;
-  const emptyComponent: JSX.Element = !loading && internalData.length === 0 ? <EmptyList/> : <></>;
-  const footerComponent: JSX.Element = loading ? <Loading/> : <></>;
+  const itemSeparator = separateOptions ? () => <View style={listStyles.separator} /> : undefined;
+  const emptyComponent: JSX.Element = !loading && internalData.length === 0 ? <EmptyList /> : <></>;
+  const footerComponent: JSX.Element = loading ? <Loading /> : <></>;
 
   useEffect(() => {
     setLoading(true);
@@ -44,29 +44,29 @@ export const SimpleList = ({
     }, 300);
 
     return () => clearTimeout(searchTimeout);
-  }, [search]);
+  }, [ search ]);
 
   useEffect(() => {
-    handleSearchData()
-  }, [dataAsString])
+    handleSearchData();
+  }, [ dataAsString ]);
 
   const handleSearchData = () => {
     if (!withSearch) return internalData;
 
-    if (!search) setInternalData([...data]);
+    if (!search) setInternalData([ ...data ]);
     else {
-      const filteredData = data.filter(item => {
-        if (searchKeys!.some(key => item[key]?.toLowerCase()?.includes(search.toLowerCase()))) return item;
-      })
+      const filteredData = data.filter((item) => {
+        if (searchKeys!.some((key) => item[key]?.toLowerCase()?.includes(search.toLowerCase()))) return item;
+      });
 
-      setInternalData([...filteredData]);
+      setInternalData([ ...filteredData ]);
     }
     setLoading(false);
-  }
+  };
 
   const handleChangeSearch = (value: string): void => {
     setSearch(value);
-    setInternalData([])
+    setInternalData([]);
   };
 
   const headerComponent: JSX.Element = (
@@ -83,7 +83,7 @@ export const SimpleList = ({
   );
 
   return (
-    <View style={[listStyles.container, {backgroundColor: colors.WHITE}]}>
+    <View style={[ listStyles.container, { backgroundColor: colors.WHITE } ]}>
       <FlatList
         data={internalData}
         renderItem={renderItem}
@@ -93,9 +93,9 @@ export const SimpleList = ({
         ListEmptyComponent={emptyComponent}
         ListFooterComponent={footerComponent}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{flexGrow: 1}}
+        contentContainerStyle={{ flexGrow: 1 }}
         style={listStyles.list}
-        stickyHeaderIndices={withSearch ? [0] : undefined}
+        stickyHeaderIndices={withSearch ? [ 0 ] : undefined}
         ListHeaderComponent={withSearch ? headerComponent : <></>}
       />
       {

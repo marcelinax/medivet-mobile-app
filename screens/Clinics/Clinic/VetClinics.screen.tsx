@@ -1,8 +1,11 @@
-import {ListLayout} from 'layouts/List.layout';
-import {VetClinicList} from 'components/Screens/Clinics/UserClinics/VetClinicList';
+import { ListLayout } from 'layouts/List.layout';
+import { VetClinicList } from 'components/Screens/Clinics/UserClinics/VetClinicList';
 
 export const VetClinicsScreen = () => (
-  <ListLayout withoutVerticalPadding>
-    <VetClinicList/>
+  <ListLayout
+    withoutVerticalPadding
+    withoutBackgroundColor
+  >
+    <VetClinicList />
   </ListLayout>
 );

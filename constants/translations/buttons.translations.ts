@@ -14,5 +14,5 @@ export const buttonsTranslations = {
   ADD: 'Dodaj',
   CANCEL_REMOVAL: 'Anuluj usunięcie',
   APPLY: 'Zastosuj',
-  CLEAR: 'Wyczyść'
+  CLEAR: 'Wyczyść',
 };

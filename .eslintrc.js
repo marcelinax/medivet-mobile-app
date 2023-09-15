@@ -1,5 +1,5 @@
 module.exports = {
-  env: {es2021: true},
+  env: { es2021: true },
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
@@ -8,9 +8,9 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2021,
     sourceType: 'module',
-    project: './tsconfig.json',
+    project: [ './tsconfig.json' ],
   },
-  plugins: ['@typescript-eslint', 'react'],
+  plugins: [ '@typescript-eslint', 'react' ],
   rules: {
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
@@ -20,7 +20,7 @@ module.exports = {
       'error',
       {
         ArrayExpression: 'consistent',
-        ArrayPattern: {minItems: 3},
+        ArrayPattern: { minItems: 3 },
       },
     ],
     'object-property-newline': [
@@ -29,60 +29,61 @@ module.exports = {
         allowMultiplePropertiesPerLine: false,
       },
     ],
-    'object-curly-newline': ['error'],
+    'object-curly-newline': [ 'error' ],
     'no-multi-spaces': 'error',
     'no-irregular-whitespace': 'error',
     'no-trailing-spaces': 'error',
     'import/no-extraneous-dependencies': 'off',
     'global-require': 'off',
     'max-len': [
+      'error',
       {
         code: 140,
         tabWidth: 2,
       },
     ],
-    indent: ['error', 2],
+    indent: [ 'error', 2 ],
     'no-tabs': 'error',
-    semi: ['error'],
+    semi: [ 'error' ],
     'linebreak-style': 'off',
     'import/no-unresolved': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': 'off',
     'no-lone-blocks': 'error',
     'eol-last': 'error',
-    'react/jsx-max-props-per-line': ['error', {maximum: 1}],
+    'react/jsx-max-props-per-line': [ 'error', { maximum: 1 } ],
     'no-use-before-define': 'off',
     'react/style-prop-object': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     'react/jsx-indent': 'off',
     'consistent-return': 'off',
     'import/prefer-default-export': 'off',
-    'array-bracket-newline': ['error', {multiline: true}],
+    'array-bracket-newline': [ 'error', { multiline: true } ],
     'react/function-component-definition': 'off',
     'react/require-default-props': 'off',
     'react/jsx-props-no-spreading': 'off',
-    'curly': [
+    curly: [
       'error',
-      'multi-line'
+      'multi-line',
     ],
     'array-bracket-spacing': [
       'error',
-      'always'
+      'always',
     ],
     'no-multiple-empty-lines': [
       'error',
       {
-        'max': 1
-      }
+        max: 1,
+      },
     ],
     'no-undef': 'off',
     'react/jsx-no-useless-fragment': 'off',
     'no-param-reassign': 'off',
     'no-nested-ternary': 'off',
-    'no-empty-pattern': 'off'
+    'no-empty-pattern': 'off',
   },
   globals: {
     React: true,
-    JSX: true
+    JSX: true,
   },
 };

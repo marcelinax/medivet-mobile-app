@@ -3,19 +3,20 @@ import colors from 'themes/colors';
 
 interface Props {
   children: JSX.Element;
-  withoutHorizontalPadding?: boolean;
   withoutVerticalPadding?: boolean;
+  withoutBackgroundColor?: boolean;
 }
 
 export const ListLayout = ({
   children,
-  withoutHorizontalPadding, withoutVerticalPadding,
+  withoutVerticalPadding,
+  withoutBackgroundColor,
 }: Props) => (
   <View style={[
     styles.container,
     {
-      paddingHorizontal: !withoutHorizontalPadding ? 10 : 0,
       paddingVertical: !withoutVerticalPadding ? 20 : 0,
+      backgroundColor: withoutBackgroundColor ? 'transparent' : colors.WHITE,
     },
   ]}
   >
@@ -26,6 +27,5 @@ export const ListLayout = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.WHITE,
   },
 });

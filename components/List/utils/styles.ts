@@ -4,11 +4,19 @@ import colors from 'themes/colors';
 export const listStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.WHITE,
   },
   inputContainer: {
     backgroundColor: colors.WHITE,
     padding: 16,
+    paddingTop: 0,
+    marginBottom: 10,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 1.65,
+    elevation: 1,
   },
   separator: {
     marginTop: 10,

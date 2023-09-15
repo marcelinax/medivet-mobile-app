@@ -1,15 +1,15 @@
 import {
   VetClinicProvidedMedicalServiceListFilters,
 } from 'components/Screens/Clinics/VetClinicProvidedMedicalServices/VetClinicProvidedMedicalServiceListFilters';
-import {DefaultLayout} from 'layouts/Default.layout';
-import {buttonsTranslations} from 'constants/translations/buttons.translations';
-import React, {useRef} from 'react';
-import {Button} from 'components/Buttons/Button';
-import {setSelectedFilters} from 'store/listFilters/listFiltersSlice';
-import {useDispatch} from 'react-redux';
-import {HandleApplyFilters} from 'types/filters/types';
-import {useNavigation} from "@react-navigation/native";
-import {VetClinicProvidedMedicalServicesScreenNavigationProps} from "types/Navigation/types";
+import { DefaultLayout } from 'layouts/Default.layout';
+import { buttonsTranslations } from 'constants/translations/buttons.translations';
+import React, { useRef } from 'react';
+import { Button } from 'components/Buttons/Button';
+import { setSelectedFilters } from 'store/listFilters/listFiltersSlice';
+import { useDispatch } from 'react-redux';
+import { HandleApplyFilters } from 'types/filters/types';
+import { useNavigation } from '@react-navigation/native';
+import { VetClinicProvidedMedicalServicesScreenNavigationProps } from 'types/Navigation/types';
 
 export const VetClinicProvidedMedicalServiceListFiltersScreen = () => {
   const dispatch = useDispatch();
@@ -19,9 +19,9 @@ export const VetClinicProvidedMedicalServiceListFiltersScreen = () => {
   const submitFilters = () => {
     const selectedFilter = {
       id: 'specializationIds',
-      value: [...(filtersScreenRef?.current?.value || [])],
+      value: [ ...(filtersScreenRef?.current?.value || []) ],
     };
-    dispatch(setSelectedFilters([selectedFilter]));
+    dispatch(setSelectedFilters([ selectedFilter ]));
     navigation.goBack();
   };
 
@@ -31,11 +31,11 @@ export const VetClinicProvidedMedicalServiceListFiltersScreen = () => {
         title={buttonsTranslations.APPLY}
         variant="solid"
         onPress={submitFilters}
-        style={{marginBottom: 5}}
+        style={{ marginBottom: 5 }}
       />
     )}
     >
-      <VetClinicProvidedMedicalServiceListFilters ref={filtersScreenRef}/>
+      <VetClinicProvidedMedicalServiceListFilters ref={filtersScreenRef} />
     </DefaultLayout>
   );
 };

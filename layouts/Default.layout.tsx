@@ -1,9 +1,9 @@
 import {
   ScrollView, StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
-import colors from 'themes/colors';
 import { isAndroidPlatform } from 'utils/isAndroidPlatfrom';
 import { StickyFooter } from 'components/Composition/StickyFooter';
+import colors from 'themes/colors';
 
 interface Props {
   children: JSX.Element;

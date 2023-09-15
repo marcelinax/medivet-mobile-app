@@ -12,6 +12,7 @@ export const AnimalList = () => {
       onFetch={AnimalApi.getOwnerAnimals}
       renderItem={renderAnimal}
       separateOptions
+      withoutBackgroundColor
     />
   );
 };
