@@ -4,7 +4,8 @@ import { store } from 'store/store';
 import { ConfirmationAlertContextProvider } from 'hooks/Alerts/useConfirmationAlert';
 import { useRef } from 'react';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { SwipeButtonContext } from './contexts/buttons/SwipeButtonContext';
+import { SwipeButtonContext } from 'contexts/buttons/SwipeButtonContext';
+import './i18n.ts';
 
 export default function App() {
   const currentSwipeButton = useRef<Swipeable | null>(null);

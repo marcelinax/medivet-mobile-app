@@ -35,14 +35,16 @@ class UserApi {
 
   static async getVetSpecializations(params?: Record<string, any>): Promise<VetSpecialization[]> {
     const res = await authClient.get('vet-specializations', { params });
-    return res.data.map((item: VetSpecialization) => ({
-      ...item,
-      label: item.name,
-    }));
+    return res.data;
   }
 
   static async updateUserVetSpecializations(specializationIds: number[]): Promise<User> {
     const res = await authClient.put('users/me/vet-specializations', { specializationIds });
+    return res.data;
+  }
+
+  static async getVets(params?: Record<string, any>): Promise<User[]> {
+    const res = await authClient.get('users/vets', { params });
     return res.data;
   }
 }

@@ -3,7 +3,6 @@ import { RootStackParamList, VetClinicScreenNavigationProps } from 'types/Naviga
 import colors from 'themes/colors';
 import routes from 'constants/routes';
 import { VetClinicsScreen } from 'screens/Clinics/Clinic/VetClinics.screen';
-import { navigationTranslations } from 'constants/translations/navigation.translations';
 import { VetClinicScreen } from 'screens/Clinics/Clinic/VetClinic.screen';
 import { VetClinicAvailabilitiesScreen } from 'screens/Clinics/VetAvailability/VetClinicAvailabilities.screen';
 import { getDefaultScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
@@ -30,10 +29,12 @@ import { bottomTabStyles } from 'navigation/BottomTab/StackNavigator/utils/style
 import {
   VetClinicProvidedMedicalServiceListFiltersScreen,
 } from 'screens/Clinics/ProvidedMedicalService/VetClinicProvidedMedicalServiceListFilters.screen';
+import { useTranslation } from 'react-i18next';
 
 export const ClinicsNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const navigation = useNavigation<VetClinicScreenNavigationProps>();
+  const { t } = useTranslation();
 
   const navigateToAddVetClinicScreen = () => navigation.navigate('Add Vet Clinic');
   const navigateToCreateVetClinicAvailabilityScreen = () => navigation.navigate('Create Vet Clinic Availability');
@@ -80,23 +81,17 @@ export const ClinicsNavigator = () => {
   );
 
   const vetClinicsScreenOptions: NativeStackNavigationOptions = {
-    ...getDefaultScreenOptions(navigationTranslations.USER_CLINICS),
+    ...getDefaultScreenOptions(t('navigation.user_clinics.title')),
     headerRight: () => vetClinicsScreenHeaderRight(),
   };
 
   const vetClinicAvailabilitiesScreenOptions: NativeStackNavigationOptions = {
-    ...getDefaultScreenOptions(navigationTranslations.CLINIC_AVAILABILITIES),
+    ...getDefaultScreenOptions(t('navigation.clinic_availabilities.title')),
     headerRight: () => vetClinicAvailabilitiesScreenHeaderRight(),
   };
 
   const vetClinicProvidedMedicalServicesScreenOptions: NativeStackNavigationOptions = {
-    ...getDefaultScreenOptions(navigationTranslations.VET_CLINIC_PROVIDED_MEDICAL_SERVICES),
-    headerRight: () => vetClinicProvidedMedicalServicesScreenHeaderRight(),
-  };
-
-  const vetClinicProvidedMedicalServiceListFiltersScreenOptions: NativeStackNavigationOptions = {
-    ...getDefaultScreenOptions(navigationTranslations.FILTERS),
-    presentation: 'card',
+    ...getDefaultScreenOptions(t('navigation.vet_clinic_provided_medical_services.title')),
     headerRight: () => vetClinicProvidedMedicalServicesScreenHeaderRight(),
   };
 
@@ -115,12 +110,12 @@ export const ClinicsNavigator = () => {
       <Stack.Screen
         name={routes.ADD_VET_CLINIC}
         component={AddVetClinicScreen}
-        options={getDefaultScreenOptions(navigationTranslations.ADD_CLINIC)}
+        options={getDefaultScreenOptions(t('navigation.add_clinic.title'))}
       />
       <Stack.Screen
         name={routes.VET_CLINIC}
         component={VetClinicScreen}
-        options={getDefaultScreenOptions(navigationTranslations.CLINIC)}
+        options={getDefaultScreenOptions(t('navigation.clinic.title'))}
       />
       <Stack.Screen
         name={routes.VET_CLINIC_AVAILABILITIES}
@@ -130,20 +125,20 @@ export const ClinicsNavigator = () => {
       <Stack.Screen
         name={routes.CREATE_VET_CLINIC_AVAILABILITY}
         component={CreateVetClinicAvailabilityScreen}
-        options={getDefaultScreenOptions(navigationTranslations.CREATE_AVAILABILITY)}
+        options={getDefaultScreenOptions(t('navigation.create_availability.title'))}
       />
       <Stack.Screen
         name={routes.CREATE_VET_CLINIC_AVAILABILITY_RECEPTION_HOURS}
         component={CreateVetClinicAvailabilityReceptionHoursScreen}
         options={{
-          ...getDefaultScreenOptions(navigationTranslations.CREATE_AVAILABILITY_RECEPTION_HOURS),
+          ...getDefaultScreenOptions(t('navigation.create_availability_reception_hours.title')),
           presentation: 'card',
         }}
       />
       <Stack.Screen
         name={routes.EDIT_VET_CLINIC_AVAILABILITY}
         component={EditVetClinicAvailabilityScreen}
-        options={getDefaultScreenOptions(navigationTranslations.EDIT_AVAILABILITY)}
+        options={getDefaultScreenOptions(t('navigation.edit_availability.title'))}
       />
       <Stack.Screen
         name={routes.VET_CLINIC_PROVIDED_MEDICAL_SERVICES}
@@ -153,19 +148,19 @@ export const ClinicsNavigator = () => {
       <Stack.Screen
         name={routes.CREATE_VET_CLINIC_PROVIDED_MEDICAL_SERVICE}
         component={CreateVetClinicProvidedMedicalServiceScreen}
-        options={getDefaultScreenOptions(navigationTranslations.CREATE_VET_CLINIC_PROVIDED_MEDICAL_SERVICES)}
+        options={getDefaultScreenOptions(t('navigation.create_vet_clinic_provided_medical_services.title'))}
       />
       <Stack.Screen
         name={routes.EDIT_VET_CLINIC_PROVIDED_MEDICAL_SERVICE}
         component={EditVetClinicProvidedMedicalServiceScreen}
-        options={getDefaultScreenOptions(navigationTranslations.EDIT_VET_CLINIC_PROVIDED_MEDICAL_SERVICES)}
+        options={getDefaultScreenOptions(t('navigation.edit_vet_clinic_provided_medical_services.title'))}
       />
       <Stack.Screen
         name={routes.VET_CLINIC_PROVIDED_MEDICAL_SERVICE_LIST_FILTERS}
         component={VetClinicProvidedMedicalServiceListFiltersScreen}
         options={
           {
-            ...getDefaultScreenOptions(navigationTranslations.FILTERS),
+            ...getDefaultScreenOptions(t('navigation.filters.title')),
             presentation: 'card',
           }
         }

@@ -2,8 +2,6 @@ import { VetAvailabilityReceptionHourFormProps } from 'types/api/vetAvailability
 import { StyleSheet, Text, View } from 'react-native';
 import { simpleListItemStyles } from 'screens/utils/styles';
 import React from 'react';
-import { enumsTranslations } from 'constants/translations/enums.translations';
-import { dayOfWeekSelectOptions } from 'constants/selectOptions';
 import { DayWeek } from 'constants/enums/dayWeek.enum';
 import { BreakLine } from 'components/Composition/BreakLine';
 import { SwipeButton } from 'components/Buttons/SwipeButton/SwipeButton';
@@ -14,6 +12,8 @@ import { removeCurrentVetClinicAvailabilityReceptionHour } from 'store/clinic/cl
 import { ErrorMessage } from 'types/api/error/types';
 import { ErrorText } from 'components/Composition/ErrorText';
 import { parseDateFormatToTime, parseTimeStringToDate } from 'utils/formatDate';
+import { getDayOfWeekSelectOptions } from 'constants/selectOptions';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   receptionHour: VetAvailabilityReceptionHourFormProps;
@@ -26,10 +26,11 @@ export const VetClinicAvailabilityReceptionHourFormItem = ({
   receptionHour, index, error, onRemove,
 }: Props) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const getReceptionHourTitle = () => {
-    const dayId = dayOfWeekSelectOptions!.find((day) => day.id === receptionHour.day.id)!.id as DayWeek;
-    const weekDayTranslation = enumsTranslations[`${dayId}_SHORTCUT`];
+    const dayId = getDayOfWeekSelectOptions(t)!.find((day) => day.id === receptionHour.day.id)!.id as DayWeek;
+    const weekDayTranslation = t(`enums.day_of_week.shortcut.${dayId}`);
     const hourFrom = parseDateFormatToTime(parseTimeStringToDate(receptionHour.hourFrom), false);
     const hourTo = parseDateFormatToTime(parseTimeStringToDate(receptionHour.hourTo), false);
     return `${weekDayTranslation}: ${hourFrom} - ${hourTo}`;

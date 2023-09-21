@@ -12,7 +12,7 @@ import {
   setSingleSelectOptions,
   setSingleSelectSelectedOption,
 } from 'store/select/selectSlice';
-import { inputsTranslations } from 'constants/translations/inputs.translations';
+import { useTranslation } from 'react-i18next';
 
 export const SelectInput = ({
   variant,
@@ -31,6 +31,7 @@ export const SelectInput = ({
   const navigation = useNavigation<SelectScreenNavigationProps>();
   const selectState = useSelector((state: RootState) => state.select.selects.find((select) => select.id === id));
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     handleNavigateToSelectScreen();
@@ -75,7 +76,7 @@ export const SelectInput = ({
       label={label}
       errors={errors}
       handleShowOptions={handleShowOptions}
-      placeholder={placeholder ?? inputsTranslations.CHOOSE}
+      placeholder={placeholder ?? t('actions.choose.title')}
       selectedValue={selectState?.selectedOption}
       rounded={rounded}
       isEditable={isEditable}

@@ -4,7 +4,6 @@ import { FlatList, ListRenderItem, View } from 'react-native';
 import { EmptyList } from 'components/Composition/EmptyList';
 import { Loading } from 'components/Composition/Loading';
 import { TextInput } from 'components/Inputs/TextInput';
-import { inputsTranslations } from 'constants/translations/inputs.translations';
 import { listStyles } from 'components/List/utils/styles';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { ApiError } from 'types/api/error/types';
@@ -12,6 +11,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import colors from 'themes/colors';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   onFetch: (params: Record<string, any>, id?: number) => Promise<any[]>;
@@ -26,6 +26,7 @@ interface Props {
   withoutBackgroundColor?: boolean;
 }
 
+// poprawic background sticky footera
 export const List = ({
   onFetch,
   renderItem,
@@ -48,6 +49,7 @@ export const List = ({
   const pageSize = 10;
   const isFocused = useIsFocused();
   const filters = useSelector((state: RootState) => state.listFilters.selectedFilters);
+  const { t } = useTranslation();
 
   useEffect(() => {
     onFetchData();
@@ -123,7 +125,7 @@ export const List = ({
         onChangeText={onChangeSearch}
         errors={[]}
         autoCapitalize="none"
-        placeholder={inputsTranslations.SEARCH}
+        placeholder={t('words.search.title')}
       />
     </View>
   );
@@ -160,7 +162,9 @@ export const List = ({
         </View>
         {
           stickyFooterButtonTitle && stickyFooterButtonAction && (
-            <View style={listStyles.footerButtonContainer}>
+            <View
+              style={[ listStyles.footerButtonContainer, { backgroundColor: withoutBackgroundColor ? 'transparent' : colors.WHITE } ]}
+            >
               <LoadingButton
                 loading={!!stickyButtonLoading}
                 title={stickyFooterButtonTitle}

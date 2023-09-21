@@ -2,25 +2,26 @@ import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react
 import { EditAnimalScreenNavigationProps, RootStackParamList } from 'types/Navigation/types';
 import routes from 'constants/routes';
 import { UserAnimalsScreen } from 'screens/Animals/UserAnimals.screen';
-import { navigationTranslations } from 'constants/translations/navigation.translations';
 import { EditAnimalScreen } from 'screens/Animals/EditAnimal.screen';
 import { IconButton } from 'components/Buttons/IconButton';
 import icons from 'themes/icons';
 import colors from 'themes/colors';
 import { useNavigation } from '@react-navigation/native';
 import { CreateAnimalScreen } from 'screens/Animals/CreateAnimal.screen';
+import { useTranslation } from 'react-i18next';
 import { getDefaultScreenOptions } from './utils/screenOptions';
 
 export const AnimalsNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const navigation = useNavigation<EditAnimalScreenNavigationProps>();
+  const { t } = useTranslation();
 
   const onNavigateToCreateAnimalScreen = (): void => {
     navigation.navigate('Create Animal');
   };
 
   const animalsScreenOptions: NativeStackNavigationOptions = {
-    ...getDefaultScreenOptions(navigationTranslations.USER_ANIMALS),
+    ...getDefaultScreenOptions(t('navigation.user_animals.title')),
     headerRight: () => (
       <IconButton
         icon={icons.ADD_OUTLINE}
@@ -50,7 +51,7 @@ export const AnimalsNavigator = () => {
       <Stack.Screen
         name={routes.CREATE_ANIMAL}
         component={CreateAnimalScreen}
-        options={() => getDefaultScreenOptions(navigationTranslations.NEW_ANIMAL)}
+        options={() => getDefaultScreenOptions(t('navigation.new_animal.title'))}
       />
     </Stack.Navigator>
   );

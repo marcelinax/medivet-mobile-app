@@ -4,7 +4,6 @@ import routes from 'constants/routes';
 import { UserProfileScreen } from 'screens/User/UserProfile.screen';
 import { EditUserProfileScreen } from 'screens/User/EditUserProfile.screen';
 import { EditUserAddressScreen } from 'screens/User/EditUserAddress.screen';
-import { navigationTranslations } from 'constants/translations/navigation.translations';
 import colors from 'themes/colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
@@ -19,7 +18,6 @@ import { setCurrentUser } from 'store/user/userSlice';
 import { getDefaultScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
 import { UserApi } from 'api/user/user.api';
 import { MultiSelectId } from 'constants/enums/multiSelectId.enum';
-import { commonTranslations } from 'constants/translations/common.translations';
 import {
   fetchSingleMultiSelectOptions,
   handleChooseSingleMultiSelectSelectedOptions,
@@ -27,6 +25,7 @@ import {
   setSingleMultiSelectSelectedOptions,
 } from 'store/multiSelect/multiSelectSlice';
 import { parseDataToSelectOptions } from 'utils/selectInput';
+import { useTranslation } from 'react-i18next';
 
 export const UserNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -34,8 +33,12 @@ export const UserNavigator = () => {
   const isVet = hasVetRole(user);
   const navigation = useNavigation<UserScreenNavigationProps>();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
-  const fetchVetSpecializations = async (params?: Record<string, any>) => UserApi.getVetSpecializations(params);
+  const fetchVetSpecializations = async (params?: Record<string, any>) => {
+    const res = await UserApi.getVetSpecializations(params);
+    return parseDataToSelectOptions(res, 'name', 'id');
+  };
 
   const onNavigateToUserSpecializationsScreen = (): void => {
     const parsedUserVetSpecializations = parseDataToSelectOptions(user.specializations || [], 'name', 'id');
@@ -53,7 +56,7 @@ export const UserNavigator = () => {
       id: MultiSelectId.VET_SPECIALIZATIONS,
     }));
     navigation.navigate('Multi Select', {
-      title: commonTranslations.SPECIALIZATIONS,
+      title: t('words.specializations.title'),
       id: MultiSelectId.VET_SPECIALIZATIONS,
     });
   };
@@ -68,7 +71,7 @@ export const UserNavigator = () => {
   );
 
   const userSpecializationsScreenOptions: NativeStackNavigationOptions = {
-    ...getDefaultScreenOptions(navigationTranslations.USER_SPECIALIZATIONS),
+    ...getDefaultScreenOptions(t('navigation.user_specializations.title')),
     headerRight: () => userSpecializationsScreenHeaderRight(),
   };
 
@@ -95,17 +98,17 @@ export const UserNavigator = () => {
       <Stack.Screen
         name={routes.USER}
         component={UserProfileScreen}
-        options={() => getDefaultScreenOptions(navigationTranslations.USER_PROFILE)}
+        options={() => getDefaultScreenOptions(t('navigation.user_profile.title'))}
       />
       <Stack.Screen
         name={routes.EDIT_USER}
         component={EditUserProfileScreen}
-        options={() => getDefaultScreenOptions(navigationTranslations.EDIT_USER_PROFILE)}
+        options={() => getDefaultScreenOptions(t('navigation.edit_user_profile.title'))}
       />
       <Stack.Screen
         name={routes.EDIT_USER_ADDRESS}
         component={EditUserAddressScreen}
-        options={() => getDefaultScreenOptions(navigationTranslations.EDIT_ADDRESS)}
+        options={() => getDefaultScreenOptions(t('navigation.edit_address.title'))}
       />
       {
         isVet && (

@@ -1,5 +1,4 @@
 import { Ionicons } from '@expo/vector-icons';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import moment from 'moment';
 import React, { useState } from 'react';
 import {
@@ -13,6 +12,7 @@ import { InputVariant } from 'types/components/Inputs/types';
 import { getErrorMessage } from 'api/error/services';
 import { getInputBorderRadius, getInputStylesDependingOnVariant, inputStyles } from 'components/Inputs/utils/styles';
 import { parseDateFormatToTime } from 'utils/formatDate';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   handleCancel?: () => void;
@@ -42,6 +42,7 @@ export const DatePicker = ({
   showSeconds,
 }: Props) => {
   const [ visible, setVisible ] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const parseDateToString = (): string => {
     if (shouldDisplayPlaceholder || !value) return '';
@@ -95,8 +96,8 @@ export const DatePicker = ({
         )
       }
       <DateTimePickerModal
-        cancelTextIOS={buttonsTranslations.CANCEL}
-        confirmTextIOS={buttonsTranslations.CHOOSE}
+        cancelTextIOS={t('actions.cancel.title')}
+        confirmTextIOS={t('actions.choose.title')}
         isVisible={visible}
         is24Hour
         locale="pl_PL"

@@ -6,12 +6,11 @@ import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { Animal } from 'types/api/animal/types';
 import { AnimalForm } from 'components/Forms/AnimalForm';
 import { LoadingContainer } from 'components/Composition/LoadingContainer';
-import { commonTranslations } from 'constants/translations/common.translations';
 import { AnimalApi } from 'api/animal/animal.api';
 import { ApiError } from 'types/api/error/types';
 import { HandleSubmitForm } from 'types/components/Forms/types';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
+import { useTranslation } from 'react-i18next';
 
 export const EditAnimalScreen = () => {
   const formRef = useRef<HandleSubmitForm>(null);
@@ -20,6 +19,7 @@ export const EditAnimalScreen = () => {
   const [ animal, setAnimal ] = useState<Animal | undefined>(undefined);
   const navigation = useNavigation<EditAnimalScreenNavigationProps>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     onFetchAnimal();
@@ -31,7 +31,7 @@ export const EditAnimalScreen = () => {
       const res = await AnimalApi.getOwnerAnimal(route.params.animalId, params);
       navigation.setOptions({
         headerShown: true,
-        headerTitle: `${commonTranslations.EDIT} "${res.name}"`,
+        headerTitle: `${t('words.edition.title')} "${res.name}"`,
       });
       setAnimal(res);
     } catch (err: any) {
@@ -45,7 +45,7 @@ export const EditAnimalScreen = () => {
     <DefaultLayout
       stickyFooterChildren={(
         <LoadingButton
-          title={buttonsTranslations.SAVE}
+          title={t('actions.save.title')}
           variant="solid"
           loading={!!formRef.current?.loading}
           onPress={() => formRef.current?.submit()}

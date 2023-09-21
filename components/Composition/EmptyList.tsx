@@ -1,11 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { commonTranslations } from 'constants/translations/common.translations';
+import { useTranslation } from 'react-i18next';
 
-export const EmptyList = () => (
-  <View style={styles.container}>
-    <Text style={styles.text}>{commonTranslations.NOT_FOUND_RESULTS}</Text>
-  </View>
-);
+export const EmptyList = () => {
+  const { t } = useTranslation();
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>{t('words.not_found_results.title')}</Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

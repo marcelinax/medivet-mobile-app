@@ -5,10 +5,6 @@ import { AvatarInput } from 'components/Inputs/AvatarInput';
 import { DatePicker } from 'components/Inputs/DatePicker';
 import { PhoneNumberInput } from 'components/Inputs/PhoneNumberInput';
 import { TextInput } from 'components/Inputs/TextInput';
-import { genderSelectOptions } from 'constants/selectOptions';
-import { successAlertTranslations } from 'constants/translations/alerts/successAlert.translations';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
-import { inputsTranslations } from 'constants/translations/inputs.translations';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 import { DefaultLayout } from 'layouts/Default.layout';
@@ -25,6 +21,8 @@ import { SelectInput } from 'components/Inputs/SelectInput/SelectInput';
 import { AddressApi } from 'types/api/types';
 import { SelectOptionProps } from 'types/components/Inputs/types';
 import { removeSingleSelect } from 'store/select/selectSlice';
+import { useTranslation } from 'react-i18next';
+import { getGenderSelectOptions } from 'constants/selectOptions';
 
 interface FormProps {
   name: string;
@@ -37,9 +35,10 @@ interface FormProps {
 
 export const EditUserProfileScreen = () => {
   const user = useSelector((state: RootState) => state.user.currentUser) as User;
+  const { t } = useTranslation();
   const [ form, setForm ] = useState<FormProps>({
     ...user,
-    gender: genderSelectOptions.find((gender) => gender.id === user.gender) || genderSelectOptions[0],
+    gender: getGenderSelectOptions(t).find((gender) => gender.id === user.gender) || getGenderSelectOptions(t)[0],
   });
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
@@ -125,7 +124,7 @@ export const EditUserProfileScreen = () => {
   return (
     <DefaultLayout stickyFooterChildren={(
       <LoadingButton
-        title={buttonsTranslations.SAVE}
+        title={t('actions.save.title')}
         variant="solid"
         loading={loading}
         onPress={onSubmit}
@@ -134,7 +133,7 @@ export const EditUserProfileScreen = () => {
     >
       <View>
         {drawErrorAlert(errors)}
-        {drawSuccessAlert(successAlertTranslations.SAVED)}
+        {drawSuccessAlert(t('alerts.success.save.title'))}
         <View style={styles.avatarContainer}>
           <AvatarInput
             url={user?.profilePhotoUrl}
@@ -147,7 +146,7 @@ export const EditUserProfileScreen = () => {
             value={user.name}
             variant="underline"
             isClearable={false}
-            label={inputsTranslations.NAME}
+            label={t('words.name.title')}
             onChangeText={(e) => onChangeInput('name', e)}
             errors={[]}
           />
@@ -156,19 +155,19 @@ export const EditUserProfileScreen = () => {
               value={new Date(form.birthDate)}
               errors={getInputErrors(errors, 'birthDate')}
               onConfirm={onDatePickerConfirm}
-              label={inputsTranslations.BIRTH_DATE}
+              label={t('words.birth_date.title')}
             />
           </View>
           <View style={styles.inputMargin}>
             <SelectInput
               onChoose={(gender) => onChangeInput('gender', gender)}
               variant="underline"
-              options={genderSelectOptions}
-              label={inputsTranslations.GENDER}
+              options={getGenderSelectOptions(t)}
+              label={t('words.gender.title')}
               errors={[]}
               id={SelectId.GENDER}
               defaultValue={form.gender}
-              selectScreenHeaderTitle={inputsTranslations.GENDER}
+              selectScreenHeaderTitle={t('words.gender.title')}
             />
           </View>
           <View style={styles.inputMargin}>

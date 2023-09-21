@@ -8,10 +8,10 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { SelectScreenNavigationProps, SelectScreenRouteProps } from 'types/Navigation/types';
 import { SelectOption } from 'components/Inputs/SelectInput/SelectOption';
 import { List } from 'components/List/List';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import { SimpleList } from 'components/List/SimpleList';
 import { setSingleSelectButtonLoading, setSingleSelectSelectedOption } from 'store/select/selectSlice';
 import { ApiError } from 'types/api/error/types';
+import { useTranslation } from 'react-i18next';
 
 export const Select = () => {
   const route = useRoute<SelectScreenRouteProps>();
@@ -22,6 +22,7 @@ export const Select = () => {
   const dispatch = useDispatch();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const [ internalSelectedOption, setInternalSelectedOption ] = useState<SelectOptionProps | undefined>(selectState?.selectedOption);
+  const { t } = useTranslation();
 
   const handleChangeSelectedOption = (option: SelectOptionProps): void => {
     setInternalSelectedOption(option);
@@ -71,7 +72,7 @@ export const Select = () => {
             withSearch
             stickyFooterButtonAction={onChoose}
             stickyButtonLoading={selectState.loading}
-            stickyFooterButtonTitle={buttonsTranslations.CHOOSE}
+            stickyFooterButtonTitle={t('actions.choose.title')}
           />
         ) : (
           <SimpleList
@@ -80,7 +81,7 @@ export const Select = () => {
             separateOptions
             stickyFooterButtonAction={onChoose}
             stickyButtonLoading={selectState?.loading}
-            stickyFooterButtonTitle={buttonsTranslations.CHOOSE}
+            stickyFooterButtonTitle={t('actions.choose.title')}
           />
         )
       }

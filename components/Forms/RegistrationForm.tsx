@@ -6,9 +6,6 @@ import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { DatePicker } from 'components/Inputs/DatePicker';
 import { PasswordInput } from 'components/Inputs/PasswordInput';
 import { TextInput } from 'components/Inputs/TextInput';
-import { genderSelectOptions } from 'constants/selectOptions';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
-import { inputsTranslations } from 'constants/translations/inputs.translations';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import React, { useEffect, useState } from 'react';
 import {
@@ -20,12 +17,13 @@ import { UserRoleType } from 'types/api/user/types';
 import { RegistrationScreenNavigationProps } from 'types/Navigation/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
-import { otherTranslations } from 'constants/translations/other.translations';
 import { isAndroidPlatform } from 'utils/isAndroidPlatfrom';
 import { SelectId } from 'constants/enums/selectId.enum';
 import { SelectInput } from 'components/Inputs/SelectInput/SelectInput';
 import { removeSingleSelect } from 'store/select/selectSlice';
 import { SelectOptionProps } from 'types/components/Inputs/types';
+import { useTranslation } from 'react-i18next';
+import { getGenderSelectOptions } from 'constants/selectOptions';
 
 interface FormProps {
   email: string;
@@ -44,11 +42,12 @@ export const RegistrationForm = () => {
   const navigation = useNavigation<RegistrationScreenNavigationProps>();
   const selectedUserRole = useSelector((state: RootState) => state.user.userRole) as UserRoleType;
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const [ form, setForm ] = useState<FormProps>({
     email: '',
     password: '',
     name: '',
-    gender: genderSelectOptions[0],
+    gender: getGenderSelectOptions(t)[0],
     birthDate: undefined,
     acceptTerms: false,
     role: selectedUserRole,
@@ -105,7 +104,7 @@ export const RegistrationForm = () => {
           value={form.email}
           onChangeText={(e) => onChange('email', e)}
           variant="underline"
-          placeholder={inputsTranslations.EMAIL}
+          placeholder={t('words.email.title')}
           isClearable
           keyboardType="email-address"
           errors={getInputErrors(errors, 'email')}
@@ -115,31 +114,31 @@ export const RegistrationForm = () => {
           value={form.password}
           errors={getInputErrors(errors, 'password')}
           onChangeText={(e) => onChange('password', e)}
-          placeholder={inputsTranslations.PASSWORD}
+          placeholder={t('words.password.title')}
         />
         <TextInput
           value={form.name}
           onChangeText={(e) => onChange('name', e)}
           variant="underline"
-          placeholder={inputsTranslations.NAME}
+          placeholder={t('words.name.title')}
           isClearable
           errors={getInputErrors(errors, 'name')}
         />
         <SelectInput
           onChoose={(gender) => onChange('gender', gender)}
           variant="underline"
-          options={genderSelectOptions}
+          options={getGenderSelectOptions(t)}
           errors={[]}
           id={SelectId.GENDER}
           defaultValue={form.gender}
-          selectScreenHeaderTitle={inputsTranslations.GENDER}
+          selectScreenHeaderTitle={t('words.gender.title')}
         />
         <DatePicker
           value={form.birthDate ?? new Date()}
           errors={getInputErrors(errors, 'birthDate')}
           onConfirm={onDatePickerConfirm}
           shouldDisplayPlaceholder={!form.birthDate}
-          placeholder={inputsTranslations.BIRTH_DATE}
+          placeholder={t('words.birth_date.title')}
         />
         <View style={styles.acceptTermsContainer}>
           <Switch
@@ -150,23 +149,23 @@ export const RegistrationForm = () => {
           <Text
             style={[ styles.acceptTermsText, areAcceptTermsFieldHasError() ? styles.acceptTermsTextError : {} ]}
           >
-            {otherTranslations.ACCEPT_TERMS}
+            {t('actions.accept_terms.title')}
           </Text>
         </View>
         <LoadingButton
           variant="solid"
-          title={buttonsTranslations.SIGN_UP}
+          title={t('actions.sign_up.title')}
           loading={loading}
           style={{ marginTop: 10 }}
           onPress={onSignUp}
         />
         <View style={styles.signUpButtonContainer}>
           <Text style={styles.signUpText}>
-            {buttonsTranslations.HAVE_ACCOUNT_ALREADY}
+            {t('actions.have_account_already.title')}
           </Text>
           <Button
             variant="link"
-            title={buttonsTranslations.SIGN_IN}
+            title={t('actions.sign_in.title')}
             color="secondary"
             fontWeight="bolder"
             onPress={onSignIn}

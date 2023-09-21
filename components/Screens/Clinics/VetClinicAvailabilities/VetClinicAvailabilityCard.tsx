@@ -7,7 +7,6 @@ import {
   VetAvailability,
   VetAvailabilityReceptionHour,
 } from 'types/api/vetAvailability/types';
-import { enumsTranslations } from 'constants/translations/enums.translations';
 import { SwipeButtonActionProps } from 'types/components/Buttons/types';
 import { OutlineCard } from 'components/Composition/OutlineCard';
 import { parseDateFormatToTime, parseTimeStringToDate } from 'utils/formatDate';
@@ -18,7 +17,7 @@ import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { VetAvailabilityApi } from 'api/vetAvailability/vetAvailability.api';
 import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
-import { confirmationAlertTranslations } from 'constants/translations/alerts/confirmationAlert.translations';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   availability: VetAvailability;
@@ -31,6 +30,7 @@ export const VetClinicAvailabilityCard = ({ availability, onSuccessRemove, setRe
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const confirmation = useConfirmationAlert();
+  const { t } = useTranslation();
 
   const sortSingleGroupedReceptionHours = (groupedReceptionHours: GroupedVetAvailabilityReceptionHour[]) => {
     groupedReceptionHours.forEach((groupedReceptionHour) => groupedReceptionHour.hours.sort((a, b) => {
@@ -87,7 +87,7 @@ export const VetClinicAvailabilityCard = ({ availability, onSuccessRemove, setRe
         return `${hourFrom}-${hourTo}`;
       }).join(', ');
       const { day } = receptionHour;
-      const weekDayTranslation = enumsTranslations[`${day}_SHORTCUT`];
+      const weekDayTranslation = t(`enums.day_of_week.shortcut.${day}`);
       const receptionHourString = `${weekDayTranslation}: ${joinedHours}`;
       result.push(receptionHourString);
     });
@@ -99,7 +99,7 @@ export const VetClinicAvailabilityCard = ({ availability, onSuccessRemove, setRe
   const handleRemoveVetClinicAvailability = async () => {
     await confirmation({
       title: '',
-      message: confirmationAlertTranslations.REMOVING_CONFIRMATION,
+      message: t('alerts.confirmation.remove.title'),
     });
     setRemoveLoading(true);
     try {

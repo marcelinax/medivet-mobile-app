@@ -1,17 +1,17 @@
 import { DefaultLayout } from 'layouts/Default.layout';
 import { Button } from 'components/Buttons/Button';
 import { StyleSheet, Text, View } from 'react-native';
-import { commonTranslations } from 'constants/translations/common.translations';
 import { useDispatch } from 'react-redux';
 import { UserRoleType } from 'types/api/user/types';
 import colors from 'themes/colors';
 import { setUserRole } from 'store/user/userSlice';
 import { useNavigation } from '@react-navigation/native';
 import { PreRegistrationScreenNavigationProps } from 'types/Navigation/types';
-import { otherTranslations } from 'constants/translations/other.translations';
+import { useTranslation } from 'react-i18next';
 
 export const PreRegistrationScreen = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const navigation = useNavigation<PreRegistrationScreenNavigationProps>();
 
   const onChooseRole = (role: UserRoleType): void => {
@@ -23,18 +23,18 @@ export const PreRegistrationScreen = () => {
     <DefaultLayout>
       <View style={styles.container}>
         <Text style={styles.text}>
-          {otherTranslations.CHOOSE_ROLE}
+          {t('actions.choose_role.title')}
         </Text>
         <View style={styles.buttonContainer}>
           <Button
-            title={commonTranslations.PATIENT}
+            title={t('enums.user.role.PATIENT.title')}
             variant="outline"
             onPress={() => onChooseRole('patient')}
           />
         </View>
         <View style={styles.buttonContainer}>
           <Button
-            title={commonTranslations.VET}
+            title={t('enums.user.role.VET.title')}
             variant="solid"
             onPress={() => onChooseRole('vet')}
           />

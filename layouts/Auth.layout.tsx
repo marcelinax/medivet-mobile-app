@@ -1,38 +1,42 @@
-import { commonTranslations } from 'constants/translations/common.translations';
 import React from 'react';
 import {
   Image, ImageResolvedAssetSource, ScrollView, StyleSheet, Text, View,
 } from 'react-native';
 import colors from 'themes/colors';
 import { isAndroidPlatform } from 'utils/isAndroidPlatfrom';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   children: JSX.Element;
   image: ImageResolvedAssetSource;
 }
 
-export const AuthLayout = ({ image, children }: Props) => (
-  <ScrollView
-    style={{ flex: 1 }}
-    automaticallyAdjustKeyboardInsets
-    contentContainerStyle={styles.scrollViewContainer}
-  >
-    <View style={styles.container}>
-      <Image
-        source={{ uri: Image.resolveAssetSource(image).uri }}
-        style={{
-          width: 250,
-          height: 200,
-        }}
-        resizeMode="contain"
-      />
-      <Text style={styles.text}>
-        {commonTranslations.LOGO}
-      </Text>
-      {children}
-    </View>
-  </ScrollView>
-);
+export const AuthLayout = ({ image, children }: Props) => {
+  const { t } = useTranslation();
+
+  return (
+    <ScrollView
+      style={{ flex: 1 }}
+      automaticallyAdjustKeyboardInsets
+      contentContainerStyle={styles.scrollViewContainer}
+    >
+      <View style={styles.container}>
+        <Image
+          source={{ uri: Image.resolveAssetSource(image).uri }}
+          style={{
+            width: 250,
+            height: 200,
+          }}
+          resizeMode="contain"
+        />
+        <Text style={styles.text}>
+          {t('words.logo.title')}
+        </Text>
+        {children}
+      </View>
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
   scrollViewContainer: {

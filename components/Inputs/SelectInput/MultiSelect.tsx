@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { MultiSelectScreenNavigationProps, MultiSelectScreenRouteProps } from 'types/Navigation/types';
 import { List } from 'components/List/List';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
@@ -14,6 +13,7 @@ import {
   setSingleMultiSelectButtonLoading,
   setSingleMultiSelectSelectedOptions,
 } from 'store/multiSelect/multiSelectSlice';
+import { useTranslation } from 'react-i18next';
 
 export const MultiSelect = () => {
   const route = useRoute<MultiSelectScreenRouteProps>();
@@ -27,6 +27,7 @@ export const MultiSelect = () => {
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const dispatch = useDispatch();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
+  const { t } = useTranslation();
 
   const handleChangeSelectedOptions = (newOption: SelectOptionProps): void => {
     const newSelectedOptions = [ ...internalSelectedOptions ];
@@ -86,7 +87,7 @@ export const MultiSelect = () => {
             withSearch
             stickyFooterButtonAction={onChoose}
             stickyButtonLoading={multiSelectState.loading}
-            stickyFooterButtonTitle={buttonsTranslations.CHOOSE}
+            stickyFooterButtonTitle={t('actions.choose.title')}
           />
         )
       }

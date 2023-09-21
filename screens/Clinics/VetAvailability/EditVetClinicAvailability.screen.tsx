@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { VetClinicAvailabilityForm } from 'components/Forms/VetClinicAvailability/VetClinicAvailabilityForm';
 import { DefaultLayout } from 'layouts/Default.layout';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import { useRoute } from '@react-navigation/native';
 import { EditVetClinicAvailabilityScreenRouteProps } from 'types/Navigation/types';
 import { ApiError } from 'types/api/error/types';
@@ -11,6 +10,7 @@ import { VetAvailability } from 'types/api/vetAvailability/types';
 import { VetAvailabilityApi } from 'api/vetAvailability/vetAvailability.api';
 import { LoadingContainer } from 'components/Composition/LoadingContainer';
 import { HandleSubmitForm } from 'types/components/Forms/types';
+import { useTranslation } from 'react-i18next';
 
 export const EditVetClinicAvailabilityScreen = () => {
   const formRef = useRef<HandleSubmitForm>(null);
@@ -18,6 +18,7 @@ export const EditVetClinicAvailabilityScreen = () => {
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const [ availability, setAvailability ] = useState<VetAvailability | undefined>(undefined);
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchVetClinicAvailability();
@@ -39,7 +40,7 @@ export const EditVetClinicAvailabilityScreen = () => {
     <DefaultLayout
       stickyFooterChildren={(
         <LoadingButton
-          title={buttonsTranslations.SAVE}
+          title={t('actions.save.title')}
           variant="solid"
           loading={!!formRef.current?.loading}
           onPress={() => formRef.current?.submit()}

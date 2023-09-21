@@ -9,30 +9,30 @@ import {
   CreateVetClinicAvailabilityReceptionHoursScreenRouteProps,
 } from 'types/Navigation/types';
 import { SelectInput } from 'components/Inputs/SelectInput/SelectInput';
-import { dayOfWeekSelectOptions } from 'constants/selectOptions';
-import { inputsTranslations } from 'constants/translations/inputs.translations';
 import { SelectId } from 'constants/enums/selectId.enum';
 import { SelectOptionProps } from 'types/components/Inputs/types';
 import { Button } from 'components/Buttons/Button';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import { updateCurrentVetClinicAvailabilityReceptionHours } from 'store/clinic/clinicSlice';
 import { removeSingleSelect } from 'store/select/selectSlice';
 import { DatePicker } from 'components/Inputs/DatePicker';
 import { parseDateFormatToTime, parseTimeStringToDate } from 'utils/formatDate';
+import { useTranslation } from 'react-i18next';
+import { getDayOfWeekSelectOptions } from 'constants/selectOptions';
 
 export const VetClinicAvailabilityReceptionHourForm = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation<CreateVetClinicAvailabilityReceptionHoursScreenNavigationProps>();
   const route = useRoute<CreateVetClinicAvailabilityReceptionHoursScreenRouteProps>();
   const { index } = route.params;
+  const { t } = useTranslation();
   const currentVetAvailability = useSelector((state: RootState) => state.clinic.currentVetClinicAvailability);
   const currentVetAvailabilityReceptionHour = index !== undefined && currentVetAvailability
     ? currentVetAvailability.receptionHours[index] : undefined;
   const [ form, setForm ] = useState<VetAvailabilityReceptionHourFormProps>({
     hourTo: currentVetAvailabilityReceptionHour?.hourTo || '',
-    day: currentVetAvailabilityReceptionHour?.day ? dayOfWeekSelectOptions.find(
+    day: currentVetAvailabilityReceptionHour?.day ? getDayOfWeekSelectOptions(t).find(
       (dayOption) => dayOption.id === currentVetAvailabilityReceptionHour.day.id,
-    ) as SelectOptionProps : dayOfWeekSelectOptions[0],
+    ) as SelectOptionProps : getDayOfWeekSelectOptions(t)[0],
     hourFrom: currentVetAvailabilityReceptionHour?.hourFrom || '',
   });
 
@@ -60,12 +60,12 @@ export const VetClinicAvailabilityReceptionHourForm = () => {
         <SelectInput
           onChoose={(day) => handleChangeInput('day', day)}
           variant="underline"
-          options={dayOfWeekSelectOptions}
-          label={inputsTranslations.DAY_OF_WEEK}
+          options={getDayOfWeekSelectOptions(t)}
+          label={t('words.day_of_week.title')}
           errors={[]}
           id={SelectId.DAY_OF_WEEK}
           defaultValue={form?.day}
-          selectScreenHeaderTitle={inputsTranslations.DAY_OF_WEEK}
+          selectScreenHeaderTitle={t('words.day_of_week.title')}
         />
       </View>
       <View style={styles.inputMargin}>
@@ -76,7 +76,7 @@ export const VetClinicAvailabilityReceptionHourForm = () => {
           onConfirm={(hourFrom) => {
             handleChangeInput('hourFrom', parseDateFormatToTime(hourFrom));
           }}
-          label={inputsTranslations.HOUR_FROM}
+          label={t('words.hour_from.title')}
         />
       </View>
       <View style={styles.inputMargin}>
@@ -87,11 +87,13 @@ export const VetClinicAvailabilityReceptionHourForm = () => {
           onConfirm={(hourTo) => {
             handleChangeInput('hourTo', parseDateFormatToTime(hourTo));
           }}
-          label={inputsTranslations.HOUR_TO}
+          label={t('words.hour_to.title')}
         />
       </View>
       <Button
-        title={currentVetAvailabilityReceptionHour ? buttonsTranslations.CHANGE : buttonsTranslations.ADD}
+        title={currentVetAvailabilityReceptionHour
+          ? t('actions.change.title')
+          : t('actions.add.title')}
         variant="solid"
         onPress={onSubmit}
         disabled={!isFormCompleted}

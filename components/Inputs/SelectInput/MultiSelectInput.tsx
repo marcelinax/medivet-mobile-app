@@ -5,13 +5,13 @@ import { MultiSelectProps } from 'types/components/Inputs/types';
 import { MultiSelectScreenNavigationProps } from 'types/Navigation/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
-import { inputsTranslations } from 'constants/translations/inputs.translations';
 import {
   fetchSingleMultiSelectOptions,
   handleChooseSingleMultiSelectSelectedOptions,
   initSingleMultiSelect,
   setSingleMultiSelectSelectedOptions,
 } from 'store/multiSelect/multiSelectSlice';
+import { useTranslation } from 'react-i18next';
 
 export const MultiSelectInput = ({
   variant,
@@ -31,6 +31,7 @@ export const MultiSelectInput = ({
     (state: RootState) => state.multiSelect.multiSelects.find((multiSelect) => multiSelect.id === id),
   );
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     handleNavigateToMultiSelectScreen();
@@ -66,7 +67,7 @@ export const MultiSelectInput = ({
       label={label}
       errors={errors}
       handleShowOptions={handleShowOptions}
-      placeholder={placeholder ?? inputsTranslations.CHOOSE}
+      placeholder={placeholder ?? t('actions.choose.title')}
       selectedValue={multiSelectState?.selectedOptions}
       rounded={rounded}
       isEditable={isEditable}

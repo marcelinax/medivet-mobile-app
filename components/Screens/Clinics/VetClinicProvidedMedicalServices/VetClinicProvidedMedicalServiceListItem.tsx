@@ -2,13 +2,11 @@ import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedi
 import { StyleSheet, Text, View } from 'react-native';
 import { OutlineCard } from 'components/Composition/OutlineCard';
 import colors from 'themes/colors';
-import { commonTranslations } from 'constants/translations/common.translations';
 import { SwipeButtonActionProps } from 'types/components/Buttons/types';
 import icons from 'themes/icons';
 import { useNavigation } from '@react-navigation/native';
 import { VetClinicProvidedMedicalServicesScreenNavigationProps } from 'types/Navigation/types';
 import { SwipeButton } from 'components/Buttons/SwipeButton/SwipeButton';
-import { confirmationAlertTranslations } from 'constants/translations/alerts/confirmationAlert.translations';
 import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { useState } from 'react';
@@ -16,6 +14,7 @@ import { ApiError } from 'types/api/error/types';
 import {
   VetClinicProvidedMedicalServiceApi,
 } from 'api/vetClinicProvidedMedicalService/vetClinicProvidedMedicalService.api';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   medicalService: VetClinicProvidedMedicalService;
@@ -32,6 +31,7 @@ export const VetClinicProvidedMedicalServiceListItem = ({
   const confirmation = useConfirmationAlert();
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
+  const { t } = useTranslation();
 
   const handleEditVetClinicProvidedMedicalService = () => navigation.navigate(
     'Edit Vet Clinic Provided Medical Service',
@@ -41,7 +41,7 @@ export const VetClinicProvidedMedicalServiceListItem = ({
   const handleRemoveVetClinicProvidedMedicalService = async () => {
     await confirmation({
       title: '',
-      message: confirmationAlertTranslations.REMOVING_CONFIRMATION,
+      message: t('alerts.confirmation.remove.title'),
     });
     setRemoveLoading(true);
     try {
@@ -85,7 +85,7 @@ export const VetClinicProvidedMedicalServiceListItem = ({
             <Text style={styles.specialization}>{medicalService.medicalService.specialization.name}</Text>
             <View style={styles.otherInformationContainer}>
               <Text style={styles.otherInformationLabel}>
-                {`${commonTranslations.PRICE}: `}
+                {`${t('words.price.title')}: `}
               </Text>
               <Text style={styles.otherInformationValue}>
                 {`${medicalService.price} PLN`}
@@ -93,10 +93,10 @@ export const VetClinicProvidedMedicalServiceListItem = ({
             </View>
             <View style={styles.otherInformationContainer}>
               <Text style={styles.otherInformationLabel}>
-                {`${commonTranslations.AVERAGE_DURATION_TIME}: `}
+                {`${t('words.average_duration_time.title')}: `}
               </Text>
               <Text style={styles.otherInformationValue}>
-                {`${medicalService.duration} ${commonTranslations.MINUTES}`}
+                {`${t('words.minutes.title', { count: medicalService.medicalService })}`}
               </Text>
             </View>
           </View>

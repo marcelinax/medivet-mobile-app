@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { ApiError } from 'types/api/error/types';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
-import { navigationTranslations } from 'constants/translations/navigation.translations';
 import { VetAvailabilityApi } from 'api/vetAvailability/vetAvailability.api';
 import { VetClinicAvailabilityCard } from 'components/Screens/Clinics/VetClinicAvailabilities/VetClinicAvailabilityCard';
 import { DefaultLayout } from 'layouts/Default.layout';
@@ -15,6 +14,7 @@ import { FullScreenLoading } from 'components/Composition/FullScreenLoading';
 import { LoadingContainer } from 'components/Composition/LoadingContainer';
 import { View } from 'react-native';
 import { EmptyList } from 'components/Composition/EmptyList';
+import { useTranslation } from 'react-i18next';
 
 export const VetClinicAvailabilityList = () => {
   const navigation = useNavigation<VetClinicAvailabilitiesScreenNavigationProps>();
@@ -26,6 +26,7 @@ export const VetClinicAvailabilityList = () => {
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
   const isFocused = useIsFocused();
   const [ removeLoading, setRemoveLoading ] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchVetClinicAvailabilities();
@@ -33,7 +34,7 @@ export const VetClinicAvailabilityList = () => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: `${navigationTranslations.CLINIC_AVAILABILITIES} "${clinic!.name}"`,
+      headerTitle: `${t('navigation.clinic_availabilities.title')} "${clinic!.name}"`,
     });
   }, [ navigation ]);
 

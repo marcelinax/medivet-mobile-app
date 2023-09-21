@@ -1,25 +1,29 @@
 import images from 'constants/images';
-import { commonTranslations } from 'constants/translations/common.translations';
 import React from 'react';
 import {
   Image, StyleSheet, Text, View,
 } from 'react-native';
 import colors from 'themes/colors';
 import { Loading } from 'components/Composition/Loading';
+import { useTranslation } from 'react-i18next';
 
-export const GlobalLoader = () => (
-  <View style={styles.logoContainer}>
-    <Image
-      style={styles.logo}
-      source={{ uri: Image.resolveAssetSource(images.LOGO()).uri }}
-      resizeMode="contain"
-    />
-    <Loading />
-    <Text style={styles.loadingText}>
-      {commonTranslations.LOADING}
-    </Text>
-  </View>
-);
+export const GlobalLoader = () => {
+  const { t } = useTranslation();
+
+  return (
+    <View style={styles.logoContainer}>
+      <Image
+        style={styles.logo}
+        source={{ uri: Image.resolveAssetSource(images.LOGO()).uri }}
+        resizeMode="contain"
+      />
+      <Loading />
+      <Text style={styles.loadingText}>
+        {t('words.loading.title')}
+      </Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   logoContainer: {

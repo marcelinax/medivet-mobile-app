@@ -7,7 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "eslint . **/*.ts *.tsx"
+    "lint": "eslint . **/*.ts *.tsx",
+    "extract": "i18next -c i18n-parser.config.ts --fail-on-warnings"
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
@@ -16,6 +17,7 @@
     "@react-navigation/native": "^6.0.14",
     "@react-navigation/native-stack": "^6.9.2",
     "@reduxjs/toolkit": "^1.9.0",
+    "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "axios": "^1.2.0",
@@ -26,9 +28,12 @@
     "expo-image-picker": "~14.0.2",
     "expo-secure-store": "~12.0.0",
     "expo-status-bar": "~1.4.2",
+    "i18next": "^23.5.1",
+    "i18next-parser": "^8.7.0",
     "moment": "^2.29.4",
     "react": "18.1.0",
     "react-dom": "18.1.0",
+    "react-i18next": "^13.2.2",
     "react-native": "0.70.5",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-modal-datetime-picker": "^14.0.0",

@@ -13,14 +13,10 @@ import { inputStyles } from 'components/Inputs/utils/styles';
 import { useNavigation } from '@react-navigation/native';
 import { CreateVetClinicAvailabilityScreenNavigationProps } from 'types/Navigation/types';
 import { SelectInput } from 'components/Inputs/SelectInput/SelectInput';
-import { commonTranslations } from 'constants/translations/common.translations';
-import { inputsTranslations } from 'constants/translations/inputs.translations';
 import { removeSingleSelect } from 'store/select/selectSlice';
 import { SelectId } from 'constants/enums/selectId.enum';
 import { setCurrentVetClinicAvailability } from 'store/clinic/clinicSlice';
-import { dayOfWeekSelectOptions } from 'constants/selectOptions';
 import { SelectOptionProps } from 'types/components/Inputs/types';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import {
   VetClinicAvailabilityReceptionHourFormList,
 } from 'components/Forms/VetClinicAvailability/VetClinicAvailabilityReceptionHourFormList';
@@ -29,6 +25,8 @@ import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { DayWeek } from 'constants/enums/dayWeek.enum';
 import { ErrorText } from 'components/Composition/ErrorText';
 import { HandleSubmitForm } from 'types/components/Forms/types';
+import { useTranslation } from 'react-i18next';
+import { getDayOfWeekSelectOptions } from 'constants/selectOptions';
 
 interface Props {
   availability?: VetAvailability;
@@ -38,6 +36,7 @@ export const VetClinicAvailabilityForm = forwardRef<HandleSubmitForm, Props>((
   { availability },
   ref,
 ) => {
+  const { t } = useTranslation();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const user = useSelector((state: RootState) => state.user.currentUser);
   const clinic = useSelector((state: RootState) => state.clinic.currentClinic);
@@ -46,7 +45,7 @@ export const VetClinicAvailabilityForm = forwardRef<HandleSubmitForm, Props>((
     clinicId: availability ? availability.clinic.id : clinic!.id,
     receptionHours: availability ? availability.receptionHours.map((receptionHour) => ({
       ...receptionHour,
-      day: dayOfWeekSelectOptions.find((dayOption) => dayOption.id === receptionHour.day) as SelectOptionProps,
+      day: getDayOfWeekSelectOptions(t).find((dayOption) => dayOption.id === receptionHour.day) as SelectOptionProps,
     })) : [],
     specialization: availability?.specialization ? {
       id: availability.specialization.id.toString(),
@@ -145,16 +144,16 @@ export const VetClinicAvailabilityForm = forwardRef<HandleSubmitForm, Props>((
           variant="underline"
           id={SelectId.VET_SPECIALIZATION}
           options={parsedUserVetSpecializations}
-          label={inputsTranslations.SPECIALIZATION}
+          label={t('words.specialization.title')}
           errors={getInputErrors(errors, 'specializationId')}
-          selectScreenHeaderTitle={commonTranslations.SPECIALIZATIONS}
+          selectScreenHeaderTitle={t('words.specializations.title')}
         />
       </View>
       <View style={styles.receptionHoursContainer}>
         <Text
           style={[ inputStyles.label, styles.receptionHoursText ]}
         >
-          {commonTranslations.RECEPTION_HOURS.toUpperCase()}
+          {t('words.reception_hours.title').toUpperCase()}
         </Text>
         {
           receptionHoursErrors.length > 0
@@ -169,7 +168,7 @@ export const VetClinicAvailabilityForm = forwardRef<HandleSubmitForm, Props>((
         />
         <View style={{ marginTop: 10 }}>
           <Button
-            title={buttonsTranslations.ADD}
+            title={t('actions.add.title')}
             variant="outline"
             onPress={handleAddVetClinicAvailability}
           />

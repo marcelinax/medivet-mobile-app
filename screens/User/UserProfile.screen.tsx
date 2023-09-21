@@ -2,7 +2,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { WideButton } from 'components/Buttons/WideButton';
 import { Avatar } from 'components/Composition/Avatar';
-import { commonTranslations } from 'constants/translations/common.translations';
 import { DefaultLayout } from 'layouts/Default.layout';
 import {
   StyleSheet, Text, TouchableWithoutFeedback, View,
@@ -15,14 +14,15 @@ import { User } from 'types/api/user/types';
 import { UserScreenNavigationProps } from 'types/Navigation/types';
 import * as SecureStore from 'expo-secure-store';
 import { removeToken } from 'store/auth/authSlice';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import { hasVetRole } from 'utils/hasVetRole';
+import { useTranslation } from 'react-i18next';
 
 export const UserProfileScreen = () => {
   const user = useSelector((state: RootState) => state.user.currentUser) as User;
   const navigation = useNavigation<UserScreenNavigationProps>();
   const dispatch = useDispatch();
   const isVet = hasVetRole(user);
+  const { t } = useTranslation();
 
   const onEditUserDetails = (): void => {
     navigation.navigate('Edit User');
@@ -57,20 +57,20 @@ export const UserProfileScreen = () => {
           {!isVet && (
             <WideButton
               onPress={() => navigation.navigate('Edit User Address')}
-              title={commonTranslations.ADDRESS}
+              title={t('words.specializations.title')}
               icon={icons.HOME_OUTLINE}
             />
           )}
           {isVet && (
             <WideButton
               onPress={() => navigation.navigate('User Specializations')}
-              title={commonTranslations.SPECIALIZATIONS}
+              title={t('words.specializations.title')}
               icon={icons.MEDKIT_OUTLINE}
             />
           )}
           <WideButton
             onPress={onLogout}
-            title={buttonsTranslations.LOGOUT}
+            title={t('actions.logout.title')}
             icon={icons.LOG_OUT_OUTLINE}
           />
         </View>

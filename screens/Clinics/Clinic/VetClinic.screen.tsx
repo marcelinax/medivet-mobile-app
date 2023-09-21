@@ -1,7 +1,6 @@
 import { Clinic } from 'types/api/clinic/types';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { VetClinicScreenNavigationProps, VetClinicScreenRouteProps } from 'types/Navigation/types';
-import { navigationTranslations } from 'constants/translations/navigation.translations';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { LoadingContainer } from 'components/Composition/LoadingContainer';
@@ -9,17 +8,14 @@ import { DefaultLayout } from 'layouts/Default.layout';
 import { ClinicApi } from 'api/clinic/clinic.api';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'components/Buttons/Button';
-import { commonTranslations } from 'constants/translations/common.translations';
 import { useDispatch } from 'react-redux';
 import { setCurrentClinic } from 'store/clinic/clinicSlice';
 import { ApiError } from 'types/api/error/types';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
-import { confirmationAlertTranslations } from 'constants/translations/alerts/confirmationAlert.translations';
 import { ClinicAssignmentRequestStatus } from 'constants/enums/clinic.enum';
 import colors from 'themes/colors';
-import { otherTranslations } from 'constants/translations/other.translations';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
+import { useTranslation } from 'react-i18next';
 
 export const VetClinicScreen = () => {
   const route = useRoute<VetClinicScreenRouteProps>();
@@ -34,6 +30,7 @@ export const VetClinicScreen = () => {
     (request) => request.status === ClinicAssignmentRequestStatus.TO_UNASSIGN
       && request.clinic.id === clinic?.id,
   );
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchVetClinic();
@@ -42,7 +39,7 @@ export const VetClinicScreen = () => {
   useLayoutEffect(() => {
     if (clinic) {
       navigation.setOptions({
-        headerTitle: `${navigationTranslations.CLINIC} "${clinic.name}"`,
+        headerTitle: `${t('navigation.clinic.title')} "${clinic.name}"`,
       });
     }
   }, [ clinic, navigation ]);
@@ -64,7 +61,7 @@ export const VetClinicScreen = () => {
     try {
       await confirmation({
         title: '',
-        message: `${confirmationAlertTranslations.REMOVE_CLINIC_CONFIRMATION} "${clinic!.name}"?`,
+        message: `${t('alerts.confirmation.remove_clinic.title')} "${clinic!.name}"?`,
       });
       await ClinicApi.removeClinic(clinic!.id);
       handleSuccessAlert();
@@ -80,7 +77,7 @@ export const VetClinicScreen = () => {
     try {
       await confirmation({
         title: '',
-        message: confirmationAlertTranslations.CONFIRMATION_MESSAGE,
+        message: t('alerts.confirmation.message'),
       });
       await ClinicApi.cancelClinicRemoval(clinic!.id);
       handleSuccessAlert();
@@ -104,13 +101,13 @@ export const VetClinicScreen = () => {
                 {isClinicAboutToRemove && (
                   <View style={styles.buttonContainer}>
                     <Text style={styles.removingInfo}>
-                      {otherTranslations.PENDING_CLINIC_REMOVAL}
+                      {t('words.pending_clinic_removal.title')}
                     </Text>
                   </View>
                 )}
                 <View style={styles.buttonContainer}>
                   <Button
-                    title={commonTranslations.AVAILABILITIES}
+                    title={t('words.availabilities.title')}
                     variant="outline"
                     color="light"
                     onPress={() => navigation.navigate('Vet Clinic Availabilities')}
@@ -118,7 +115,7 @@ export const VetClinicScreen = () => {
                 </View>
                 <View style={styles.buttonContainer}>
                   <Button
-                    title={commonTranslations.VET_CLINIC_PROVIDED_MEDICAL_SERVICES}
+                    title={t('words.vet_clinic_provided_medical_services.title')}
                     variant="outline"
                     color="light"
                     onPress={() => navigation.navigate('Vet Clinic Provided Medical Services')}
@@ -128,7 +125,7 @@ export const VetClinicScreen = () => {
                   isClinicAboutToRemove ? (
                     <View style={styles.buttonContainer}>
                       <Button
-                        title={buttonsTranslations.CANCEL_REMOVAL}
+                        title={t('actions.cancel_removal.title')}
                         variant="outline"
                         color="primary"
                         onPress={handleCancelVetClinicRemoval}
@@ -137,7 +134,7 @@ export const VetClinicScreen = () => {
                   ) : (
                     <View style={styles.buttonContainer}>
                       <Button
-                        title={buttonsTranslations.REMOVE}
+                        title={t('actions.remove.title')}
                         variant="outline"
                         color="danger"
                         onPress={handleRemoveVetClinic}

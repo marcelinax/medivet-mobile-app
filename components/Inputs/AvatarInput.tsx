@@ -1,7 +1,5 @@
 import { Button } from 'components/Buttons/Button';
 import { Avatar } from 'components/Composition/Avatar';
-import { errorAlertTranslations } from 'constants/translations/alerts/errorAlert.translations';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import * as ImagePicker from 'expo-image-picker';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { useState } from 'react';
@@ -9,7 +7,7 @@ import { StyleSheet, View } from 'react-native';
 import { useActionsSheet } from 'hooks/Alerts/useActionsSheet';
 import { ActionsSheetButtonProps } from 'types/components/Alerts/types';
 import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
-import { confirmationAlertTranslations } from 'constants/translations/alerts/confirmationAlert.translations';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   onChange: (url?: string) => void;
@@ -26,6 +24,7 @@ export const AvatarInput = ({
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const { drawActionsSheet, handleActionsSheet } = useActionsSheet();
   const confirmation = useConfirmationAlert();
+  const { t } = useTranslation();
 
   const onPickImage = async (): Promise<void> => {
     if (!status?.granted) {
@@ -52,7 +51,7 @@ export const AvatarInput = ({
   const onRemoveImage = async (): Promise<void> => {
     await confirmation({
       title: '',
-      message: confirmationAlertTranslations.REMOVING_CONFIRMATION,
+      message: t('alerts.confirmation.remove.title'),
     });
     await onRemove();
     setImage('');
@@ -61,12 +60,12 @@ export const AvatarInput = ({
   const actions: ActionsSheetButtonProps[] = [
     {
       onPress: onPickImage,
-      title: buttonsTranslations.CHOOSE,
+      title: t('actions.choose.title'),
       variant: 'primary',
     },
     {
       onPress: onRemoveImage,
-      title: buttonsTranslations.REMOVE,
+      title: t('actions.remove.title'),
       variant: 'danger',
       visible: !!image,
     },
@@ -78,8 +77,8 @@ export const AvatarInput = ({
       <View style={styles.container}>
         {drawErrorAlert(
           [],
-          errorAlertTranslations.NO_MEDIA_LIBRARY_PERMISSION_TITLE,
-          errorAlertTranslations.NO_MEDIA_LIBRARY_PERMISSION_MESSAGE,
+          t('errors.no_media_library_permission.title'),
+          t('errors.no_media_library_permission.message'),
         )}
         <Avatar
           size="large"
@@ -88,7 +87,7 @@ export const AvatarInput = ({
         />
         <Button
           variant="link"
-          title={buttonsTranslations.CHANGE.toUpperCase()}
+          title={t('actions.change.title').toUpperCase()}
           color="light"
           onPress={handleActionsSheet}
         />

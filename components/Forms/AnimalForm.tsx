@@ -1,11 +1,7 @@
 import { AnimalApi } from 'api/animal/animal.api';
 import { getInputErrors } from 'api/error/services';
-import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { DatePicker } from 'components/Inputs/DatePicker';
 import { TextInput } from 'components/Inputs/TextInput';
-import { animalGenderSelectOptions, animalTypeSelectOptions } from 'constants/selectOptions';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
-import { inputsTranslations } from 'constants/translations/inputs.translations';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import {
   forwardRef, useEffect, useImperativeHandle, useState,
@@ -20,13 +16,14 @@ import { useDispatch } from 'react-redux';
 import icons from 'themes/icons';
 import { useNavigation } from '@react-navigation/native';
 import { EditAnimalScreenNavigationProps } from 'types/Navigation/types';
-import { commonTranslations } from 'constants/translations/common.translations';
 import { SelectInput } from 'components/Inputs/SelectInput/SelectInput';
 import { parseDataToSelectOptions } from 'utils/selectInput';
 import { removeSingleSelect, setSingleSelectSelectedOption } from 'store/select/selectSlice';
 import { SelectId } from 'constants/enums/selectId.enum';
 import { ApiError } from 'types/api/error/types';
 import { HandleSubmitForm } from 'types/components/Forms/types';
+import { useTranslation } from 'react-i18next';
+import { getAnimalGenderSelectOptions, getAnimalTypeSelectOptions } from 'constants/selectOptions';
 
 interface Props {
   animal?: Animal;
@@ -53,15 +50,17 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
   const [ firstRender, setFirstRender ] = useState<boolean>(true);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const [ form, setForm ] = useState<FormProps>({
     name: animal?.name ?? '',
-    type: animalTypeSelectOptions.find((type) => animal?.type === type.id),
+    type: getAnimalTypeSelectOptions(t).find((type) => animal?.type === type.id),
     birthDate: animal?.birthDate ? new Date(animal.birthDate) : undefined,
     breed: animal?.breed ? {
       id: animal.breed.id.toString(),
       label: animal.breed.name,
     } : undefined,
-    gender: animalGenderSelectOptions.find((gender) => animal?.gender === gender.id) || animalGenderSelectOptions[0],
+    gender: getAnimalGenderSelectOptions(t).find((gender) => animal?.gender === gender.id)
+      || getAnimalGenderSelectOptions(t)[0],
     coatColor: animal?.coatColor ? {
       id: animal.coatColor.id.toString(),
       label: animal.coatColor.name,
@@ -140,7 +139,7 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
       if (animal?.id) {
         res = await AnimalApi.updateAnimal(Number(animal?.id), getParsedDataForm());
         navigation.setOptions({
-          headerTitle: `${commonTranslations.EDIT} "${res.name}"`,
+          headerTitle: `${t('words.edition.title')} "${res.name}"`,
         });
       } else {
         res = await AnimalApi.createAnimal(getParsedDataForm());
@@ -208,7 +207,7 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
         <TextInput
           errors={getInputErrors(errors, 'name')}
           value={form?.name}
-          label={inputsTranslations.SINGLE_NAME}
+          label={t('words.single_name.title')}
           onChangeText={(name) => onChangeInput('name', name)}
           variant="underline"
         />
@@ -217,12 +216,12 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
         <SelectInput
           onChoose={(type) => onChangeInput('type', type)}
           variant="underline"
-          options={animalTypeSelectOptions}
-          label={inputsTranslations.TYPE}
+          options={getAnimalTypeSelectOptions(t)}
+          label={t('words.type.title')}
           errors={getInputErrors(errors, 'type')}
           id={SelectId.ANIMAL_TYPE}
           defaultValue={form.type}
-          selectScreenHeaderTitle={inputsTranslations.TYPE}
+          selectScreenHeaderTitle={t('words.type.title')}
         />
       </View>
       {
@@ -232,11 +231,11 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
               onChoose={(breed) => onChangeInput('breed', breed)}
               variant="underline"
               fetchOptions={fetchAnimalBreeds}
-              label={inputsTranslations.BREED}
+              label={t('words.breed.title')}
               errors={getInputErrors(errors, 'breedId')}
               id={SelectId.ANIMAL_BREED}
               defaultValue={form?.breed}
-              selectScreenHeaderTitle={inputsTranslations.BREED}
+              selectScreenHeaderTitle={t('words.breed.title')}
             />
           </View>
         )
@@ -245,24 +244,24 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
         <SelectInput
           onChoose={(gender) => onChangeInput('gender', gender)}
           variant="underline"
-          label={inputsTranslations.GENDER}
+          label={t('words.gender.title')}
           errors={[]}
           id={SelectId.ANIMAL_GENDER}
-          options={animalGenderSelectOptions}
+          options={getAnimalGenderSelectOptions(t)}
           defaultValue={form.gender}
-          selectScreenHeaderTitle={inputsTranslations.GENDER}
+          selectScreenHeaderTitle={t('words.gender.title')}
         />
       </View>
       <View style={styles.inputMargin}>
         <SelectInput
           onChoose={(coatColor) => onChangeInput('coatColor', coatColor)}
           variant="underline"
-          label={inputsTranslations.COAT_COLOR}
+          label={t('words.coat_color.title')}
           errors={[]}
           id={SelectId.ANIMAL_COAT_COLOR}
           fetchOptions={fetchAnimalCoatColors}
           defaultValue={form.coatColor}
-          selectScreenHeaderTitle={inputsTranslations.COAT_COLOR}
+          selectScreenHeaderTitle={t('words.coat_color.title')}
         />
       </View>
       <View style={styles.inputMargin}>
@@ -271,16 +270,9 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
           errors={getInputErrors(errors, 'birthDate')}
           onConfirm={(date) => onChangeInput('birthDate', date)}
           shouldDisplayPlaceholder={!form.birthDate}
-          placeholder={inputsTranslations.BIRTH_DATE}
+          placeholder={t('words.birth_date.title')}
         />
       </View>
-      <LoadingButton
-        variant="solid"
-        title={buttonsTranslations.SAVE}
-        loading={loading}
-        style={styles.inputMargin}
-        onPress={onSubmit}
-      />
     </View>
   );
 });

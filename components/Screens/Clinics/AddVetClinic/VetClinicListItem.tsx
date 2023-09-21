@@ -7,7 +7,6 @@ import {
 import { BreakLine } from 'components/Composition/BreakLine';
 import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
-import { confirmationAlertTranslations } from 'constants/translations/alerts/confirmationAlert.translations';
 import { FormatAddress } from 'components/Formatters/FormatAddress';
 import colors from 'themes/colors';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
@@ -18,10 +17,10 @@ import { RootState } from 'store/store';
 import { ClinicAssignmentRequestStatus } from 'constants/enums/clinic.enum';
 import { Ionicons } from '@expo/vector-icons';
 import icons from 'themes/icons';
-import { otherTranslations } from 'constants/translations/other.translations';
 import { FullScreenLoading } from 'components/Composition/FullScreenLoading';
 import { ClinicApi } from 'api/clinic/clinic.api';
 import { ApiError } from 'types/api/error/types';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   clinic: Clinic;
@@ -35,13 +34,14 @@ export const VetClinicListItem = ({ clinic }: Props) => {
   const [ loading, setLoading ] = useState<boolean>(false);
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert(() => navigation.goBack());
   const [ errors, setErrors ] = useState<ApiError[]>([]);
+  const { t } = useTranslation();
 
   const handleAddClinic = async () => {
     if (isClinicWaitingForAssignment()) return;
     try {
       await confirmation({
         title: '',
-        message: `${confirmationAlertTranslations.ADD_CLINIC_CONFIRMATION} "${clinic.name}"?`,
+        message: `${t('alerts.confirmation.add_clinic.title')} "${clinic.name}"?`,
       });
       setLoading((prevState) => !prevState);
       await ClinicApi.addClinic(clinic.id);
@@ -89,7 +89,7 @@ export const VetClinicListItem = ({ clinic }: Props) => {
                     color={colors.PRIMARY}
                   />
                   <Text style={styles.waitingInformationText}>
-                    {otherTranslations.PENDING_APPROVAL}
+                    {t('words.pending_approval.title')}
                   </Text>
                 </View>
               )}

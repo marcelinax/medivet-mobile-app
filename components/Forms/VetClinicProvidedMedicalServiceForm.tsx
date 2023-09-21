@@ -7,7 +7,6 @@ import {
   forwardRef, useEffect, useImperativeHandle, useState,
 } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { inputsTranslations } from 'constants/translations/inputs.translations';
 import { getInputErrors } from 'api/error/services';
 import { SelectId } from 'constants/enums/selectId.enum';
 import { SelectInput } from 'components/Inputs/SelectInput/SelectInput';
@@ -21,12 +20,12 @@ import {
 } from 'api/vetClinicProvidedMedicalService/vetClinicProvidedMedicalService.api';
 import { removeSingleSelect, setSingleSelectSelectedOption } from 'store/select/selectSlice';
 import { NumberInput } from 'components/Inputs/NumberInput';
-import { commonTranslations } from 'constants/translations/common.translations';
 import { useNavigation } from '@react-navigation/native';
 import { CreateVetClinicProvidedMedicalServiceScreenNavigationProps } from 'types/Navigation/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { MoneyInput } from 'components/Inputs/MoneyInput';
 import { HandleSubmitForm } from 'types/components/Forms/types';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   providedMedicalService?: VetClinicProvidedMedicalService;
@@ -64,6 +63,7 @@ export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitForm, 
   const user = useSelector((state: RootState) => state.user.currentUser);
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const parsedUserVetSpecializations = parseDataToSelectOptions(user?.specializations || [], 'name', 'id');
+  const { t } = useTranslation();
 
   useEffect(() => {
     setFirstRender(false);
@@ -153,11 +153,11 @@ export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitForm, 
           onChoose={(specialization) => handleChangeInput('specialization', specialization)}
           variant="underline"
           options={parsedUserVetSpecializations}
-          label={inputsTranslations.SPECIALIZATION}
+          label={t('words.specialization.title')}
           errors={getInputErrors(errors, 'specializationId')}
           id={SelectId.VET_MEDICAL_SPECIALIZATION}
           defaultValue={form.specialization}
-          selectScreenHeaderTitle={inputsTranslations.SPECIALIZATION}
+          selectScreenHeaderTitle={t('words.specialization.title')}
         />
       </View>
       {
@@ -167,11 +167,11 @@ export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitForm, 
               onChoose={(medicalService) => handleChangeInput('specializationMedicalService', medicalService)}
               variant="underline"
               fetchOptions={fetchVetSpecializationMedicalServices}
-              label={inputsTranslations.SERVICE}
+              label={t('words.service.title')}
               errors={getInputErrors(errors, 'specializationMedicalServiceId')}
               id={SelectId.VET_MEDICAL_SERVICE}
               defaultValue={form.specializationMedicalService}
-              selectScreenHeaderTitle={inputsTranslations.SERVICE}
+              selectScreenHeaderTitle={t('words.service.title')}
             />
           </View>
         )
@@ -182,7 +182,7 @@ export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitForm, 
           value={form?.price}
           onChangeText={(price) => handleChangeInput('price', price)}
           errors={getInputErrors(errors, 'price')}
-          label={`${commonTranslations.PRICE} (PLN)`}
+          label={`${t('words.price.title')} (PLN)`}
         />
       </View>
       <View style={styles.inputMargin}>
@@ -191,7 +191,7 @@ export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitForm, 
           value={form?.duration?.toString()}
           onChangeText={(duration) => handleChangeInput('duration', duration)}
           errors={getInputErrors(errors, 'duration')}
-          label={`${commonTranslations.AVERAGE_DURATION_TIME} (min)`}
+          label={`${t('words.average_duration_time.title')} (min)`}
         />
       </View>
     </View>

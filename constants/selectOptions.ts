@@ -1,72 +1,71 @@
 import { SelectOptionProps } from 'types/components/Inputs/types';
 import { DayWeek } from 'constants/enums/dayWeek.enum';
+import { TFunction } from 'i18next';
 import { AnimalType } from './enums/animalType.enum';
 import { Gender } from './enums/gender.enum';
-import { commonTranslations } from './translations/common.translations';
-import { enumsTranslations } from './translations/enums.translations';
 
-export const genderSelectOptions: SelectOptionProps[] = [
+export const getGenderSelectOptions = (t: TFunction<string, undefined>): SelectOptionProps[] => [
   {
     id: Gender.FEMALE,
-    label: commonTranslations.FEMALE,
+    label: t('enums.gender.FEMALE'),
   },
   {
     id: Gender.MALE,
-    label: commonTranslations.MALE,
+    label: t('enums.gender.MALE'),
   },
 ];
 
-export const animalGenderSelectOptions: SelectOptionProps[] = [
+export const getAnimalGenderSelectOptions = (t: TFunction<string, undefined>): SelectOptionProps[] => [
   {
     id: Gender.FEMALE,
-    label: commonTranslations.ANIMAL_FEMALE,
+    label: t('enums.gender.ANIMAL_FEMALE'),
   },
   {
     id: Gender.MALE,
-    label: commonTranslations.ANIMAL_MALE,
+    label: t('enums.gender.ANIMAL_MALE'),
   },
 ];
 
-export const animalTypeSelectOptions: SelectOptionProps[] = [
+export const getAnimalTypeSelectOptions = (t: TFunction<string, undefined>): SelectOptionProps[] => [
   {
     id: AnimalType.DOG,
-    label: enumsTranslations.DOG,
+    label: t('enums.animal.type.DOG'),
   },
   {
     id: AnimalType.CAT,
-    label: enumsTranslations.CAT,
+    label: t('enums.animal.type.CAT'),
   },
   {
     id: AnimalType.BIRD,
-    label: enumsTranslations.BIRD,
+    label: t('enums.animal.type.BIRD'),
   },
   {
     id: AnimalType.FUR_ANIMAL,
-    label: enumsTranslations.FUR_ANIMAL,
+    label: t('enums.animal.type.FUR_ANIMAL'),
   },
 ];
 
-export const dayOfWeekSelectOptions: SelectOptionProps[] = [
+export const getDayOfWeekSelectOptions = (t: TFunction<string, undefined>): SelectOptionProps[] => [
   {
     id: DayWeek.MONDAY,
-    label: enumsTranslations.MONDAY,
+    label: t('enums.day_of_week.MONDAY'),
   }, {
     id: DayWeek.TUESDAY,
-    label: enumsTranslations.TUESDAY,
+    label: t('enums.day_of_week.TUESDAY'),
   }, {
     id: DayWeek.WEDNESDAY,
-    label: enumsTranslations.WEDNESDAY,
+    label: t('enums.day_of_week.WEDNESDAY'),
   }, {
     id: DayWeek.THURSDAY,
-    label: enumsTranslations.THURSDAY,
+    label: t('enums.day_of_week.THURSDAY'),
   }, {
     id: DayWeek.FRIDAY,
-    label: enumsTranslations.FRIDAY,
+    label: t('enums.day_of_week.FRIDAY'),
   }, {
     id: DayWeek.SATURDAY,
-    label: enumsTranslations.SATURDAY,
+    label: t('enums.day_of_week.SATURDAY'),
   }, {
     id: DayWeek.SUNDAY,
-    label: enumsTranslations.SUNDAY,
+    label: t('enums.day_of_week.SUNDAY'),
   },
 ];

@@ -3,9 +3,6 @@ import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { NumberInput } from 'components/Inputs/NumberInput';
 import { TextInput } from 'components/Inputs/TextInput';
 import { ZipCodeInput } from 'components/Inputs/ZipCodeInput';
-import { successAlertTranslations } from 'constants/translations/alerts/successAlert.translations';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
-import { inputsTranslations } from 'constants/translations/inputs.translations';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 import { DefaultLayout } from 'layouts/Default.layout';
@@ -17,6 +14,7 @@ import { setCurrentUser } from 'store/user/userSlice';
 import { AddressApi } from 'types/api/types';
 import { User } from 'types/api/user/types';
 import { ApiError } from 'types/api/error/types';
+import { useTranslation } from 'react-i18next';
 
 export const EditUserAddressScreen = () => {
   const user = useSelector((state: RootState) => state.user.currentUser) as User;
@@ -26,6 +24,7 @@ export const EditUserAddressScreen = () => {
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
+  const { t } = useTranslation();
 
   const onChange = (field: string, value: string | number): void => {
     setForm({
@@ -54,7 +53,7 @@ export const EditUserAddressScreen = () => {
   return (
     <DefaultLayout stickyFooterChildren={(
       <LoadingButton
-        title={buttonsTranslations.SAVE}
+        title={t('actions.save.title')}
         variant="solid"
         loading={loading}
         onPress={onSubmit}
@@ -63,11 +62,11 @@ export const EditUserAddressScreen = () => {
     >
       <View>
         {drawErrorAlert(errors)}
-        {drawSuccessAlert(successAlertTranslations.SAVED)}
+        {drawSuccessAlert(t('alerts.success.save.title'))}
         <View style={styles.inputMargin}>
           <TextInput
             onChangeText={(e) => onChange('street', e)}
-            label={inputsTranslations.STREET}
+            label={t('words.street.title')}
             value={form?.street}
             errors={[]}
             variant="underline"
@@ -77,7 +76,7 @@ export const EditUserAddressScreen = () => {
         <View style={styles.inputMargin}>
           <NumberInput
             onChangeText={(e) => onChange('buildingNumber', e)}
-            label={inputsTranslations.BUILDING_NUMBER}
+            label={t('words.building_number.title')}
             value={form?.buildingNumber}
             errors={[]}
             variant="underline"
@@ -87,7 +86,7 @@ export const EditUserAddressScreen = () => {
         <View style={styles.inputMargin}>
           <NumberInput
             onChangeText={(e) => onChange('flatNumber', e)}
-            label={inputsTranslations.FLAT_NUMBER}
+            label={t('words.flat_number.title')}
             value={form?.flatNumber}
             errors={[]}
             variant="underline"
@@ -97,7 +96,7 @@ export const EditUserAddressScreen = () => {
         <View style={styles.inputMargin}>
           <TextInput
             onChangeText={(e) => onChange('city', e)}
-            label={inputsTranslations.CITY}
+            label={t('words.city.title')}
             value={form?.city}
             errors={[]}
             variant="underline"
@@ -107,7 +106,7 @@ export const EditUserAddressScreen = () => {
         <View style={styles.inputMargin}>
           <ZipCodeInput
             onChangeText={(e) => onChange('zipCode', e)}
-            label={inputsTranslations.ZIP_CODE}
+            label={t('words.zip_code.title')}
             value={form?.zipCode}
             errors={[]}
             variant="underline"

@@ -10,10 +10,10 @@ import {
 } from 'api/vetClinicProvidedMedicalService/vetClinicProvidedMedicalService.api';
 import { DefaultLayout } from 'layouts/Default.layout';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
 import { LoadingContainer } from 'components/Composition/LoadingContainer';
 import { StyleSheet } from 'react-native';
 import { HandleSubmitForm } from 'types/components/Forms/types';
+import { useTranslation } from 'react-i18next';
 
 export const EditVetClinicProvidedMedicalServiceScreen = () => {
   const formRef = useRef<HandleSubmitForm>(null);
@@ -21,6 +21,7 @@ export const EditVetClinicProvidedMedicalServiceScreen = () => {
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const [ medicalService, setMedicalService ] = useState<VetClinicProvidedMedicalService | undefined>();
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchVetProvidedMedicalService();
@@ -42,7 +43,7 @@ export const EditVetClinicProvidedMedicalServiceScreen = () => {
     <DefaultLayout
       stickyFooterChildren={(
         <LoadingButton
-          title={buttonsTranslations.SAVE}
+          title={t('actions.save.title')}
           variant="solid"
           loading={!!formRef.current?.loading}
           onPress={() => formRef.current?.submit()}

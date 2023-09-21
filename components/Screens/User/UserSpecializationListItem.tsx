@@ -14,7 +14,7 @@ import { RootState } from 'store/store';
 import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { ApiError } from 'types/api/error/types';
-import { confirmationAlertTranslations } from 'constants/translations/alerts/confirmationAlert.translations';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   vetSpecialization: VetSpecialization;
@@ -28,11 +28,12 @@ export const UserSpecializationListItem = ({ vetSpecialization, setRemoveLoading
   const confirmation = useConfirmationAlert();
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
+  const { t } = useTranslation();
 
   const handleRemove = async () => {
     await confirmation({
       title: '',
-      message: confirmationAlertTranslations.REMOVING_CONFIRMATION,
+      message: t('alerts.confirmation.remove.title'),
     });
     setRemoveLoading(true);
     try {

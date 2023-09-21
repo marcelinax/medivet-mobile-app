@@ -3,7 +3,7 @@ import sizes from 'constants/sizes';
 import { ActionsSheetButtonProps } from 'types/components/Alerts/types';
 import { ActionsSheetButton } from 'components/Alerts/ActionsSheet/ActionsSheetButton';
 import colors from 'themes/colors';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   visible: boolean;
@@ -13,6 +13,7 @@ interface Props {
 
 export const ActionsSheet = ({ visible, onHide, buttons }: Props) => {
   const visibleButtons = buttons.filter((button) => button.visible === true || button.visible === undefined);
+  const { t } = useTranslation();
 
   const drawButtons = (): JSX.Element[] => visibleButtons.map((button, index) => (
     <View
@@ -45,7 +46,7 @@ export const ActionsSheet = ({ visible, onHide, buttons }: Props) => {
             <ActionsSheetButton
               onPress={onHide}
               isLast
-              title={buttonsTranslations.CANCEL}
+              title={t('actions.cancel.title')}
               variant="primary"
             />
           </View>

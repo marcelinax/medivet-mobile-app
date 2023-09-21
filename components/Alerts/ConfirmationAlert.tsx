@@ -2,8 +2,7 @@ import { Modal, Text, View } from 'react-native';
 import { alertStyles } from 'components/Alerts/utils/styles';
 import { Button } from 'components/Buttons/Button';
 import React from 'react';
-import { confirmationAlertTranslations } from 'constants/translations/alerts/confirmationAlert.translations';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   show: boolean;
@@ -16,41 +15,45 @@ interface Props {
 export const ConfirmationAlert = ({
   show, onHide, onConfirm,
   message, title,
-}: Props) => (
-  <Modal
-    visible={show}
-    transparent
-    animationType="slide"
-  >
-    <View style={alertStyles.modalContainer}>
-      <View style={alertStyles.modal}>
-        <Text style={[
-          alertStyles.title,
-          { marginBottom: !message ? 8 : 0 },
-        ]}
-        >
-          {title || confirmationAlertTranslations.CONFIRMATION_TITLE}
-        </Text>
-        <Text>
-          {message}
-        </Text>
-        <View style={alertStyles.buttonsContainer}>
-          <Button
-            title={buttonsTranslations.CONFIRM}
-            color="primary"
-            onPress={onConfirm}
-            variant="solid"
-            style={alertStyles.button}
-          />
-          <Button
-            title={buttonsTranslations.CANCEL}
-            color="danger"
-            onPress={onHide}
-            variant="solid"
-            style={[ alertStyles.button, alertStyles.secondButton ]}
-          />
+}: Props) => {
+  const { t } = useTranslation();
+
+  return (
+    <Modal
+      visible={show}
+      transparent
+      animationType="slide"
+    >
+      <View style={alertStyles.modalContainer}>
+        <View style={alertStyles.modal}>
+          <Text style={[
+            alertStyles.title,
+            { marginBottom: !message ? 8 : 0 },
+          ]}
+          >
+            {title || t('alerts.confirmation.title')}
+          </Text>
+          <Text>
+            {message}
+          </Text>
+          <View style={alertStyles.buttonsContainer}>
+            <Button
+              title={t('actions.confirm.title')}
+              color="primary"
+              onPress={onConfirm}
+              variant="solid"
+              style={alertStyles.button}
+            />
+            <Button
+              title={t('actions.save.title')}
+              color="danger"
+              onPress={onHide}
+              variant="solid"
+              style={[ alertStyles.button, alertStyles.secondButton ]}
+            />
+          </View>
         </View>
       </View>
-    </View>
-  </Modal>
-);
+    </Modal>
+  );
+};

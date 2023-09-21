@@ -6,7 +6,7 @@ import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { useEffect, useState } from 'react';
 import { Loading } from 'components/Composition/Loading';
 import { TextInput } from 'components/Inputs/TextInput';
-import { inputsTranslations } from 'constants/translations/inputs.translations';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   data: any[];
@@ -32,6 +32,7 @@ export const SimpleList = ({
   const withSearch = searchKeys && searchKeys.length > 0;
   const [ internalData, setInternalData ] = useState<any[]>([ ...data ]);
   const dataAsString = JSON.stringify(data);
+  const { t } = useTranslation();
 
   const itemSeparator = separateOptions ? () => <View style={listStyles.separator} /> : undefined;
   const emptyComponent: JSX.Element = !loading && internalData.length === 0 ? <EmptyList /> : <></>;
@@ -77,7 +78,7 @@ export const SimpleList = ({
         onChangeText={handleChangeSearch}
         errors={[]}
         autoCapitalize="none"
-        placeholder={inputsTranslations.SEARCH}
+        placeholder={t('words.search.title')}
       />
     </View>
   );

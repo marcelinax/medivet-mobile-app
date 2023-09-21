@@ -5,8 +5,6 @@ import { Button } from 'components/Buttons/Button';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { PasswordInput } from 'components/Inputs/PasswordInput';
 import { TextInput } from 'components/Inputs/TextInput';
-import { buttonsTranslations } from 'constants/translations/buttons.translations';
-import { inputsTranslations } from 'constants/translations/inputs.translations';
 import * as SecureStore from 'expo-secure-store';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import React, { useState } from 'react';
@@ -17,6 +15,7 @@ import colors from 'themes/colors';
 import { AuthCredentials } from 'types/api/auth/types';
 import { ApiError } from 'types/api/error/types';
 import { LoginScreenNavigationProps } from 'types/Navigation/types';
+import { useTranslation } from 'react-i18next';
 
 export const LoginForm = () => {
   const [ form, setForm ] = useState<AuthCredentials>({
@@ -28,6 +27,7 @@ export const LoginForm = () => {
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const dispatch = useDispatch();
   const navigation = useNavigation<LoginScreenNavigationProps>();
+  const { t } = useTranslation();
 
   const onChange = (field: string, newValue: string): void => {
     setForm({
@@ -62,7 +62,7 @@ export const LoginForm = () => {
           value={form.email}
           onChangeText={(e) => onChange('email', e)}
           variant="underline"
-          placeholder={inputsTranslations.EMAIL}
+          placeholder={t('words.email.title')}
           isClearable
           keyboardType="email-address"
           errors={getInputErrors(errors, 'email')}
@@ -72,29 +72,29 @@ export const LoginForm = () => {
           value={form.password}
           errors={getInputErrors(errors, 'password')}
           onChangeText={(e) => onChange('password', e)}
-          placeholder={inputsTranslations.PASSWORD}
+          placeholder={t('words.password.title')}
         />
         <Button
           variant="link"
-          title={buttonsTranslations.FORGOT_PASSWORD}
+          title={t('actions.forgot_password.title')}
           style={{ marginTop: 10 }}
           color="light"
           fontWeight="light"
         />
         <LoadingButton
           variant="solid"
-          title={buttonsTranslations.SIGN_IN}
+          title={t('actions.sign_in.title')}
           loading={loading}
           style={{ marginTop: 10 }}
           onPress={onSignIn}
         />
         <View style={styles.signUpButtonContainer}>
           <Text style={styles.signUpText}>
-            {buttonsTranslations.NO_ACCOUNT_YET}
+            {t('actions.no_account_yet.title')}
           </Text>
           <Button
             variant="link"
-            title={buttonsTranslations.SIGN_UP}
+            title={t('actions.sign_up.title')}
             color="secondary"
             fontWeight="bolder"
             onPress={onSignUp}
