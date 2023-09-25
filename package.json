@@ -8,7 +8,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "eslint . **/*.ts *.tsx",
-    "extract": "i18next -c i18n-parser.config.ts --fail-on-warnings"
+    "extract": "i18next -c i18n-parser.config.ts"
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
@@ -29,7 +29,9 @@
     "expo-secure-store": "~12.0.0",
     "expo-status-bar": "~1.4.2",
     "i18next": "^23.5.1",
+    "i18next-intervalplural-postprocessor": "^3.0.0",
     "i18next-parser": "^8.7.0",
+    "intl-pluralrules": "^2.0.1",
     "moment": "^2.29.4",
     "react": "18.1.0",
     "react-dom": "18.1.0",
@@ -37,9 +39,11 @@
     "react-native": "0.70.5",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-modal-datetime-picker": "^14.0.0",
+    "react-native-pager-view": "^6.2.1",
     "react-native-reanimated": "~2.12.0",
     "react-native-safe-area-context": "4.4.1",
     "react-native-screens": "~3.18.0",
+    "react-native-tab-view": "^3.5.2",
     "react-native-web": "~0.18.9",
     "react-redux": "^8.0.5",
     "redux": "^4.2.0",

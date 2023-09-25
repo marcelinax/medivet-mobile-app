@@ -1,4 +1,5 @@
 import { AddressApi } from 'types/api/types';
+import { Clinic } from 'types/api/clinic/types';
 
 export interface RegistrationCredentials {
   email: string;
@@ -21,6 +22,8 @@ export interface User {
   phoneNumber?: string;
   address?: AddressApi;
   specializations?: VetSpecialization[];
+  opinions?: VetOpinion[];
+  clinics?: Clinic[];
 }
 
 export type UserRoleType = 'patient' | 'vet';
@@ -28,4 +31,13 @@ export type UserRoleType = 'patient' | 'vet';
 export interface VetSpecialization {
   name: string;
   id: number;
+}
+
+export interface VetOpinion {
+  id: number;
+  message: string;
+  rate: number;
+  issuer: User;
+  date: string;
+  vet: User;
 }

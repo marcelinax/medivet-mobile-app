@@ -1,6 +1,8 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import plTranslations from 'translations/pl/translation.json';
+import 'intl-pluralrules';
+import intervalPlural from 'i18next-intervalplural-postprocessor';
 
 const resources = {
   pl: {
@@ -10,32 +12,22 @@ const resources = {
 
 i18n
   .use(initReactI18next)
+  .use(intervalPlural)
   .init({
+    compatibilityJSON: 'v4',
     resources,
     fallbackLng: 'pl',
     react: {
       useSuspense: false,
-      wait: true,
     },
     sort: true,
     pluralSeparator: '_',
     keepRemoved: false,
-    debug: true,
     interpolation: {
       escapeValue: false,
     },
+    saveMissing: true,
     returnEmptyString: false,
-  })
-  .then(() => {
-    i18n.services.pluralResolver.insertRule('pl', {
-      numbers: [ 1, 2, 3 ],
-      plurals: (n: number) => {
-        if (n === undefined) return;
-        return Number(
-          n === 1 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2,
-        );
-      },
-    });
   });
 
 export default i18n;

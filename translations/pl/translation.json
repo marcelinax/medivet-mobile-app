@@ -1,19 +1,34 @@
 {
   "actions": {
-    "accept_terms": {
-      "title": "Akceptuję regulamin i politykę prywatności"
-    },
-    "add": {
-      "title": "Dodaj"
-    },
-    "apply": {
-      "title": "Zastosuj"
-    },
     "cancel": {
       "title": "Anuluj"
     },
-    "cancel_removal": {
-      "title": "Anuluj usunięcie"
+    "confirm": {
+      "title": "Potwierdź"
+    },
+    "save": {
+      "title": "Zapisz"
+    },
+    "forgot_password": {
+      "title": "Zapomniałeś hasła?"
+    },
+    "sign_in": {
+      "title": "Zaloguj się"
+    },
+    "no_account_yet": {
+      "title": "Nie masz jeszcze konta?"
+    },
+    "sign_up": {
+      "title": "Zarejestruj się"
+    },
+    "accept_terms": {
+      "title": "Akceptuję regulamin i politykę prywatności"
+    },
+    "have_account_already": {
+      "title": "Masz już konto?"
+    },
+    "add": {
+      "title": "Dodaj"
     },
     "change": {
       "title": "Zmień"
@@ -21,90 +36,265 @@
     "choose": {
       "title": "Wybierz"
     },
-    "choose_role": {
-      "title": "Wybierz rolę"
+    "remove": {
+      "title": "Usuń"
     },
     "clear": {
       "title": "Wyczyść"
     },
-    "confirm": {
-      "title": "Potwierdź"
+    "choose_role": {
+      "title": "Wybierz rolę"
     },
-    "forgot_password": {
-      "title": "Zapomniałeś hasła?"
+    "cancel_removal": {
+      "title": "Anuluj usunięcie"
     },
-    "have_account_already": {
-      "title": "Masz już konto?"
-    },
-    "logout": {
-      "title": "Wyloguj się"
-    },
-    "no_account_yet": {
-      "title": "Nie masz jeszcze konta?"
-    },
-    "remove": {
-      "title": "Usuń"
-    },
-    "save": {
-      "title": "Zapisz"
+    "apply": {
+      "title": "Zastosuj"
     },
     "search": {
       "title": "Szukaj"
     },
-    "sign_in": {
-      "title": "Zaloguj się"
-    },
-    "sign_up": {
-      "title": "Zarejestruj się"
+    "logout": {
+      "title": "Wyloguj się"
     }
   },
   "alerts": {
     "confirmation": {
-      "add_clinic": {
-        "title": "Na pewno chcesz dodać klinikę"
-      },
-      "message": "Na pewno chcesz wykonać akcję?",
+      "title": "Potwierdzenie",
       "remove": {
         "title": "Na pewno chcesz usunąć?"
+      },
+      "add_clinic": {
+        "title": "Na pewno chcesz dodać klinikę"
       },
       "remove_clinic": {
         "title": "Na pewno chcesz usunąć klinikę"
       },
-      "title": "Potwierdzenie"
+      "message": "Na pewno chcesz wykonać akcję?"
     },
     "success": {
+      "title": "Akcja powiodła się!",
       "save": {
         "title": "Zapisano!"
-      },
-      "title": "Akcja powiodła się!"
+      }
+    }
+  },
+  "errors": {
+    "something_went_wrong": {
+      "title": "Coś poszło nie tak"
+    },
+    "no_media_library_permission": {
+      "title": "Brak dostępu do rolki aparatu",
+      "message": "Aby korzystać z rolki aparatu, musisz przejść do ustawień systemowych i zezwolić aplikacji na jej korzystanie."
+    }
+  },
+  "words": {
+    "not_found_results": {
+      "title": "Nie znaleziono wyników."
+    },
+    "opinions": {
+      "title_one": "{{count}} opinia",
+      "title_few": "{{count}} opinie",
+      "title_many": "{{count}} opinii",
+      "title_other": "{{count}} opinii"
+    },
+    "edition": {
+      "title": "Edycja"
+    },
+    "single_name": {
+      "title": "Imię"
+    },
+    "type": {
+      "title": "Typ"
+    },
+    "breed": {
+      "title": "Rasa"
+    },
+    "gender": {
+      "title": "Płeć"
+    },
+    "coat_color": {
+      "title": "Umaszczenie"
+    },
+    "birth_date": {
+      "title": "Data urodzenia"
+    },
+    "email": {
+      "title": "Email"
+    },
+    "password": {
+      "title": "Hasło"
+    },
+    "name": {
+      "title": "Imię i nazwisko"
+    },
+    "specialization": {
+      "title": "Specjalizacja"
+    },
+    "city": {
+      "title": "Miasto"
+    },
+    "specializations": {
+      "title": "Specjalizacje"
+    },
+    "reception_hours": {
+      "title": "Godziny przyjmowania"
+    },
+    "day_of_week": {
+      "title": "Dzień tygodnia"
+    },
+    "hour_from": {
+      "title": "Od"
+    },
+    "hour_to": {
+      "title": "Do"
+    },
+    "service": {
+      "title": "Usługa"
+    },
+    "price": {
+      "title": "Cena"
+    },
+    "average_duration_time": {
+      "title": "Średni czas trwania"
+    },
+    "phone_number": {
+      "title": "Nr telefonu"
+    },
+    "search": {
+      "title": "Szukaj..."
+    },
+    "pending_approval": {
+      "title": "Oczekuje na zatwierdzenie"
+    },
+    "minutes": {
+      "title_one": "{{count}} minuta",
+      "title_few": "{{count}} minuty",
+      "title_many": "{{count}} minut",
+      "title_other": "{{count}} minut"
+    },
+    "loading": {
+      "title": "Ładowanie..."
+    },
+    "next_date": {
+      "title": "Najbliższy wolny termin"
+    },
+    "address": {
+      "title": "Adres"
+    },
+    "logo": {
+      "title": "MediVet"
+    },
+    "pending_clinic_removal": {
+      "title": "W oczekiwaniu na zatwierdzenie usunięcia przez Admina"
+    },
+    "availabilities": {
+      "title": "Dostępności"
+    },
+    "vet_clinic_provided_medical_services": {
+      "title": "Świadczone usługi"
+    },
+    "find_vet": {
+      "title": "Znajdź weterynarza i umów wizytę"
+    },
+    "street": {
+      "title": "Ulica"
+    },
+    "building_number": {
+      "title": "Nr budynku"
+    },
+    "flat_number": {
+      "title": "Nr lokalu"
+    },
+    "zip_code": {
+      "title": "Kod pocztowy"
+    }
+  },
+  "navigation": {
+    "clinic_availabilities": {
+      "title": "Dostępności"
+    },
+    "user_animals": {
+      "title": "Moje zwierzęta"
+    },
+    "new_animal": {
+      "title": "Dodawanie zwierzęcia"
+    },
+    "user_clinics": {
+      "title": "Moje kliniki"
+    },
+    "vet_clinic_provided_medical_services": {
+      "title": "Świadczone usuługi"
+    },
+    "add_clinic": {
+      "title": "Dodawanie kliniki"
+    },
+    "clinic": {
+      "title": "Klinika"
+    },
+    "create_availability": {
+      "title": "Tworzenie dostępności"
+    },
+    "create_availability_reception_hours": {
+      "title": "Tworzenie godzin przyjmowania"
+    },
+    "edit_availability": {
+      "title": "Edycja dostępności"
+    },
+    "create_vet_clinic_provided_medical_services": {
+      "title": "Tworzenie świadczonej usługi"
+    },
+    "edit_vet_clinic_provided_medical_services": {
+      "title": "Edycja świadczonej usługi"
+    },
+    "filters": {
+      "title": "Filtrowanie"
+    },
+    "user_specializations": {
+      "title": "Moje specjalizacje"
+    },
+    "user_profile": {
+      "title": "Profil"
+    },
+    "edit_user_profile": {
+      "title": "Edycja profilu"
+    },
+    "edit_address": {
+      "title": "Edycja adresu"
     }
   },
   "enums": {
+    "gender": {
+      "FEMALE": "Kobieta",
+      "MALE": "Mężczyzna",
+      "ANIMAL_FEMALE": "Samica",
+      "ANIMAL_MALE": "Samiec"
+    },
     "animal": {
       "type": {
-        "BIRD": "Ptak",
-        "CAT": "Kot",
         "DOG": "Pies",
+        "CAT": "Kot",
+        "BIRD": "Ptak",
         "FUR_ANIMAL": "Zwierzęta futerkowe"
       }
     },
     "day_of_week": {
-      "FRIDAY": "Piątek",
       "MONDAY": "Poniedziałek",
-      "SATURDAY": "Sobota",
-      "SUNDAY": "Niedziela",
-      "THURSDAY": "Wtorek",
       "TUESDAY": "Czwartek",
       "WEDNESDAY": "Środa",
+      "THURSDAY": "Wtorek",
+      "FRIDAY": "Piątek",
+      "SATURDAY": "Sobota",
+      "SUNDAY": "Niedziela",
       "shortcut": {
-        "FRIDAY": "Pt"
+        "FRIDAY": "Pt.",
+        "MONDAY": "Pon.",
+        "SUNDAY": "Niedz.",
+        "SATURDAY": "Sob.",
+        "WEDNESDAY": "Śr.",
+        "THURSDAY": "Czw.",
+        "TUESDAY": "Wt."
       }
-    },
-    "gender": {
-      "ANIMAL_FEMALE": "Samica",
-      "ANIMAL_MALE": "Samiec",
-      "FEMALE": "Kobieta",
-      "MALE": "Mężczyzna"
     },
     "user": {
       "role": {
@@ -115,184 +305,6 @@
           "title": "Weterynarz"
         }
       }
-    }
-  },
-  "errors": {
-    "no_media_library_permission": {
-      "message": "Aby korzystać z rolki aparatu, musisz przejść do ustawień systemowych i zezwolić aplikacji na jej korzystanie.",
-      "title": "Brak dostępu do rolki aparatu"
-    },
-    "something_went_wrong": {
-      "title": "Coś poszło nie tak"
-    }
-  },
-  "navigation": {
-    "add_clinic": {
-      "title": "Dodawanie kliniki"
-    },
-    "clinic": {
-      "title": "Klinika"
-    },
-    "clinic_availabilities": {
-      "title": "Dostępności"
-    },
-    "create_availability": {
-      "title": "Tworzenie dostępności"
-    },
-    "create_availability_reception_hours": {
-      "title": "Tworzenie godzin przyjmowania"
-    },
-    "create_vet_clinic_provided_medical_services": {
-      "title": "Tworzenie świadczonej usługi"
-    },
-    "edit_address": {
-      "title": "Edycja adresu"
-    },
-    "edit_availability": {
-      "title": "Edycja dostępności"
-    },
-    "edit_user_profile": {
-      "title": "Edycja profilu"
-    },
-    "edit_vet_clinic_provided_medical_services": {
-      "title": "Edycja świadczonej usługi"
-    },
-    "filters": {
-      "title": "Filtrowanie"
-    },
-    "new_animal": {
-      "title": "Dodawanie zwierzęcia"
-    },
-    "user_animals": {
-      "title": "Moje zwierzęta"
-    },
-    "user_clinics": {
-      "title": "Moje kliniki"
-    },
-    "user_profile": {
-      "title": "Profil"
-    },
-    "user_specializations": {
-      "title": "Moje specjalizacje"
-    },
-    "vet_clinic_provided_medical_services": {
-      "title": "Świadczone usuługi"
-    }
-  },
-  "words": {
-    "availabilities": {
-      "title": "Dostępności"
-    },
-    "average_duration_time": {
-      "title": "Średni czas trwania"
-    },
-    "birth_date": {
-      "title": "Data urodzenia"
-    },
-    "breed": {
-      "title": "Rasa"
-    },
-    "building_number": {
-      "title": "Nr budynku"
-    },
-    "city": {
-      "title": "Miasto"
-    },
-    "coat_color": {
-      "title": "Umaszczenie"
-    },
-    "day_of_week": {
-      "title": "Dzień tygodnia"
-    },
-    "edition": {
-      "title": "Edycja"
-    },
-    "email": {
-      "title": "Email"
-    },
-    "find_vet": {
-      "title": "Znajdź weterynarza i umów wizytę"
-    },
-    "flat_number": {
-      "title": "Nr lokalu"
-    },
-    "gender": {
-      "title": "Płeć"
-    },
-    "hour_from": {
-      "title": "Od"
-    },
-    "hour_to": {
-      "title": "Do"
-    },
-    "loading": {
-      "title": "Ładowanie..."
-    },
-    "logo": {
-      "title": "MediVet"
-    },
-    "minutes": {
-      "title_one": "{{count}} minuta",
-      "title_few": "{{count}} minuty",
-      "title_many": "{{count}} minut",
-      "title_other": "{{count}} minut"
-    },
-    "name": {
-      "title": "Imię i nazwisko"
-    },
-    "not_found_results": {
-      "title": "Nie znaleziono wyników."
-    },
-    "opinions": {
-      "title_one": "{{count}} opinia",
-      "title_few": "{{count}} opinie",
-      "title_many": "{{count}} opinii",
-      "title_other": "{{count}} opinii"
-    },
-    "password": {
-      "title": "Hasło"
-    },
-    "pending_approval": {
-      "title": "Oczekuje na zatwierdzenie"
-    },
-    "pending_clinic_removal": {
-      "title": "W oczekiwaniu na zatwierdzenie usunięcia przez Admina"
-    },
-    "phone_number": {
-      "title": "Nr telefonu"
-    },
-    "price": {
-      "title": "Cena"
-    },
-    "reception_hours": {
-      "title": "Godziny przyjmowania"
-    },
-    "search": {
-      "title": "Szukaj..."
-    },
-    "service": {
-      "title": "Usługa"
-    },
-    "single_name": {
-      "title": "Imię"
-    },
-    "specialization": {
-      "title": "Specjalizacja"
-    },
-    "specializations": {
-      "title": "Specjalizacje"
-    },
-    "street": {
-      "title": "Ulica"
-    },
-    "type": {
-      "title": "Typ"
-    },
-    "vet_clinic_provided_medical_services": {
-      "title": "Świadczone usługi"
-    },
-    "zip_code": {
-      "title": "Kod pocztowy"
     }
   }
 }

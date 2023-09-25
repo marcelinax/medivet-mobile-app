@@ -6,6 +6,7 @@ export default {
   CHEVRON_UP: 'chevron-up' as const,
   CHEVRON_FORWARD_OUTLINE: 'chevron-forward-outline' as const,
   CALENDAR: 'calendar' as const,
+  CALENDAR_OUTLINE: 'calendar-outline' as const,
   PERSON_OUTLINE: 'person-outline' as const,
   HOME_OUTLINE: 'home-outline' as const,
   LOG_OUT_OUTLINE: 'log-out-outline' as const,
@@ -19,4 +20,7 @@ export default {
   TIME_OUTLINE: 'time-outline' as const,
   TRASH_OUTLINE: 'trash-outline' as const,
   OPTIONS_OUTLINE: 'options-outline' as const,
+  STAR_OUTLINE: 'star-outline' as const,
+  STAR: 'star' as const,
+  LOCATION: 'location' as const,
 };
