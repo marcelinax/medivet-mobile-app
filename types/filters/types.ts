@@ -8,3 +8,8 @@ export interface SelectedFilter {
 export interface HandleApplyFilters {
   value: SelectOptionProps[];
 }
+
+export interface SearchVetsFilters {
+  city?: string;
+  specialization?: SelectOptionProps;
+}

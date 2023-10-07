@@ -1,5 +1,7 @@
 import moment from 'moment';
 
+moment.locale('pl');
+
 export const parseDateFormatToTime = (
   date: Date,
   showSeconds?: boolean,

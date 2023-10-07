@@ -6,9 +6,10 @@ import { UserApi } from 'api/user/user.api';
 
 export const VetList = () => {
   const renderVet: ListRenderItem<User> = ({ item }) => <VetListItem vet={item} />;
-
+  // powinno pobrać tylko takich którym zgadza sie adres, specjalizacja i maja co najmniej jedna usluge
   const listParams = {
-    include: 'specializations,opinions',
+    include: 'specializations,opinions,clinics',
+    name: 'Darko',
   };
   return (
     <List

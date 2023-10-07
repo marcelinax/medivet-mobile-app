@@ -35,6 +35,7 @@ export type RootStackParamList = {
   'Create Vet Clinic Provided Medical Service': undefined;
   'Edit Vet Clinic Provided Medical Service': EditVetClinicProvidedMedicalServiceScreenParams;
   'Vet Clinic Provided Medical Service List Filters': undefined;
+  'Vets': undefined;
 }
 
 // AUTH
@@ -73,6 +74,9 @@ export type VetClinicProvidedMedicalServiceListFiltersScreenNavigationProps = Na
 // SELECTS
 export type MultiSelectScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Multi Select'>;
 export type SelectScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Select'>;
+
+// HOME
+export type HomeNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 // ROUTES
 export type VetClinicScreenRouteProps = RouteProp<RootStackParamList, 'Vet Clinic'>;

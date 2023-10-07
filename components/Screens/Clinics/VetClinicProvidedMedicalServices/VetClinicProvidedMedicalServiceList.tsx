@@ -20,6 +20,7 @@ export const VetClinicProvidedMedicalServiceList = () => {
   const [ forceFetching, setForceFetching ] = useState(false);
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user.currentUser);
 
   useEffect(() => () => {
     dispatch(clearSelectedFilters());
@@ -47,6 +48,7 @@ export const VetClinicProvidedMedicalServiceList = () => {
       <List
         onFetch={(params) => VetClinicProvidedMedicalServiceApi.getVetClinicProvidedMedicalServices(clinic!.id, {
           ...params,
+          vetId: user!.id,
           include: 'medicalService,medicalService.specialization',
         })}
         forceFetching={forceFetching}

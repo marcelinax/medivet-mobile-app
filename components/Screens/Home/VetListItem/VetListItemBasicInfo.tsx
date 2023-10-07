@@ -22,17 +22,16 @@ export const VetListItemBasicInfo = ({ vet }: Props) => {
           <Text style={styles.name}>
             {vet.name}
           </Text>
-          <View style={{
-            flexDirection: 'row',
-          }}
-          >
+          <View style={styles.rowContainer}>
             {specializations && (
               <Text style={styles.specializations}>
                 {specializations}
               </Text>
             )}
           </View>
-          <OpinionRating opinions={(vet?.opinions || [])} />
+          <View style={styles.opinionsContainer}>
+            <OpinionRating opinions={(vet?.opinions || [])} />
+          </View>
         </View>
       </View>
       <View />
@@ -55,5 +54,8 @@ const styles = StyleSheet.create({
   specializations: {
     fontSize: 16,
     color: colors.GRAY_DARK,
+  },
+  opinionsContainer: {
+    marginTop: 5,
   },
 });
