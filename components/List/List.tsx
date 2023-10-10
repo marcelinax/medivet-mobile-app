@@ -24,6 +24,7 @@ interface Props {
   forceFetching?: boolean;
   setForceFetching?: (forceFetching: boolean) => void;
   withoutBackgroundColor?: boolean;
+  customStickyHeader?: JSX.Element;
 }
 
 // poprawic background sticky footera
@@ -38,6 +39,7 @@ export const List = ({
   forceFetching,
   setForceFetching,
   withoutBackgroundColor,
+  customStickyHeader,
 }: Props) => {
   const [ loading, setLoading ] = useState<boolean>(false);
   const [ offset, setOffset ] = useState<number>(0);
@@ -76,7 +78,12 @@ export const List = ({
   }, [ search ]);
 
   const getParsedFilters = (): Record<string, any> => filters.reduce((acc: Record<string, any>, cur) => {
-    acc[cur.id] = cur.value.map((singleValue) => singleValue.id);
+    if (Array.isArray(cur.value)) {
+      acc[cur.id] = cur.value.map((singleValue) => singleValue.id);
+    } else {
+      acc[cur.id] = cur.value.id;
+    }
+
     return acc;
   }, {});
 
@@ -146,7 +153,7 @@ export const List = ({
           <FlatList
             data={data}
             renderItem={renderItem}
-            ListHeaderComponent={withSearch ? headerComponent : <></>}
+            ListHeaderComponent={withSearch ? headerComponent : customStickyHeader || <></>}
             bounces={false}
             ItemSeparatorComponent={itemSeparator}
             keyExtractor={(item) => item.id}
@@ -157,7 +164,7 @@ export const List = ({
             onEndReached={() => onFetchData()}
             contentContainerStyle={{ flexGrow: 1 }}
             style={[ listStyles.list, { backgroundColor: withoutBackgroundColor ? 'transparent' : colors.WHITE } ]}
-            stickyHeaderIndices={withSearch ? [ 0 ] : undefined}
+            stickyHeaderIndices={withSearch || customStickyHeader ? [ 0 ] : undefined}
           />
         </View>
         {

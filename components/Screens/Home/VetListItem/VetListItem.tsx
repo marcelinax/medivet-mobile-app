@@ -14,7 +14,7 @@ export const VetListItem = ({ vet }: Props) => {
   return (
     <TouchableWithoutFeedback>
       <View style={[ listItemStyles.container, styles.container ]}>
-        <Card>
+        <Card style={styles.card}>
           <>
             <VetListItemBasicInfo vet={vet} />
             <View style={styles.addressesContainer}>
@@ -38,5 +38,8 @@ const styles = StyleSheet.create({
   },
   addressesContainer: {
     marginTop: 10,
+  },
+  card: {
+    padding: 16,
   },
 });

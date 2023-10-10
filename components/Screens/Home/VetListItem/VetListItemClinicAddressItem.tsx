@@ -90,7 +90,7 @@ export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
       const date = moment.utc(availableDate.dates[0]).format('DD MMMM');
       title = `${t('words.next_date.title')}: ${t(`enums.day_of_week.shortcut.${availableDate.day}`)} ${date}`;
     } else {
-      title = t('words.no_available_dates');
+      title = t('words.no_available_dates.title');
       style = {
         ...style,
         color: colors.GRAY_DARK,

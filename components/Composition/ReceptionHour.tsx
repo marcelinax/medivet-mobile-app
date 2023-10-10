@@ -12,12 +12,16 @@ export const ReceptionHour = ({ hour, onPress }: Props) => (
     title={hour}
     variant="outline"
     style={styles.button}
+    containerStyle={styles.buttonContainer}
   />
 );
 
 const styles = StyleSheet.create({
   button: {
-    paddingHorizontal: 5,
+    paddingHorizontal: 10,
     paddingVertical: 5,
+  },
+  buttonContainer: {
+    marginRight: 10,
   },
 });

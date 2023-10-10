@@ -69,3 +69,18 @@ export const getDayOfWeekSelectOptions = (t: TFunction<string, undefined>): Sele
     label: t('enums.day_of_week.SUNDAY'),
   },
 ];
+
+export const getAvailableDatesSelectOptions = (t: TFunction<string, undefined>): SelectOptionProps[] => [
+  {
+    id: 'TODAY',
+    label: t('enums.available_date.TODAY'),
+  },
+  {
+    id: 'WITHIN_3_DAYS',
+    label: t('enums.available_date.WITHIN_3_DAYS'),
+  },
+  {
+    id: 'WHENEVER',
+    label: t('enums.available_date.WHENEVER'),
+  },
+];

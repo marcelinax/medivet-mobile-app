@@ -10,6 +10,7 @@ import { HandleApplyFilters } from 'types/filters/types';
 import { useNavigation } from '@react-navigation/native';
 import { VetClinicProvidedMedicalServicesScreenNavigationProps } from 'types/Navigation/types';
 import { useTranslation } from 'react-i18next';
+import { SelectOptionProps } from 'types/components/Inputs/types';
 
 export const VetClinicProvidedMedicalServiceListFiltersScreen = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ export const VetClinicProvidedMedicalServiceListFiltersScreen = () => {
   const submitFilters = () => {
     const selectedFilter = {
       id: 'specializationIds',
-      value: [ ...(filtersScreenRef?.current?.value || []) ],
+      value: [ ...(filtersScreenRef?.current?.value || []) as SelectOptionProps[] ],
     };
     dispatch(setSelectedFilters([ selectedFilter ]));
     navigation.goBack();

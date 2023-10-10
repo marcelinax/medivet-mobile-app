@@ -39,7 +39,7 @@ export const SimpleList = ({
   const footerComponent: JSX.Element = loading ? <Loading /> : <></>;
 
   useEffect(() => {
-    setLoading(true);
+    if (withSearch) setLoading(true);
     const searchTimeout = setTimeout(() => {
       handleSearchData();
     }, 300);

@@ -37,7 +37,6 @@ export const VetListItemClinicAddressList = ({ clinics, vet }: Props) => {
             index,
             routes,
           }}
-          // initialLayout={styles.layout}
           initialLayout={{
             height: 0,
             width: layout.width,

@@ -23,4 +23,5 @@ export default {
   STAR_OUTLINE: 'star-outline' as const,
   STAR: 'star' as const,
   LOCATION: 'location' as const,
+  CLOSE_OUTLINE: 'close-outline' as const,
 };

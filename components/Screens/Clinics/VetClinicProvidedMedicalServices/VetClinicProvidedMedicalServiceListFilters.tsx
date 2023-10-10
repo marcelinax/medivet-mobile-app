@@ -24,7 +24,7 @@ export const VetClinicProvidedMedicalServiceListFilters = forwardRef<HandleApply
   const selectedFilters = useSelector((state: RootState) => state.listFilters.selectedFilters);
   const specializationsFilter = selectedFilters.find((filter) => filter.id === 'specializationIds');
   const [ selectedSpecializations, setSelectedSpecializations ] = useState<SelectOptionProps[]>(
-    [ ...(specializationsFilter?.value || []) ],
+    [ ...(specializationsFilter?.value as SelectOptionProps[] || []) ],
   );
   const { t } = useTranslation();
   const navigation = useNavigation<VetClinicProvidedMedicalServiceListFiltersScreenNavigationProps>();

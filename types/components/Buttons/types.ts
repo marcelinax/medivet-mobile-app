@@ -1,4 +1,6 @@
-import { TouchableHighlightProps, TouchableWithoutFeedbackProps } from 'react-native';
+import {
+  StyleProp, TouchableHighlightProps, TouchableWithoutFeedbackProps, ViewStyle,
+} from 'react-native';
 import { ReactNode } from 'react';
 
 export type ButtonVariant = 'solid' | 'outline' | 'link';
@@ -17,6 +19,7 @@ export interface ButtonProps extends TouchableHighlightProps {
   leftIcon?: any;
   rightIcon?: any;
   fontWeight?: ButtonFontWeight;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 export interface ButtonLoadingProps extends TouchableHighlightProps {

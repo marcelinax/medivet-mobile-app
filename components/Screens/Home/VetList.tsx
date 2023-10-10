@@ -3,6 +3,7 @@ import { User } from 'types/api/user/types';
 import { VetListItem } from 'components/Screens/Home/VetListItem/VetListItem';
 import { List } from 'components/List/List';
 import { UserApi } from 'api/user/user.api';
+import { VetListFilters } from 'components/Screens/Home/VetListFilters/VetListFilters';
 
 export const VetList = () => {
   const renderVet: ListRenderItem<User> = ({ item }) => <VetListItem vet={item} />;
@@ -11,6 +12,7 @@ export const VetList = () => {
     include: 'specializations,opinions,clinics',
     name: 'Darko',
   };
+
   return (
     <List
       onFetch={(params) => UserApi.getVets({
@@ -19,6 +21,7 @@ export const VetList = () => {
       })}
       renderItem={renderVet}
       withoutBackgroundColor
+      customStickyHeader={<VetListFilters />}
     />
   );
 };

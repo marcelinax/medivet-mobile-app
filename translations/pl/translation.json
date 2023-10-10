@@ -176,8 +176,17 @@
     "loading": {
       "title": "Ładowanie..."
     },
+    "available_dates": {
+      "title": "Dostępne terminy"
+    },
     "next_date": {
       "title": "Najbliższy termin"
+    },
+    "no_available_dates": {
+      "title": "Brak dostępnych terminów"
+    },
+    "more": {
+      "title": "Więcej"
     },
     "address": {
       "title": "Adres"
@@ -295,6 +304,11 @@
         "THURSDAY": "Czw.",
         "TUESDAY": "Wt."
       }
+    },
+    "available_date": {
+      "TODAY": "Dzisiaj",
+      "WITHIN_3_DAYS": "W ciągu 3 dni",
+      "WHENEVER": "Kiedykolwiek"
     },
     "user": {
       "role": {
