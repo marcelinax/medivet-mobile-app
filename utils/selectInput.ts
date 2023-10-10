@@ -4,7 +4,14 @@ export const parseDataToSelectOptions = (
   data: Record<string, any>,
   fieldAsLabel: string,
   fieldAsId: string,
-): SelectOptionProps[] => data.map((item: Record<string, any>) => ({
-  id: item[fieldAsId].toString(),
-  label: item[fieldAsLabel],
-}));
+): SelectOptionProps[] => data.map((item: Record<string, any>) => {
+  const label = fieldAsLabel.split('.').reduce((acc, cur) => {
+    if (acc) return acc[`${cur}`];
+    return cur;
+  }, item);
+
+  return ({
+    id: item[fieldAsId].toString(),
+    label,
+  });
+});

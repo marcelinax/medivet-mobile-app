@@ -149,8 +149,8 @@
     "hour_to": {
       "title": "Do"
     },
-    "service": {
-      "title": "Usługa"
+    "services": {
+      "title": "Usługi"
     },
     "price": {
       "title": "Cena"

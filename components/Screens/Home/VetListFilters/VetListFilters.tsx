@@ -4,9 +4,23 @@ import { useTranslation } from 'react-i18next';
 import { FilterButton } from 'components/Composition/FilterButton';
 import { getAvailableDatesSelectOptions } from 'constants/selectOptions';
 import { SelectId } from 'constants/enums/selectId.enum';
+import { SelectOptionProps } from 'types/components/Inputs/types';
+import { parseDataToSelectOptions } from 'utils/selectInput';
+import {
+  VetClinicProvidedMedicalServiceApi,
+} from 'api/vetClinicProvidedMedicalService/vetClinicProvidedMedicalService.api';
 
 export const VetListFilters = () => {
   const { t } = useTranslation();
+
+  const fetchMedicalServices = async (params?: Record<string, any>): Promise<SelectOptionProps[]> => {
+    params = {
+      ...params,
+      include: 'medicalService',
+    };
+    const res = await VetClinicProvidedMedicalServiceApi.getProvidedMedicalServices(params);
+    return parseDataToSelectOptions(res, 'medicalService.name', 'id');
+  };
 
   return (
     <ScrollView
@@ -21,11 +35,19 @@ export const VetListFilters = () => {
             isMultiSelect={false}
             options={getAvailableDatesSelectOptions(t)}
             selectId={SelectId.AVAILABLE_DATES}
-            filterId="available_dates"
+            filterId="availableDates"
             selectScreenHeaderTitle={t('words.available_dates.title')}
             defaultSelectedFilterValue={getAvailableDatesSelectOptions(t)[2]}
           />
         </View>
+        <FilterButton
+          title={t('words.services.title')}
+          isMultiSelect
+          fetchOptions={fetchMedicalServices}
+          selectId={SelectId.MEDICAL_SERVICES}
+          filterId="medicalServices"
+          selectScreenHeaderTitle={t('words.services.title')}
+        />
       </View>
     </ScrollView>
   );

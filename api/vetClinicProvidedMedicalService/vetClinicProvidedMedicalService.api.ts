@@ -15,6 +15,13 @@ export class VetClinicProvidedMedicalServiceApi {
     return res.data;
   }
 
+  static async getProvidedMedicalServices(
+    params?: Record<string, any>,
+  ): Promise<VetClinicProvidedMedicalService[]> {
+    const res = await authClient.get('vet-provided-medical-services', { params });
+    return res.data;
+  }
+
   static async getVetSpecializationMedicalServices(
     params?: Record<string, any>,
   ): Promise<VetSpecializationMedicalService[]> {
