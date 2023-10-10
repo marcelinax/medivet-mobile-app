@@ -1,12 +1,15 @@
-import { StyleSheet, View } from 'react-native';
+import {
+  StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
 import colors from 'themes/colors';
 
 interface Props {
   children: JSX.Element;
+  style?: StyleProp<ViewStyle>;
 }
 
-export const Card = ({ children }: Props) => (
-  <View style={styles.card}>
+export const Card = ({ children, style }: Props) => (
+  <View style={[ styles.card, style ]}>
     {children}
   </View>
 );

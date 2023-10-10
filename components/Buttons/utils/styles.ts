@@ -5,7 +5,7 @@ import { ButtonColor, ButtonFontWeight, ButtonVariant } from 'types/components/B
 export const buttonStyles = StyleSheet.create({
   container: {
     borderRadius: 10,
-    paddingVertical: 13,
+    padding: 13,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',

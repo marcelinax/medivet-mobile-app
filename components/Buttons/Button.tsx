@@ -26,6 +26,7 @@ export const Button = ({
     {...props}
     disabled={disabled}
     underlayColor={colors.WHITE}
+    style={props.containerStyle}
   >
     <View style={[
       {
