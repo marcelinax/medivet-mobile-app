@@ -3,6 +3,7 @@ import { SelectedFilter } from 'types/filters/types';
 
 interface ListFiltersSlice {
   selectedFilters: SelectedFilter[];
+  forceFetchingList?: boolean;
 }
 
 const initialState: ListFiltersSlice = {
@@ -19,8 +20,11 @@ export const listFiltersSlice = createSlice({
     clearSelectedFilters: (state) => {
       state.selectedFilters = [];
     },
+    setForceFetchingList: (state, action: PayloadAction<boolean>) => {
+      state.forceFetchingList = action.payload;
+    },
   },
 });
 
-export const { setSelectedFilters, clearSelectedFilters } = listFiltersSlice.actions;
+export const { setSelectedFilters, clearSelectedFilters, setForceFetchingList } = listFiltersSlice.actions;
 export default listFiltersSlice.reducer;
