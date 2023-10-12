@@ -9,6 +9,7 @@ import { parseDataToSelectOptions } from 'utils/selectInput';
 import {
   VetClinicProvidedMedicalServiceApi,
 } from 'api/vetClinicProvidedMedicalService/vetClinicProvidedMedicalService.api';
+import { MultiSelectId } from 'constants/enums/multiSelectId.enum';
 
 export const VetListFilters = () => {
   const { t } = useTranslation();
@@ -44,7 +45,7 @@ export const VetListFilters = () => {
           title={t('words.services.title')}
           isMultiSelect
           fetchOptions={fetchMedicalServices}
-          selectId={SelectId.MEDICAL_SERVICES}
+          selectId={MultiSelectId.MEDICAL_SERVICES}
           filterId="medicalServices"
           selectScreenHeaderTitle={t('words.services.title')}
         />

@@ -5,6 +5,8 @@ import { removeSingleMultiSelect } from 'store/multiSelect/multiSelectSlice';
 import { clearSelectedFilters } from 'store/home/homeSlice';
 import { useEffect } from 'react';
 import { SelectId } from 'constants/enums/selectId.enum';
+import { removeSingleSelect } from 'store/select/selectSlice';
+import { MultiSelectId } from 'constants/enums/multiSelectId.enum';
 
 export const VetsScreen = () => {
   const dispatch = useDispatch();
@@ -12,8 +14,8 @@ export const VetsScreen = () => {
   useEffect(() => () => handleClearFilters(), []);
 
   const handleClearFilters = () => {
-    console.log('tutaj');
-    dispatch(removeSingleMultiSelect(SelectId.AVAILABLE_DATES));
+    dispatch(removeSingleMultiSelect(MultiSelectId.MEDICAL_SERVICES));
+    dispatch(removeSingleSelect(SelectId.AVAILABLE_DATES));
     dispatch(clearSelectedFilters());
   };
 

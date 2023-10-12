@@ -9,26 +9,23 @@ interface Props {
   vet: User;
 }
 
-export const VetListItem = ({ vet }: Props) => {
-  const specializations = '';
-  return (
-    <TouchableWithoutFeedback>
-      <View style={[ listItemStyles.container, styles.container ]}>
-        <Card style={styles.card}>
-          <>
-            <VetListItemBasicInfo vet={vet} />
-            <View style={styles.addressesContainer}>
-              <VetListItemClinicAddressList
-                clinics={vet?.clinics || []}
-                vet={vet}
-              />
-            </View>
-          </>
-        </Card>
-      </View>
-    </TouchableWithoutFeedback>
-  );
-};
+export const VetListItem = ({ vet }: Props) => (
+  <TouchableWithoutFeedback>
+    <View style={[ listItemStyles.container, styles.container ]}>
+      <Card style={styles.card}>
+        <>
+          <VetListItemBasicInfo vet={vet} />
+          <View style={styles.addressesContainer}>
+            <VetListItemClinicAddressList
+              clinics={vet?.clinics || []}
+              vet={vet}
+            />
+          </View>
+        </>
+      </Card>
+    </View>
+  </TouchableWithoutFeedback>
+);
 
 const styles = StyleSheet.create({
   container: {

@@ -7,7 +7,6 @@ import { useState } from 'react';
 import colors from 'themes/colors';
 import { useTranslation } from 'react-i18next';
 import { VetListItemClinicAddressItem } from 'components/Screens/Home/VetListItem/VetListItemClinicAddressItem';
-import sizes from 'constants/sizes';
 import { User } from 'types/api/user/types';
 
 interface Props {
@@ -18,8 +17,7 @@ interface Props {
 export const VetListItemClinicAddressList = ({ clinics, vet }: Props) => {
   const { t } = useTranslation();
   const [ index, setIndex ] = useState<number>(0);
-  // poprawic bo zawsze beda kliniki
-  const [ currentClinicId, setCurrentClinicId ] = useState<string>(clinics[0]?.id?.toString() ?? '0');
+  const [ currentClinicId, setCurrentClinicId ] = useState<string>(clinics[0]!.id!.toString());
   const [ routes ] = useState(
     clinics.map((clinic, clinicIndex) => ({
       key: clinic.id.toString(),
@@ -45,7 +43,7 @@ export const VetListItemClinicAddressList = ({ clinics, vet }: Props) => {
           renderTabBar={(props) => (
             <TabBar
               {...props}
-              scrollEnabled
+              contentContainerStyle={styles.tabBarContainer}
               indicatorContainerStyle={styles.indicatorContainer}
               onTabPress={({ route }) => setCurrentClinicId(route.key)}
               indicatorStyle={styles.indicator}
@@ -72,12 +70,10 @@ export const VetListItemClinicAddressList = ({ clinics, vet }: Props) => {
     )
       : (
         <View style={styles.tabBar}>
-          {clinics[0] ? (
-            <VetListItemClinicAddressItem
-              clinic={clinics[0]}
-              vet={vet}
-            />
-          ) : <Text>Brak</Text>}
+          <VetListItemClinicAddressItem
+            clinic={clinics[0]}
+            vet={vet}
+          />
         </View>
       )
   );
@@ -95,8 +91,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     marginBottom: 15,
   },
-  layout: {
-    height: 0,
-    width: sizes.FULL_WIDTH,
+  tabBarContainer: {
+    flexGrow: 1,
   },
 });
