@@ -8,10 +8,11 @@ import { listStyles } from 'components/List/utils/styles';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { ApiError } from 'types/api/error/types';
 import { useIsFocused } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import colors from 'themes/colors';
 import { useTranslation } from 'react-i18next';
+import { setForceFetchingList } from 'store/listFilters/listFiltersSlice';
 
 interface Props {
   onFetch: (params: Record<string, any>, id?: number) => Promise<any[]>;
@@ -51,7 +52,9 @@ export const List = ({
   const pageSize = 10;
   const isFocused = useIsFocused();
   const filters = useSelector((state: RootState) => state.listFilters.selectedFilters);
+  const forceFetchingList = useSelector((state: RootState) => state.listFilters.forceFetchingList);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     onFetchData();
@@ -60,6 +63,13 @@ export const List = ({
   useEffect(() => {
     if (isFocused) onFetchData(true);
   }, [ isFocused ]);
+
+  useEffect(() => {
+    if (forceFetchingList) {
+      onFetchData(true);
+      dispatch(setForceFetchingList(false));
+    }
+  }, [ forceFetchingList ]);
 
   useEffect(() => {
     if (forceFetching) {

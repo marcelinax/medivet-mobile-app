@@ -21,7 +21,7 @@ import {
   initSingleMultiSelect,
   setSingleMultiSelectSelectedOptions,
 } from 'store/multiSelect/multiSelectSlice';
-import { setSelectedFilters } from 'store/listFilters/listFiltersSlice';
+import { setForceFetchingList, setSelectedFilters } from 'store/listFilters/listFiltersSlice';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import icons from 'themes/icons';
 
@@ -113,12 +113,19 @@ export const FilterButton = ({
 
   const handleApplyFilter = (filterOptions: SelectOptionProps[]) => {
     const value = isMultiSelect ? [ ...filterOptions ] : filterOptions[0];
-    dispatch(setSelectedFilters([
-      ...selectedFilters, {
-        id: filterId,
-        value,
-      },
-    ]));
+    const existingFilter = selectedFilters.find((selectedFilter) => selectedFilter.id === filterId);
+    if (existingFilter) {
+      const index = selectedFilters.indexOf(existingFilter);
+      selectedFilters[index].value = value;
+      dispatch(setSelectedFilters([ ...selectedFilters ]));
+    } else {
+      dispatch(setSelectedFilters([
+        ...selectedFilters, {
+          id: filterId,
+          value,
+        },
+      ]));
+    }
   };
 
   const handleClearFilter = () => {
@@ -126,6 +133,7 @@ export const FilterButton = ({
     const filterIndex = filters.findIndex((filter) => filter.id === filterId);
     filters.splice(filterIndex, 1);
     dispatch(setSelectedFilters(filters));
+    dispatch(setForceFetchingList(true));
 
     if (isMultiSelect) {
       const newSelectedOptions = defaultSelectedFilterValue as SelectOptionProps[] ?? [];
@@ -155,8 +163,6 @@ export const FilterButton = ({
     if (!selectState?.selectedOption?.id) return false;
 
     const defaultValueId = Object.values(defaultSelectedFilterValue || {})[0];
-    console.log('defaultValueId', defaultValueId);
-    console.log('selectState.selectedOption.id', selectState.selectedOption.id);
     return defaultValueId !== selectState.selectedOption.id;
   };
 

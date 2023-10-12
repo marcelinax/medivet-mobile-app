@@ -35,6 +35,7 @@ export const alertStyles = StyleSheet.create({
   },
   button: {
     flexGrow: 1,
+    width: '100%',
   },
   secondButton: {
     marginLeft: 5,
