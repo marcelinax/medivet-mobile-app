@@ -131,7 +131,7 @@ export const VetClinicAvailabilityCard = ({ availability, onSuccessRemove, setRe
   ];
 
   return (
-    <>
+    <View style={styles.container}>
       {drawErrorAlert(errors)}
       <View>
         <SwipeButton
@@ -148,7 +148,7 @@ export const VetClinicAvailabilityCard = ({ availability, onSuccessRemove, setRe
           </OutlineCard>
         </SwipeButton>
       </View>
-    </>
+    </View>
   );
 };
 
@@ -165,5 +165,8 @@ const styles = StyleSheet.create({
   },
   card: {
     marginBottom: 10,
+  },
+  container: {
+    paddingHorizontal: 15,
   },
 });

@@ -97,7 +97,7 @@ export const VetClinicAvailabilityList = () => {
   ));
 
   return (
-    <DefaultLayout>
+    <DefaultLayout withoutHorizontalPadding>
       <>
         <FullScreenLoading loading={removeLoading} />
         {drawErrorAlert(errors)}

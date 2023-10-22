@@ -24,6 +24,7 @@ import { ApiError } from 'types/api/error/types';
 import { HandleSubmitForm } from 'types/components/Forms/types';
 import { useTranslation } from 'react-i18next';
 import { getAnimalGenderSelectOptions, getAnimalTypeSelectOptions } from 'constants/selectOptions';
+import { setForceFetchingList } from 'store/list/listSlice';
 
 interface Props {
   animal?: Animal;
@@ -138,6 +139,7 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
 
       if (animal?.id) {
         res = await AnimalApi.updateAnimal(Number(animal?.id), getParsedDataForm());
+        dispatch(setForceFetchingList(true));
         navigation.setOptions({
           headerTitle: `${t('words.edition.title')} "${res.name}"`,
         });

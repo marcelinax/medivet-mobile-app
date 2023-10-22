@@ -7,12 +7,11 @@ import { TextInput } from 'components/Inputs/TextInput';
 import { listStyles } from 'components/List/utils/styles';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { ApiError } from 'types/api/error/types';
-import { useIsFocused } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import colors from 'themes/colors';
 import { useTranslation } from 'react-i18next';
-import { setForceFetchingList } from 'store/listFilters/listFiltersSlice';
+import { setForceFetchingList } from 'store/list/listSlice';
 
 interface Props {
   onFetch: (params: Record<string, any>, id?: number) => Promise<any[]>;
@@ -22,8 +21,6 @@ interface Props {
   stickyFooterButtonTitle?: string;
   stickyFooterButtonAction?: () => void;
   stickyButtonLoading?: boolean;
-  forceFetching?: boolean;
-  setForceFetching?: (forceFetching: boolean) => void;
   withoutBackgroundColor?: boolean;
   customStickyHeader?: JSX.Element;
 }
@@ -37,12 +34,10 @@ export const List = ({
   stickyFooterButtonTitle,
   stickyFooterButtonAction,
   stickyButtonLoading,
-  forceFetching,
-  setForceFetching,
   withoutBackgroundColor,
   customStickyHeader,
 }: Props) => {
-  const [ loading, setLoading ] = useState<boolean>(false);
+  const [ loading, setLoading ] = useState<boolean>(true);
   const [ offset, setOffset ] = useState<number>(0);
   const [ data, setData ] = useState<any[]>([]);
   const [ hasNextPage, setHasNextPage ] = useState<boolean>(true);
@@ -50,9 +45,8 @@ export const List = ({
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const pageSize = 10;
-  const isFocused = useIsFocused();
-  const filters = useSelector((state: RootState) => state.listFilters.selectedFilters);
-  const forceFetchingList = useSelector((state: RootState) => state.listFilters.forceFetchingList);
+  const filters = useSelector((state: RootState) => state.list.selectedFilters);
+  const forceFetchingList = useSelector((state: RootState) => state.list.forceFetchingList);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -61,30 +55,25 @@ export const List = ({
   }, []);
 
   useEffect(() => {
-    if (isFocused) onFetchData(true);
-  }, [ isFocused ]);
-
-  useEffect(() => {
     if (forceFetchingList) {
+      console.log('d');
       onFetchData(true);
       dispatch(setForceFetchingList(false));
     }
   }, [ forceFetchingList ]);
 
   useEffect(() => {
-    if (forceFetching) {
-      onFetchData(true);
-      if (setForceFetching) setForceFetching(false);
-    }
-  }, [ forceFetching ]);
-
-  useEffect(() => {
     setLoading(true);
-    const searchTimeout = setTimeout(() => {
-      onFetchData();
-    }, 300);
 
-    return () => clearTimeout(searchTimeout);
+    if (!search) {
+      onFetchData();
+    } else {
+      const searchTimeout = setTimeout(() => {
+        onFetchData();
+      }, 300);
+
+      return () => clearTimeout(searchTimeout);
+    }
   }, [ search ]);
 
   const getParsedFilters = (): Record<string, any> => filters.reduce((acc: Record<string, any>, cur) => {

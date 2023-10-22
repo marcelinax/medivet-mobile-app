@@ -79,28 +79,30 @@ export const VetClinicProvidedMedicalServiceListItem = ({
         size="small"
         rightActions={rightActions}
       >
-        <OutlineCard>
-          <View>
-            <Text style={styles.name}>{medicalService.medicalService.name}</Text>
-            <Text style={styles.specialization}>{medicalService.medicalService.specialization.name}</Text>
-            <View style={styles.otherInformationContainer}>
-              <Text style={styles.otherInformationLabel}>
-                {`${t('words.price.title')}: `}
-              </Text>
-              <Text style={styles.otherInformationValue}>
-                {`${medicalService.price} PLN`}
-              </Text>
+        <View style={styles.container}>
+          <OutlineCard>
+            <View>
+              <Text style={styles.name}>{medicalService.medicalService.name}</Text>
+              <Text style={styles.specialization}>{medicalService.medicalService.specialization.name}</Text>
+              <View style={styles.otherInformationContainer}>
+                <Text style={styles.otherInformationLabel}>
+                  {`${t('words.price.title')}: `}
+                </Text>
+                <Text style={styles.otherInformationValue}>
+                  {`${medicalService.price} PLN`}
+                </Text>
+              </View>
+              <View style={styles.otherInformationContainer}>
+                <Text style={styles.otherInformationLabel}>
+                  {`${t('words.average_duration_time.title')}: `}
+                </Text>
+                <Text style={styles.otherInformationValue}>
+                  {`${t('words.minutes.title', { count: medicalService.duration })}`}
+                </Text>
+              </View>
             </View>
-            <View style={styles.otherInformationContainer}>
-              <Text style={styles.otherInformationLabel}>
-                {`${t('words.average_duration_time.title')}: `}
-              </Text>
-              <Text style={styles.otherInformationValue}>
-                {`${t('words.minutes.title', { count: medicalService.medicalService })}`}
-              </Text>
-            </View>
-          </View>
-        </OutlineCard>
+          </OutlineCard>
+        </View>
       </SwipeButton>
     </>
   );
@@ -128,5 +130,8 @@ const styles = StyleSheet.create({
   otherInformationValue: {
     fontSize: 15,
     color: colors.GRAY_DARK,
+  },
+  container: {
+    paddingHorizontal: 15,
   },
 });

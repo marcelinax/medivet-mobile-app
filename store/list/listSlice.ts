@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SelectedFilter } from 'types/filters/types';
 
-interface ListFiltersSlice {
+interface ListSlice {
   selectedFilters: SelectedFilter[];
   forceFetchingList?: boolean;
 }
 
-const initialState: ListFiltersSlice = {
+const initialState: ListSlice = {
   selectedFilters: [],
 };
 
@@ -26,5 +26,9 @@ export const listFiltersSlice = createSlice({
   },
 });
 
-export const { setSelectedFilters, clearSelectedFilters, setForceFetchingList } = listFiltersSlice.actions;
+export const {
+  setSelectedFilters,
+  clearSelectedFilters,
+  setForceFetchingList,
+} = listFiltersSlice.actions;
 export default listFiltersSlice.reducer;

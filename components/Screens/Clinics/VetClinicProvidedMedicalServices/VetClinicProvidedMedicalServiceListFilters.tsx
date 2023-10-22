@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { HandleApplyFilters } from 'types/filters/types';
 import { Button } from 'components/Buttons/Button';
-import { clearSelectedFilters } from 'store/listFilters/listFiltersSlice';
+import { clearSelectedFilters } from 'store/list/listSlice';
 import { useNavigation } from '@react-navigation/native';
 import { VetClinicProvidedMedicalServiceListFiltersScreenNavigationProps } from 'types/Navigation/types';
 import { setSingleMultiSelectSelectedOptions } from 'store/multiSelect/multiSelectSlice';
@@ -21,7 +21,7 @@ export const VetClinicProvidedMedicalServiceListFilters = forwardRef<HandleApply
   ref,
 ) => {
   const dispatch = useDispatch();
-  const selectedFilters = useSelector((state: RootState) => state.listFilters.selectedFilters);
+  const selectedFilters = useSelector((state: RootState) => state.list.selectedFilters);
   const specializationsFilter = selectedFilters.find((filter) => filter.id === 'specializationIds');
   const [ selectedSpecializations, setSelectedSpecializations ] = useState<SelectOptionProps[]>(
     [ ...(specializationsFilter?.value as SelectOptionProps[] || []) ],

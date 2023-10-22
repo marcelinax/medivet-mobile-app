@@ -4,7 +4,7 @@ import {
 import { DefaultLayout } from 'layouts/Default.layout';
 import React, { useRef } from 'react';
 import { Button } from 'components/Buttons/Button';
-import { setSelectedFilters } from 'store/listFilters/listFiltersSlice';
+import { setSelectedFilters } from 'store/list/listSlice';
 import { useDispatch } from 'react-redux';
 import { HandleApplyFilters } from 'types/filters/types';
 import { useNavigation } from '@react-navigation/native';

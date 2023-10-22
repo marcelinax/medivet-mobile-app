@@ -40,6 +40,8 @@ export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
     if (medicalService?.id) fetchFirstAvailableDate();
   }, [ medicalService?.id ]);
 
+  // TODO tutaj powinno pobrać pierwszy dowolny jeżeli nie ma filtru usługi a jeżeli jest to wtedy przekazać dodatkowy parametr niżej
+  // TODO jeżeli znajdzie kilka to powinno wziąć to co ma najbliższy termin?
   const fetchMedicalServices = async () => {
     try {
       const res = await VetClinicProvidedMedicalServiceApi.getVetClinicProvidedMedicalServices(clinic.id, {
@@ -70,7 +72,7 @@ export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
   const drawAvailableDateHours = () => {
     const datesToDisplay = availableDate!.dates.filter((_, index) => index < 3);
     return datesToDisplay.map((date, index) => {
-      const parsedDate = moment.utc(date).format('HH:mm');
+      const parsedDate = moment(date).format('HH:mm');
       return (
         <ReceptionHour
           hour={parsedDate}

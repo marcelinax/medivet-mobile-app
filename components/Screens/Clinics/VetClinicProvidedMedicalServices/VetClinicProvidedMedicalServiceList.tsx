@@ -12,12 +12,11 @@ import {
 import { FullScreenLoading } from 'components/Composition/FullScreenLoading';
 import { useEffect, useState } from 'react';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
-import { clearSelectedFilters } from 'store/listFilters/listFiltersSlice';
+import { clearSelectedFilters, setForceFetchingList } from 'store/list/listSlice';
 
 export const VetClinicProvidedMedicalServiceList = () => {
   const clinic = useSelector((state: RootState) => state.clinic.currentClinic);
   const [ removeLoading, setRemoveLoading ] = useState(false);
-  const [ forceFetching, setForceFetching ] = useState(false);
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.currentUser);
@@ -38,7 +37,7 @@ export const VetClinicProvidedMedicalServiceList = () => {
 
   const handleSuccessAction = () => {
     handleSuccessAlert();
-    setForceFetching(true);
+    dispatch(setForceFetchingList(true));
   };
 
   return (
@@ -51,7 +50,6 @@ export const VetClinicProvidedMedicalServiceList = () => {
           vetId: user!.id,
           include: 'medicalService,medicalService.specialization',
         })}
-        forceFetching={forceFetching}
         renderItem={renderMedicalService}
         separateOptions
       />

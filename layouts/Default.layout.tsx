@@ -9,39 +9,50 @@ interface Props {
   children: JSX.Element;
   stickyFooterChildren?: JSX.Element;
   stickyFooterStyles?: StyleProp<ViewStyle>;
+  withoutHorizontalPadding?: boolean;
 }
 
 export const DefaultLayout = ({
   children,
   stickyFooterChildren,
   stickyFooterStyles,
-}: Props) => (
-  <>
-    <ScrollView
-      style={{ flex: 1 }}
-      contentContainerStyle={styles.scrollViewContainer}
-      automaticallyAdjustKeyboardInsets
-      bounces={false}
-    >
-      <View style={styles.container}>
-        {children}
-      </View>
-    </ScrollView>
-    {
-      stickyFooterChildren && (
-        <StickyFooter style={[
-          stickyFooterStyles, {
-            paddingHorizontal: 20,
-            paddingBottom: 10,
+  withoutHorizontalPadding,
+}: Props) => {
+  const horizontalPadding = withoutHorizontalPadding ? 0 : 30;
+
+  return (
+    <>
+      <ScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={styles.scrollViewContainer}
+        automaticallyAdjustKeyboardInsets
+        bounces={false}
+      >
+        <View style={[
+          styles.container, {
+            paddingHorizontal: horizontalPadding,
           },
         ]}
         >
-          {stickyFooterChildren}
-        </StickyFooter>
-      )
-    }
-  </>
-);
+          {children}
+        </View>
+      </ScrollView>
+      {
+        stickyFooterChildren && (
+          <StickyFooter style={[
+            stickyFooterStyles, {
+              paddingHorizontal: 20,
+              paddingBottom: 10,
+            },
+          ]}
+          >
+            {stickyFooterChildren}
+          </StickyFooter>
+        )
+      }
+    </>
+  );
+};
 
 const styles = StyleSheet.create({
   scrollViewContainer: {
@@ -51,6 +62,5 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     paddingVertical: isAndroidPlatform() ? 30 : 15,
-    paddingHorizontal: 30,
   },
 });

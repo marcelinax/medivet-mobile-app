@@ -16,6 +16,7 @@ import * as SecureStore from 'expo-secure-store';
 import { removeToken } from 'store/auth/authSlice';
 import { hasVetRole } from 'utils/hasVetRole';
 import { useTranslation } from 'react-i18next';
+import { clearSelectedFilters } from 'store/home/homeSlice';
 
 export const UserProfileScreen = () => {
   const user = useSelector((state: RootState) => state.user.currentUser) as User;
@@ -30,6 +31,7 @@ export const UserProfileScreen = () => {
 
   const onLogout = async (): Promise<void> => {
     await SecureStore.deleteItemAsync('token');
+    dispatch(clearSelectedFilters());
     dispatch(removeToken());
   };
 
@@ -57,7 +59,7 @@ export const UserProfileScreen = () => {
           {!isVet && (
             <WideButton
               onPress={() => navigation.navigate('Edit User Address')}
-              title={t('words.specializations.title')}
+              title={t('words.address.title')}
               icon={icons.HOME_OUTLINE}
             />
           )}

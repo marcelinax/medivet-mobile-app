@@ -149,8 +149,8 @@
     "hour_to": {
       "title": "Do"
     },
-    "services": {
-      "title": "Usługi"
+    "service": {
+      "title": "Usługa"
     },
     "price": {
       "title": "Cena"
@@ -178,6 +178,9 @@
     },
     "available_dates": {
       "title": "Dostępne terminy"
+    },
+    "services": {
+      "title": "Usługi"
     },
     "next_date": {
       "title": "Najbliższy termin"

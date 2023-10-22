@@ -27,6 +27,7 @@ import { ErrorText } from 'components/Composition/ErrorText';
 import { HandleSubmitForm } from 'types/components/Forms/types';
 import { useTranslation } from 'react-i18next';
 import { getDayOfWeekSelectOptions } from 'constants/selectOptions';
+import { setForceFetchingList } from 'store/list/listSlice';
 
 interface Props {
   availability?: VetAvailability;
@@ -114,6 +115,7 @@ export const VetClinicAvailabilityForm = forwardRef<HandleSubmitForm, Props>((
       } else {
         await VetAvailabilityApi.createVetAvailability(getParsedFormData());
       }
+      dispatch(setForceFetchingList(true));
       navigation.navigate('Vet Clinic Availabilities');
     } catch (err: any) {
       const errs = [ err?.response?.data ];

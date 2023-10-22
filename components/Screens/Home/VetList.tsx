@@ -9,7 +9,7 @@ import { RootState } from 'store/store';
 import { SelectOptionProps } from 'types/components/Inputs/types';
 
 export const VetList = () => {
-  const filters = useSelector((state: RootState) => state.listFilters.selectedFilters);
+  const filters = useSelector((state: RootState) => state.list.selectedFilters);
   const homeFilters = useSelector((state: RootState) => state.home.selectedFilters);
   const renderVet: ListRenderItem<User> = ({ item }) => <VetListItem vet={item} />;
 
@@ -28,12 +28,19 @@ export const VetList = () => {
         medicalServiceIds: (medicalServices.value as SelectOptionProps[]).map((singleValue: SelectOptionProps) => singleValue.id).join(','),
       };
     }
+
+    if (availableDates) {
+      params = {
+        ...params,
+        availableDates: (availableDates.value as SelectOptionProps).id,
+      };
+    }
     return params;
   };
+
   // TODO czy filtr usług nie powinien być ograniczony do specjalizacji?
   // TODO jak ładuje sie adres to przesuwa sie scroll do góry => fix
 
-  getListParams();
   const listParams = {
     ...getListParams(),
     include: 'specializations,opinions,clinics',

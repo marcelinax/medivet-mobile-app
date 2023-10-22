@@ -21,7 +21,7 @@ import {
   initSingleMultiSelect,
   setSingleMultiSelectSelectedOptions,
 } from 'store/multiSelect/multiSelectSlice';
-import { setForceFetchingList, setSelectedFilters } from 'store/listFilters/listFiltersSlice';
+import { setForceFetchingList, setSelectedFilters } from 'store/list/listSlice';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import icons from 'themes/icons';
 
@@ -53,7 +53,7 @@ export const FilterButton = ({
   const selectState = useSelector((state: RootState) => (
     state.select.selects.find((select) => select.id === selectId)));
   const dispatch = useDispatch();
-  const selectedFilters = useSelector((state: RootState) => state.listFilters.selectedFilters);
+  const selectedFilters = useSelector((state: RootState) => state.list.selectedFilters);
 
   useEffect(() => {
     handleNavigateToSelectScreen();
@@ -126,6 +126,7 @@ export const FilterButton = ({
         },
       ]));
     }
+    dispatch(setForceFetchingList(true));
   };
 
   const handleClearFilter = () => {

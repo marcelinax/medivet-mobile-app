@@ -5,7 +5,7 @@ import multiSelectSlice from 'store/multiSelect/multiSelectSlice';
 import thunk from 'redux-thunk';
 import clinicSlice from 'store/clinic/clinicSlice';
 import selectSlice from 'store/select/selectSlice';
-import listFiltersSlice from 'store/listFilters/listFiltersSlice';
+import listSlice from 'store/list/listSlice';
 import homeSlice from 'store/home/homeSlice';
 
 export const store = configureStore({
@@ -15,7 +15,7 @@ export const store = configureStore({
     multiSelect: multiSelectSlice,
     clinic: clinicSlice,
     select: selectSlice,
-    listFilters: listFiltersSlice,
+    list: listSlice,
     home: homeSlice,
   },
   middleware: [ thunk ],
