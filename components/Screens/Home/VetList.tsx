@@ -37,8 +37,6 @@ export const VetList = () => {
     }
     return params;
   };
-
-  // TODO czy filtr usług nie powinien być ograniczony do specjalizacji?
   // TODO jak ładuje sie adres to przesuwa sie scroll do góry => fix
 
   const listParams = {

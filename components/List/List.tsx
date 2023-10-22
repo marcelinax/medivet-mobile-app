@@ -25,7 +25,6 @@ interface Props {
   customStickyHeader?: JSX.Element;
 }
 
-// poprawic background sticky footera
 export const List = ({
   onFetch,
   renderItem,
@@ -56,7 +55,6 @@ export const List = ({
 
   useEffect(() => {
     if (forceFetchingList) {
-      console.log('d');
       onFetchData(true);
       dispatch(setForceFetchingList(false));
     }
@@ -145,7 +143,7 @@ export const List = ({
   return (
     <>
       {drawErrorAlert(errors)}
-      <View style={[ listStyles.container ]}>
+      <View style={[ listStyles.container, { backgroundColor: withoutBackgroundColor ? 'transparent' : colors.WHITE } ]}>
         <View
           style={stickyFooterButtonTitle && stickyFooterButtonAction ? listStyles.listContainer : listStyles.list}
         >
@@ -162,14 +160,14 @@ export const List = ({
             onEndReachedThreshold={0.001}
             onEndReached={() => onFetchData()}
             contentContainerStyle={{ flexGrow: 1 }}
-            style={[ listStyles.list, { backgroundColor: withoutBackgroundColor ? 'transparent' : colors.WHITE } ]}
+            style={listStyles.list}
             stickyHeaderIndices={withSearch || customStickyHeader ? [ 0 ] : undefined}
           />
         </View>
         {
           stickyFooterButtonTitle && stickyFooterButtonAction && (
             <View
-              style={[ listStyles.footerButtonContainer, { backgroundColor: withoutBackgroundColor ? 'transparent' : colors.WHITE } ]}
+              style={[ listStyles.footerButtonContainer ]}
             >
               <LoadingButton
                 loading={!!stickyButtonLoading}
