@@ -10,8 +10,13 @@ export const parseDataToSelectOptions = (
     return cur;
   }, item);
 
+  const id = fieldAsId.toString().split('.').reduce((acc, cur) => {
+    if (acc) return acc[`${cur}`];
+    return cur;
+  }, item);
+
   return ({
-    id: item[fieldAsId].toString(),
+    id,
     label,
   });
 });

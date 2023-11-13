@@ -18,6 +18,9 @@ import { AvailableDatesApi } from 'api/availableDates/availableDates.api';
 import { ReceptionHour } from 'components/Composition/ReceptionHour';
 import { AvailableDate } from 'types/api/availableDates/types';
 import moment from 'moment';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { SelectOptionProps } from 'types/components/Inputs/types';
 
 interface Props {
   clinic: Clinic;
@@ -31,24 +34,35 @@ export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const { t } = useTranslation();
   const [ loading, setLoading ] = useState(true);
+  const filters = useSelector((state: RootState) => state.list.selectedFilters);
+  const medicalServicesFilterAsString = JSON.stringify(filters.find((filter) => filter.id === 'medicalServices')?.value);
 
   useEffect(() => {
     fetchMedicalServices();
-  }, []);
+  }, [ medicalServicesFilterAsString ]);
 
   useEffect(() => {
     if (medicalService?.id) fetchFirstAvailableDate();
   }, [ medicalService?.id ]);
 
-  // TODO tutaj powinno pobrać pierwszy dowolny jeżeli nie ma filtru usługi a jeżeli jest to wtedy przekazać dodatkowy parametr niżej
-  // TODO jeżeli znajdzie kilka to powinno wziąć to co ma najbliższy termin?
   const fetchMedicalServices = async () => {
     try {
-      const res = await VetClinicProvidedMedicalServiceApi.getVetClinicProvidedMedicalServices(clinic.id, {
+      let params: Record<string, any> = {
         vetId: vet.id,
-        include: 'medicalService',
+        include: 'medicalService,user',
         size: 1,
-      });
+        sorting: 'nearest-availability',
+      };
+      const medicalServicesFilter = filters.find((filter) => filter.id === 'medicalServices');
+
+      if (medicalServicesFilter) {
+        params = {
+          ...params,
+          medicalServiceIds: (medicalServicesFilter.value as SelectOptionProps[]).map((singleValue) => singleValue.id),
+        };
+      }
+
+      const res = await VetClinicProvidedMedicalServiceApi.getVetClinicProvidedMedicalServices(clinic.id, params);
       setMedicalService(res[0]);
     } catch (err: any) {
       const errs = [ err?.response?.data ];
