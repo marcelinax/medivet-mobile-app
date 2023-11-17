@@ -27,3 +27,7 @@ export type EditVetClinicAvailabilityScreenParams = {
 export type EditVetClinicProvidedMedicalServiceScreenParams = {
   medicalServiceId: number;
 };
+
+export type VetScreenParams = {
+  vetId: number;
+}

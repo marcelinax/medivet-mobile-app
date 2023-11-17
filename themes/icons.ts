@@ -24,4 +24,5 @@ export default {
   STAR: 'star' as const,
   LOCATION: 'location' as const,
   CLOSE_OUTLINE: 'close-outline' as const,
+  CALL: 'call' as const,
 };

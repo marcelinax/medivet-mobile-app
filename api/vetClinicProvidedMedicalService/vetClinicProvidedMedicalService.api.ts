@@ -11,7 +11,7 @@ export class VetClinicProvidedMedicalServiceApi {
     clinicId: number,
     params: Record<string, any>,
   ): Promise<VetClinicProvidedMedicalService[]> {
-    const res = await authClient.get(`vet-provided-medical-services/clinic/${clinicId}`, { params });
+    const res = await authClient.get(`vet-provided-medical-services/clinics/${clinicId}`, { params });
     return res.data;
   }
 
@@ -54,5 +54,13 @@ export class VetClinicProvidedMedicalServiceApi {
 
   static async removeVetClinicProvidedMedicalService(vetClinicProvidedMedicalServiceId: number): Promise<void> {
     await authClient.delete(`vet-provided-medical-services/${vetClinicProvidedMedicalServiceId}`);
+  }
+
+  static async getVetClinicProvidedMedicalServicesForVet(
+    vetId: number,
+    params?: Record<string, any>,
+  ): Promise<VetClinicProvidedMedicalService[]> {
+    const res = await authClient.get(`vet-provided-medical-services/vets/${vetId}`, { params });
+    return res.data;
   }
 }

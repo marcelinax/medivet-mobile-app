@@ -47,6 +47,11 @@ class UserApi {
     const res = await authClient.get('users/vets', { params });
     return res.data;
   }
+
+  static async getVet(vetId: number, params?: Record<string, any>): Promise<User> {
+    const res = await authClient.get(`users/vets/${vetId}`, { params });
+    return res.data;
+  }
 }
 
 export { UserApi };

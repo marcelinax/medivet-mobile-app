@@ -8,6 +8,7 @@ import {
   MultiSelectScreenParams,
   SelectScreenParams,
   VetClinicScreenParams,
+  VetScreenParams,
 } from 'types/Navigation/screenParamsTypes';
 
 export type RootStackParamList = {
@@ -36,6 +37,7 @@ export type RootStackParamList = {
   'Edit Vet Clinic Provided Medical Service': EditVetClinicProvidedMedicalServiceScreenParams;
   'Vet Clinic Provided Medical Service List Filters': undefined;
   'Vets': undefined;
+  'Vet': VetScreenParams;
 }
 
 // AUTH
@@ -60,8 +62,6 @@ export type CreateVetClinicAvailabilityScreenNavigationProps = NativeStackNaviga
 export type VetClinicAvailabilitiesScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Vet Clinic Availabilities'>;
 export type CreateVetClinicAvailabilityReceptionHoursScreenNavigationProps = NativeStackNavigationProp<RootStackParamList,
   'Create Vet Clinic Availability Reception Hours'>;
-export type EditVetClinicAvailabilityScreenNavigationProps = NativeStackNavigationProp<RootStackParamList,
-  'Edit Vet Clinic Availability'>;
 
 // CLINIC PROVIDED MEDICAL SERVICES
 export type VetClinicProvidedMedicalServicesScreenNavigationProps = NativeStackNavigationProp<RootStackParamList,
@@ -77,6 +77,7 @@ export type SelectScreenNavigationProps = NativeStackNavigationProp<RootStackPar
 
 // HOME
 export type HomeNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+export type VetScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Vet'>;
 
 // ROUTES
 export type VetClinicScreenRouteProps = RouteProp<RootStackParamList, 'Vet Clinic'>;
@@ -87,4 +88,4 @@ export type CreateVetClinicAvailabilityReceptionHoursScreenRouteProps =
   RouteProp<RootStackParamList, 'Create Vet Clinic Availability Reception Hours'>;
 export type EditVetClinicAvailabilityScreenRouteProps = RouteProp<RootStackParamList, 'Edit Vet Clinic Availability'>;
 export type EditVetClinicProvidedMedicalServiceScreenRouteProps = RouteProp<RootStackParamList, 'Edit Vet Clinic Provided Medical Service'>;
-
+export type VetScreenRouteProps = RouteProp<RootStackParamList, 'Vet'>;

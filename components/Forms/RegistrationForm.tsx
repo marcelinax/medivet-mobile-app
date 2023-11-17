@@ -79,7 +79,7 @@ export const RegistrationForm = () => {
     setLoading(true);
     try {
       const res = await UserApi.registerUser(getParsedFormData());
-      // powinno przenieść do logowania albo zalogować
+      // TODO powinno przenieść do logowania albo zalogować
     } catch (err: any) {
       const errs = [ err?.response?.data ];
       handleErrorAlert(errs);
@@ -93,8 +93,8 @@ export const RegistrationForm = () => {
   };
 
   const areAcceptTermsFieldHasError = () => !!getInputErrors(errors, 'acceptTerms').length;
-  // obsłuzyc rolę
-  // animacja "shake" kiedy regulamin nie został zaakceptowany
+  // TODO obsłuzyc rolę
+  // TODO animacja "shake" kiedy regulamin nie został zaakceptowany
 
   return (
     <>

@@ -42,6 +42,9 @@
     "clear": {
       "title": "Wyczyść"
     },
+    "show_calendar": {
+      "title": "Pokaż kalendarz"
+    },
     "choose_role": {
       "title": "Wybierz rolę"
     },
@@ -96,7 +99,8 @@
       "title_one": "{{count}} opinia",
       "title_few": "{{count}} opinie",
       "title_many": "{{count}} opinii",
-      "title_other": "{{count}} opinii"
+      "title_other": "{{count}} opinii",
+      "title": "Opinie"
     },
     "edition": {
       "title": "Edycja"
@@ -176,11 +180,23 @@
     "loading": {
       "title": "Ładowanie..."
     },
-    "available_dates": {
-      "title": "Dostępne terminy"
+    "vet_has_not_any_medical_services": {
+      "title": "Lekarz nie wykonuje obecnie żadnych usług"
     },
     "services": {
       "title": "Usługi"
+    },
+    "address": {
+      "title": "Adres"
+    },
+    "addresses": {
+      "title": "Adresy"
+    },
+    "price_list": {
+      "title": "Cennik"
+    },
+    "available_dates": {
+      "title": "Dostępne terminy"
     },
     "next_date": {
       "title": "Najbliższy termin"
@@ -190,9 +206,6 @@
     },
     "more": {
       "title": "Więcej"
-    },
-    "address": {
-      "title": "Adres"
     },
     "logo": {
       "title": "MediVet"

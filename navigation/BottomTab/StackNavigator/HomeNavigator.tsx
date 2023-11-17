@@ -3,10 +3,11 @@ import { RootStackParamList } from 'types/Navigation/types';
 import routes from 'constants/routes';
 import { HomeScreen } from 'screens/Home/Home.screen';
 import colors from 'themes/colors';
-import { VetsScreen } from 'screens/Home/Vets.screen';
+import { VetsScreen } from 'screens/Home/Vets/Vets.screen';
 import { getDefaultScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
+import { VetScreen } from 'screens/Home/Vets/Vet.screen';
 
 export const HomeNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -29,6 +30,10 @@ export const HomeNavigator = () => {
         name={routes.VETS}
         component={VetsScreen}
         options={getDefaultScreenOptions(vetsScreenTitle)}
+      />
+      <Stack.Screen
+        name={routes.VET}
+        component={VetScreen}
       />
     </Stack.Navigator>
   );

@@ -4,28 +4,38 @@ import { VetListItemBasicInfo } from 'components/Screens/Home/VetListItem/VetLis
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { listItemStyles } from 'screens/utils/styles';
 import { VetListItemClinicAddressList } from 'components/Screens/Home/VetListItem/VetListItemClinicAddressList';
+import { useNavigation } from '@react-navigation/native';
+import { VetScreenNavigationProps } from 'types/Navigation/types';
 
 interface Props {
   vet: User;
 }
 
-export const VetListItem = ({ vet }: Props) => (
-  <TouchableWithoutFeedback>
-    <View style={[ listItemStyles.container, styles.container ]}>
-      <Card style={styles.card}>
-        <>
-          <VetListItemBasicInfo vet={vet} />
-          <View style={styles.addressesContainer}>
-            <VetListItemClinicAddressList
-              clinics={vet?.clinics || []}
-              vet={vet}
-            />
-          </View>
-        </>
-      </Card>
-    </View>
-  </TouchableWithoutFeedback>
-);
+export const VetListItem = ({ vet }: Props) => {
+  const navigation = useNavigation<VetScreenNavigationProps>();
+
+  const handleNavigateToVetScreen = () => {
+    navigation.navigate('Vet', { vetId: vet.id });
+  };
+
+  return (
+    <TouchableWithoutFeedback onPress={handleNavigateToVetScreen}>
+      <View style={[ listItemStyles.container, styles.container ]}>
+        <Card style={styles.card}>
+          <>
+            <VetListItemBasicInfo vet={vet} />
+            <View style={styles.addressesContainer}>
+              <VetListItemClinicAddressList
+                clinics={vet?.clinics || []}
+                vet={vet}
+              />
+            </View>
+          </>
+        </Card>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
