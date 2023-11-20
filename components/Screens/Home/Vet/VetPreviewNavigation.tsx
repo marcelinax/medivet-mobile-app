@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { VetClinics } from 'components/Screens/Home/Vet/VetClinics';
 import { User } from 'types/api/user/types';
 import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedicalService/types';
+import { PriceLists } from 'components/Screens/Home/Vet/PriceLists';
 
 interface Props {
   vet: User;
@@ -36,7 +37,7 @@ export const VetPreviewNavigation = ({ vet, medicalServices }: Props) => {
   const renderView = () => {
     switch (index) {
     case 1:
-      return <View><Text>Cenniki</Text></View>;
+      return <PriceLists medicalServices={medicalServices} />;
     case 2:
       return <View><Text>Opinie</Text></View>;
     case 0:

@@ -1,12 +1,18 @@
-import { StyleSheet, View } from 'react-native';
+import {
+  StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
 import colors from 'themes/colors';
 
-export const BreakLine = () => <View style={styles.line} />;
+interface Props {
+  style?: StyleProp<ViewStyle>;
+}
+
+export const BreakLine = ({ style }: Props) => <View style={[ styles.line, style ]} />;
 
 const styles = StyleSheet.create({
   line: {
     backgroundColor: colors.GRAY_LIGHT,
-    height: 0.3,
+    height: 1,
     width: '100%',
   },
 });

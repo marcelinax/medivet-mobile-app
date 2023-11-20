@@ -53,6 +53,9 @@ export const VetClinic = ({ clinic, medicalServices }: Props) => {
           title={t('actions.show_calendar.title')}
           variant="outline"
           style={styles.button}
+          onPress={() => {
+            // TODO przenieść do kalendarza
+          }}
           containerStyle={styles.buttonContainer}
         />
       </View>

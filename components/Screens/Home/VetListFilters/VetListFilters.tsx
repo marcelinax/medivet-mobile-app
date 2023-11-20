@@ -20,7 +20,8 @@ export const VetListFilters = () => {
       include: 'medicalService',
     };
     const res = await VetClinicProvidedMedicalServiceApi.getProvidedMedicalServices(params);
-    return parseDataToSelectOptions(res, 'medicalService.name', 'medicalService.id');
+    const uniqueArray = [ ...new Map(res.map((item) => [ item.medicalService.id, item ])).values() ];
+    return parseDataToSelectOptions(uniqueArray, 'medicalService.name', 'medicalService.id');
   };
 
   return (

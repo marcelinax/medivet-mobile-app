@@ -6,9 +6,17 @@ import { useRef } from 'react';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { SwipeButtonContext } from 'contexts/buttons/SwipeButtonContext';
 import './i18n.ts';
+import { Platform, UIManager } from 'react-native';
 
 export default function App() {
   const currentSwipeButton = useRef<Swipeable | null>(null);
+
+  if (
+    Platform.OS === 'android'
+    && UIManager.setLayoutAnimationEnabledExperimental
+  ) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
 
   return (
     <Provider store={store}>
