@@ -50,13 +50,9 @@ export const List = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    onFetchData();
-  }, []);
-
-  useEffect(() => {
     if (forceFetchingList) {
-      onFetchData(true);
       dispatch(setForceFetchingList(false));
+      onFetchData(true);
     }
   }, [ forceFetchingList ]);
 
@@ -95,9 +91,12 @@ export const List = ({
         ...getParsedFilters(),
       };
       const res = await onFetch(params);
+
       if (forceReset) {
         setData([ ...res ]);
-      } else setData([ ...data, ...res ]);
+      } else {
+        setData((prevState) => [ ...prevState, ...res ]);
+      }
       if (res.length <= 0) setHasNextPage(false);
       else {
         setOffset((forceReset ? 0 : offset) + res.length);
