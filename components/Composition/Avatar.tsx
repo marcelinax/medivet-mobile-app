@@ -6,14 +6,15 @@ import icons from 'themes/icons';
 interface Props {
   url?: string;
   icon?: any;
-  size: 'medium' | 'large';
+  size: 'medium' | 'large' | 'small';
 }
 
 export const Avatar = ({ url, size, icon }: Props) => {
-  const sizeStyles = size === 'large' ? styles.large : styles.medium;
-  const borderRadius = size === 'large' ? 100 / 2 : 80 / 2;
-  const iconSize = size === 'large' ? 100 / 2 : 80 / 2;
+  const sizeStyles = size === 'large' ? styles.large : size === 'medium' ? styles.medium : styles.small;
+  const borderRadius = size === 'large' ? 100 / 2 : size === 'medium' ? 80 / 2 : 50 / 2;
+  const iconSize = size === 'large' ? 100 / 2 : size === 'medium' ? 80 / 2 : 50 / 2;
 
+  // TODO zamiast człowieczka może lepiej dac pierwsza litere imienia?
   return (
     <View style={[ styles.container, sizeStyles, { borderRadius }, url ? {} : styles.withoutImage ]}>
       {url ? (
@@ -55,6 +56,10 @@ const styles = StyleSheet.create({
   medium: {
     width: 80,
     height: 80,
+  },
+  small: {
+    width: 50,
+    height: 50,
   },
   withoutImage: {
     borderColor: colors.GRAY,

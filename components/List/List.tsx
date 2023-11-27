@@ -158,6 +158,7 @@ export const List = ({
             showsVerticalScrollIndicator={false}
             onEndReachedThreshold={0.001}
             onEndReached={() => onFetchData()}
+            onScroll={(e) => console.log(e.nativeEvent.contentOffset)}
             contentContainerStyle={{ flexGrow: 1 }}
             style={listStyles.list}
             stickyHeaderIndices={withSearch || customStickyHeader ? [ 0 ] : undefined}

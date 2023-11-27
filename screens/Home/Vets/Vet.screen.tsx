@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { User } from 'types/api/user/types';
 import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
-import { DefaultLayout } from 'layouts/Default.layout';
 import { LoadingContainer } from 'components/Composition/LoadingContainer';
 import { UserApi } from 'api/user/user.api';
 import { VetPreview } from 'components/Screens/Home/Vet/VetPreview';
@@ -12,6 +11,7 @@ import {
   VetClinicProvidedMedicalServiceApi,
 } from 'api/vetClinicProvidedMedicalService/vetClinicProvidedMedicalService.api';
 import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedicalService/types';
+import { DefaultLayout } from 'layouts/Default.layout';
 
 export const VetScreen = () => {
   const navigation = useNavigation<VetScreenNavigationProps>();
@@ -19,7 +19,7 @@ export const VetScreen = () => {
   const [ vet, setVet ] = useState<User | undefined>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
-  const [ medicalServices, setMedicalServices ] = useState<VetClinicProvidedMedicalService[]>([]);
+  const [ medicalServices, setMedicalServices ] = useState<VetClinicProvidedMedicalService[] | undefined>();
 
   useEffect(() => {
     fetchVet();

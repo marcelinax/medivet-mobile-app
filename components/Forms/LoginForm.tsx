@@ -44,6 +44,7 @@ export const LoginForm = () => {
       dispatch(setToken(res.access_token));
     } catch (err: any) {
       const errs = [ err?.response?.data ];
+      console.log(errs);
       handleErrorAlert(errs);
       setErrors([ ...errs ]);
     }

@@ -7,9 +7,10 @@ import { useTranslation } from 'react-i18next';
 
 interface Props {
   opinions: VetOpinion[];
+  hideOpinionsAmount?: boolean;
 }
 
-export const OpinionRating = ({ opinions }: Props) => {
+export const OpinionRating = ({ opinions, hideOpinionsAmount }: Props) => {
   const MAX_STARS_AMOUNT = 5;
   const { t } = useTranslation();
 
@@ -44,8 +45,8 @@ export const OpinionRating = ({ opinions }: Props) => {
     const fillStarsAmount = Math.ceil(calcOpinionsAverage());
     const finalStars: JSX.Element[] = [];
     for (let i = 0; i < MAX_STARS_AMOUNT; i++) {
-      if (i < MAX_STARS_AMOUNT - fillStarsAmount) finalStars.push(drawStar(true, i));
-      else finalStars.push(drawStar(false, i));
+      if (i < fillStarsAmount) finalStars.push(drawStar(false, i));
+      else finalStars.push(drawStar(true, i));
     }
 
     return finalStars;
@@ -54,7 +55,8 @@ export const OpinionRating = ({ opinions }: Props) => {
   return (
     <View style={styles.container}>
       {drawStars()}
-      <Text style={styles.opinions}>{t('words.opinions.title', { count: opinions.length })}</Text>
+      {!hideOpinionsAmount
+        && <Text style={styles.opinions}>{t('words.opinions.title', { count: opinions.length })}</Text>}
     </View>
   );
 };

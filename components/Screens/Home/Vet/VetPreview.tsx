@@ -10,7 +10,10 @@ interface Props {
 
 export const VetPreview = ({ vet, medicalServices }: Props) => (
   <>
-    <VetInfo vet={vet} />
+    <VetInfo
+      vet={vet}
+      opinions={vet?.opinions || []}
+    />
     <VetPreviewNavigation
       vet={vet}
       medicalServices={medicalServices}

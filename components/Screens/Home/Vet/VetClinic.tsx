@@ -30,7 +30,7 @@ export const VetClinic = ({ clinic, medicalServices }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View>
       <View style={styles.row}>
         <Ionicons
           name={icons.LOCATION}
@@ -78,9 +78,6 @@ export const VetClinic = ({ clinic, medicalServices }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 10,
-  },
   row: {
     flexDirection: 'row',
   },

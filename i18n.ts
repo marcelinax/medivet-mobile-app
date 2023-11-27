@@ -1,3 +1,5 @@
+import 'intl';
+import 'intl/locale-data/jsonp/pl';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import plTranslations from 'translations/pl/translation.json';

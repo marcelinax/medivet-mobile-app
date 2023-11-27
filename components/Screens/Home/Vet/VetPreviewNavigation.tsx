@@ -1,6 +1,6 @@
 import { TabBar, TabView } from 'react-native-tab-view';
 import {
-  ScrollView, StyleSheet, Text, useWindowDimensions, View,
+  ScrollView, StyleSheet, Text, useWindowDimensions,
 } from 'react-native';
 import colors from 'themes/colors';
 import { useState } from 'react';
@@ -9,6 +9,7 @@ import { VetClinics } from 'components/Screens/Home/Vet/VetClinics';
 import { User } from 'types/api/user/types';
 import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedicalService/types';
 import { PriceLists } from 'components/Screens/Home/Vet/PriceLists';
+import { Opinions } from 'components/Screens/Home/Vet/Opinions';
 
 interface Props {
   vet: User;
@@ -18,7 +19,7 @@ interface Props {
 export const VetPreviewNavigation = ({ vet, medicalServices }: Props) => {
   const { t } = useTranslation();
   const layout = useWindowDimensions();
-  const [ index, setIndex ] = useState<number>(0);
+  const [ index, setIndex ] = useState<number>(2);
   const [ routes ] = useState([
     {
       key: 'address',
@@ -39,7 +40,11 @@ export const VetPreviewNavigation = ({ vet, medicalServices }: Props) => {
     case 1:
       return <PriceLists medicalServices={medicalServices} />;
     case 2:
-      return <View><Text>Opinie</Text></View>;
+      return (
+        <Opinions
+          vetId={vet.id}
+        />
+      );
     case 0:
     default:
       return (
@@ -51,10 +56,97 @@ export const VetPreviewNavigation = ({ vet, medicalServices }: Props) => {
     }
   };
 
+  const renderScene = (props) => {
+    switch (props.route.key) {
+    case 'address':
+      return (
+        <VetClinics
+          clinics={vet?.clinics || []}
+          medicalServices={medicalServices}
+          {...props}
+        />
+      );
+    case 'opinions':
+      return (
+        <Opinions
+          vetId={vet.id}
+          {...props}
+        />
+      );
+    case 'priceList':
+      return (
+        <PriceLists
+          medicalServices={medicalServices}
+          {...props}
+        />
+      );
+    default:
+      return null;
+    }
+  };
+  console.log(index);
+  return (
+    <TabView
+      onIndexChange={setIndex}
+      navigationState={{
+        index,
+        routes,
+      }}
+      initialLayout={{
+        height: 0,
+        width: layout.width,
+      }}
+      renderScene={renderScene}
+      renderTabBar={(props) => (
+        <TabBar
+          {...props}
+          scrollEnabled
+          onTabPress={(scene) => {
+            const { route } = scene;
+            props.jumpTo(route.key);
+          }}
+        />
+      )}
+      // renderTabBar={(props) => (
+      //   <TabBar
+      //     {...props}
+      //     navigationState={{
+      //       index,
+      //       routes,
+      //     }}
+      //     onTabPress={(event) => {
+      //       console.log('props', props);
+      //       const i = Math.floor(Math.random() * 3);
+      //       // const tabIndex = routes.findIndex((route) => route.key === event.route.key);
+      //       console.log('Math.floor(Math.random() * 3)', i);
+      //       setIndex(i);
+      //       // props.jumpTo(event.route.key);
+      //     }}
+      //     scrollEnabled
+      //     pressOpacity={1}
+      //     pressColor={colors.WHITE}
+      //     contentContainerStyle={styles.tabBarContainer}
+      //     indicatorContainerStyle={styles.indicatorContainer}
+      //     indicatorStyle={styles.indicator}
+      //     style={styles.tabBar}
+      //     renderLabel={(scene) => (
+      //       <Text style={{
+      //         color: scene.focused ? colors.PRIMARY : colors.GRAY_DARK,
+      //       }}
+      //       >
+      //         {scene.route.title}
+      //       </Text>
+      //     )}
+      //   />
+      // )}
+    />
+  );
+
   return (
     <ScrollView bounces={false}>
       <TabView
-        onIndexChange={setIndex}
+        onIndexChange={() => {
+        }}
         navigationState={{
           index,
           routes,
@@ -67,6 +159,7 @@ export const VetPreviewNavigation = ({ vet, medicalServices }: Props) => {
         renderTabBar={(props) => (
           <TabBar
             {...props}
+            scrollEnabled
             contentContainerStyle={styles.tabBarContainer}
             indicatorContainerStyle={styles.indicatorContainer}
             indicatorStyle={styles.indicator}

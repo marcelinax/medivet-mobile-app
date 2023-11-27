@@ -1,14 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { User } from 'types/api/user/types';
+import { User, VetOpinion } from 'types/api/user/types';
 import { Avatar } from 'components/Composition/Avatar';
 import { OpinionRating } from 'components/Composition/OpinionRating';
 import colors from 'themes/colors';
 
 interface Props {
   vet: User;
+  opinions: VetOpinion[];
 }
 
-export const VetInfo = ({ vet }: Props) => {
+export const VetInfo = ({ vet, opinions }: Props) => {
   const specializations = (vet.specializations || []).map((specialization) => specialization.name).join(', ');
 
   return (
@@ -20,7 +21,7 @@ export const VetInfo = ({ vet }: Props) => {
       <View style={styles.infoContainer}>
         <Text style={styles.name}>{vet.name}</Text>
         <Text style={styles.specializations}>{specializations}</Text>
-        <OpinionRating opinions={(vet?.opinions || [])} />
+        <OpinionRating opinions={opinions} />
       </View>
     </View>
   );

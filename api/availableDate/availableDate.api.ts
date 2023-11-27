@@ -1,7 +1,7 @@
 import { authClient } from 'api/services';
 import { AvailableDate } from 'types/api/availableDates/types';
 
-export class AvailableDatesApi {
+export class AvailableDateApi {
   static async getAvailableDates(
     vetId: number,
     medicalServiceId: number,

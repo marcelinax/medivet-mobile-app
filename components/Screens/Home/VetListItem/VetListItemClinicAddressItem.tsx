@@ -14,7 +14,7 @@ import { User } from 'types/api/user/types';
 import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { useTranslation } from 'react-i18next';
-import { AvailableDatesApi } from 'api/availableDates/availableDates.api';
+import { AvailableDateApi } from 'api/availableDate/availableDate.api';
 import { ReceptionHour } from 'components/Composition/ReceptionHour';
 import { AvailableDate } from 'types/api/availableDates/types';
 import moment from 'moment';
@@ -45,6 +45,8 @@ export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
     if (medicalService?.id) fetchFirstAvailableDate();
   }, [ medicalService?.id ]);
 
+  // TODO jeżeli medical service został już raz pobrany to niech doda sie do stanu a pozniej przy ponownym wejsciu w zakładkę korzysta z tego pobranego a nie pobiera na nowo
+
   const fetchMedicalServices = async () => {
     try {
       let params: Record<string, any> = {
@@ -73,7 +75,7 @@ export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
 
   const fetchFirstAvailableDate = async () => {
     try {
-      const res = await AvailableDatesApi.getAvailableDate(vet.id, medicalService!.id);
+      const res = await AvailableDateApi.getAvailableDate(vet.id, medicalService!.id);
       setAvailableDate(res);
     } catch (err: any) {
       const errs = [ err?.response?.data ];
