@@ -32,7 +32,6 @@ export const Opinion = ({ opinion }: Props) => {
           {opinion.message}
         </Text>
       </View>
-
     </View>
   );
 };

@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedicalService/types';
 import { PriceList } from 'components/Screens/Home/Vet/PriceList';
 
@@ -41,14 +41,18 @@ export const PriceLists = ({ medicalServices }: Props) => {
   ));
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.scrollView}
+      bounces={false}
+    >
       {drawMedicalServicePriceLists()}
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  scrollView: {
+    flex: 1,
     marginTop: 10,
   },
 });

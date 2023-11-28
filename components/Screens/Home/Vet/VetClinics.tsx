@@ -30,13 +30,17 @@ export const VetClinics = ({ clinics, medicalServices }: Props) => {
   ));
 
   return (
-    <>
+    <ScrollView bounces={false}>
       {clinics.length > 1 && (
-        <ScrollView horizontal>
-          <View style={styles.buttonsContainer}>
-            {drawClinicButtons()}
-          </View>
-        </ScrollView>
+        <View>
+          <ScrollView
+            horizontal
+          >
+            <View style={styles.buttonsContainer}>
+              {drawClinicButtons()}
+            </View>
+          </ScrollView>
+        </View>
       )}
       <View style={clinics.length > 1 ? styles.clinicContainer : { marginTop: 16 }}>
         <VetClinic
@@ -44,7 +48,8 @@ export const VetClinics = ({ clinics, medicalServices }: Props) => {
           medicalServices={getMedicalServicesForClinic()}
         />
       </View>
-    </>
+
+    </ScrollView>
   );
 };
 

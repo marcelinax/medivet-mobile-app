@@ -4,10 +4,10 @@ import routes from 'constants/routes';
 import { HomeScreen } from 'screens/Home/Home.screen';
 import colors from 'themes/colors';
 import { VetsScreen } from 'screens/Home/Vets/Vets.screen';
-import { getDefaultScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { VetScreen } from 'screens/Home/Vets/Vet.screen';
+import { getDefaultScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
 
 export const HomeNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -17,7 +17,7 @@ export const HomeNavigator = () => {
 
   return (
     <Stack.Navigator screenOptions={{
-      headerShown: false,
+      headerShown: true,
       headerBackTitle: '',
       headerTintColor: colors.BLACK,
     }}
@@ -29,7 +29,7 @@ export const HomeNavigator = () => {
       <Stack.Screen
         name={routes.VETS}
         component={VetsScreen}
-        options={getDefaultScreenOptions(vetsScreenTitle)}
+        options={() => getDefaultScreenOptions(vetsScreenTitle)}
       />
       <Stack.Screen
         name={routes.VET}

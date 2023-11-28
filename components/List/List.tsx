@@ -23,6 +23,7 @@ interface Props {
   stickyButtonLoading?: boolean;
   withoutBackgroundColor?: boolean;
   customStickyHeader?: JSX.Element;
+  customOptionsSeparator?: JSX.Element;
 }
 
 export const List = ({
@@ -30,6 +31,7 @@ export const List = ({
   renderItem,
   withSearch,
   separateOptions,
+  customOptionsSeparator,
   stickyFooterButtonTitle,
   stickyFooterButtonAction,
   stickyButtonLoading,
@@ -139,7 +141,11 @@ export const List = ({
 
   const footerComponent: JSX.Element = loading && data.length === 0 ? <Loading /> : <></>;
 
-  const itemSeparator = separateOptions ? () => <View style={listStyles.separator} /> : undefined;
+  const itemSeparator = customOptionsSeparator ? () => customOptionsSeparator : (separateOptions ? () => (
+    <View
+      style={listStyles.separator}
+    />
+  ) : undefined);
 
   return (
     <>
@@ -164,6 +170,7 @@ export const List = ({
             contentContainerStyle={{
               flexGrow: 1,
             }}
+            nestedScrollEnabled
             style={listStyles.list}
             stickyHeaderIndices={withSearch || customStickyHeader ? [ 0 ] : undefined}
           />
