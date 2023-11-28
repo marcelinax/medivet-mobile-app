@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     borderColor: colors.GRAY,
   },
   tabBar: {
-    backgroundColor: 'transparent',
+    backgroundColor: colors.WHITE,
     marginBottom: 15,
   },
   tabBarContainer: {

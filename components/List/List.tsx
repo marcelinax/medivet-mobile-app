@@ -36,7 +36,7 @@ export const List = ({
   withoutBackgroundColor,
   customStickyHeader,
 }: Props) => {
-  const [ loading, setLoading ] = useState<boolean>(true);
+  const [ loading, setLoading ] = useState<boolean>(false);
   const [ offset, setOffset ] = useState<number>(0);
   const [ data, setData ] = useState<any[]>([]);
   const [ hasNextPage, setHasNextPage ] = useState<boolean>(true);
@@ -82,6 +82,8 @@ export const List = ({
 
   const onFetchData = async (forceReset?: boolean): Promise<void | undefined> => {
     if (!hasNextPage && !forceReset) return;
+    if (loading) return;
+
     setLoading(true);
     try {
       const params = {
@@ -156,10 +158,12 @@ export const List = ({
             ListEmptyComponent={emptyComponent}
             ListFooterComponent={footerComponent}
             showsVerticalScrollIndicator={false}
-            onEndReachedThreshold={0.001}
+            onEndReachedThreshold={0.5}
             onEndReached={() => onFetchData()}
-            onScroll={(e) => console.log(e.nativeEvent.contentOffset)}
-            contentContainerStyle={{ flexGrow: 1 }}
+            // onScroll={(e) => console.log(e.nativeEvent.contentOffset)}
+            contentContainerStyle={{
+              flexGrow: 1,
+            }}
             style={listStyles.list}
             stickyHeaderIndices={withSearch || customStickyHeader ? [ 0 ] : undefined}
           />
