@@ -1,16 +1,17 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { VetOpinion } from 'types/api/user/types';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import icons from 'themes/icons';
 import colors from 'themes/colors';
 import { useTranslation } from 'react-i18next';
+import { VetOpinion } from 'types/api/opinion/types';
 
 interface Props {
   opinions: VetOpinion[];
   hideOpinionsAmount?: boolean;
+  opinionsAmount?: number;
 }
 
-export const OpinionRating = ({ opinions, hideOpinionsAmount }: Props) => {
+export const OpinionRating = ({ opinions, hideOpinionsAmount, opinionsAmount }: Props) => {
   const MAX_STARS_AMOUNT = 5;
   const { t } = useTranslation();
 
@@ -56,7 +57,13 @@ export const OpinionRating = ({ opinions, hideOpinionsAmount }: Props) => {
     <View style={styles.container}>
       {drawStars()}
       {!hideOpinionsAmount
-        && <Text style={styles.opinions}>{t('words.opinions.title', { count: opinions.length })}</Text>}
+        && (
+          <Text
+            style={styles.opinions}
+          >
+            {t('words.opinions.title', { count: opinionsAmount !== undefined ? opinionsAmount : opinions.length })}
+          </Text>
+        )}
     </View>
   );
 };

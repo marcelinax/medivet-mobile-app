@@ -7,8 +7,11 @@ import { VetListFilters } from 'components/Screens/Home/VetListFilters/VetListFi
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { SelectOptionProps } from 'types/components/Inputs/types';
+import { getAvailableDatesSelectOptions } from 'constants/selectOptions';
+import { useTranslation } from 'react-i18next';
 
 export const VetList = () => {
+  const { t } = useTranslation();
   const filters = useSelector((state: RootState) => state.list.selectedFilters);
   const homeFilters = useSelector((state: RootState) => state.home.selectedFilters);
   const renderVet: ListRenderItem<User> = ({ item }) => <VetListItem vet={item} />;
@@ -29,12 +32,10 @@ export const VetList = () => {
       };
     }
 
-    if (availableDates) {
-      params = {
-        ...params,
-        availableDates: (availableDates.value as SelectOptionProps).id,
-      };
-    }
+    params = {
+      ...params,
+      availableDates: availableDates ? (availableDates.value as SelectOptionProps).id : getAvailableDatesSelectOptions(t)[2].id,
+    };
     return params;
   };
 

@@ -42,6 +42,9 @@
     "clear": {
       "title": "Wyczyść"
     },
+    "add_opinion": {
+      "title": "Dodaj opinię"
+    },
     "show_calendar": {
       "title": "Pokaż kalendarz"
     },
@@ -274,6 +277,9 @@
     },
     "filters": {
       "title": "Filtrowanie"
+    },
+    "create_opinion": {
+      "title": "Tworzenie opinii"
     },
     "user_specializations": {
       "title": "Moje specjalizacje"

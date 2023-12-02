@@ -150,8 +150,6 @@ export const FilterButton = ({
     }
   };
 
-  const hasDefaultFilterValue = () => defaultSelectedFilterValue && Object.keys(defaultSelectedFilterValue).length > 0;
-
   const isFilterApplied = () => {
     if (isMultiSelect) {
       if (!multiSelectState?.selectedOptions || multiSelectState?.selectedOptions?.length === 0) return false;

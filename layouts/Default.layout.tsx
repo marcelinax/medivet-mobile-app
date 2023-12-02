@@ -29,8 +29,6 @@ export const DefaultLayout = ({
         bounces={false}
         nestedScrollEnabled
         scrollEventThrottle={1}
-        // onScroll={(e) => console.log('scroll', e.nativeEvent.contentOffset)}
-        // onLayout={(e) => console.log(e.nativeEvent)}
       >
         <View style={[
           styles.container, {

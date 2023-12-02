@@ -45,7 +45,10 @@ export const Input = ({
           inputStyles.inputInnerContainer,
           getInputStylesDependingOnVariant(variant),
           label && variant !== 'underline' ? inputStyles.inputWithLabel : {},
-          { borderRadius: getInputBorderRadius(variant, rounded) },
+          {
+            borderRadius: getInputBorderRadius(variant, rounded),
+            height: props.multiline ? 150 : 48,
+          },
         ]}
         >
           {icon && (

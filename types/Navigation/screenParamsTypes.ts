@@ -30,4 +30,10 @@ export type EditVetClinicProvidedMedicalServiceScreenParams = {
 
 export type VetScreenParams = {
   vetId: number;
+  showSuccessAlert?: boolean;
+  shouldRefreshOpinionsAmount?: boolean;
+}
+
+export type OpinionScreenParams = {
+  vetId: number;
 }

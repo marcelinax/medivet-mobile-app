@@ -12,19 +12,44 @@ import {
 } from 'api/vetClinicProvidedMedicalService/vetClinicProvidedMedicalService.api';
 import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedicalService/types';
 import { DefaultLayout } from 'layouts/Default.layout';
+import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
+import { useTranslation } from 'react-i18next';
+import { OpinionApi } from 'api/opinion/opinion.api';
 
 export const VetScreen = () => {
+  const { t } = useTranslation();
   const navigation = useNavigation<VetScreenNavigationProps>();
   const route = useRoute<VetScreenRouteProps>();
   const [ vet, setVet ] = useState<User | undefined>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
+  const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
   const [ medicalServices, setMedicalServices ] = useState<VetClinicProvidedMedicalService[] | undefined>();
+  const [ opinionsAmount, setOpinionsAmount ] = useState<number | undefined>();
 
   useEffect(() => {
     fetchVet();
     fetchVetProvidedMedicalServices();
+    fetchAmountOfVetOpinions();
   }, []);
+
+  useEffect(() => {
+    if (route?.params?.showSuccessAlert) {
+      handleSuccessAlert();
+      navigation.setParams({
+        showSuccessAlert: false,
+      });
+    }
+  }, [ route?.params?.showSuccessAlert ]);
+
+  useEffect(() => {
+    if (route?.params?.shouldRefreshOpinionsAmount) {
+      fetchAmountOfVetOpinions();
+      navigation.setParams({
+        shouldRefreshOpinionsAmount: false,
+      });
+    }
+  }, [ route?.params?.shouldRefreshOpinionsAmount ]);
 
   const fetchVet = async () => {
     try {
@@ -35,6 +60,17 @@ export const VetScreen = () => {
         headerTitle: res.name,
         headerShown: true,
       });
+    } catch (err: any) {
+      const errs = [ err?.response?.data ];
+      setErrors([ ...errs ]);
+      handleErrorAlert(errs);
+    }
+  };
+
+  const fetchAmountOfVetOpinions = async () => {
+    try {
+      const res = await OpinionApi.getTotalAmountOfVetOpinions(route.params.vetId);
+      setOpinionsAmount(res);
     } catch (err: any) {
       const errs = [ err?.response?.data ];
       setErrors([ ...errs ]);
@@ -60,11 +96,13 @@ export const VetScreen = () => {
     <DefaultLayout>
       <>
         {drawErrorAlert(errors)}
+        {drawSuccessAlert(t('alerts.success.save.title'))}
         {
-          !vet || !medicalServices ? <LoadingContainer />
+          !vet || !medicalServices || opinionsAmount === undefined ? <LoadingContainer />
             : (
               <VetPreview
                 vet={vet}
+                opinionsAmount={opinionsAmount}
                 medicalServices={medicalServices}
               />
             )

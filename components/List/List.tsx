@@ -24,6 +24,7 @@ interface Props {
   withoutBackgroundColor?: boolean;
   customStickyHeader?: JSX.Element;
   customOptionsSeparator?: JSX.Element;
+  customHeader?: JSX.Element;
 }
 
 export const List = ({
@@ -37,6 +38,7 @@ export const List = ({
   stickyButtonLoading,
   withoutBackgroundColor,
   customStickyHeader,
+  customHeader,
 }: Props) => {
   const [ loading, setLoading ] = useState<boolean>(false);
   const [ offset, setOffset ] = useState<number>(0);
@@ -157,7 +159,7 @@ export const List = ({
           <FlatList
             data={data}
             renderItem={renderItem}
-            ListHeaderComponent={withSearch ? headerComponent : customStickyHeader || <></>}
+            ListHeaderComponent={withSearch ? headerComponent : customStickyHeader || customHeader || <></>}
             bounces={false}
             ItemSeparatorComponent={itemSeparator}
             keyExtractor={(item) => item.id}
@@ -166,7 +168,6 @@ export const List = ({
             showsVerticalScrollIndicator={false}
             onEndReachedThreshold={0.5}
             onEndReached={() => onFetchData()}
-            // onScroll={(e) => console.log(e.nativeEvent.contentOffset)}
             contentContainerStyle={{
               flexGrow: 1,
             }}

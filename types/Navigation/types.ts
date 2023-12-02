@@ -6,6 +6,7 @@ import {
   EditVetClinicAvailabilityScreenParams,
   EditVetClinicProvidedMedicalServiceScreenParams,
   MultiSelectScreenParams,
+  OpinionScreenParams,
   SelectScreenParams,
   VetClinicScreenParams,
   VetScreenParams,
@@ -38,6 +39,7 @@ export type RootStackParamList = {
   'Vet Clinic Provided Medical Service List Filters': undefined;
   'Vets': undefined;
   'Vet': VetScreenParams;
+  'Create Opinion': OpinionScreenParams;
 }
 
 // AUTH
@@ -78,6 +80,7 @@ export type SelectScreenNavigationProps = NativeStackNavigationProp<RootStackPar
 // HOME
 export type HomeNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 export type VetScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Vet'>;
+export type CreateOpinionScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Create Opinion'>;
 
 // ROUTES
 export type VetClinicScreenRouteProps = RouteProp<RootStackParamList, 'Vet Clinic'>;
@@ -89,3 +92,4 @@ export type CreateVetClinicAvailabilityReceptionHoursScreenRouteProps =
 export type EditVetClinicAvailabilityScreenRouteProps = RouteProp<RootStackParamList, 'Edit Vet Clinic Availability'>;
 export type EditVetClinicProvidedMedicalServiceScreenRouteProps = RouteProp<RootStackParamList, 'Edit Vet Clinic Provided Medical Service'>;
 export type VetScreenRouteProps = RouteProp<RootStackParamList, 'Vet'>;
+export type CreateOpinionScreenRouteProps = RouteProp<RootStackParamList, 'Create Opinion'>;
