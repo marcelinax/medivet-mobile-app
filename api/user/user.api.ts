@@ -52,6 +52,21 @@ class UserApi {
     const res = await authClient.get(`users/vets/${vetId}`, { params });
     return res.data;
   }
+
+  static async addVetToFavourites(vetId: number): Promise<void> {
+    const res = await authClient.post(`users/favourite-vets/${vetId}`);
+    return res.data;
+  }
+
+  static async removeVetFromFavourites(vetId: number): Promise<void> {
+    const res = await authClient.delete(`users/favourite-vets/${vetId}`);
+    return res.data;
+  }
+
+  static async checkIfVetIsInFavourites(vetId: number): Promise<boolean> {
+    const res = await authClient.get(`users/favourite-vets/${vetId}`);
+    return res.data;
+  }
 }
 
 export { UserApi };

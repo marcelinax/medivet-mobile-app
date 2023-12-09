@@ -15,6 +15,7 @@ import { DefaultLayout } from 'layouts/Default.layout';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 import { useTranslation } from 'react-i18next';
 import { OpinionApi } from 'api/opinion/opinion.api';
+import { VetPreviewRightHeader } from 'components/Screens/Home/Vet/VetPreviewRightHeader';
 
 export const VetScreen = () => {
   const { t } = useTranslation();
@@ -26,11 +27,13 @@ export const VetScreen = () => {
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
   const [ medicalServices, setMedicalServices ] = useState<VetClinicProvidedMedicalService[] | undefined>();
   const [ opinionsAmount, setOpinionsAmount ] = useState<number | undefined>();
+  const [ isInFavourites, setIsInFavourites ] = useState<boolean | undefined>();
 
   useEffect(() => {
     fetchVet();
     fetchVetProvidedMedicalServices();
     fetchAmountOfVetOpinions();
+    fetchStatusOfVetInFavourites();
   }, []);
 
   useEffect(() => {
@@ -59,6 +62,15 @@ export const VetScreen = () => {
       navigation.setOptions({
         headerTitle: res.name,
         headerShown: true,
+        headerRight: () => (
+          <VetPreviewRightHeader
+            setErrors={setErrors}
+            handleErrorAlert={handleErrorAlert}
+            isInFavourites={!!isInFavourites}
+            vetId={res.id}
+          />
+        )
+        ,
       });
     } catch (err: any) {
       const errs = [ err?.response?.data ];
@@ -71,6 +83,17 @@ export const VetScreen = () => {
     try {
       const res = await OpinionApi.getTotalAmountOfVetOpinions(route.params.vetId);
       setOpinionsAmount(res);
+    } catch (err: any) {
+      const errs = [ err?.response?.data ];
+      setErrors([ ...errs ]);
+      handleErrorAlert(errs);
+    }
+  };
+
+  const fetchStatusOfVetInFavourites = async () => {
+    try {
+      const res = await UserApi.checkIfVetIsInFavourites(route.params.vetId);
+      setIsInFavourites(res);
     } catch (err: any) {
       const errs = [ err?.response?.data ];
       setErrors([ ...errs ]);
@@ -98,7 +121,7 @@ export const VetScreen = () => {
         {drawErrorAlert(errors)}
         {drawSuccessAlert(t('alerts.success.save.title'))}
         {
-          !vet || !medicalServices || opinionsAmount === undefined ? <LoadingContainer />
+          !vet || !medicalServices || opinionsAmount === undefined || isInFavourites === undefined ? <LoadingContainer />
             : (
               <VetPreview
                 vet={vet}

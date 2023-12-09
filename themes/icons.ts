@@ -25,4 +25,6 @@ export default {
   LOCATION: 'location' as const,
   CLOSE_OUTLINE: 'close-outline' as const,
   CALL: 'call' as const,
+  HEART_OUTLINE: 'heart-outline' as const,
+  HEART: 'heart' as const,
 };
