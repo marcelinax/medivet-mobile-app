@@ -39,6 +39,7 @@ export const VetPreviewNavigation = ({ vet, medicalServices }: Props) => {
         <VetClinics
           clinics={vet?.clinics || []}
           medicalServices={medicalServices}
+          vet={vet}
         />
       );
     case 'opinions':

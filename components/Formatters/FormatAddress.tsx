@@ -6,31 +6,29 @@ interface Props {
   style?: StyleProp<TextStyle>;
 }
 
-export const FormatAddress = ({ address, style }: Props) => {
-  const getAddressString = (): string => {
-    let result: string = '';
+export const getAddressString = (address: AddressApi) => {
+  let result: string = '';
 
-    if (address.street) {
-      result += address.street;
-    }
-    if (address.buildingNumber) {
-      result += ` ${address.buildingNumber}`;
-    }
-    if (address.flatNumber) {
-      result += `/${address.flatNumber}`;
-    }
-    if (address?.city || address?.zipCode) {
-      result += ',';
-    }
-    if (address.zipCode) {
-      result += ` ${address.zipCode}`;
-    }
-    if (address.city) {
-      result += ` ${address.city}`;
-    }
+  if (address.street) {
+    result += address.street;
+  }
+  if (address.buildingNumber) {
+    result += ` ${address.buildingNumber}`;
+  }
+  if (address.flatNumber) {
+    result += `/${address.flatNumber}`;
+  }
+  if (address?.city || address?.zipCode) {
+    result += ',';
+  }
+  if (address.zipCode) {
+    result += ` ${address.zipCode}`;
+  }
+  if (address.city) {
+    result += ` ${address.city}`;
+  }
 
-    return result;
-  };
-
-  return <Text style={style}>{getAddressString()}</Text>;
+  return result;
 };
+
+export const FormatAddress = ({ address, style }: Props) => <Text style={style}>{getAddressString(address)}</Text>;

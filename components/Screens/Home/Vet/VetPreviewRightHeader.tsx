@@ -37,7 +37,7 @@ export const VetPreviewRightHeader = ({
   return (
     <IconButton
       icon={checked ? icons.HEART : icons.HEART_OUTLINE}
-      size="large"
+      size="medium"
       color={colors.PRIMARY}
       onPress={toggleOnPress}
     />

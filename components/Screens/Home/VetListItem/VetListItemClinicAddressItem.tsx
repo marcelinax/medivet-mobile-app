@@ -95,6 +95,7 @@ export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
           onPress={() => {
             // TODO przenieść do umawiania wizyty
           }}
+          variant="small"
           key={`vet-${vet.id}-clinic-${clinic.id}-medical-service-${medicalService!.id}-hour-${index}`}
         />
       );
@@ -173,9 +174,10 @@ export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
                     {drawAvailableDateHours()}
                     {availableDate.dates.length > 3 && (
                       <ReceptionHour
+                        variant="small"
                         hour={t('words.more.title')}
                         onPress={() => {
-                          // TODO przenieść do kalendarza
+                          // TODO przenieść do kalendarza z wybrana godzina
                         }}
                       />
                     )}
@@ -219,5 +221,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flex: 1,
     flexDirection: 'row',
+    gap: 10,
   },
 });

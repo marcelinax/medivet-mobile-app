@@ -1,6 +1,7 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 import {
+  AppointmentCalendarScreenParams,
   CreateVetClinicAvailabilityReceptionHourScreenParams,
   EditAnimalScreenParams,
   EditVetClinicAvailabilityScreenParams,
@@ -40,6 +41,7 @@ export type RootStackParamList = {
   'Vets': undefined;
   'Vet': VetScreenParams;
   'Create Opinion': OpinionScreenParams;
+  'Appointment Calendar': AppointmentCalendarScreenParams;
 }
 
 // AUTH
@@ -81,6 +83,7 @@ export type SelectScreenNavigationProps = NativeStackNavigationProp<RootStackPar
 export type HomeNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 export type VetScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Vet'>;
 export type CreateOpinionScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Create Opinion'>;
+export type AppointmentCalendarScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Appointment Calendar'>;
 
 // ROUTES
 export type VetClinicScreenRouteProps = RouteProp<RootStackParamList, 'Vet Clinic'>;
@@ -93,3 +96,4 @@ export type EditVetClinicAvailabilityScreenRouteProps = RouteProp<RootStackParam
 export type EditVetClinicProvidedMedicalServiceScreenRouteProps = RouteProp<RootStackParamList, 'Edit Vet Clinic Provided Medical Service'>;
 export type VetScreenRouteProps = RouteProp<RootStackParamList, 'Vet'>;
 export type CreateOpinionScreenRouteProps = RouteProp<RootStackParamList, 'Create Opinion'>;
+export type AppointmentCalendarScreenRouteProps = RouteProp<RootStackParamList, 'Appointment Calendar'>;

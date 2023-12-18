@@ -6,13 +6,15 @@ import { useTranslation } from 'react-i18next';
 import { VetClinic } from 'components/Screens/Home/Vet/VetClinic';
 import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedicalService/types';
 import colors from 'themes/colors';
+import { User } from 'types/api/user/types';
 
 interface Props {
   clinics: Clinic[];
   medicalServices: VetClinicProvidedMedicalService[];
+  vet: User;
 }
 
-export const VetClinics = ({ clinics, medicalServices }: Props) => {
+export const VetClinics = ({ clinics, medicalServices, vet }: Props) => {
   const [ currentClinic, setCurrentClinic ] = useState<Clinic>(clinics[0]);
   const { t } = useTranslation();
 
@@ -46,6 +48,7 @@ export const VetClinics = ({ clinics, medicalServices }: Props) => {
         <VetClinic
           clinic={currentClinic}
           medicalServices={getMedicalServicesForClinic()}
+          vet={vet}
         />
       </View>
 

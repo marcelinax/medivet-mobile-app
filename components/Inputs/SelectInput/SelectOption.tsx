@@ -43,10 +43,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 16,
+    flex: 1,
   },
   text: {
     fontWeight: '500',
     fontSize: 18,
+    maxWidth: '90%',
   },
   separator: {
     width: '100%',

@@ -126,6 +126,15 @@
     "birth_date": {
       "title": "Data urodzenia"
     },
+    "not_available_dates": {
+      "title": "Brak wolnych terminów"
+    },
+    "address": {
+      "title": "Adres"
+    },
+    "service": {
+      "title": "Usługa"
+    },
     "email": {
       "title": "Email"
     },
@@ -156,9 +165,6 @@
     "hour_to": {
       "title": "Do"
     },
-    "service": {
-      "title": "Usługa"
-    },
     "price": {
       "title": "Cena"
     },
@@ -188,9 +194,6 @@
     },
     "services": {
       "title": "Usługi"
-    },
-    "address": {
-      "title": "Adres"
     },
     "addresses": {
       "title": "Adresy"
@@ -292,6 +295,9 @@
     },
     "edit_address": {
       "title": "Edycja adresu"
+    },
+    "appointment_calendar": {
+      "title": "Umów wizytę u"
     }
   },
   "enums": {

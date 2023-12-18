@@ -39,4 +39,5 @@ export default {
   VETS: 'Vets' as keyof RootStackParamList,
   VET: 'Vet' as keyof RootStackParamList,
   CREATE_OPINION: 'Create Opinion' as keyof RootStackParamList,
+  APPOINTMENT_CALENDAR: 'Appointment Calendar' as keyof RootStackParamList,
 };

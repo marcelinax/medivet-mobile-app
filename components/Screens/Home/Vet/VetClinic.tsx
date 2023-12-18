@@ -8,14 +8,19 @@ import { Clinic } from 'types/api/clinic/types';
 import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedicalService/types';
 import { VetClinicMedicalService } from 'components/Screens/Home/Vet/VetClinicMedicalService';
 import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
+import { VetScreenNavigationProps } from 'types/Navigation/types';
+import { User } from 'types/api/user/types';
 
 interface Props {
   clinic: Clinic;
   medicalServices: VetClinicProvidedMedicalService[];
+  vet: User;
 }
 
-export const VetClinic = ({ clinic, medicalServices }: Props) => {
+export const VetClinic = ({ clinic, medicalServices, vet }: Props) => {
   const { t } = useTranslation();
+  const navigation = useNavigation<VetScreenNavigationProps>();
 
   const drawMedicalServices = () => {
     if (medicalServices.length > 0) {
@@ -53,9 +58,11 @@ export const VetClinic = ({ clinic, medicalServices }: Props) => {
           title={t('actions.show_calendar.title')}
           variant="outline"
           style={styles.button}
-          onPress={() => {
-            // TODO przenieść do kalendarza
-          }}
+          onPress={() => navigation.navigate('Appointment Calendar', {
+            vet,
+            clinicId: clinic.id,
+            medicalService: medicalServices[0],
+          })}
           containerStyle={styles.buttonContainer}
         />
       </View>

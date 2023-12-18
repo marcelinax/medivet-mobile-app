@@ -10,6 +10,7 @@ import { VetScreen } from 'screens/Home/Vets/Vet.screen';
 import { getDefaultScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
 import { VetOpinionScreen } from 'screens/Home/Vets/VetOpinion.screen';
 import { useTranslation } from 'react-i18next';
+import { AppointmentCalendarScreen } from 'screens/Home/Appointment/AppointmentCalendar.screen';
 
 export const HomeNavigator = () => {
   const { t } = useTranslation();
@@ -42,6 +43,13 @@ export const HomeNavigator = () => {
       <Stack.Screen
         name={routes.VET}
         component={VetScreen}
+      />
+      <Stack.Screen
+        name={routes.APPOINTMENT_CALENDAR}
+        component={AppointmentCalendarScreen}
+        options={{
+          presentation: 'card',
+        }}
       />
       <Stack.Screen
         name={routes.CREATE_OPINION}

@@ -1,3 +1,6 @@
+import { User } from 'types/api/user/types';
+import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedicalService/types';
+
 export type MultiSelectScreenParams = {
   title: string;
   id: string;
@@ -36,4 +39,10 @@ export type VetScreenParams = {
 
 export type OpinionScreenParams = {
   vetId: number;
+}
+
+export type AppointmentCalendarScreenParams = {
+  vet: User;
+  clinicId?: number;
+  medicalService?: VetClinicProvidedMedicalService;
 }
