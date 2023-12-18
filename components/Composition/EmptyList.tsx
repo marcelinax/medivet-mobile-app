@@ -1,12 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-export const EmptyList = () => {
+interface Props {
+  title?: string;
+}
+
+export const EmptyList = ({ title }: Props) => {
   const { t } = useTranslation();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{t('words.not_found_results.title')}</Text>
+      <Text style={styles.text}>{title ?? t('words.not_found_results.title')}</Text>
     </View>
   );
 };
