@@ -1,8 +1,10 @@
 import { StyleSheet, View } from 'react-native';
-import { useEffect, useState } from 'react';
+import {
+  forwardRef, useEffect, useImperativeHandle, useState,
+} from 'react';
 import { removeSingleSelect, setSingleSelectSelectedOption } from 'store/select/selectSlice';
 import { SelectId } from 'constants/enums/selectId.enum';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SelectInput } from 'components/Inputs/SelectInput/SelectInput';
 import { SelectOptionProps } from 'types/components/Inputs/types';
 import { useTranslation } from 'react-i18next';
@@ -14,16 +16,16 @@ import {
 import { parseDataToSelectOptions } from 'utils/selectInput';
 import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedicalService/types';
 import { AppointmentCalendarDatesForm } from 'components/Forms/Appointment/AppointmentCalendarDatesForm';
-
-interface FormProps {
-  address?: SelectOptionProps;
-  medicalService?: SelectOptionProps;
-}
+import { AppointmentDetails, setAppointmentDetails } from 'store/home/appointmentSlice';
+import { RootState } from 'store/store';
+import { HandleSubmitAppointmentCalendarForm } from 'types/components/Forms/types';
 
 interface Props {
   vet: User;
   clinicId?: number;
   medicalService?: VetClinicProvidedMedicalService;
+  setIsButtonDisabled: (disabled: boolean) => void;
+  isButtonDisabled: boolean;
 }
 
 const getDefaultAddressForm = (vet: User, clinicId?: number) => {
@@ -42,19 +44,66 @@ const getDefaultAddressForm = (vet: User, clinicId?: number) => {
   };
 };
 
-export const AppointmentCalendarForm = ({ vet, clinicId, medicalService }: Props) => {
+const getInitialFormState = (
+  appointmentDetails: AppointmentDetails,
+  vet: User,
+  clinicId?: number,
+  medicalService?: VetClinicProvidedMedicalService,
+) => {
+  if (Object.keys(appointmentDetails).length === 0) {
+    return {
+      clinicAddress: getDefaultAddressForm(vet, clinicId),
+      medicalService: medicalService ? {
+        id: medicalService.medicalService.id.toString(),
+        label: medicalService.medicalService.name,
+      } : undefined,
+      date: undefined,
+      hour: undefined,
+      animal: undefined,
+      vet: vet.name,
+      price: medicalService?.price,
+    };
+  }
+
+  return {
+    ...appointmentDetails,
+  };
+};
+
+export const AppointmentCalendarForm = forwardRef<HandleSubmitAppointmentCalendarForm, Props>(({
+  vet,
+  clinicId,
+  medicalService,
+  setIsButtonDisabled,
+  isButtonDisabled,
+}, ref) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [ form, setForm ] = useState<FormProps>({
-    address: getDefaultAddressForm(vet, clinicId),
-    medicalService: medicalService ? {
-      id: medicalService.medicalService.id.toString(),
-      label: medicalService.medicalService.name,
-    } : undefined,
-  });
-  // POWINNO SIE WYCZYSCIC DOPIERO JAK CAŁKOWICIE WYJDZIE Z FORMULARZA UMWAIANIA (czyli tez krok 2)
-  // z tego wynika, że w momencie przejścia dalej formularz powinien być zapisany w reduxie
-  useEffect(() => () => handleClearSelectInputs(), []);
+  const { appointmentDetails } = useSelector((state: RootState) => state.appointment);
+  const [ form, setForm ] = useState<AppointmentDetails>(getInitialFormState(appointmentDetails, vet, clinicId, medicalService));
+  // TODO POWINNO SIE WYCZYSCIC DOPIERO JAK CAŁKOWICIE WYJDZIE Z FORMULARZA UMWAIANIA (czyli tez krok 2)
+  // useEffect(() => () => handleClearSelectInputs(), []);
+
+  useImperativeHandle(ref, () => ({
+    loading: false,
+    submit: () => {
+      dispatch(setAppointmentDetails(form));
+    },
+    buttonDisabled: isFormButtonDisabled(),
+  }));
+
+  useEffect(() => {
+    if (isFormButtonDisabled() && !isButtonDisabled) {
+      setIsButtonDisabled(true);
+    } else if (isButtonDisabled && !isFormButtonDisabled()) {
+      setIsButtonDisabled(false);
+    }
+  }, [ JSON.stringify(form) ]);
+
+  const isFormButtonDisabled = () => !form.clinicAddress
+    || !form.date
+    || !form.hour
+    || !form.medicalService;
 
   const handleClearSelectInputs = () => {
     dispatch(removeSingleSelect(SelectId.APPOINTMENT_CLINIC));
@@ -74,20 +123,23 @@ export const AppointmentCalendarForm = ({ vet, clinicId, medicalService }: Props
   }));
 
   const fetchClinicMedicalService = async (params?: Record<string, any>): Promise<SelectOptionProps[]> => {
-    if (!form.address?.id) return [];
+    if (!form.clinicAddress?.id) return [];
 
     params = {
       ...params,
       vetId: vet.id,
       include: 'medicalService,user',
     };
-    const res = await VetClinicProvidedMedicalServiceApi.getVetClinicProvidedMedicalServices(Number(form.address.id), params);
-    return parseDataToSelectOptions(res, 'medicalService.name', 'id');
+    const res = await VetClinicProvidedMedicalServiceApi.getVetClinicProvidedMedicalServices(Number(form.clinicAddress.id), params);
+    return parseDataToSelectOptions(res, 'medicalService.name', 'medicalService.id');
   };
 
   const handleChangeAddressInput = (address: SelectOptionProps) => {
-    onChangeInput('address', address);
-    onChangeInput('medicalService', undefined);
+    setForm({
+      ...form,
+      clinicAddress: address,
+      medicalService: undefined,
+    });
     dispatch(setSingleSelectSelectedOption({
       option: undefined,
       id: SelectId.APPOINTMENT_MEDICAL_SERVICE,
@@ -104,7 +156,7 @@ export const AppointmentCalendarForm = ({ vet, clinicId, medicalService }: Props
           label={t('words.address.title')}
           errors={[]}
           id={SelectId.APPOINTMENT_CLINIC}
-          defaultValue={form?.address}
+          defaultValue={form?.clinicAddress}
           selectScreenHeaderTitle={t('words.address.title')}
         />
       </View>
@@ -125,13 +177,15 @@ export const AppointmentCalendarForm = ({ vet, clinicId, medicalService }: Props
           <AppointmentCalendarDatesForm
             vetId={vet.id}
             medicalServiceId={Number(form.medicalService.id)}
+            setForm={setForm}
+            form={form}
           />
         )
       }
 
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   inputContainer: {

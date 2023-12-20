@@ -11,6 +11,8 @@ import { getDefaultScreenOptions } from 'navigation/BottomTab/StackNavigator/uti
 import { VetOpinionScreen } from 'screens/Home/Vets/VetOpinion.screen';
 import { useTranslation } from 'react-i18next';
 import { AppointmentCalendarScreen } from 'screens/Home/Appointment/AppointmentCalendar.screen';
+import { AppointmentAnimalScreen } from 'screens/Home/Appointment/AppointmentAnimal.screen';
+import { AppointmentConfirmationScreen } from 'screens/Home/Appointment/AppointmentConfirmation.screen';
 
 export const HomeNavigator = () => {
   const { t } = useTranslation();
@@ -45,6 +47,11 @@ export const HomeNavigator = () => {
         component={VetScreen}
       />
       <Stack.Screen
+        name={routes.CREATE_OPINION}
+        component={VetOpinionScreen}
+        options={opinionScreenOptions}
+      />
+      <Stack.Screen
         name={routes.APPOINTMENT_CALENDAR}
         component={AppointmentCalendarScreen}
         options={{
@@ -52,9 +59,19 @@ export const HomeNavigator = () => {
         }}
       />
       <Stack.Screen
-        name={routes.CREATE_OPINION}
-        component={VetOpinionScreen}
-        options={opinionScreenOptions}
+        name={routes.APPOINTMENT_ANIMAL}
+        component={AppointmentAnimalScreen}
+        options={{
+          presentation: 'card',
+        }}
+      />
+      <Stack.Screen
+        name={routes.APPOINTMENT_CONFIRMATION}
+        component={AppointmentConfirmationScreen}
+        options={{
+          ...getDefaultScreenOptions(t('navigation.appointment_confirmation.title')),
+          presentation: 'card',
+        }}
       />
     </Stack.Navigator>
   );

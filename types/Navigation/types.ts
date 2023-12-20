@@ -42,6 +42,8 @@ export type RootStackParamList = {
   'Vet': VetScreenParams;
   'Create Opinion': OpinionScreenParams;
   'Appointment Calendar': AppointmentCalendarScreenParams;
+  'Appointment Animal': undefined;
+  'Appointment Confirmation': undefined;
 }
 
 // AUTH
@@ -84,6 +86,7 @@ export type HomeNavigationProps = NativeStackNavigationProp<RootStackParamList, 
 export type VetScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Vet'>;
 export type CreateOpinionScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Create Opinion'>;
 export type AppointmentCalendarScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Appointment Calendar'>;
+export type AppointmentAnimalScreenNavigationProps = NativeStackNavigationProp<RootStackParamList, 'Appointment Animal'>;
 
 // ROUTES
 export type VetClinicScreenRouteProps = RouteProp<RootStackParamList, 'Vet Clinic'>;

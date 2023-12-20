@@ -10,27 +10,33 @@ import moment from 'moment';
 import { ReceptionHour } from 'components/Composition/ReceptionHour';
 import { EmptyList } from 'components/Composition/EmptyList';
 import { useTranslation } from 'react-i18next';
+import { AppointmentDetails } from 'store/home/appointmentSlice';
 
 interface Props {
   vetId: number;
   medicalServiceId: number;
+  setForm: (form: AppointmentDetails) => void;
+  form: AppointmentDetails;
 }
 
-export const AppointmentCalendarDatesForm = ({ medicalServiceId, vetId }: Props) => {
+export const AppointmentCalendarDatesForm = ({
+  medicalServiceId, vetId, setForm, form,
+}: Props) => {
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const [ loading, setLoading ] = useState(true);
   const [ availableDates, setAvailableDates ] = useState<AvailableDate[]>([]);
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
-  const [ selectedDate, setSelectedDate ] = useState<string | undefined>();
-  const [ selectedHour, setSelectedHour ] = useState<string | undefined>();
   const containerWidth = useRef(0);
   const { t } = useTranslation();
 
   useEffect(() => {
     if (medicalServiceId) {
       fetchAvailableDates();
-      setSelectedDate(undefined);
-      setSelectedHour(undefined);
+      setForm({
+        ...form,
+        hour: undefined,
+        date: undefined,
+      });
     } else setAvailableDates([]);
   }, [ medicalServiceId ]);
 
@@ -50,15 +56,18 @@ export const AppointmentCalendarDatesForm = ({ medicalServiceId, vetId }: Props)
 
   const drawDates = () => availableDates.map((availableDate) => (
     <CalendarDay
-      onPress={() => setSelectedDate(availableDate.date)}
+      onPress={() => setForm({
+        ...form,
+        date: availableDate.date,
+      })}
       date={availableDate.date}
       key={`${availableDate.date}`}
-      isSelected={!selectedDate ? false : availableDate.date === selectedDate}
+      isSelected={!form.date ? false : availableDate.date === form.date}
     />
   ));
 
   const drawHours = () => {
-    const dates = availableDates.find((availableDate) => availableDate.date === selectedDate)?.dates || [];
+    const dates = availableDates.find((availableDate) => availableDate.date === form.date)?.dates || [];
     const hours = dates.map((date) => moment(date).format('HH:mm'));
     const MIN_WIDTH = 110;
     const maxNumberOfColumns = Math.floor(containerWidth.current / MIN_WIDTH);
@@ -72,19 +81,26 @@ export const AppointmentCalendarDatesForm = ({ medicalServiceId, vetId }: Props)
       const columnWidth = hours.length < maxNumberOfColumns ? `${(100 / hours.length)}%` : `${100 / maxNumberOfColumns}%`;
 
       elements.push(
-        <View style={styles.hoursRow}>
+        <View
+          style={styles.hoursRow}
+          key={`row-${i}`}
+        >
           {hoursToDraw.map((hour, index) => (
-            <View style={{
-              width: columnWidth,
-              paddingRight: index === (hours.length < maxNumberOfColumns ? hours.length - 1 : maxNumberOfColumns - 1) ? 0 : 5,
-              paddingLeft: index === 0 ? 0 : 5,
-            }}
+            <View
+              key={hour}
+              style={{
+                width: columnWidth,
+                paddingRight: index === (hours.length < maxNumberOfColumns ? hours.length - 1 : maxNumberOfColumns - 1) ? 0 : 5,
+                paddingLeft: index === 0 ? 0 : 5,
+              }}
             >
               <ReceptionHour
                 hour={hour}
-                key={hour}
-                onPress={() => setSelectedHour(hour)}
-                isSelected={hour === selectedHour}
+                onPress={() => setForm({
+                  ...form,
+                  hour,
+                })}
+                isSelected={hour === form.hour}
                 variant="normal"
               />
             </View>
@@ -114,7 +130,7 @@ export const AppointmentCalendarDatesForm = ({ medicalServiceId, vetId }: Props)
                 >
                   {drawDates()}
                 </ScrollView>
-                {selectedDate && (
+                {form.date && (
                   <View style={styles.hoursContainer}>
                     {drawHours()}
                   </View>

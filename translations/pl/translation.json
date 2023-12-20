@@ -57,6 +57,9 @@
     "apply": {
       "title": "Zastosuj"
     },
+    "next": {
+      "title": "Dalej"
+    },
     "search": {
       "title": "Szukaj"
     },
@@ -189,6 +192,18 @@
     "loading": {
       "title": "Ładowanie..."
     },
+    "summary": {
+      "title": "Podsumowanie"
+    },
+    "vet": {
+      "title": "Weterynarz"
+    },
+    "date": {
+      "title": "Data"
+    },
+    "animal": {
+      "title": "Zwierzę"
+    },
     "vet_has_not_any_medical_services": {
       "title": "Lekarz nie wykonuje obecnie żadnych usług"
     },
@@ -284,6 +299,9 @@
     "create_opinion": {
       "title": "Tworzenie opinii"
     },
+    "appointment_confirmation": {
+      "title": "Potwierdzenie wizyty"
+    },
     "user_specializations": {
       "title": "Moje specjalizacje"
     },
@@ -295,6 +313,9 @@
     },
     "edit_address": {
       "title": "Edycja adresu"
+    },
+    "appointment_animal": {
+      "title": "Wybór zwierzęcia"
     },
     "appointment_calendar": {
       "title": "Umów wizytę u"

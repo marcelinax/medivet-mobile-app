@@ -7,6 +7,7 @@ import clinicSlice from 'store/clinic/clinicSlice';
 import selectSlice from 'store/select/selectSlice';
 import listSlice from 'store/list/listSlice';
 import homeSlice from 'store/home/homeSlice';
+import appointmentSlice from 'store/home/appointmentSlice';
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     select: selectSlice,
     list: listSlice,
     home: homeSlice,
+    appointment: appointmentSlice,
   },
   middleware: [ thunk ],
 });
