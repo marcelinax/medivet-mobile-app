@@ -29,4 +29,5 @@ export default {
   SPECIALIZATIONMEDICALSERVICEID_SHOULD_NOT_BE_EMPTY: 'Wybierz usługę',
   CANNOT_CREATE_MORE_THAN_ONE_VET_PROVIDED_MEDICAL_SERVICE_FOR_SAME_SPECIALIZATION_IN_ONE_CLINIC:
     'Usługa już istnieje dla tej kliniki i specjalizacji.',
+  CANNOT_CREATE_APPOINTMENT_BECAUSE_OF_NOT_AVAILABLE_DATE: 'Wybrana przez Ciebie data nie jest już dostępna.',
 } as Record<string, string>;

@@ -31,10 +31,11 @@ import { setForceFetchingList } from 'store/list/listSlice';
 
 interface Props {
   availability?: VetAvailability;
+  setLoading: (loading: boolean) => void;
 }
 
 export const VetClinicAvailabilityForm = forwardRef<HandleSubmitForm, Props>((
-  { availability },
+  { availability, setLoading },
   ref,
 ) => {
   const { t } = useTranslation();
@@ -57,7 +58,6 @@ export const VetClinicAvailabilityForm = forwardRef<HandleSubmitForm, Props>((
   const navigation = useNavigation<CreateVetClinicAvailabilityScreenNavigationProps>();
   const parsedUserVetSpecializations = parseDataToSelectOptions(user?.specializations || [], 'name', 'id');
   const currentAvailability = useSelector((state: RootState) => state.clinic.currentVetClinicAvailability);
-  const [ loading, setLoading ] = useState(false);
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const receptionHoursAsString = JSON.stringify(currentAvailability?.receptionHours || []);
 
@@ -83,7 +83,6 @@ export const VetClinicAvailabilityForm = forwardRef<HandleSubmitForm, Props>((
     submit() {
       handleSubmitForm();
     },
-    loading,
   }));
 
   const handleClearSelectInputs = () => {

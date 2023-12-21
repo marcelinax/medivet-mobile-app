@@ -20,6 +20,7 @@ export const EditAnimalScreen = () => {
   const navigation = useNavigation<EditAnimalScreenNavigationProps>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { t } = useTranslation();
+  const [ loading, setLoading ] = useState(false);
 
   useEffect(() => {
     onFetchAnimal();
@@ -47,7 +48,7 @@ export const EditAnimalScreen = () => {
         <LoadingButton
           title={t('actions.save.title')}
           variant="solid"
-          loading={!!formRef.current?.loading}
+          loading={loading}
           onPress={() => formRef.current?.submit()}
         />
       )}
@@ -60,6 +61,7 @@ export const EditAnimalScreen = () => {
               <AnimalForm
                 ref={formRef}
                 animal={animal}
+                setLoading={setLoading}
               />
             )
         }

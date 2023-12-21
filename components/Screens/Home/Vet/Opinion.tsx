@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { VetOpinion } from 'types/api/user/types';
 import { Avatar } from 'components/Composition/Avatar';
 import colors from 'themes/colors';
 import moment from 'moment';
 import { OpinionRating } from 'components/Composition/OpinionRating';
+import { VetOpinion } from 'types/api/opinion/types';
 
 interface Props {
   opinion: VetOpinion;

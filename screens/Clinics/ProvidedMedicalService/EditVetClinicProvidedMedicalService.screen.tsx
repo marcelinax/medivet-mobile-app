@@ -22,6 +22,7 @@ export const EditVetClinicProvidedMedicalServiceScreen = () => {
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const [ medicalService, setMedicalService ] = useState<VetClinicProvidedMedicalService | undefined>();
   const { t } = useTranslation();
+  const [ loading, setLoading ] = useState(false);
 
   useEffect(() => {
     fetchVetProvidedMedicalService();
@@ -45,7 +46,7 @@ export const EditVetClinicProvidedMedicalServiceScreen = () => {
         <LoadingButton
           title={t('actions.save.title')}
           variant="solid"
-          loading={!!formRef.current?.loading}
+          loading={loading}
           onPress={() => formRef.current?.submit()}
         />
       )}
@@ -59,6 +60,7 @@ export const EditVetClinicProvidedMedicalServiceScreen = () => {
               <VetClinicProvidedMedicalServiceForm
                 ref={formRef}
                 providedMedicalService={medicalService}
+                setLoading={setLoading}
               />
             )
         }

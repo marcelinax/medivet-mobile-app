@@ -28,6 +28,7 @@ import { setForceFetchingList } from 'store/list/listSlice';
 
 interface Props {
   animal?: Animal;
+  setLoading: (loading: boolean) => void;
 }
 
 interface FormProps {
@@ -41,12 +42,11 @@ interface FormProps {
 }
 
 export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
-  { animal },
+  { animal, setLoading },
   ref,
 ) => {
   const navigation = useNavigation<EditAnimalScreenNavigationProps>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
-  const [ loading, setLoading ] = useState<boolean>(false);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
   const [ firstRender, setFirstRender ] = useState<boolean>(true);
@@ -79,7 +79,6 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
     submit() {
       onSubmit();
     },
-    loading,
   }));
 
   useEffect(() => {

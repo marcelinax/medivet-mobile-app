@@ -19,6 +19,7 @@ export const EditVetClinicAvailabilityScreen = () => {
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const [ availability, setAvailability ] = useState<VetAvailability | undefined>(undefined);
   const { t } = useTranslation();
+  const [ loading, setLoading ] = useState(false);
 
   useEffect(() => {
     fetchVetClinicAvailability();
@@ -42,7 +43,7 @@ export const EditVetClinicAvailabilityScreen = () => {
         <LoadingButton
           title={t('actions.save.title')}
           variant="solid"
-          loading={!!formRef.current?.loading}
+          loading={loading}
           onPress={() => formRef.current?.submit()}
         />
       )}
@@ -55,6 +56,7 @@ export const EditVetClinicAvailabilityScreen = () => {
               <VetClinicAvailabilityForm
                 ref={formRef}
                 availability={availability}
+                setLoading={setLoading}
               />
             )
         }

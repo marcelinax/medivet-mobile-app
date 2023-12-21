@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { StyleSheet, Text, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -7,13 +7,56 @@ import colors from 'themes/colors';
 import moment from 'moment';
 import { BreakLine } from 'components/Composition/BreakLine';
 import { useTranslation } from 'react-i18next';
+import { forwardRef, useImperativeHandle, useState } from 'react';
+import { HandleSubmitForm } from 'types/components/Forms/types';
+import { ApiError } from 'types/api/error/types';
+import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
+import { AppointmentApi } from 'api/appointment/appointment.api';
+import { CreateAppointment } from 'types/api/appointment/types';
 
-export const AppointmentConfirmationPreview = () => {
+interface Props {
+  setLoading: (loading: boolean) => void;
+}
+
+export const AppointmentConfirmationPreview = forwardRef<HandleSubmitForm, Props>(({ setLoading }, ref) => {
   const { appointmentDetails } = useSelector((state: RootState) => state.appointment);
   const { t } = useTranslation();
+  const [ errors, setErrors ] = useState<ApiError[]>([]);
+  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
+  const dispatch = useDispatch();
+
+  useImperativeHandle(ref, () => ({
+    submit: () => handleSubmit(),
+  }));
+
+  const getParsedAppointmentData = (): CreateAppointment => {
+    const hourPart = appointmentDetails!.hour!.split(':');
+    const date = moment(appointmentDetails.date).hour(Number(hourPart[0])).minute(Number(hourPart[1]));
+
+    return ({
+      animalId: Number(appointmentDetails!.animal!.id),
+      medicalServiceId: Number(appointmentDetails!.medicalService!.id),
+      date: date.toDate(),
+    });
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const res = await AppointmentApi.createAppointment(getParsedAppointmentData());
+      // TODO po utworzeniu dodać alert + przenieść na podgląd wizyty
+      // TODO powinno wyczyścić zapisany formularz + wszystkie inputy -> to powinno się wydarzyć również jak ktoś zrezygnuje z umawiania (kiedy?)
+    } catch (err: any) {
+      const errs = [ err?.response?.data ];
+      setErrors([ ...errs ]);
+      handleErrorAlert(errs);
+    }
+    setLoading(false);
+  };
 
   return (
     <View>
+      {drawErrorAlert(errors)}
       <Text style={styles.heading}>
         {t('words.summary.title')}
       </Text>
@@ -99,7 +142,7 @@ export const AppointmentConfirmationPreview = () => {
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   heading: {

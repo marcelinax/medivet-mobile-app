@@ -29,6 +29,7 @@ import { useTranslation } from 'react-i18next';
 
 interface Props {
   providedMedicalService?: VetClinicProvidedMedicalService;
+  setLoading: (loading: boolean) => void;
 }
 
 interface FormProps {
@@ -39,7 +40,7 @@ interface FormProps {
 }
 
 export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitForm, Props>((
-  { providedMedicalService },
+  { providedMedicalService, setLoading },
   ref,
 ) => {
   const [ form, setForm ] = useState<FormProps>({
@@ -54,7 +55,6 @@ export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitForm, 
     price: providedMedicalService?.price,
     duration: providedMedicalService?.duration,
   });
-  const [ loading, setLoading ] = useState(false);
   const navigation = useNavigation<CreateVetClinicProvidedMedicalServiceScreenNavigationProps>();
   const clinic = useSelector((state: RootState) => state.clinic.currentClinic);
   const dispatch = useDispatch();
@@ -86,7 +86,6 @@ export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitForm, 
     submit() {
       handleSubmitForm();
     },
-    loading,
   }));
 
   const handleChangeInput = (field: string, value: string | SelectOptionProps | undefined | number): void => {
