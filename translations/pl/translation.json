@@ -48,6 +48,9 @@
     "show_calendar": {
       "title": "Pokaż kalendarz"
     },
+    "make_an_appointment": {
+      "title": "Umów wizytę"
+    },
     "choose_role": {
       "title": "Wybierz rolę"
     },
@@ -265,6 +268,9 @@
     },
     "new_animal": {
       "title": "Dodawanie zwierzęcia"
+    },
+    "appointments": {
+      "title": "Wizyty"
     },
     "user_clinics": {
       "title": "Moje kliniki"
