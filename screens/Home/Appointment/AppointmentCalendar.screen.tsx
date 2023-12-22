@@ -1,5 +1,5 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { AppointmentCalendarScreenNavigationProps, AppointmentCalendarScreenRouteProps } from 'types/Navigation/types';
+import { NavigationProps, RouteProps } from 'types/Navigation/types';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DefaultLayout } from 'layouts/Default.layout';
@@ -9,8 +9,8 @@ import { HandleSubmitAppointmentCalendarForm } from 'types/components/Forms/type
 
 export const AppointmentCalendarScreen = () => {
   const { t } = useTranslation();
-  const { params: { vet, clinicId, medicalService } } = useRoute<AppointmentCalendarScreenRouteProps>();
-  const navigation = useNavigation<AppointmentCalendarScreenNavigationProps>();
+  const { params: { vet, clinicId, medicalService } } = useRoute<RouteProps<'Appointment Calendar'>>();
+  const navigation = useNavigation<NavigationProps>();
   const appointmentCalendarFormRef = useRef<HandleSubmitAppointmentCalendarForm>(null);
   const [ isButtonDisabled, setIsButtonDisabled ] = useState(!!appointmentCalendarFormRef.current?.buttonDisabled);
 

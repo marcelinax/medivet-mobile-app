@@ -11,7 +11,7 @@ import { parseDataToSelectOptions } from 'utils/selectInput';
 import { Button } from 'components/Buttons/Button';
 import { inputStyles } from 'components/Inputs/utils/styles';
 import { useNavigation } from '@react-navigation/native';
-import { CreateVetClinicAvailabilityScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { SelectInput } from 'components/Inputs/SelectInput/SelectInput';
 import { removeSingleSelect } from 'store/select/selectSlice';
 import { SelectId } from 'constants/enums/selectId.enum';
@@ -55,7 +55,7 @@ export const VetClinicAvailabilityForm = forwardRef<HandleSubmitForm, Props>((
     } : undefined,
   });
   const dispatch = useDispatch();
-  const navigation = useNavigation<CreateVetClinicAvailabilityScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const parsedUserVetSpecializations = parseDataToSelectOptions(user?.specializations || [], 'name', 'id');
   const currentAvailability = useSelector((state: RootState) => state.clinic.currentVetClinicAvailability);
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();

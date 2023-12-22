@@ -4,7 +4,7 @@ import { DefaultLayout } from 'layouts/Default.layout';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { CreateOpinionScreenNavigationProps, CreateOpinionScreenRouteProps } from 'types/Navigation/types';
+import { NavigationProps, RouteProps } from 'types/Navigation/types';
 import { RatingInput } from 'components/Inputs/RatingInput';
 import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
@@ -16,8 +16,8 @@ import { setForceFetchingList } from 'store/list/listSlice';
 
 export const VetOpinionScreen = () => {
   const { t } = useTranslation();
-  const route = useRoute<CreateOpinionScreenRouteProps>();
-  const navigation = useNavigation<CreateOpinionScreenNavigationProps>();
+  const route = useRoute<RouteProps<'Create Opinion'>>();
+  const navigation = useNavigation<NavigationProps>();
   const [ opinion, setOpinion ] = useState<string>('');
   const [ rating, setRating ] = useState<number>(0);
   const [ errors, setErrors ] = useState<ApiError[]>([]);

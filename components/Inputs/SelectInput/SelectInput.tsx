@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { SelectInputWrapper } from 'components/Inputs/SelectInput/SelectInputWrapper';
 import { SelectProps } from 'types/components/Inputs/types';
-import { SelectScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import {
@@ -28,7 +28,7 @@ export const SelectInput = ({
   id,
   isEditable,
 }: SelectProps) => {
-  const navigation = useNavigation<SelectScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const selectState = useSelector((state: RootState) => state.select.selects.find((select) => select.id === id));
   const dispatch = useDispatch();
   const { t } = useTranslation();

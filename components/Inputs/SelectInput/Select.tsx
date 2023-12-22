@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SelectOptionProps } from 'types/components/Inputs/types';
 import { RootState } from 'store/store';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { SelectScreenNavigationProps, SelectScreenRouteProps } from 'types/Navigation/types';
+import { NavigationProps, RouteProps } from 'types/Navigation/types';
 import { SelectOption } from 'components/Inputs/SelectInput/SelectOption';
 import { List } from 'components/List/List';
 import { SimpleList } from 'components/List/SimpleList';
@@ -14,10 +14,10 @@ import { ApiError } from 'types/api/error/types';
 import { useTranslation } from 'react-i18next';
 
 export const Select = () => {
-  const route = useRoute<SelectScreenRouteProps>();
+  const route = useRoute<RouteProps<'Select'>>();
   const selectId = route.params.id;
   const selectState = useSelector((state: RootState) => state.select.selects.find((select) => select.id === selectId));
-  const navigation = useNavigation<SelectScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const dispatch = useDispatch();
   const [ errors, setErrors ] = useState<ApiError[]>([]);

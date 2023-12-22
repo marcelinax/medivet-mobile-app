@@ -14,7 +14,7 @@ import { setToken } from 'store/auth/authSlice';
 import colors from 'themes/colors';
 import { AuthCredentials } from 'types/api/auth/types';
 import { ApiError } from 'types/api/error/types';
-import { LoginScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { useTranslation } from 'react-i18next';
 
 export const LoginForm = () => {
@@ -26,7 +26,7 @@ export const LoginForm = () => {
   const [ loading, setLoading ] = useState<boolean>(false);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const dispatch = useDispatch();
-  const navigation = useNavigation<LoginScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const { t } = useTranslation();
 
   const onChange = (field: string, newValue: string): void => {

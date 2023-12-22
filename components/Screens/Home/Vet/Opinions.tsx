@@ -6,7 +6,7 @@ import { BreakLine } from 'components/Composition/BreakLine';
 import { Button } from 'components/Buttons/Button';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
-import { VetScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { VetOpinion } from 'types/api/opinion/types';
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 
 export const Opinions = ({ vetId }: Props) => {
   const { t } = useTranslation();
-  const navigation = useNavigation<VetScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
 
   const renderOpinion: ListRenderItem<VetOpinion> = ({ item }) => <Opinion opinion={item} />;
 

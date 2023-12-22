@@ -14,7 +14,7 @@ import {
 import colors from 'themes/colors';
 import { ApiError } from 'types/api/error/types';
 import { UserRoleType } from 'types/api/user/types';
-import { RegistrationScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { isAndroidPlatform } from 'utils/isAndroidPlatfrom';
@@ -39,7 +39,7 @@ export const RegistrationForm = () => {
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const [ loading, setLoading ] = useState<boolean>(false);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
-  const navigation = useNavigation<RegistrationScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const selectedUserRole = useSelector((state: RootState) => state.user.userRole) as UserRoleType;
   const dispatch = useDispatch();
   const { t } = useTranslation();

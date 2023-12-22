@@ -6,13 +6,13 @@ import { UserRoleType } from 'types/api/user/types';
 import colors from 'themes/colors';
 import { setUserRole } from 'store/user/userSlice';
 import { useNavigation } from '@react-navigation/native';
-import { PreRegistrationScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { useTranslation } from 'react-i18next';
 
 export const PreRegistrationScreen = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const navigation = useNavigation<PreRegistrationScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
 
   const onChooseRole = (role: UserRoleType): void => {
     dispatch(setUserRole(role));

@@ -3,7 +3,7 @@ import { VetClinicAvailabilityForm } from 'components/Forms/VetClinicAvailabilit
 import { DefaultLayout } from 'layouts/Default.layout';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { useRoute } from '@react-navigation/native';
-import { EditVetClinicAvailabilityScreenRouteProps } from 'types/Navigation/types';
+import { RouteProps } from 'types/Navigation/types';
 import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { VetAvailability } from 'types/api/vetAvailability/types';
@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 
 export const EditVetClinicAvailabilityScreen = () => {
   const formRef = useRef<HandleSubmitForm>(null);
-  const route = useRoute<EditVetClinicAvailabilityScreenRouteProps>();
+  const route = useRoute<RouteProps<'Edit Vet Clinic Availability'>>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const [ availability, setAvailability ] = useState<VetAvailability | undefined>(undefined);

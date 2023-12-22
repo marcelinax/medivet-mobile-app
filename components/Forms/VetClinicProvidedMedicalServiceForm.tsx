@@ -21,7 +21,7 @@ import {
 import { removeSingleSelect, setSingleSelectSelectedOption } from 'store/select/selectSlice';
 import { NumberInput } from 'components/Inputs/NumberInput';
 import { useNavigation } from '@react-navigation/native';
-import { CreateVetClinicProvidedMedicalServiceScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { MoneyInput } from 'components/Inputs/MoneyInput';
 import { HandleSubmitForm } from 'types/components/Forms/types';
@@ -55,7 +55,7 @@ export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitForm, 
     price: providedMedicalService?.price,
     duration: providedMedicalService?.duration,
   });
-  const navigation = useNavigation<CreateVetClinicProvidedMedicalServiceScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const clinic = useSelector((state: RootState) => state.clinic.currentClinic);
   const dispatch = useDispatch();
   const [ errors, setErrors ] = useState<ApiError[]>([]);

@@ -11,7 +11,7 @@ import { RootState } from 'store/store';
 import colors from 'themes/colors';
 import icons from 'themes/icons';
 import { User } from 'types/api/user/types';
-import { UserScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import * as SecureStore from 'expo-secure-store';
 import { removeToken } from 'store/auth/authSlice';
 import { hasVetRole } from 'utils/hasVetRole';
@@ -20,7 +20,7 @@ import { clearSelectedFilters } from 'store/home/homeSlice';
 
 export const UserProfileScreen = () => {
   const user = useSelector((state: RootState) => state.user.currentUser) as User;
-  const navigation = useNavigation<UserScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const dispatch = useDispatch();
   const isVet = hasVetRole(user);
   const { t } = useTranslation();

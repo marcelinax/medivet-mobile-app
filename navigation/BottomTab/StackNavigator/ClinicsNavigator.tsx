@@ -1,5 +1,5 @@
 import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
-import { RootStackParamList, VetClinicScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps, RootStackParamList } from 'types/Navigation/types';
 import colors from 'themes/colors';
 import routes from 'constants/routes';
 import { VetClinicsScreen } from 'screens/Clinics/Clinic/VetClinics.screen';
@@ -33,7 +33,7 @@ import { useTranslation } from 'react-i18next';
 
 export const ClinicsNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
-  const navigation = useNavigation<VetClinicScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const { t } = useTranslation();
 
   const navigateToAddVetClinicScreen = () => navigation.navigate('Add Vet Clinic');

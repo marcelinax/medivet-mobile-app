@@ -11,7 +11,7 @@ import { FormatAddress } from 'components/Formatters/FormatAddress';
 import colors from 'themes/colors';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 import { useNavigation } from '@react-navigation/native';
-import { AddVetClinicScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { ClinicAssignmentRequestStatus } from 'constants/enums/clinic.enum';
@@ -29,7 +29,7 @@ interface Props {
 export const VetClinicListItem = ({ clinic }: Props) => {
   const confirmation = useConfirmationAlert();
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
-  const navigation = useNavigation<AddVetClinicScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const user = useSelector((state: RootState) => state.user.currentUser);
   const [ loading, setLoading ] = useState<boolean>(false);
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert(() => navigation.goBack());

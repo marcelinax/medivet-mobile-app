@@ -11,7 +11,7 @@ import { SwipeButtonActionProps } from 'types/components/Buttons/types';
 import { OutlineCard } from 'components/Composition/OutlineCard';
 import { parseDateFormatToTime, parseTimeStringToDate } from 'utils/formatDate';
 import { useNavigation } from '@react-navigation/native';
-import { VetClinicAvailabilitiesScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { useState } from 'react';
 import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
@@ -26,7 +26,7 @@ interface Props {
 }
 
 export const VetClinicAvailabilityCard = ({ availability, onSuccessRemove, setRemoveLoading }: Props) => {
-  const navigation = useNavigation<VetClinicAvailabilitiesScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const confirmation = useConfirmationAlert();

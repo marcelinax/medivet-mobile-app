@@ -6,7 +6,7 @@ import icons from 'themes/icons';
 import { Animal } from 'types/api/animal/types';
 import { updateAppointmentDetails } from 'store/home/appointmentSlice';
 import { useNavigation } from '@react-navigation/native';
-import { AppointmentAnimalScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { useDispatch } from 'react-redux';
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const AnimalListItem = ({ animal }: Props) => {
-  const navigation = useNavigation<AppointmentAnimalScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const dispatch = useDispatch();
 
   const handleChooseAnimal = () => {

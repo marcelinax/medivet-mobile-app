@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { SelectInputWrapper } from 'components/Inputs/SelectInput/SelectInputWrapper';
 import { MultiSelectProps } from 'types/components/Inputs/types';
-import { MultiSelectScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import {
@@ -26,7 +26,7 @@ export const MultiSelectInput = ({
   id,
   isEditable,
 }: MultiSelectProps) => {
-  const navigation = useNavigation<MultiSelectScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const multiSelectState = useSelector(
     (state: RootState) => state.multiSelect.multiSelects.find((multiSelect) => multiSelect.id === id),
   );

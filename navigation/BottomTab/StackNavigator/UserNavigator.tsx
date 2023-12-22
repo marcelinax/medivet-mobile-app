@@ -1,5 +1,5 @@
 import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
-import { RootStackParamList, UserScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps, RootStackParamList } from 'types/Navigation/types';
 import routes from 'constants/routes';
 import { UserProfileScreen } from 'screens/User/UserProfile.screen';
 import { EditUserProfileScreen } from 'screens/User/EditUserProfile.screen';
@@ -31,7 +31,7 @@ export const UserNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const user = useSelector((state: RootState) => state.user.currentUser) as User;
   const isVet = hasVetRole(user);
-  const navigation = useNavigation<UserScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const dispatch = useDispatch();
   const { t } = useTranslation();
 

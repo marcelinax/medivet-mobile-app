@@ -81,8 +81,6 @@ export const AppointmentCalendarForm = forwardRef<HandleSubmitAppointmentCalenda
   const { t } = useTranslation();
   const { appointmentDetails } = useSelector((state: RootState) => state.appointment);
   const [ form, setForm ] = useState<AppointmentDetails>(getInitialFormState(appointmentDetails, vet, clinicId, medicalService));
-  // TODO POWINNO SIE WYCZYSCIC DOPIERO JAK CAŁKOWICIE WYJDZIE Z FORMULARZA UMWAIANIA (czyli tez krok 2)
-  // useEffect(() => () => handleClearSelectInputs(), []);
 
   useImperativeHandle(ref, () => ({
     loading: false,
@@ -91,6 +89,8 @@ export const AppointmentCalendarForm = forwardRef<HandleSubmitAppointmentCalenda
     },
     buttonDisabled: isFormButtonDisabled(),
   }));
+
+  useEffect(() => () => handleClearForm(), []);
 
   useEffect(() => {
     if (isFormButtonDisabled() && !isButtonDisabled) {
@@ -105,9 +105,10 @@ export const AppointmentCalendarForm = forwardRef<HandleSubmitAppointmentCalenda
     || !form.hour
     || !form.medicalService;
 
-  const handleClearSelectInputs = () => {
+  const handleClearForm = () => {
     dispatch(removeSingleSelect(SelectId.APPOINTMENT_CLINIC));
     dispatch(removeSingleSelect(SelectId.APPOINTMENT_MEDICAL_SERVICE));
+    dispatch(setAppointmentDetails({}));
   };
 
   const onChangeInput = (field: string, value: any): void => {

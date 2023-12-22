@@ -15,7 +15,6 @@ import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 import { useDispatch } from 'react-redux';
 import icons from 'themes/icons';
 import { useNavigation } from '@react-navigation/native';
-import { EditAnimalScreenNavigationProps } from 'types/Navigation/types';
 import { SelectInput } from 'components/Inputs/SelectInput/SelectInput';
 import { parseDataToSelectOptions } from 'utils/selectInput';
 import { removeSingleSelect, setSingleSelectSelectedOption } from 'store/select/selectSlice';
@@ -25,6 +24,7 @@ import { HandleSubmitForm } from 'types/components/Forms/types';
 import { useTranslation } from 'react-i18next';
 import { getAnimalGenderSelectOptions, getAnimalTypeSelectOptions } from 'constants/selectOptions';
 import { setForceFetchingList } from 'store/list/listSlice';
+import { NavigationProps } from 'types/Navigation/types';
 
 interface Props {
   animal?: Animal;
@@ -45,7 +45,7 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
   { animal, setLoading },
   ref,
 ) => {
-  const navigation = useNavigation<EditAnimalScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();

@@ -3,16 +3,16 @@ import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { Animal } from 'types/api/animal/types';
 import { Avatar } from 'components/Composition/Avatar';
 import { useNavigation } from '@react-navigation/native';
-import { UserAnimalsScreenNavigationProps } from 'types/Navigation/types';
 import icons from 'themes/icons';
 import { listItemStyles } from 'screens/utils/styles';
+import { NavigationProps } from 'types/Navigation/types';
 
 interface Props {
   animal: Animal;
 }
 
 export const AnimalListItem = ({ animal }: Props) => {
-  const navigation = useNavigation<UserAnimalsScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
 
   return (
     <TouchableWithoutFeedback

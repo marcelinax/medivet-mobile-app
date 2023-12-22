@@ -5,7 +5,7 @@ import colors from 'themes/colors';
 import { SwipeButtonActionProps } from 'types/components/Buttons/types';
 import icons from 'themes/icons';
 import { useNavigation } from '@react-navigation/native';
-import { VetClinicProvidedMedicalServicesScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { SwipeButton } from 'components/Buttons/SwipeButton/SwipeButton';
 import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
@@ -27,7 +27,7 @@ export const VetClinicProvidedMedicalServiceListItem = ({
   setRemoveLoading,
   handleSuccessAction,
 }: Props) => {
-  const navigation = useNavigation<VetClinicProvidedMedicalServicesScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const confirmation = useConfirmationAlert();
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const [ errors, setErrors ] = useState<ApiError[]>([]);

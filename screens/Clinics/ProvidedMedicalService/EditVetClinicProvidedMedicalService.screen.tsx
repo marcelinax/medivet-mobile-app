@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
-import { EditVetClinicProvidedMedicalServiceScreenRouteProps } from 'types/Navigation/types';
+import { RouteProps } from 'types/Navigation/types';
 import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { VetClinicProvidedMedicalServiceForm } from 'components/Forms/VetClinicProvidedMedicalServiceForm';
@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 
 export const EditVetClinicProvidedMedicalServiceScreen = () => {
   const formRef = useRef<HandleSubmitForm>(null);
-  const route = useRoute<EditVetClinicProvidedMedicalServiceScreenRouteProps>();
+  const route = useRoute<RouteProps<'Edit Vet Clinic Provided Medical Service'>>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const [ medicalService, setMedicalService ] = useState<VetClinicProvidedMedicalService | undefined>();

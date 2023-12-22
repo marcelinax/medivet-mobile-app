@@ -4,10 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import {
-  CreateVetClinicAvailabilityReceptionHoursScreenNavigationProps,
-  CreateVetClinicAvailabilityReceptionHoursScreenRouteProps,
-} from 'types/Navigation/types';
+import { NavigationProps, RouteProps } from 'types/Navigation/types';
 import { SelectInput } from 'components/Inputs/SelectInput/SelectInput';
 import { SelectId } from 'constants/enums/selectId.enum';
 import { SelectOptionProps } from 'types/components/Inputs/types';
@@ -21,8 +18,8 @@ import { getDayOfWeekSelectOptions } from 'constants/selectOptions';
 
 export const VetClinicAvailabilityReceptionHourForm = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation<CreateVetClinicAvailabilityReceptionHoursScreenNavigationProps>();
-  const route = useRoute<CreateVetClinicAvailabilityReceptionHoursScreenRouteProps>();
+  const navigation = useNavigation<NavigationProps>();
+  const route = useRoute<RouteProps<'Create Vet Clinic Availability Reception Hours'>>();
   const { index } = route.params;
   const { t } = useTranslation();
   const currentVetAvailability = useSelector((state: RootState) => state.clinic.currentVetClinicAvailability);

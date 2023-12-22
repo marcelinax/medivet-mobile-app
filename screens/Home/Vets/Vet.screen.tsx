@@ -1,5 +1,5 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { VetScreenNavigationProps, VetScreenRouteProps } from 'types/Navigation/types';
+import { NavigationProps, RouteProps } from 'types/Navigation/types';
 import React, { useEffect, useState } from 'react';
 import { User } from 'types/api/user/types';
 import { ApiError } from 'types/api/error/types';
@@ -19,8 +19,8 @@ import { VetPreviewRightHeader } from 'components/Screens/Home/Vet/VetPreviewRig
 
 export const VetScreen = () => {
   const { t } = useTranslation();
-  const navigation = useNavigation<VetScreenNavigationProps>();
-  const route = useRoute<VetScreenRouteProps>();
+  const navigation = useNavigation<NavigationProps>();
+  const route = useRoute<RouteProps<'Vet'>>();
   const [ vet, setVet ] = useState<User | undefined>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();

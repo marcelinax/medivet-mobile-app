@@ -5,14 +5,14 @@ import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { listItemStyles } from 'screens/utils/styles';
 import { VetListItemClinicAddressList } from 'components/Screens/Home/VetListItem/VetListItemClinicAddressList';
 import { useNavigation } from '@react-navigation/native';
-import { VetScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 
 interface Props {
   vet: User;
 }
 
 export const VetListItem = ({ vet }: Props) => {
-  const navigation = useNavigation<VetScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
 
   const handleNavigateToVetScreen = () => {
     navigation.navigate('Vet', { vetId: vet.id });

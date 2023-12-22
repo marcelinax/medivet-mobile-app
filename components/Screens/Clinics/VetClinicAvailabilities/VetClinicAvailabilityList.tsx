@@ -1,5 +1,5 @@
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { VetClinicAvailabilitiesScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { VetAvailability } from 'types/api/vetAvailability/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
@@ -17,7 +17,7 @@ import { EmptyList } from 'components/Composition/EmptyList';
 import { useTranslation } from 'react-i18next';
 
 export const VetClinicAvailabilityList = () => {
-  const navigation = useNavigation<VetClinicAvailabilitiesScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const [ availabilities, setAvailabilities ] = useState<VetAvailability[] | undefined>();
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const user = useSelector((state: RootState) => state.user.currentUser);

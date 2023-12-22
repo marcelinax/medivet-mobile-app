@@ -12,7 +12,7 @@ import { HandleApplyFilters } from 'types/filters/types';
 import { Button } from 'components/Buttons/Button';
 import { clearSelectedFilters } from 'store/list/listSlice';
 import { useNavigation } from '@react-navigation/native';
-import { VetClinicProvidedMedicalServiceListFiltersScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { setSingleMultiSelectSelectedOptions } from 'store/multiSelect/multiSelectSlice';
 import { useTranslation } from 'react-i18next';
 
@@ -27,7 +27,7 @@ export const VetClinicProvidedMedicalServiceListFilters = forwardRef<HandleApply
     [ ...(specializationsFilter?.value as SelectOptionProps[] || []) ],
   );
   const { t } = useTranslation();
-  const navigation = useNavigation<VetClinicProvidedMedicalServiceListFiltersScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
 
   useImperativeHandle(ref, () => ({
     value: [ ...selectedSpecializations ],

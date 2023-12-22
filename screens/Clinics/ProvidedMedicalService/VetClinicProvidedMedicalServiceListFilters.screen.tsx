@@ -8,14 +8,14 @@ import { setSelectedFilters } from 'store/list/listSlice';
 import { useDispatch } from 'react-redux';
 import { HandleApplyFilters } from 'types/filters/types';
 import { useNavigation } from '@react-navigation/native';
-import { VetClinicProvidedMedicalServicesScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { useTranslation } from 'react-i18next';
 import { SelectOptionProps } from 'types/components/Inputs/types';
 
 export const VetClinicProvidedMedicalServiceListFiltersScreen = () => {
   const dispatch = useDispatch();
   const filtersScreenRef = useRef<HandleApplyFilters>(null);
-  const navigation = useNavigation<VetClinicProvidedMedicalServicesScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const { t } = useTranslation();
 
   const submitFilters = () => {

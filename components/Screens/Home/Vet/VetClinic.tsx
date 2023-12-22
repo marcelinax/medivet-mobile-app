@@ -9,7 +9,7 @@ import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedi
 import { VetClinicMedicalService } from 'components/Screens/Home/Vet/VetClinicMedicalService';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
-import { VetScreenNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { User } from 'types/api/user/types';
 
 interface Props {
@@ -20,7 +20,7 @@ interface Props {
 
 export const VetClinic = ({ clinic, medicalServices, vet }: Props) => {
   const { t } = useTranslation();
-  const navigation = useNavigation<VetScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
 
   const drawMedicalServices = () => {
     if (medicalServices.length > 0) {

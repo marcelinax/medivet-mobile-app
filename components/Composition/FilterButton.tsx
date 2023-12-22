@@ -3,7 +3,6 @@ import {
 } from 'react-native';
 import colors from 'themes/colors';
 import { useNavigation } from '@react-navigation/native';
-import { SelectScreenNavigationProps } from 'types/Navigation/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { useEffect } from 'react';
@@ -24,6 +23,7 @@ import {
 import { setForceFetchingList, setSelectedFilters } from 'store/list/listSlice';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import icons from 'themes/icons';
+import { NavigationProps } from 'types/Navigation/types';
 
 interface Props {
   title: string;
@@ -46,7 +46,7 @@ export const FilterButton = ({
   fetchOptions,
   filterId,
 }: Props) => {
-  const navigation = useNavigation<SelectScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const multiSelectState = useSelector((state: RootState) => (state.multiSelect.multiSelects.find(
     (multiSelect) => multiSelect.id === selectId,
   )));

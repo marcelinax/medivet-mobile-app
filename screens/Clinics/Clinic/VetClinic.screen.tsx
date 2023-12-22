@@ -1,6 +1,6 @@
 import { Clinic } from 'types/api/clinic/types';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { VetClinicScreenNavigationProps, VetClinicScreenRouteProps } from 'types/Navigation/types';
+import { NavigationProps, RouteProps } from 'types/Navigation/types';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { LoadingContainer } from 'components/Composition/LoadingContainer';
@@ -18,8 +18,8 @@ import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 import { useTranslation } from 'react-i18next';
 
 export const VetClinicScreen = () => {
-  const route = useRoute<VetClinicScreenRouteProps>();
-  const navigation = useNavigation<VetClinicScreenNavigationProps>();
+  const route = useRoute<RouteProps<'Vet Clinic'>>();
+  const navigation = useNavigation<NavigationProps>();
   const [ clinic, setClinic ] = useState<Clinic | undefined>();
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();

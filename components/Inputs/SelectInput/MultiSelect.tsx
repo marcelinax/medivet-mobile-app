@@ -3,7 +3,7 @@ import { SelectOptionProps } from 'types/components/Inputs/types';
 import { SelectOption } from 'components/Inputs/SelectInput/SelectOption';
 import { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { MultiSelectScreenNavigationProps, MultiSelectScreenRouteProps } from 'types/Navigation/types';
+import { NavigationProps, RouteProps } from 'types/Navigation/types';
 import { List } from 'components/List/List';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,12 +16,12 @@ import {
 import { useTranslation } from 'react-i18next';
 
 export const MultiSelect = () => {
-  const route = useRoute<MultiSelectScreenRouteProps>();
+  const route = useRoute<RouteProps<'Multi Select'>>();
   const multiSelectId = route.params.id;
   const multiSelectState = useSelector(
     (state: RootState) => state.multiSelect.multiSelects.find((multiSelect) => multiSelect.id === multiSelectId),
   );
-  const navigation = useNavigation<MultiSelectScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const selectedOptions = [ ...(multiSelectState?.selectedOptions || []) ];
   const [ internalSelectedOptions, setInternalSelectedOptions ] = useState<SelectOptionProps[]>(selectedOptions);
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();

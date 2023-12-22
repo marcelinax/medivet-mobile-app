@@ -1,6 +1,6 @@
 import { DefaultLayout } from 'layouts/Default.layout';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { EditAnimalScreenNavigationProps, EditAnimalScreenRouteProps } from 'types/Navigation/types';
+import { NavigationProps, RouteProps } from 'types/Navigation/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { Animal } from 'types/api/animal/types';
@@ -14,10 +14,10 @@ import { useTranslation } from 'react-i18next';
 
 export const EditAnimalScreen = () => {
   const formRef = useRef<HandleSubmitForm>(null);
-  const route = useRoute<EditAnimalScreenRouteProps>();
+  const route = useRoute<RouteProps<'Edit Animal'>>();
   const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
   const [ animal, setAnimal ] = useState<Animal | undefined>(undefined);
-  const navigation = useNavigation<EditAnimalScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { t } = useTranslation();
   const [ loading, setLoading ] = useState(false);

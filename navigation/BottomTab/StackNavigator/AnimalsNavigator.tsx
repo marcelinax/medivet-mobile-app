@@ -1,5 +1,5 @@
 import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
-import { EditAnimalScreenNavigationProps, RootStackParamList } from 'types/Navigation/types';
+import { NavigationProps, RootStackParamList } from 'types/Navigation/types';
 import routes from 'constants/routes';
 import { UserAnimalsScreen } from 'screens/Animals/UserAnimals.screen';
 import { EditAnimalScreen } from 'screens/Animals/EditAnimal.screen';
@@ -13,7 +13,7 @@ import { getDefaultScreenOptions } from './utils/screenOptions';
 
 export const AnimalsNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
-  const navigation = useNavigation<EditAnimalScreenNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const { t } = useTranslation();
 
   const onNavigateToCreateAnimalScreen = (): void => {

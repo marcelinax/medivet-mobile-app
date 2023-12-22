@@ -6,7 +6,7 @@ import {
 } from 'react';
 import { SelectOptionProps } from 'types/components/Inputs/types';
 import { useNavigation } from '@react-navigation/native';
-import { HomeNavigationProps } from 'types/Navigation/types';
+import { NavigationProps } from 'types/Navigation/types';
 import { parseDataToSelectOptions } from 'utils/selectInput';
 import { UserApi } from 'api/user/user.api';
 import { TextInput } from 'components/Inputs/TextInput';
@@ -38,7 +38,7 @@ export const SearchVetsForm = forwardRef<HandleSearchVets, Props>((
     city: filters?.city,
     specialization: filters?.specialization,
   });
-  const navigation = useNavigation<HomeNavigationProps>();
+  const navigation = useNavigation<NavigationProps>();
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
