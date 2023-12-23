@@ -3,7 +3,8 @@ import colors from 'themes/colors';
 
 export const listItemStyles = StyleSheet.create({
   container: {
-    height: 100,
+    // height: 100,
+    flex: 1,
     width: '100%',
     paddingHorizontal: 15,
     paddingTop: 1,

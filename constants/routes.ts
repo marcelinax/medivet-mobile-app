@@ -9,6 +9,7 @@ export default {
   USER_NAVIGATOR: 'User Navigator' as keyof RootStackParamList,
   ANIMALS_NAVIGATOR: 'Animals Navigator' as keyof RootStackParamList,
   CLINICS_NAVIGATOR: 'Clinics Navigator' as keyof RootStackParamList,
+  APPOINTMENTS_NAVIGATOR: 'Appointments Navigator' as keyof RootStackParamList,
 
   // SCREENS
   LOGIN: 'Login' as keyof RootStackParamList,
@@ -42,4 +43,5 @@ export default {
   APPOINTMENT_CALENDAR: 'Appointment Calendar' as keyof RootStackParamList,
   APPOINTMENT_ANIMAL: 'Appointment Animal' as keyof RootStackParamList,
   APPOINTMENT_CONFIRMATION: 'Appointment Confirmation' as keyof RootStackParamList,
+  APPOINTMENTS: 'Appointments' as keyof RootStackParamList,
 };

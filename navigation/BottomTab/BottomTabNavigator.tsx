@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { User } from 'types/api/user/types';
 import { hasVetRole } from 'utils/hasVetRole';
+import { AppointmentsNavigator } from 'navigation/BottomTab/StackNavigator/AppointmentsNavigator';
 import { AnimalsNavigator } from './StackNavigator/AnimalsNavigator';
 import { UserNavigator } from './StackNavigator/UserNavigator';
 import { HomeNavigator } from './StackNavigator/HomeNavigator';
@@ -40,6 +41,15 @@ export const BottomTabNavigator = () => {
           tabBarIcon: ({ focused }) => getTabIcon(focused, icons.HOME_OUTLINE),
         }}
       />
+      {!isVet && (
+        <Tab.Screen
+          name={routes.APPOINTMENTS_NAVIGATOR}
+          component={AppointmentsNavigator}
+          options={{
+            tabBarIcon: ({ focused }) => getTabIcon(focused, icons.CALENDAR_OUTLINE),
+          }}
+        />
+      )}
       <Tab.Screen
         name={routes.USER_NAVIGATOR}
         component={UserNavigator}

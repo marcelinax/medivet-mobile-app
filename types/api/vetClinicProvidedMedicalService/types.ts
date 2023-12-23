@@ -1,5 +1,5 @@
 import { Clinic } from 'types/api/clinic/types';
-import { VetSpecialization } from 'types/api/user/types';
+import { User, VetSpecialization } from 'types/api/user/types';
 
 export interface VetClinicProvidedMedicalService {
   id: number;
@@ -7,6 +7,7 @@ export interface VetClinicProvidedMedicalService {
   price: number;
   clinic: Clinic;
   medicalService: VetClinicMedicalService;
+  user: User;
 }
 
 export interface VetClinicMedicalService {

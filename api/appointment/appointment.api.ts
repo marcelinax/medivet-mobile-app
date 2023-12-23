@@ -6,4 +6,9 @@ export class AppointmentApi {
     const res = await authClient.post('appointments', { ...data });
     return res.data;
   }
+
+  static async getAppointments(params?: Record<string, any>): Promise<Appointment[]> {
+    const res = await authClient.get('appointments', { params });
+    return res.data;
+  }
 }

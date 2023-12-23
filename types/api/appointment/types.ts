@@ -12,4 +12,7 @@ export interface Appointment {
   animal: Animal;
   medicalService: VetClinicProvidedMedicalService;
   date: string;
+  status: AppointmentStatus;
 }
+
+export type AppointmentStatus = 'CANCELLED' | 'IN_PROGRESS' | 'FINISHED';
