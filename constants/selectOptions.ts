@@ -1,8 +1,6 @@
 import { SelectOptionProps } from 'types/components/Inputs/types';
-import { DayWeek } from 'constants/enums/dayWeek.enum';
 import { TFunction } from 'i18next';
-import { AnimalType } from './enums/animalType.enum';
-import { Gender } from './enums/gender.enum';
+import { AnimalType, DayWeek, Gender } from 'constants/enums/enums';
 
 export const getGenderSelectOptions = (t: TFunction<string, undefined>): SelectOptionProps[] => [
   {

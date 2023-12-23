@@ -22,12 +22,12 @@ import {
 } from 'components/Forms/VetClinicAvailability/VetClinicAvailabilityReceptionHourFormList';
 import { VetAvailabilityApi } from 'api/vetAvailability/vetAvailability.api';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
-import { DayWeek } from 'constants/enums/dayWeek.enum';
 import { ErrorText } from 'components/Composition/ErrorText';
 import { HandleSubmitForm } from 'types/components/Forms/types';
 import { useTranslation } from 'react-i18next';
 import { getDayOfWeekSelectOptions } from 'constants/selectOptions';
 import { setForceFetchingList } from 'store/list/listSlice';
+import { DayWeek } from 'constants/enums/enums';
 
 interface Props {
   availability?: VetAvailability;

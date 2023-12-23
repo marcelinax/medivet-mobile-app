@@ -14,13 +14,13 @@ import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from 'types/Navigation/types';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
-import { ClinicAssignmentRequestStatus } from 'constants/enums/clinic.enum';
 import { Ionicons } from '@expo/vector-icons';
 import icons from 'themes/icons';
 import { FullScreenLoading } from 'components/Composition/FullScreenLoading';
 import { ClinicApi } from 'api/clinic/clinic.api';
 import { ApiError } from 'types/api/error/types';
 import { useTranslation } from 'react-i18next';
+import { ClinicAssignmentRequestStatus } from 'constants/enums/enums';
 
 interface Props {
   clinic: Clinic;

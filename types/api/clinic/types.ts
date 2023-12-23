@@ -1,6 +1,6 @@
 import { AddressApi } from 'types/api/types';
 import { User } from 'types/api/user/types';
-import { ClinicAssignmentRequestStatus } from 'constants/enums/clinic.enum';
+import { ClinicAssignmentRequestStatus } from 'constants/enums/enums';
 
 export interface Clinic {
   id: number;

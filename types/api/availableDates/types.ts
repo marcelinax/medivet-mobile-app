@@ -1,4 +1,4 @@
-import { DayWeek } from 'constants/enums/dayWeek.enum';
+import { DayWeek } from 'constants/enums/enums';
 
 export interface AvailableDate {
   dates: string[];

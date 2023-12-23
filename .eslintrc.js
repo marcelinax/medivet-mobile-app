@@ -81,7 +81,8 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-nested-ternary': 'off',
     'no-empty-pattern': 'off',
-    'no-plusplus': 'off'
+    'no-plusplus': 'off',
+    "no-shadow": "off",
   },
   globals: {
     React: true,

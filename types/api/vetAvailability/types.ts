@@ -1,7 +1,7 @@
 import { User, VetSpecialization } from 'types/api/user/types';
 import { Clinic } from 'types/api/clinic/types';
-import { DayWeek } from 'constants/enums/dayWeek.enum';
 import { SelectOptionProps } from 'types/components/Inputs/types';
+import { DayWeek } from 'constants/enums/enums';
 
 export interface VetAvailability {
   id: number;

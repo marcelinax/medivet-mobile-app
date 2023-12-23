@@ -2,7 +2,6 @@ import { VetAvailabilityReceptionHourFormProps } from 'types/api/vetAvailability
 import { StyleSheet, Text, View } from 'react-native';
 import { simpleListItemStyles } from 'screens/utils/styles';
 import React from 'react';
-import { DayWeek } from 'constants/enums/dayWeek.enum';
 import { BreakLine } from 'components/Composition/BreakLine';
 import { SwipeButton } from 'components/Buttons/SwipeButton/SwipeButton';
 import colors from 'themes/colors';
@@ -14,6 +13,7 @@ import { ErrorText } from 'components/Composition/ErrorText';
 import { parseDateFormatToTime, parseTimeStringToDate } from 'utils/formatDate';
 import { getDayOfWeekSelectOptions } from 'constants/selectOptions';
 import { useTranslation } from 'react-i18next';
+import { DayWeek } from 'constants/enums/enums';
 
 interface Props {
   receptionHour: VetAvailabilityReceptionHourFormProps;

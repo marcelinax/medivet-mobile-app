@@ -12,10 +12,10 @@ import { useDispatch } from 'react-redux';
 import { setCurrentClinic } from 'store/clinic/clinicSlice';
 import { ApiError } from 'types/api/error/types';
 import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
-import { ClinicAssignmentRequestStatus } from 'constants/enums/clinic.enum';
 import colors from 'themes/colors';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 import { useTranslation } from 'react-i18next';
+import { ClinicAssignmentRequestStatus } from 'constants/enums/enums';
 
 export const VetClinicScreen = () => {
   const route = useRoute<RouteProps<'Vet Clinic'>>();
