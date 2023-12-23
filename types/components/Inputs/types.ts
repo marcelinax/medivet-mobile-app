@@ -47,4 +47,5 @@ export interface MultiSelectProps {
 export interface SelectOptionProps {
   id: string;
   label: string;
+  additionalFields?: Record<string, any>
 }

@@ -23,7 +23,6 @@ export const Select = () => {
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const [ internalSelectedOption, setInternalSelectedOption ] = useState<SelectOptionProps | undefined>(selectState?.selectedOption);
   const { t } = useTranslation();
-
   const handleChangeSelectedOption = (option: SelectOptionProps): void => {
     setInternalSelectedOption(option);
   };
@@ -58,6 +57,7 @@ export const Select = () => {
       onSelect={handleChangeSelectedOption}
       label={item.label}
       id={item.id}
+      additionalFields={item.additionalFields}
     />
   );
 

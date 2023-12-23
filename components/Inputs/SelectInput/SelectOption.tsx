@@ -12,11 +12,12 @@ interface Props extends SelectOptionProps {
 }
 
 export const SelectOption = ({
-  isSelected, label, onSelect, id,
+  isSelected, label, onSelect, id, additionalFields,
 }: Props) => (
   <TouchableWithoutFeedback onPress={() => onSelect({
     id,
     label,
+    additionalFields,
   })}
   >
     <View>

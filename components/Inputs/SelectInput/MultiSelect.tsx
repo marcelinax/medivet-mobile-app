@@ -73,6 +73,7 @@ export const MultiSelect = () => {
       onSelect={handleChangeSelectedOptions}
       label={item.label}
       id={item.id}
+      additionalFields={item.additionalFields}
     />
   );
 
