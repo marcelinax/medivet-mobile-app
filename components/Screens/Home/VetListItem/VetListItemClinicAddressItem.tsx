@@ -21,6 +21,8 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { SelectOptionProps } from 'types/components/Inputs/types';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationProps } from 'types/Navigation/types';
 
 interface Props {
   clinic: Clinic;
@@ -36,6 +38,7 @@ export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
   const [ loading, setLoading ] = useState(true);
   const filters = useSelector((state: RootState) => state.list.selectedFilters);
   const medicalServicesFilterAsString = JSON.stringify(filters.find((filter) => filter.id === 'medicalServices')?.value);
+  const navigation = useNavigation<NavigationProps>();
 
   useEffect(() => {
     fetchMedicalServices();
@@ -88,13 +91,16 @@ export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
   const drawAvailableDateHours = () => {
     const datesToDisplay = availableDate!.dates.filter((_, index) => index < 3);
     return datesToDisplay.map((date, index) => {
-      const parsedDate = moment(date).format('HH:mm');
+      const hour = moment(date).format('HH:mm');
       return (
         <ReceptionHour
-          hour={parsedDate}
-          onPress={() => {
-            // TODO przenieść do umawiania wizyty
-          }}
+          hour={hour}
+          onPress={() => navigation.navigate('Appointment Calendar', {
+            vet,
+            clinicId: clinic.id,
+            date,
+            medicalService,
+          })}
           variant="small"
           key={`vet-${vet.id}-clinic-${clinic.id}-medical-service-${medicalService!.id}-hour-${index}`}
         />
@@ -176,9 +182,11 @@ export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
                       <ReceptionHour
                         variant="small"
                         hour={t('words.more.title')}
-                        onPress={() => {
-                          // TODO przenieść do kalendarza z wybrana godzina
-                        }}
+                        onPress={() => navigation.navigate('Appointment Calendar', {
+                          vet,
+                          clinicId: clinic.id,
+                          medicalService,
+                        })}
                       />
                     )}
                   </View>

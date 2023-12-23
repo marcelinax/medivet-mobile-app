@@ -45,4 +45,5 @@ export type AppointmentCalendarScreenParams = {
   vet: User;
   clinicId?: number;
   medicalService?: VetClinicProvidedMedicalService;
+  date?: string;
 }

@@ -19,11 +19,13 @@ import { AppointmentCalendarDatesForm } from 'components/Forms/Appointment/Appoi
 import { AppointmentDetails, setAppointmentDetails } from 'store/home/appointmentSlice';
 import { RootState } from 'store/store';
 import { HandleSubmitAppointmentCalendarForm } from 'types/components/Forms/types';
+import moment from 'moment';
 
 interface Props {
   vet: User;
   clinicId?: number;
   medicalService?: VetClinicProvidedMedicalService;
+  date?: string;
   setIsButtonDisabled: (disabled: boolean) => void;
   isButtonDisabled: boolean;
 }
@@ -49,16 +51,17 @@ const getInitialFormState = (
   vet: User,
   clinicId?: number,
   medicalService?: VetClinicProvidedMedicalService,
+  date?: string,
 ) => {
   if (Object.keys(appointmentDetails).length === 0) {
     return {
       clinicAddress: getDefaultAddressForm(vet, clinicId),
       medicalService: medicalService ? {
-        id: medicalService.medicalService.id.toString(),
+        id: medicalService.id.toString(),
         label: medicalService.medicalService.name,
       } : undefined,
-      date: undefined,
-      hour: undefined,
+      date,
+      hour: date ? moment(date).format('HH:mm') : undefined,
       animal: undefined,
       vet: vet.name,
       price: medicalService?.price,
@@ -76,11 +79,12 @@ export const AppointmentCalendarForm = forwardRef<HandleSubmitAppointmentCalenda
   medicalService,
   setIsButtonDisabled,
   isButtonDisabled,
+  date,
 }, ref) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { appointmentDetails } = useSelector((state: RootState) => state.appointment);
-  const [ form, setForm ] = useState<AppointmentDetails>(getInitialFormState(appointmentDetails, vet, clinicId, medicalService));
+  const [ form, setForm ] = useState<AppointmentDetails>(getInitialFormState(appointmentDetails, vet, clinicId, medicalService, date));
 
   useImperativeHandle(ref, () => ({
     loading: false,
@@ -111,13 +115,6 @@ export const AppointmentCalendarForm = forwardRef<HandleSubmitAppointmentCalenda
     dispatch(setAppointmentDetails({}));
   };
 
-  const onChangeInput = (field: string, value: any): void => {
-    setForm({
-      ...form,
-      [field]: value,
-    });
-  };
-
   const getClinicAddressOptions = (): SelectOptionProps[] => (vet?.clinics || []).map((clinic) => ({
     id: clinic.id.toString(),
     label: getAddressString(clinic.address),
@@ -132,7 +129,7 @@ export const AppointmentCalendarForm = forwardRef<HandleSubmitAppointmentCalenda
       include: 'medicalService,user',
     };
     const res = await VetClinicProvidedMedicalServiceApi.getVetClinicProvidedMedicalServices(Number(form.clinicAddress.id), params);
-    return parseDataToSelectOptions(res, 'medicalService.name', 'medicalService.id');
+    return parseDataToSelectOptions(res, 'medicalService.name', 'id', [ 'price' ]);
   };
 
   const handleChangeAddressInput = (address: SelectOptionProps) => {
@@ -145,6 +142,16 @@ export const AppointmentCalendarForm = forwardRef<HandleSubmitAppointmentCalenda
       option: undefined,
       id: SelectId.APPOINTMENT_MEDICAL_SERVICE,
     }));
+  };
+
+  const handleChangeMedicalServiceInput = (service: SelectOptionProps) => {
+    setForm({
+      ...form,
+      medicalService: service,
+      hour: undefined,
+      date: undefined,
+      price: service.additionalFields?.price,
+    });
   };
 
   return (
@@ -163,7 +170,7 @@ export const AppointmentCalendarForm = forwardRef<HandleSubmitAppointmentCalenda
       </View>
       <View style={styles.inputContainer}>
         <SelectInput
-          onChoose={(service) => onChangeInput('medicalService', service)}
+          onChoose={handleChangeMedicalServiceInput}
           variant="outline"
           fetchOptions={fetchClinicMedicalService}
           label={t('words.service.title')}
@@ -183,7 +190,6 @@ export const AppointmentCalendarForm = forwardRef<HandleSubmitAppointmentCalenda
           />
         )
       }
-
     </View>
   );
 });

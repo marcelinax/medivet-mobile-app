@@ -9,7 +9,11 @@ import { HandleSubmitAppointmentCalendarForm } from 'types/components/Forms/type
 
 export const AppointmentCalendarScreen = () => {
   const { t } = useTranslation();
-  const { params: { vet, clinicId, medicalService } } = useRoute<RouteProps<'Appointment Calendar'>>();
+  const {
+    params: {
+      vet, clinicId, medicalService, date,
+    },
+  } = useRoute<RouteProps<'Appointment Calendar'>>();
   const navigation = useNavigation<NavigationProps>();
   const appointmentCalendarFormRef = useRef<HandleSubmitAppointmentCalendarForm>(null);
   const [ isButtonDisabled, setIsButtonDisabled ] = useState(!!appointmentCalendarFormRef.current?.buttonDisabled);
@@ -40,6 +44,7 @@ export const AppointmentCalendarScreen = () => {
         vet={vet}
         clinicId={clinicId}
         medicalService={medicalService}
+        date={date}
         ref={appointmentCalendarFormRef}
         setIsButtonDisabled={setIsButtonDisabled}
         isButtonDisabled={isButtonDisabled}

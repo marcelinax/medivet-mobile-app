@@ -32,11 +32,6 @@ export const AppointmentCalendarDatesForm = ({
   useEffect(() => {
     if (medicalServiceId) {
       fetchAvailableDates();
-      setForm({
-        ...form,
-        hour: undefined,
-        date: undefined,
-      });
     } else setAvailableDates([]);
   }, [ medicalServiceId ]);
 
@@ -62,12 +57,13 @@ export const AppointmentCalendarDatesForm = ({
       })}
       date={availableDate.date}
       key={`${availableDate.date}`}
-      isSelected={!form.date ? false : availableDate.date === form.date}
+      isSelected={!form.date ? false : moment(availableDate.date).format('DD.MM.YYYY') === moment(form.date).format('DD.MM.YYYY')}
     />
   ));
 
   const drawHours = () => {
-    const dates = availableDates.find((availableDate) => availableDate.date === form.date)?.dates || [];
+    const dates = availableDates.find((availableDate) => moment(availableDate.date).format('DD.MM.YYYY')
+      === moment(form.date).format('DD.MM.YYYY'))?.dates || [];
     const hours = dates.map((date) => moment(date).format('HH:mm'));
     const MIN_WIDTH = 110;
     const maxNumberOfColumns = Math.floor(containerWidth.current / MIN_WIDTH);
