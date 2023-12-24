@@ -1,5 +1,6 @@
 import { Animal } from 'types/api/animal/types';
 import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedicalService/types';
+import { AppointmentStatus } from 'constants/enums/enums';
 
 export interface CreateAppointment {
   animalId: number;
@@ -14,5 +15,3 @@ export interface Appointment {
   date: string;
   status: AppointmentStatus;
 }
-
-export type AppointmentStatus = 'CANCELLED' | 'IN_PROGRESS' | 'FINISHED';

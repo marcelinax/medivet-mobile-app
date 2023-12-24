@@ -26,3 +26,9 @@ export enum Gender {
   ANIMAL_FEMALE = 'animal-female',
   ANIMAL_MALE = 'animal-male'
 }
+
+export enum AppointmentStatus {
+  CANCELLED = 'CANCELLED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  FINISHED = 'FINISHED',
+}

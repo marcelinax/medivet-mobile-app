@@ -77,7 +77,7 @@ export const List = ({
   const getParsedFilters = (): Record<string, any> => filters.reduce((acc: Record<string, any>, cur) => {
     if (Array.isArray(cur.value)) {
       acc[cur.id] = cur.value.map((singleValue) => singleValue.id);
-    } else {
+    } else if (typeof cur.value !== 'string') {
       acc[cur.id] = cur.value.id;
     }
 

@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { StyleSheet, Text, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -11,8 +11,10 @@ import { forwardRef, useImperativeHandle, useState } from 'react';
 import { HandleSubmitForm } from 'types/components/Forms/types';
 import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
-import { AppointmentApi } from 'api/appointment/appointment.api';
 import { CreateAppointment } from 'types/api/appointment/types';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationProps } from 'types/Navigation/types';
+import { AppointmentApi } from 'api/appointment/appointment.api';
 
 interface Props {
   setLoading: (loading: boolean) => void;
@@ -23,7 +25,7 @@ export const AppointmentConfirmationPreview = forwardRef<HandleSubmitForm, Props
   const { t } = useTranslation();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
-  const dispatch = useDispatch();
+  const navigation = useNavigation<NavigationProps>();
 
   useImperativeHandle(ref, () => ({
     submit: () => handleSubmit(),
@@ -44,8 +46,9 @@ export const AppointmentConfirmationPreview = forwardRef<HandleSubmitForm, Props
     setLoading(true);
     try {
       const res = await AppointmentApi.createAppointment(getParsedAppointmentData());
+      navigation.popToTop();
+      navigation.navigate('Appointments');
       // TODO po utworzeniu dodać alert + przenieść na podgląd wizyty
-      // TODO powinno wyczyścić zapisany formularz + wszystkie inputy -> to powinno się wydarzyć również jak ktoś zrezygnuje z umawiania (kiedy?)
     } catch (err: any) {
       const errs = [ err?.response?.data ];
       setErrors([ ...errs ]);

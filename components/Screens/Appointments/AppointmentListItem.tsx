@@ -10,6 +10,7 @@ import colors from 'themes/colors';
 import { FormatAddress } from 'components/Formatters/FormatAddress';
 import moment from 'moment';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { AppointmentStatus } from 'constants/enums/enums';
 
 interface Props {
   appointment: Appointment;
@@ -19,7 +20,7 @@ export const AppointmentListItem = ({ appointment }: Props) => {
   const {
     animal, medicalService, date, status,
   } = appointment;
-  const isCancelled = status === 'CANCELLED';
+  const isCancelled = status === AppointmentStatus.CANCELLED;
   const iconColor = isCancelled ? colors.GRAY_DARK : colors.PRIMARY;
   const titleColor = isCancelled ? colors.GRAY_DARK : colors.BLACK;
 

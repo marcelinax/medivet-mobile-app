@@ -259,6 +259,62 @@
       "title": "Kod pocztowy"
     }
   },
+  "enums": {
+    "appointment": {
+      "status": {
+        "IN_PROGRESS": "W trakcie",
+        "FINISHED": "Zakończone",
+        "CANCELLED": "Anulowane"
+      }
+    },
+    "gender": {
+      "FEMALE": "Kobieta",
+      "MALE": "Mężczyzna",
+      "ANIMAL_FEMALE": "Samica",
+      "ANIMAL_MALE": "Samiec"
+    },
+    "animal": {
+      "type": {
+        "DOG": "Pies",
+        "CAT": "Kot",
+        "BIRD": "Ptak",
+        "FUR_ANIMAL": "Zwierzęta futerkowe"
+      }
+    },
+    "day_of_week": {
+      "MONDAY": "Poniedziałek",
+      "TUESDAY": "Czwartek",
+      "WEDNESDAY": "Środa",
+      "THURSDAY": "Wtorek",
+      "FRIDAY": "Piątek",
+      "SATURDAY": "Sobota",
+      "SUNDAY": "Niedziela",
+      "shortcut": {
+        "FRIDAY": "Pt.",
+        "MONDAY": "Pon.",
+        "SUNDAY": "Niedz.",
+        "SATURDAY": "Sob.",
+        "WEDNESDAY": "Śr.",
+        "THURSDAY": "Czw.",
+        "TUESDAY": "Wt."
+      }
+    },
+    "available_date": {
+      "TODAY": "Dzisiaj",
+      "WITHIN_3_DAYS": "W ciągu 3 dni",
+      "WHENEVER": "Kiedykolwiek"
+    },
+    "user": {
+      "role": {
+        "PATIENT": {
+          "title": "Pacjent"
+        },
+        "VET": {
+          "title": "Weterynarz"
+        }
+      }
+    }
+  },
   "navigation": {
     "clinic_availabilities": {
       "title": "Dostępności"
@@ -325,55 +381,6 @@
     },
     "appointment_calendar": {
       "title": "Umów wizytę u"
-    }
-  },
-  "enums": {
-    "gender": {
-      "FEMALE": "Kobieta",
-      "MALE": "Mężczyzna",
-      "ANIMAL_FEMALE": "Samica",
-      "ANIMAL_MALE": "Samiec"
-    },
-    "animal": {
-      "type": {
-        "DOG": "Pies",
-        "CAT": "Kot",
-        "BIRD": "Ptak",
-        "FUR_ANIMAL": "Zwierzęta futerkowe"
-      }
-    },
-    "day_of_week": {
-      "MONDAY": "Poniedziałek",
-      "TUESDAY": "Czwartek",
-      "WEDNESDAY": "Środa",
-      "THURSDAY": "Wtorek",
-      "FRIDAY": "Piątek",
-      "SATURDAY": "Sobota",
-      "SUNDAY": "Niedziela",
-      "shortcut": {
-        "FRIDAY": "Pt.",
-        "MONDAY": "Pon.",
-        "SUNDAY": "Niedz.",
-        "SATURDAY": "Sob.",
-        "WEDNESDAY": "Śr.",
-        "THURSDAY": "Czw.",
-        "TUESDAY": "Wt."
-      }
-    },
-    "available_date": {
-      "TODAY": "Dzisiaj",
-      "WITHIN_3_DAYS": "W ciągu 3 dni",
-      "WHENEVER": "Kiedykolwiek"
-    },
-    "user": {
-      "role": {
-        "PATIENT": {
-          "title": "Pacjent"
-        },
-        "VET": {
-          "title": "Weterynarz"
-        }
-      }
     }
   }
 }
