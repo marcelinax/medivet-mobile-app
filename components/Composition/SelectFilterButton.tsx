@@ -171,7 +171,7 @@ export const SelectFilterButton = ({
       title={title}
       variant={isFilterApplied() ? 'solid' : 'outline'}
       onPress={handleOnPress}
-      rightIcon={icons.CLOSE_OUTLINE}
+      rightIcon={isFilterApplied() ? icons.CLOSE_OUTLINE : undefined}
       style={{ padding: 10 }}
     />
   );
