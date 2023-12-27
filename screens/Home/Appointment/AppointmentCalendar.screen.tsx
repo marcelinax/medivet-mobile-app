@@ -27,7 +27,7 @@ export const AppointmentCalendarScreen = () => {
 
   const handleButtonPress = () => {
     appointmentCalendarFormRef.current?.submit();
-    navigation.navigate('Appointment Animal');
+    navigation.push('Appointment Animal');
   };
 
   return (

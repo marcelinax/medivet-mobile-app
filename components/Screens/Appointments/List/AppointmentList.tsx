@@ -1,9 +1,9 @@
 import { ListRenderItem } from 'react-native';
 import { List } from 'components/List/List';
 import { Appointment } from 'types/api/appointment/types';
-import { AppointmentListItem } from 'components/Screens/Appointments/AppointmentListItem';
+import { AppointmentListItem } from 'components/Screens/Appointments/List/AppointmentListItem';
 import { AppointmentApi } from 'api/appointment/appointment.api';
-import { AppointmentListFilters } from 'components/Screens/Appointments/AppointmentListFilters';
+import { AppointmentListFilters } from 'components/Screens/Appointments/List/AppointmentListFilters';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { FilterId } from 'constants/enums/filterId.enum';
@@ -29,7 +29,6 @@ export const AppointmentList = () => {
 
     return params;
   };
-  console.log(getListParams());
 
   return (
     <List

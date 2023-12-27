@@ -2,6 +2,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp } from '@react-navigation/native';
 import {
   AppointmentCalendarScreenParams,
+  AppointmentScreenParams,
   CreateVetClinicAvailabilityReceptionHourScreenParams,
   EditAnimalScreenParams,
   EditVetClinicAvailabilityScreenParams,
@@ -45,6 +46,7 @@ export type RootStackParamList = {
   'Appointment Animal': undefined;
   'Appointment Confirmation': undefined;
   'Appointments': undefined;
+  'Appointment': AppointmentScreenParams;
 }
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;

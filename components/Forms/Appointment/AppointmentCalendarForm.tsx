@@ -129,7 +129,11 @@ export const AppointmentCalendarForm = forwardRef<HandleSubmitAppointmentCalenda
       include: 'medicalService,user',
     };
     const res = await VetClinicProvidedMedicalServiceApi.getVetClinicProvidedMedicalServices(Number(form.clinicAddress.id), params);
-    return parseDataToSelectOptions(res, 'medicalService.name', 'id', [ 'price' ]);
+    const options = parseDataToSelectOptions(res, 'medicalService.name', 'id', [ 'price' ]);
+    return options.map((option) => ({
+      ...option,
+      label: `${option.label} (${option.additionalFields?.price} PLN)`,
+    }));
   };
 
   const handleChangeAddressInput = (address: SelectOptionProps) => {

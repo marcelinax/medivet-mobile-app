@@ -30,4 +30,6 @@ export default {
   CANNOT_CREATE_MORE_THAN_ONE_VET_PROVIDED_MEDICAL_SERVICE_FOR_SAME_SPECIALIZATION_IN_ONE_CLINIC:
     'Usługa już istnieje dla tej kliniki i specjalizacji.',
   CANNOT_CREATE_APPOINTMENT_BECAUSE_OF_NOT_AVAILABLE_DATE: 'Wybrana przez Ciebie data nie jest już dostępna.',
+  CANNOT_ADD_AN_OPINION_TO_NOT_FINISHED_APPOINTMENT: 'Nie można dodać opinii do wizyty, która się nie odbyła.',
+  YOU_HAVE_ALREADY_ADDED_AN_OPINION_TO_APPOINTMENT: 'Dodałeś już opinię.',
 } as Record<string, string>;

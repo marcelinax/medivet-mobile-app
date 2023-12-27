@@ -25,7 +25,7 @@ export const AnimalListItem = ({ animal }: Props) => {
         id: animal.id.toString(),
       },
     }));
-    navigation.navigate('Appointment Confirmation');
+    navigation.push('Appointment Confirmation');
   };
   return (
     <TouchableWithoutFeedback

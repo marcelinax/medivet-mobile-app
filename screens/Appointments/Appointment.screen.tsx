@@ -1,11 +1,8 @@
-import { ListLayout } from 'layouts/List.layout';
-import { AppointmentList } from 'components/Screens/Appointments/AppointmentList';
+import { DefaultLayout } from 'layouts/Default.layout';
+import { AppointmentPreview } from 'components/Screens/Appointments/Preview/AppointmentPreview';
 
 export const AppointmentScreen = () => (
-  <ListLayout
-    withoutBackgroundColor
-    withoutVerticalPadding
-  >
-    <AppointmentList />
-  </ListLayout>
+  <DefaultLayout>
+    <AppointmentPreview />
+  </DefaultLayout>
 );

@@ -11,6 +11,8 @@ import { FormatAddress } from 'components/Formatters/FormatAddress';
 import moment from 'moment';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { AppointmentStatus } from 'constants/enums/enums';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationProps } from 'types/Navigation/types';
 
 interface Props {
   appointment: Appointment;
@@ -23,9 +25,10 @@ export const AppointmentListItem = ({ appointment }: Props) => {
   const isCancelled = status === AppointmentStatus.CANCELLED;
   const iconColor = isCancelled ? colors.GRAY_DARK : colors.PRIMARY;
   const titleColor = isCancelled ? colors.GRAY_DARK : colors.BLACK;
+  const navigation = useNavigation<NavigationProps>();
 
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={() => navigation.navigate('Appointment', { appointmentId: appointment.id })}>
       <View style={listItemStyles.container}>
         <Card>
           <View style={[ listItemStyles.innerContainer, styles.innerContainer ]}>

@@ -39,11 +39,14 @@
     "remove": {
       "title": "Usuń"
     },
-    "clear": {
-      "title": "Wyczyść"
+    "make_next_appointment": {
+      "title": "Umów się na kolejną wizytę"
     },
     "add_opinion": {
       "title": "Dodaj opinię"
+    },
+    "clear": {
+      "title": "Wyczyść"
     },
     "show_calendar": {
       "title": "Pokaż kalendarz"
@@ -183,6 +186,9 @@
     "search": {
       "title": "Szukaj..."
     },
+    "appointment_status": {
+      "title": "Status wizyty"
+    },
     "pending_approval": {
       "title": "Oczekuje na zatwierdzenie"
     },
@@ -263,8 +269,8 @@
     "appointment": {
       "status": {
         "IN_PROGRESS": "W trakcie",
-        "FINISHED": "Zakończone",
-        "CANCELLED": "Anulowane"
+        "FINISHED": "Zakończona",
+        "CANCELLED": "Anulowana"
       }
     },
     "gender": {
@@ -328,6 +334,12 @@
     "appointments": {
       "title": "Wizyty"
     },
+    "appointment": {
+      "title": "Szczegóły wizyty"
+    },
+    "appointment_confirmation": {
+      "title": "Potwierdzenie wizyty"
+    },
     "user_clinics": {
       "title": "Moje kliniki"
     },
@@ -360,9 +372,6 @@
     },
     "create_opinion": {
       "title": "Tworzenie opinii"
-    },
-    "appointment_confirmation": {
-      "title": "Potwierdzenie wizyty"
     },
     "user_specializations": {
       "title": "Moje specjalizacje"

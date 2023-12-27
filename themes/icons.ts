@@ -27,4 +27,6 @@ export default {
   CALL: 'call' as const,
   HEART_OUTLINE: 'heart-outline' as const,
   HEART: 'heart' as const,
+  CHECKMARK_CIRCLE: 'checkmark-circle' as const,
+  HOURGLASS: 'hourglass' as const,
 };
