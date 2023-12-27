@@ -39,6 +39,8 @@ export type VetScreenParams = {
 
 export type OpinionScreenParams = {
   vetId: number;
+  appointmentId: number;
+  preventNavigateToVetScreen?: boolean;
 }
 
 export type AppointmentCalendarScreenParams = {
@@ -46,4 +48,9 @@ export type AppointmentCalendarScreenParams = {
   clinicId?: number;
   medicalService?: VetClinicProvidedMedicalService;
   date?: string;
+}
+
+export type AppointmentScreenParams = {
+  appointmentId: number;
+  opinionAdded?: boolean;
 }

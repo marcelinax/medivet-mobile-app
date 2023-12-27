@@ -3,10 +3,6 @@ import { Opinion } from 'components/Screens/Home/Vet/Opinion';
 import { OpinionApi } from 'api/opinion/opinion.api';
 import { List } from 'components/List/List';
 import { BreakLine } from 'components/Composition/BreakLine';
-import { Button } from 'components/Buttons/Button';
-import { useTranslation } from 'react-i18next';
-import { useNavigation } from '@react-navigation/native';
-import { NavigationProps } from 'types/Navigation/types';
 import { VetOpinion } from 'types/api/opinion/types';
 
 interface Props {
@@ -14,9 +10,6 @@ interface Props {
 }
 
 export const Opinions = ({ vetId }: Props) => {
-  const { t } = useTranslation();
-  const navigation = useNavigation<NavigationProps>();
-
   const renderOpinion: ListRenderItem<VetOpinion> = ({ item }) => <Opinion opinion={item} />;
 
   return (
@@ -33,18 +26,12 @@ export const Opinions = ({ vetId }: Props) => {
         <List
           onFetch={(params) => OpinionApi.getVetOpinions(vetId, {
             ...params,
+            include: 'appointment,appointment.medicalService,appointment.medicalService.clinic,'
+              + 'appointment.medicalService.medicalService',
             sortingMode: 'newest',
           })}
           renderItem={renderOpinion}
           customOptionsSeparator={<BreakLine style={styles.separator} />}
-          customHeader={(
-            <Button
-              title={t('actions.add_opinion.title')}
-              variant="outline"
-              style={styles.button}
-              onPress={() => navigation.navigate('Create Opinion', { vetId })}
-            />
-          )}
         />
       </ScrollView>
     </ScrollView>

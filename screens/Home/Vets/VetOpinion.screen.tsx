@@ -9,10 +9,10 @@ import { RatingInput } from 'components/Inputs/RatingInput';
 import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
-import { OpinionApi } from 'api/opinion/opinion.api';
 import { CreateVetOpinion } from 'types/api/opinion/types';
 import { useDispatch } from 'react-redux';
 import { setForceFetchingList } from 'store/list/listSlice';
+import { OpinionApi } from 'api/opinion/opinion.api';
 
 export const VetOpinionScreen = () => {
   const { t } = useTranslation();
@@ -30,19 +30,27 @@ export const VetOpinionScreen = () => {
     try {
       const data: CreateVetOpinion = {
         vetId: route.params.vetId,
+        appointmentId: route.params.appointmentId,
         message: opinion,
         rate: rating,
       };
       await OpinionApi.createOpinion(data);
-      dispatch(setForceFetchingList(true));
-      navigation.navigate({
-        name: 'Vet',
-        params: {
-          vetId: route.params.vetId,
-          showSuccessAlert: true,
-          shouldRefreshOpinionsAmount: true,
-        },
-      });
+      if (route.params.preventNavigateToVetScreen) {
+        navigation.navigate('Appointment', {
+          opinionAdded: true,
+          appointmentId: route.params.appointmentId,
+        });
+      } else {
+        dispatch(setForceFetchingList(true));
+        navigation.navigate({
+          name: 'Vet',
+          params: {
+            vetId: route.params.vetId,
+            showSuccessAlert: true,
+            shouldRefreshOpinionsAmount: true,
+          },
+        });
+      }
     } catch (err: any) {
       const errs = [ err?.response?.data ];
       setErrors([ ...errs ]);
