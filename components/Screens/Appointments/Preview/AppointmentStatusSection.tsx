@@ -8,6 +8,7 @@ import icons from 'themes/icons';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from 'types/Navigation/types';
 import { AppointmentStatus } from 'constants/enums/enums';
+import { BreakLine } from 'components/Composition/BreakLine';
 
 interface Props {
   appointment: Appointment;
@@ -50,6 +51,7 @@ export const AppointmentStatusSection = ({ appointment, isAddOpinionButtonShown 
           />
         )
       }
+      <BreakLine style={styles.breakLine} />
     </View>
   );
 };
@@ -62,5 +64,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 16,
+  },
+  breakLine: {
+    marginVertical: 16,
   },
 });

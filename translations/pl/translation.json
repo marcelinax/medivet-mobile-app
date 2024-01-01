@@ -45,6 +45,9 @@
     "add_opinion": {
       "title": "Dodaj opinię"
     },
+    "add_to_calendar": {
+      "title": "Dodaj do mojego kalendarza"
+    },
     "clear": {
       "title": "Wyczyść"
     },
@@ -89,6 +92,10 @@
     },
     "success": {
       "title": "Akcja powiodła się!",
+      "appointment_event": {
+        "title": "Wizyta została dodana do kalendarza",
+        "description": "Przypomnienie zostało ustawione na 2 godziny przed wydarzeniem."
+      },
       "save": {
         "title": "Zapisano!"
       }
@@ -101,6 +108,10 @@
     "no_media_library_permission": {
       "title": "Brak dostępu do rolki aparatu",
       "message": "Aby korzystać z rolki aparatu, musisz przejść do ustawień systemowych i zezwolić aplikacji na jej korzystanie."
+    },
+    "no_calendar_permission": {
+      "title": "Brak dostępu do kalendarza",
+      "message": "Aby korzystać z kalendarza, musisz przejść do ustawień systemowych i zezwolić aplikacji na jego korzystanie."
     }
   },
   "words": {
@@ -188,6 +199,12 @@
     },
     "appointment_status": {
       "title": "Status wizyty"
+    },
+    "appointment": {
+      "title": "Wizyta"
+    },
+    "appointment_summary": {
+      "title": "Podsumowanie wizyty"
     },
     "pending_approval": {
       "title": "Oczekuje na zatwierdzenie"
@@ -340,6 +357,9 @@
     "appointment_confirmation": {
       "title": "Potwierdzenie wizyty"
     },
+    "create_opinion": {
+      "title": "Tworzenie opinii"
+    },
     "user_clinics": {
       "title": "Moje kliniki"
     },
@@ -369,9 +389,6 @@
     },
     "filters": {
       "title": "Filtrowanie"
-    },
-    "create_opinion": {
-      "title": "Tworzenie opinii"
     },
     "user_specializations": {
       "title": "Moje specjalizacje"

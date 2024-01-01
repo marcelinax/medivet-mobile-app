@@ -23,10 +23,12 @@ export default {
   STAR_OUTLINE: 'star-outline' as const,
   STAR: 'star' as const,
   LOCATION: 'location' as const,
+  LOCATION_OUTLINE: 'location-outline' as const,
   CLOSE_OUTLINE: 'close-outline' as const,
   CALL: 'call' as const,
   HEART_OUTLINE: 'heart-outline' as const,
   HEART: 'heart' as const,
   CHECKMARK_CIRCLE: 'checkmark-circle' as const,
   HOURGLASS: 'hourglass' as const,
+  WALLET_OUTLINE: 'wallet-outline' as const,
 };

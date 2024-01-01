@@ -10,6 +10,7 @@ import { AppointmentApi } from 'api/appointment/appointment.api';
 import { AppointmentBasicInfoSection } from 'components/Screens/Appointments/Preview/AppointmentBasicInfoSection';
 import { AppointmentStatusSection } from 'components/Screens/Appointments/Preview/AppointmentStatusSection';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
+import { AppointmentSummarySection } from 'components/Screens/Appointments/Preview/AppointmentSummarySection';
 
 export const AppointmentPreview = () => {
   const route = useRoute<RouteProps<'Appointment'>>();
@@ -60,6 +61,7 @@ export const AppointmentPreview = () => {
               appointment={appointment}
               isAddOpinionButtonShown={!!route.params?.opinionAdded}
             />
+            <AppointmentSummarySection appointment={appointment} />
           </>
         )}
       </View>
