@@ -1,4 +1,4 @@
-import { AddressApi } from 'types/api/types';
+import { AddressApi, CoordinatesApi } from 'types/api/types';
 import { User } from 'types/api/user/types';
 import { ClinicAssignmentRequestStatus } from 'constants/enums/enums';
 
@@ -8,6 +8,7 @@ export interface Clinic {
   address: AddressApi;
   phoneNumber: string;
   clinicAssignmentRequests: ClinicAssignmentRequest[];
+  coordinates: CoordinatesApi;
 }
 
 export interface ClinicAssignmentRequest {

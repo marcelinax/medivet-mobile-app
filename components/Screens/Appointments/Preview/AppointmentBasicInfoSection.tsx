@@ -13,6 +13,7 @@ interface Props {
 export const AppointmentBasicInfoSection = ({ appointment }: Props) => {
   const { date, medicalService, animal } = appointment;
 
+  // TODO dorobić przycisk wysyłania wiadomości
   return (
     <>
       <View style={styles.container}>

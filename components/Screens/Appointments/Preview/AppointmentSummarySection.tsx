@@ -13,6 +13,7 @@ import * as Calendar from 'expo-calendar';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { isAndroidPlatform } from 'utils/isAndroidPlatfrom';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
+import * as Linking from 'expo-linking';
 
 interface Props {
   appointment: Appointment;
@@ -24,7 +25,6 @@ export const AppointmentSummarySection = ({ appointment }: Props) => {
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const { handleSuccessAlert, drawSuccessAlert } = useSuccessAlert();
   const [ calendarStatus, requestCalendarPermission ] = Calendar.useCalendarPermissions();
-
   // TODO dorobić informację o przyjmowanych płatnościach
 
   const handleCalendarPermission = async () => {
@@ -80,6 +80,26 @@ export const AppointmentSummarySection = ({ appointment }: Props) => {
       alarms: [ { relativeOffset: -120 } ],
     });
     handleSuccessAlert();
+  };
+
+  const handleRedirectToMaps = async () => {
+    const { lat, lon } = medicalService.clinic.coordinates;
+    const coordinatesQueryParam = `${lat},${lon}`;
+
+    const googleMapsSchemeUrl = isAndroidPlatform()
+      ? `geo:${coordinatesQueryParam}`
+      : `comgooglemaps://?center=${coordinatesQueryParam}`;
+    const isGoogleMapsAppAvailable = await Linking.canOpenURL(googleMapsSchemeUrl);
+    const isAppleMapsAppAvailable = await Linking.canOpenURL('maps://app');
+    let link = '';
+
+    if (isGoogleMapsAppAvailable) {
+      link = googleMapsSchemeUrl;
+    } else if (isAppleMapsAppAvailable && !isAndroidPlatform()) {
+      link = `maps://app?q=ll=${coordinatesQueryParam}`;
+    }
+
+    if (link) await Linking.openURL(link);
   };
 
   return (
@@ -142,10 +162,7 @@ export const AppointmentSummarySection = ({ appointment }: Props) => {
             {`${medicalService.duration} min`}
           </Text>
         </View>
-        <TouchableWithoutFeedback onPress={() => {
-          // TODO przenieść do mapy google
-        }}
-        >
+        <TouchableWithoutFeedback onPress={handleRedirectToMaps}>
           <View style={[ styles.rowContainer, styles.noMarginBottom ]}>
             <View style={[ styles.rowContainer, styles.noMarginBottom ]}>
               <Ionicons
