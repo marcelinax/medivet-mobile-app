@@ -42,6 +42,9 @@
     "make_next_appointment": {
       "title": "Umów się na kolejną wizytę"
     },
+    "cancel_appointment": {
+      "title": "Anuluj wizytę"
+    },
     "add_opinion": {
       "title": "Dodaj opinię"
     },

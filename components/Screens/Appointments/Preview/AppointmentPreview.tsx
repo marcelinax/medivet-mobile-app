@@ -12,6 +12,10 @@ import { AppointmentStatusSection } from 'components/Screens/Appointments/Previe
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 import { AppointmentSummarySection } from 'components/Screens/Appointments/Preview/AppointmentSummarySection';
 
+export const appointmentPreviewInclude = 'animal,animal.owner,medicalService,medicalService.user,medicalService.user.clinics,'
+  + 'medicalService.clinic,medicalService.medicalService,medicalService.medicalService.specialization,'
+  + 'opinion';
+
 export const AppointmentPreview = () => {
   const route = useRoute<RouteProps<'Appointment'>>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
@@ -36,9 +40,7 @@ export const AppointmentPreview = () => {
   const fetchAppointment = async () => {
     try {
       const params = {
-        include: 'animal,animal.owner,medicalService,medicalService.user,medicalService.user.clinics,'
-          + 'medicalService.clinic,medicalService.medicalService,medicalService.medicalService.specialization,'
-          + 'opinion',
+        include: appointmentPreviewInclude,
       };
       const res = await AppointmentApi.getAppointment(route.params.appointmentId, params);
       setAppointment(res);
@@ -59,6 +61,7 @@ export const AppointmentPreview = () => {
             <AppointmentBasicInfoSection appointment={appointment} />
             <AppointmentStatusSection
               appointment={appointment}
+              setAppointment={setAppointment}
               isAddOpinionButtonShown={!!route.params?.opinionAdded}
             />
             <AppointmentSummarySection appointment={appointment} />

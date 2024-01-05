@@ -16,4 +16,9 @@ export class AppointmentApi {
     const res = await authClient.get(`appointments/${id}`, { params });
     return res.data;
   }
+
+  static async cancelAppointment(id: number, params?: Record<string, any>): Promise<Appointment> {
+    const res = await authClient.put(`appointments/${id}/cancel`, undefined, { params });
+    return res.data;
+  }
 }
