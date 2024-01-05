@@ -13,6 +13,11 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { AppointmentStatus } from 'constants/enums/enums';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from 'types/Navigation/types';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { hasVetRole } from 'utils/hasVetRole';
+import { User } from 'types/api/user/types';
+import { AppointmentStatusInfo } from 'components/Screens/Appointments/Preview/AppointmentStatusInfo';
 
 interface Props {
   appointment: Appointment;
@@ -26,6 +31,10 @@ export const AppointmentListItem = ({ appointment }: Props) => {
   const iconColor = isCancelled ? colors.GRAY_DARK : colors.PRIMARY;
   const titleColor = isCancelled ? colors.GRAY_DARK : colors.BLACK;
   const navigation = useNavigation<NavigationProps>();
+  const user = useSelector((state: RootState) => state.user.currentUser) as User;
+  const isVet = hasVetRole(user);
+  const userName = isVet ? animal.owner.name : medicalService.user.name;
+  const userAvatar = isVet ? animal.owner.profilePhotoUrl : medicalService.user.profilePhotoUrl;
 
   return (
     <TouchableWithoutFeedback onPress={() => navigation.navigate('Appointment', { appointmentId: appointment.id })}>
@@ -34,7 +43,7 @@ export const AppointmentListItem = ({ appointment }: Props) => {
           <View style={[ listItemStyles.innerContainer, styles.innerContainer ]}>
             <View style={styles.textContainer}>
               <Text style={[ styles.specialization, { color: titleColor } ]}>
-                {medicalService.user.name}
+                {userName}
               </Text>
               <View style={styles.rowContainer}>
                 <Ionicons
@@ -87,11 +96,14 @@ export const AppointmentListItem = ({ appointment }: Props) => {
                   {moment(date).format('HH:mm dddd, DD.MM.YYYY')}
                 </Text>
               </View>
+              <View style={styles.rowContainer}>
+                <AppointmentStatusInfo status={appointment.status} />
+              </View>
             </View>
 
             <Avatar
               size="small"
-              url={medicalService.user.profilePhotoUrl}
+              url={userAvatar}
               icon={icons.PAW_OUTLINE}
             />
           </View>
@@ -102,7 +114,6 @@ export const AppointmentListItem = ({ appointment }: Props) => {
 };
 
 const styles = StyleSheet.create({
-
   innerContainer: { justifyContent: 'space-between' },
   specialization: {
     fontWeight: '600',

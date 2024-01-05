@@ -42,14 +42,14 @@ export const ConfirmationAlert = ({
               color="primary"
               onPress={onConfirm}
               variant="solid"
-              style={alertStyles.button}
+              containerStyle={alertStyles.button}
             />
             <Button
-              title={t('actions.save.title')}
+              title={t('actions.cancel.title')}
               color="danger"
               onPress={onHide}
               variant="solid"
-              style={[ alertStyles.button, alertStyles.secondButton ]}
+              containerStyle={alertStyles.button}
             />
           </View>
         </View>

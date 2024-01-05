@@ -43,7 +43,7 @@ export const SuccessAlert = ({
               color="primary"
               onPress={onHide}
               variant="solid"
-              style={alertStyles.button}
+              containerStyle={alertStyles.button}
             />
           </View>
         </View>

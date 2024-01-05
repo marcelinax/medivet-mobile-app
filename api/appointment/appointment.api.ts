@@ -21,4 +21,9 @@ export class AppointmentApi {
     const res = await authClient.put(`appointments/${id}/cancel`, undefined, { params });
     return res.data;
   }
+
+  static async finishAppointment(id: number, params?: Record<string, any>): Promise<Appointment> {
+    const res = await authClient.put(`appointments/${id}/finish`, undefined, { params });
+    return res.data;
+  }
 }

@@ -30,6 +30,7 @@ export default {
   HEART_OUTLINE: 'heart-outline' as const,
   HEART: 'heart' as const,
   CHECKMARK_CIRCLE: 'checkmark-circle' as const,
+  CHECKMARK_CIRCLE_OUTLINE: 'checkmark-circle-outline' as const,
   HOURGLASS: 'hourglass' as const,
   WALLET_OUTLINE: 'wallet-outline' as const,
 };

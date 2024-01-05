@@ -41,15 +41,13 @@ export const BottomTabNavigator = () => {
           tabBarIcon: ({ focused }) => getTabIcon(focused, icons.HOME_OUTLINE),
         }}
       />
-      {!isVet && (
-        <Tab.Screen
-          name={routes.APPOINTMENTS_NAVIGATOR}
-          component={AppointmentsNavigator}
-          options={{
-            tabBarIcon: ({ focused }) => getTabIcon(focused, icons.CALENDAR_OUTLINE),
-          }}
-        />
-      )}
+      <Tab.Screen
+        name={routes.APPOINTMENTS_NAVIGATOR}
+        component={AppointmentsNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => getTabIcon(focused, icons.CALENDAR_OUTLINE),
+        }}
+      />
       <Tab.Screen
         name={routes.USER_NAVIGATOR}
         component={UserNavigator}

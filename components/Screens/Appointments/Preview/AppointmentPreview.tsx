@@ -11,10 +11,15 @@ import { AppointmentBasicInfoSection } from 'components/Screens/Appointments/Pre
 import { AppointmentStatusSection } from 'components/Screens/Appointments/Preview/AppointmentStatusSection';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 import { AppointmentSummarySection } from 'components/Screens/Appointments/Preview/AppointmentSummarySection';
+import { hasVetRole } from 'utils/hasVetRole';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { User } from 'types/api/user/types';
+import { AppointmentAnimalInfoSection } from 'components/Screens/Appointments/Preview/AppointmentAnimalInfoSection';
 
 export const appointmentPreviewInclude = 'animal,animal.owner,medicalService,medicalService.user,medicalService.user.clinics,'
   + 'medicalService.clinic,medicalService.medicalService,medicalService.medicalService.specialization,'
-  + 'opinion';
+  + 'opinion,animal.breed';
 
 export const AppointmentPreview = () => {
   const route = useRoute<RouteProps<'Appointment'>>();
@@ -23,6 +28,8 @@ export const AppointmentPreview = () => {
   const [ appointment, setAppointment ] = useState<Appointment | undefined>();
   const navigation = useNavigation<NavigationProps>();
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
+  const user = useSelector((state: RootState) => state.user.currentUser) as User;
+  const isVet = hasVetRole(user);
 
   useEffect(() => {
     fetchAppointment();
@@ -59,6 +66,7 @@ export const AppointmentPreview = () => {
         {!appointment ? <Loading /> : (
           <>
             <AppointmentBasicInfoSection appointment={appointment} />
+            {isVet && <AppointmentAnimalInfoSection animal={appointment.animal} />}
             <AppointmentStatusSection
               appointment={appointment}
               setAppointment={setAppointment}

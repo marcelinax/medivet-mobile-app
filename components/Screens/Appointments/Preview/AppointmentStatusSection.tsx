@@ -15,6 +15,11 @@ import { useState } from 'react';
 import { ApiError } from 'types/api/error/types';
 import { AppointmentApi } from 'api/appointment/appointment.api';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { User } from 'types/api/user/types';
+import { hasVetRole } from 'utils/hasVetRole';
+import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
 
 interface Props {
   appointment: Appointment;
@@ -29,8 +34,15 @@ export const AppointmentStatusSection = ({ appointment, isAddOpinionButtonShown,
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const { handleSuccessAlert, drawSuccessAlert } = useSuccessAlert();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
+  const user = useSelector((state: RootState) => state.user.currentUser) as User;
+  const isVet = hasVetRole(user);
+  const confirmation = useConfirmationAlert();
 
   const handleCancelAppointment = async () => {
+    await confirmation({
+      title: '',
+      message: t('alerts.confirmation.message'),
+    });
     try {
       const params = { include: appointmentPreviewInclude };
       const res = await AppointmentApi.cancelAppointment(appointment.id, params);
@@ -43,22 +55,61 @@ export const AppointmentStatusSection = ({ appointment, isAddOpinionButtonShown,
     }
   };
 
+  const handleFinishAppointment = async () => {
+    await confirmation({
+      title: '',
+      message: t('alerts.confirmation.message'),
+    });
+    try {
+      const params = { include: appointmentPreviewInclude };
+      const res = await AppointmentApi.finishAppointment(appointment.id, params);
+      setAppointment(res);
+      handleSuccessAlert();
+    } catch (err: any) {
+      const errs = [ err?.response?.data ];
+      handleErrorAlert(errs);
+      setErrors([ ...errs ]);
+    }
+  };
+
+  const showAddOpinionButton = () => {
+    if (isVet) return false;
+
+    return !appointment.opinion && appointment.status === AppointmentStatus.FINISHED && !isAddOpinionButtonShown;
+  };
+
   return (
     <View>
       {drawErrorAlert(errors)}
       {drawSuccessAlert()}
       <Text style={styles.heading}>{t('words.appointment_status.title').toUpperCase()}</Text>
       <AppointmentStatusInfo status={status} />
-      <Button
-        title={t('actions.make_next_appointment.title')}
-        variant="outline"
-        color="light"
-        onPress={() => navigation.push('Appointment Calendar', {
-          vet: medicalService.user,
-        })}
-        leftIcon={icons.CALENDAR}
-        containerStyle={styles.buttonContainer}
-      />
+      {
+        !isVet && (
+          <Button
+            title={t('actions.make_next_appointment.title')}
+            variant="outline"
+            color="light"
+            onPress={() => navigation.push('Appointment Calendar', {
+              vet: medicalService.user,
+            })}
+            leftIcon={icons.CALENDAR}
+            containerStyle={styles.buttonContainer}
+          />
+        )
+      }
+      {
+        isVet && appointment.status === AppointmentStatus.IN_PROGRESS && (
+          <Button
+            title={t('actions.finish_appointment.title')}
+            variant="outline"
+            color="primary"
+            onPress={handleFinishAppointment}
+            leftIcon={icons.CHECKMARK_CIRCLE_OUTLINE}
+            containerStyle={styles.buttonContainer}
+          />
+        )
+      }
       {
         appointment.status === AppointmentStatus.IN_PROGRESS && (
           <Button
@@ -72,7 +123,7 @@ export const AppointmentStatusSection = ({ appointment, isAddOpinionButtonShown,
         )
       }
       {
-        !appointment.opinion && appointment.status === AppointmentStatus.FINISHED && !isAddOpinionButtonShown
+        showAddOpinionButton()
         && (
           <Button
             title={t('actions.add_opinion.title')}

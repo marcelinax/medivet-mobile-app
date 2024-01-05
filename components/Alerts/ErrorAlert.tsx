@@ -43,7 +43,7 @@ export const ErrorAlert = ({
               color="danger"
               onPress={onHide}
               variant="solid"
-              style={alertStyles.button}
+              containerStyle={alertStyles.button}
             />
           </View>
         </View>

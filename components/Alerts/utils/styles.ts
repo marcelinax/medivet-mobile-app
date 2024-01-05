@@ -32,12 +32,9 @@ export const alertStyles = StyleSheet.create({
   buttonsContainer: {
     marginTop: 20,
     flexDirection: 'row',
+    gap: 5,
   },
   button: {
-    flexGrow: 1,
-    width: '100%',
-  },
-  secondButton: {
-    marginLeft: 5,
+    flex: 1,
   },
 });

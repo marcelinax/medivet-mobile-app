@@ -14,6 +14,10 @@ import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { isAndroidPlatform } from 'utils/isAndroidPlatfrom';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 import * as Linking from 'expo-linking';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { User } from 'types/api/user/types';
+import { hasVetRole } from 'utils/hasVetRole';
 
 interface Props {
   appointment: Appointment;
@@ -24,6 +28,8 @@ export const AppointmentSummarySection = ({ appointment }: Props) => {
   const { t } = useTranslation();
   const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
   const { handleSuccessAlert, drawSuccessAlert } = useSuccessAlert();
+  const user = useSelector((state: RootState) => state.user.currentUser) as User;
+  const isVet = hasVetRole(user);
   const [ calendarStatus, requestCalendarPermission ] = Calendar.useCalendarPermissions();
   // TODO dorobić informację o przyjmowanych płatnościach
 
@@ -123,12 +129,14 @@ export const AppointmentSummarySection = ({ appointment }: Props) => {
             {moment(date).format('HH:mm dddd, DD.MM.YYYY')}
           </Text>
         </View>
-        <Button
-          title={t('actions.add_to_calendar.title')}
-          variant="solid"
-          onPress={handleCalendarPermission}
-          containerStyle={styles.buttonContainer}
-        />
+        {!isVet && (
+          <Button
+            title={t('actions.add_to_calendar.title')}
+            variant="solid"
+            onPress={handleCalendarPermission}
+            containerStyle={styles.buttonContainer}
+          />
+        )}
         <View style={styles.rowContainer}>
           <Ionicons
             name={icons.MEDKIT_OUTLINE}

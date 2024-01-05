@@ -32,4 +32,6 @@ export default {
   CANNOT_CREATE_APPOINTMENT_BECAUSE_OF_NOT_AVAILABLE_DATE: 'Wybrana przez Ciebie data nie jest już dostępna.',
   CANNOT_ADD_AN_OPINION_TO_NOT_FINISHED_APPOINTMENT: 'Nie można dodać opinii do wizyty, która się nie odbyła.',
   YOU_HAVE_ALREADY_ADDED_AN_OPINION_TO_APPOINTMENT: 'Dodałeś już opinię.',
+  'CANNOT_CANCEL_APPOINTMENT_IN_DIFFERENT_STATUS_THAN_"IN_PROGRESS"': 'Nie można anulować wizyty o innym statusie niż "W trakcie"',
+  'CANNOT_FINISH_APPOINTMENT_IN_DIFFERENT_STATUS_THAN_"IN_PROGRESS"': 'Nie można zakończyć wizyty o innym statusie niż "W trakcie"',
 } as Record<string, string>;

@@ -1,10 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Appointment } from 'types/api/appointment/types';
 import { FormatAddress } from 'components/Formatters/FormatAddress';
 import { Avatar } from 'components/Composition/Avatar';
 import moment from 'moment';
 import { BreakLine } from 'components/Composition/BreakLine';
-import colors from 'themes/colors';
+import { appointmentBasicInfoSectionStyles } from 'components/Screens/Appointments/Preview/styles/styles';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { User } from 'types/api/user/types';
+import { hasVetRole } from 'utils/hasVetRole';
 
 interface Props {
   appointment: Appointment;
@@ -12,54 +16,38 @@ interface Props {
 
 export const AppointmentBasicInfoSection = ({ appointment }: Props) => {
   const { date, medicalService, animal } = appointment;
+  const user = useSelector((state: RootState) => state.user.currentUser) as User;
+  const isVet = hasVetRole(user);
 
   // TODO dorobić przycisk wysyłania wiadomości
   return (
     <>
-      <View style={styles.container}>
-        <View style={styles.innerContainer}>
-          <Text style={styles.text}>
+      <View style={appointmentBasicInfoSectionStyles.container}>
+        <View style={appointmentBasicInfoSectionStyles.innerContainer}>
+          <Text style={appointmentBasicInfoSectionStyles.text}>
             {medicalService.user.name}
           </Text>
           <FormatAddress
             address={medicalService.clinic.address}
-            style={styles.text}
+            style={appointmentBasicInfoSectionStyles.text}
           />
-          <Text style={[ styles.text, styles.date ]}>
+          <Text style={[ appointmentBasicInfoSectionStyles.text, appointmentBasicInfoSectionStyles.date ]}>
             {moment(date).format('HH:mm dddd, DD.MM.YYYY')}
           </Text>
-          <Text style={styles.text}>
-            {animal.name}
-          </Text>
+          {
+            !isVet && (
+              <Text style={appointmentBasicInfoSectionStyles.text}>
+                {animal.name}
+              </Text>
+            )
+          }
         </View>
         <Avatar
           size="small"
           url={medicalService.user.profilePhotoUrl}
         />
       </View>
-      <BreakLine style={styles.breakLine} />
+      <BreakLine style={appointmentBasicInfoSectionStyles.breakLine} />
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  innerContainer: {
-    flex: 1,
-  },
-  text: {
-    fontSize: 18,
-    marginBottom: 8,
-  },
-  date: {
-    color: colors.GRAY_DARK,
-  },
-  breakLine: {
-    marginTop: 10,
-    marginBottom: 16,
-  },
-});
