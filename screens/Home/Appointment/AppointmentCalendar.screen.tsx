@@ -6,17 +6,23 @@ import { DefaultLayout } from 'layouts/Default.layout';
 import { AppointmentCalendarForm } from 'components/Forms/Appointment/AppointmentCalendarForm';
 import { Button } from 'components/Buttons/Button';
 import { HandleSubmitAppointmentCalendarForm } from 'types/components/Forms/types';
+import { hasVetRole } from 'utils/hasVetRole';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { User } from 'types/api/user/types';
 
 export const AppointmentCalendarScreen = () => {
   const { t } = useTranslation();
   const {
     params: {
-      vet, clinicId, medicalService, date,
+      vet, clinicId, medicalService, date, animal,
     },
   } = useRoute<RouteProps<'Appointment Calendar'>>();
   const navigation = useNavigation<NavigationProps>();
   const appointmentCalendarFormRef = useRef<HandleSubmitAppointmentCalendarForm>(null);
   const [ isButtonDisabled, setIsButtonDisabled ] = useState(!!appointmentCalendarFormRef.current?.buttonDisabled);
+  const user = useSelector((state: RootState) => state.user.currentUser) as User;
+  const isVet = hasVetRole(user);
 
   useEffect(() => {
     navigation.setOptions({
@@ -27,7 +33,11 @@ export const AppointmentCalendarScreen = () => {
 
   const handleButtonPress = () => {
     appointmentCalendarFormRef.current?.submit();
-    navigation.push('Appointment Animal');
+    if (isVet) {
+      navigation.push('Appointment Confirmation');
+    } else {
+      navigation.push('Appointment Animal');
+    }
   };
 
   return (
@@ -48,6 +58,7 @@ export const AppointmentCalendarScreen = () => {
         ref={appointmentCalendarFormRef}
         setIsButtonDisabled={setIsButtonDisabled}
         isButtonDisabled={isButtonDisabled}
+        animal={animal}
       />
     </DefaultLayout>
   );

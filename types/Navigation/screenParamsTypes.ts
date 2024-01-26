@@ -1,5 +1,6 @@
 import { User } from 'types/api/user/types';
 import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedicalService/types';
+import { Animal } from 'types/api/animal/types';
 
 export type MultiSelectScreenParams = {
   title: string;
@@ -48,6 +49,7 @@ export type AppointmentCalendarScreenParams = {
   clinicId?: number;
   medicalService?: VetClinicProvidedMedicalService;
   date?: string;
+  animal?: Animal;
 }
 
 export type AppointmentScreenParams = {

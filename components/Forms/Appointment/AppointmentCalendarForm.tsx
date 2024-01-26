@@ -20,6 +20,8 @@ import { AppointmentDetails, setAppointmentDetails } from 'store/home/appointmen
 import { RootState } from 'store/store';
 import { HandleSubmitAppointmentCalendarForm } from 'types/components/Forms/types';
 import moment from 'moment';
+import { hasVetRole } from 'utils/hasVetRole';
+import { Animal } from 'types/api/animal/types';
 
 interface Props {
   vet: User;
@@ -28,6 +30,7 @@ interface Props {
   date?: string;
   setIsButtonDisabled: (disabled: boolean) => void;
   isButtonDisabled: boolean;
+  animal?: Animal;
 }
 
 const getDefaultAddressForm = (vet: User, clinicId?: number) => {
@@ -80,8 +83,11 @@ export const AppointmentCalendarForm = forwardRef<HandleSubmitAppointmentCalenda
   setIsButtonDisabled,
   isButtonDisabled,
   date,
+  animal,
 }, ref) => {
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user.currentUser) as User;
+  const isVet = hasVetRole(user);
   const { t } = useTranslation();
   const { appointmentDetails } = useSelector((state: RootState) => state.appointment);
   const [ form, setForm ] = useState<AppointmentDetails>(getInitialFormState(appointmentDetails, vet, clinicId, medicalService, date));
@@ -89,7 +95,13 @@ export const AppointmentCalendarForm = forwardRef<HandleSubmitAppointmentCalenda
   useImperativeHandle(ref, () => ({
     loading: false,
     submit: () => {
-      dispatch(setAppointmentDetails(form));
+      dispatch(setAppointmentDetails(isVet ? {
+        ...form,
+        animal: animal ? {
+          id: animal.id.toString(),
+          label: animal.name,
+        } : undefined,
+      } : form));
     },
     buttonDisabled: isFormButtonDisabled(),
   }));
@@ -115,18 +127,22 @@ export const AppointmentCalendarForm = forwardRef<HandleSubmitAppointmentCalenda
     dispatch(setAppointmentDetails({}));
   };
 
-  const getClinicAddressOptions = (): SelectOptionProps[] => (vet?.clinics || []).map((clinic) => ({
-    id: clinic.id.toString(),
-    label: getAddressString(clinic.address),
-  }));
+  const getClinicAddressOptions = (): SelectOptionProps[] => {
+    const clinics = isVet ? user?.clinics || [] : vet?.clinics || [];
+    return clinics.map((clinic) => ({
+      id: clinic.id.toString(),
+      label: getAddressString(clinic.address),
+    }));
+  };
 
   const fetchClinicMedicalService = async (params?: Record<string, any>): Promise<SelectOptionProps[]> => {
     if (!form.clinicAddress?.id) return [];
 
     params = {
       ...params,
-      vetId: vet.id,
-      include: 'medicalService,user',
+      vetId: isVet ? user.id : vet.id,
+      include: 'medicalService,user,medicalService.specialization',
+      specializationIds: isVet && form.specialization?.id ? [ form.specialization.id ] : undefined,
     };
     const res = await VetClinicProvidedMedicalServiceApi.getVetClinicProvidedMedicalServices(Number(form.clinicAddress.id), params);
     const options = parseDataToSelectOptions(res, 'medicalService.name', 'id', [ 'price' ]);
@@ -158,32 +174,76 @@ export const AppointmentCalendarForm = forwardRef<HandleSubmitAppointmentCalenda
     });
   };
 
+  const handleChangeVetSpecialization = (specialization: SelectOptionProps) => {
+    setForm({
+      ...form,
+      specialization,
+      clinicAddress: undefined,
+      medicalService: undefined,
+    });
+    dispatch(setSingleSelectSelectedOption({
+      option: undefined,
+      id: SelectId.APPOINTMENT_CLINIC,
+    }));
+    dispatch(setSingleSelectSelectedOption({
+      option: undefined,
+      id: SelectId.APPOINTMENT_CLINIC,
+    }));
+  };
+
   return (
     <View>
-      <View style={styles.inputContainer}>
-        <SelectInput
-          onChoose={handleChangeAddressInput}
-          variant="outline"
-          options={getClinicAddressOptions()}
-          label={t('words.address.title')}
-          errors={[]}
-          id={SelectId.APPOINTMENT_CLINIC}
-          defaultValue={form?.clinicAddress}
-          selectScreenHeaderTitle={t('words.address.title')}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <SelectInput
-          onChoose={handleChangeMedicalServiceInput}
-          variant="outline"
-          fetchOptions={fetchClinicMedicalService}
-          label={t('words.service.title')}
-          errors={[]}
-          id={SelectId.APPOINTMENT_MEDICAL_SERVICE}
-          defaultValue={form?.medicalService}
-          selectScreenHeaderTitle={t('words.service.title')}
-        />
-      </View>
+      {
+        isVet && (
+          <View style={styles.inputContainer}>
+            <SelectInput
+              onChoose={handleChangeVetSpecialization}
+              variant="outline"
+              options={(user.specializations || []).map((specialization) => ({
+                id: specialization.id.toString(),
+                label: specialization.name,
+              }))}
+              label={t('words.specialization.title')}
+              errors={[]}
+              id={SelectId.APPOINTMENT_SPECIALIZATION}
+              defaultValue={form?.specialization}
+              selectScreenHeaderTitle={t('words.specializations.title')}
+            />
+          </View>
+        )
+      }
+      {
+        ((!isVet || (isVet && form?.specialization))) && (
+          <View style={styles.inputContainer}>
+            <SelectInput
+              onChoose={handleChangeAddressInput}
+              variant="outline"
+              options={getClinicAddressOptions()}
+              label={t('words.address.title')}
+              errors={[]}
+              id={SelectId.APPOINTMENT_CLINIC}
+              defaultValue={form?.clinicAddress}
+              selectScreenHeaderTitle={t('words.address.title')}
+            />
+          </View>
+        )
+      }
+      {
+        (!isVet || (isVet && form?.specialization && form?.clinicAddress)) && (
+          <View style={styles.inputContainer}>
+            <SelectInput
+              onChoose={handleChangeMedicalServiceInput}
+              variant="outline"
+              fetchOptions={fetchClinicMedicalService}
+              label={t('words.service.title')}
+              errors={[]}
+              id={SelectId.APPOINTMENT_MEDICAL_SERVICE}
+              defaultValue={form?.medicalService}
+              selectScreenHeaderTitle={t('words.service.title')}
+            />
+          </View>
+        )
+      }
       {
         form?.medicalService?.id && (
           <AppointmentCalendarDatesForm

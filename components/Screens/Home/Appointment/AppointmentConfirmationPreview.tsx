@@ -47,7 +47,7 @@ export const AppointmentConfirmationPreview = forwardRef<HandleSubmitForm, Props
     try {
       const res = await AppointmentApi.createAppointment(getParsedAppointmentData());
       navigation.popToTop();
-      navigation.navigate('Appointments');
+      navigation.navigate('Appointment', { appointmentId: res.id });
       // TODO po utworzeniu dodać alert + przenieść na podgląd wizyty
     } catch (err: any) {
       const errs = [ err?.response?.data ];

@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
   tabBar: {
     backgroundColor: colors.WHITE,
     marginBottom: 15,
+    elevation: 0,
   },
   tabBarContainer: {
     flexGrow: 1,

@@ -9,6 +9,7 @@ export interface AppointmentDetails {
   date?: string;
   vet?: string;
   price?: number;
+  specialization?: SelectOptionProps;
 }
 
 interface AppointmentSlice {

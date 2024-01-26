@@ -16,4 +16,5 @@ export interface Appointment {
   date: string;
   status: AppointmentStatus;
   opinion: VetOpinion;
+  finishedDate?: string;
 }

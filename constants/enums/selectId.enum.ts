@@ -11,5 +11,6 @@ export enum SelectId {
   SEARCH_VET_MEDICAL_SPECIALIZATION = 'searchVetMedicalSpecialization',
   AVAILABLE_DATES = 'availableDates',
   APPOINTMENT_CLINIC = 'appointmentClinic',
-  APPOINTMENT_MEDICAL_SERVICE = 'appointmentMedicalService'
+  APPOINTMENT_MEDICAL_SERVICE = 'appointmentMedicalService',
+  APPOINTMENT_SPECIALIZATION = 'appointmentSpecialization',
 }

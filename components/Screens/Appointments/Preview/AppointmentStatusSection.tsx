@@ -20,6 +20,7 @@ import { RootState } from 'store/store';
 import { User } from 'types/api/user/types';
 import { hasVetRole } from 'utils/hasVetRole';
 import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
+import moment from 'moment';
 
 interface Props {
   appointment: Appointment;
@@ -78,6 +79,16 @@ export const AppointmentStatusSection = ({ appointment, isAddOpinionButtonShown,
     return !appointment.opinion && appointment.status === AppointmentStatus.FINISHED && !isAddOpinionButtonShown;
   };
 
+  const showMakeNextAppointmentButton = () => {
+    if (!isVet) return true;
+
+    if (appointment.status === AppointmentStatus.FINISHED) {
+      return moment(appointment.finishedDate).isAfter(moment().subtract(1, 'hours'));
+    }
+
+    return false;
+  };
+
   return (
     <View>
       {drawErrorAlert(errors)}
@@ -85,13 +96,14 @@ export const AppointmentStatusSection = ({ appointment, isAddOpinionButtonShown,
       <Text style={styles.heading}>{t('words.appointment_status.title').toUpperCase()}</Text>
       <AppointmentStatusInfo status={status} />
       {
-        !isVet && (
+        showMakeNextAppointmentButton() && (
           <Button
             title={t('actions.make_next_appointment.title')}
             variant="outline"
             color="light"
             onPress={() => navigation.push('Appointment Calendar', {
               vet: medicalService.user,
+              animal: isVet ? appointment.animal : undefined,
             })}
             leftIcon={icons.CALENDAR}
             containerStyle={styles.buttonContainer}
