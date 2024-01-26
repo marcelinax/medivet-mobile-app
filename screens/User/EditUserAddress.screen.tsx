@@ -13,17 +13,16 @@ import { RootState } from 'store/store';
 import { setCurrentUser } from 'store/user/userSlice';
 import { AddressApi } from 'types/api/types';
 import { User } from 'types/api/user/types';
-import { ApiError } from 'types/api/error/types';
 import { useTranslation } from 'react-i18next';
+import { getRequestErrors } from 'utils/errors';
 
 export const EditUserAddressScreen = () => {
   const user = useSelector((state: RootState) => state.user.currentUser) as User;
   const [ form, setForm ] = useState<AddressApi | undefined>(user?.address);
   const [ loading, setLoading ] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { t } = useTranslation();
 
   const onChange = (field: string, value: string | number): void => {
@@ -43,9 +42,8 @@ export const EditUserAddressScreen = () => {
       dispatch(setCurrentUser(res));
       handleSuccessAlert();
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      handleErrorAlert(errs);
-      setErrors([ ...errs ]);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
     setLoading(false);
   };
@@ -61,7 +59,6 @@ export const EditUserAddressScreen = () => {
     )}
     >
       <View>
-        {drawErrorAlert(errors)}
         {drawSuccessAlert(t('alerts.success.save.title'))}
         <View style={styles.inputMargin}>
           <TextInput

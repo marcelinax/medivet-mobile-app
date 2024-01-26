@@ -21,7 +21,7 @@ export const AvatarInput = ({
 }: Props) => {
   const [ status, requestPermission ] = ImagePicker.useMediaLibraryPermissions();
   const [ image, setImage ] = useState<string>(url || '');
-  const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const { drawActionsSheet, handleActionsSheet } = useActionsSheet();
   const confirmation = useConfirmationAlert();
   const { t } = useTranslation();
@@ -29,7 +29,7 @@ export const AvatarInput = ({
   const onPickImage = async (): Promise<void> => {
     if (!status?.granted) {
       if (!status?.canAskAgain) {
-        handleErrorAlert([], true);
+        handleErrorAlert([], t('errors.no_media_library_permission.title'));
       } else {
         await requestPermission();
       }
@@ -75,11 +75,6 @@ export const AvatarInput = ({
     <>
       {drawActionsSheet(actions)}
       <View style={styles.container}>
-        {drawErrorAlert(
-          [],
-          t('errors.no_media_library_permission.title'),
-          t('errors.no_media_library_permission.message'),
-        )}
         <Avatar
           size="large"
           url={image}

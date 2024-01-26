@@ -26,7 +26,7 @@ interface Props {
 export const AppointmentSummarySection = ({ appointment }: Props) => {
   const { date, medicalService } = appointment;
   const { t } = useTranslation();
-  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const { handleSuccessAlert, drawSuccessAlert } = useSuccessAlert();
   const user = useSelector((state: RootState) => state.user.currentUser) as User;
   const isVet = hasVetRole(user);
@@ -39,7 +39,7 @@ export const AppointmentSummarySection = ({ appointment }: Props) => {
     } else if (calendarStatus?.canAskAgain) {
       await requestCalendarPermission();
     } else {
-      handleErrorAlert([], true);
+      handleErrorAlert([], t('errors.no_calendar_permission.title'));
     }
   };
 
@@ -110,11 +110,6 @@ export const AppointmentSummarySection = ({ appointment }: Props) => {
 
   return (
     <>
-      {drawErrorAlert(
-        [],
-        t('errors.no_calendar_permission.title'),
-        t('errors.no_calendar_permission.message'),
-      )}
       {drawSuccessAlert(t('alerts.success.appointment_event.title'), t('alerts.success.appointment_event.description'))}
       <View>
         <Text style={styles.heading}>{t('words.appointment_summary.title').toUpperCase()}</Text>

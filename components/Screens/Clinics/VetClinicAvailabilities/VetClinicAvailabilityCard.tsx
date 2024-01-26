@@ -12,12 +12,11 @@ import { OutlineCard } from 'components/Composition/OutlineCard';
 import { parseDateFormatToTime, parseTimeStringToDate } from 'utils/formatDate';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from 'types/Navigation/types';
-import { useState } from 'react';
-import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { VetAvailabilityApi } from 'api/vetAvailability/vetAvailability.api';
 import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
 import { useTranslation } from 'react-i18next';
+import { getRequestErrors } from 'utils/errors';
 
 interface Props {
   availability: VetAvailability;
@@ -27,8 +26,7 @@ interface Props {
 
 export const VetClinicAvailabilityCard = ({ availability, onSuccessRemove, setRemoveLoading }: Props) => {
   const navigation = useNavigation<NavigationProps>();
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
-  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const confirmation = useConfirmationAlert();
   const { t } = useTranslation();
 
@@ -106,9 +104,8 @@ export const VetClinicAvailabilityCard = ({ availability, onSuccessRemove, setRe
       await VetAvailabilityApi.removeVetAvailability(availability.id);
       onSuccessRemove();
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      setErrors([ ...errs ]);
-      handleErrorAlert(errs);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
     setRemoveLoading(false);
   };
@@ -132,7 +129,6 @@ export const VetClinicAvailabilityCard = ({ availability, onSuccessRemove, setRe
 
   return (
     <View style={styles.container}>
-      {drawErrorAlert(errors)}
       <View>
         <SwipeButton
           size="small"

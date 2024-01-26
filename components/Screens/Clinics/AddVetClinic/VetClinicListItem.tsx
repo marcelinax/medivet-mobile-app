@@ -18,9 +18,9 @@ import { Ionicons } from '@expo/vector-icons';
 import icons from 'themes/icons';
 import { FullScreenLoading } from 'components/Composition/FullScreenLoading';
 import { ClinicApi } from 'api/clinic/clinic.api';
-import { ApiError } from 'types/api/error/types';
 import { useTranslation } from 'react-i18next';
 import { ClinicAssignmentRequestStatus } from 'constants/enums/enums';
+import { getRequestErrors } from 'utils/errors';
 
 interface Props {
   clinic: Clinic;
@@ -28,12 +28,11 @@ interface Props {
 
 export const VetClinicListItem = ({ clinic }: Props) => {
   const confirmation = useConfirmationAlert();
-  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const navigation = useNavigation<NavigationProps>();
   const user = useSelector((state: RootState) => state.user.currentUser);
   const [ loading, setLoading ] = useState<boolean>(false);
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert(() => navigation.goBack());
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { t } = useTranslation();
 
   const handleAddClinic = async () => {
@@ -49,9 +48,8 @@ export const VetClinicListItem = ({ clinic }: Props) => {
       handleSuccessAlert();
     } catch (err: any) {
       setLoading(false);
-      const errs = [ err?.response?.data ];
-      setErrors([ ...errs ]);
-      handleErrorAlert(errs);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
   };
 
@@ -69,7 +67,6 @@ export const VetClinicListItem = ({ clinic }: Props) => {
     <TouchableWithoutFeedback onPress={handleAddClinic}>
       <View>
         <FullScreenLoading loading={loading} />
-        {drawErrorAlert(errors)}
         {drawSuccessAlert()}
         <View style={simpleListItemStyles.container}>
           <View style={simpleListItemStyles.innerContainer}>

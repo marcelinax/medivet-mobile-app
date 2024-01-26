@@ -1,7 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { NavigationProps, RouteProps } from 'types/Navigation/types';
 import { useEffect, useState } from 'react';
-import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { View } from 'react-native';
 import { Appointment } from 'types/api/appointment/types';
@@ -16,6 +15,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { User } from 'types/api/user/types';
 import { AppointmentAnimalInfoSection } from 'components/Screens/Appointments/Preview/AppointmentAnimalInfoSection';
+import { getRequestErrors } from 'utils/errors';
 
 export const appointmentPreviewInclude = 'animal,animal.owner,medicalService,medicalService.user,medicalService.user.clinics,'
   + 'medicalService.clinic,medicalService.medicalService,medicalService.medicalService.specialization,'
@@ -23,8 +23,7 @@ export const appointmentPreviewInclude = 'animal,animal.owner,medicalService,med
 
 export const AppointmentPreview = () => {
   const route = useRoute<RouteProps<'Appointment'>>();
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
-  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const [ appointment, setAppointment ] = useState<Appointment | undefined>();
   const navigation = useNavigation<NavigationProps>();
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
@@ -52,15 +51,13 @@ export const AppointmentPreview = () => {
       const res = await AppointmentApi.getAppointment(route.params.appointmentId, params);
       setAppointment(res);
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      handleErrorAlert(errs);
-      setErrors([ ...errs ]);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
   };
 
   return (
     <>
-      {drawErrorAlert(errors)}
       {drawSuccessAlert()}
       <View>
         {!appointment ? <Loading /> : (

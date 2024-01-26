@@ -25,6 +25,7 @@ import { useTranslation } from 'react-i18next';
 import { getAnimalGenderSelectOptions, getAnimalTypeSelectOptions } from 'constants/selectOptions';
 import { setForceFetchingList } from 'store/list/listSlice';
 import { NavigationProps } from 'types/Navigation/types';
+import { getRequestErrors } from 'utils/errors';
 
 interface Props {
   animal?: Animal;
@@ -47,7 +48,7 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
 ) => {
   const navigation = useNavigation<NavigationProps>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
-  const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
   const [ firstRender, setFirstRender ] = useState<boolean>(true);
   const dispatch = useDispatch();
@@ -148,7 +149,7 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
       }
       handleSuccessAlert();
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
+      const errs = getRequestErrors(err);
       setErrors([ ...errs ]);
       handleErrorAlert(errs);
     }
@@ -160,9 +161,9 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
       setLoading(true);
       try {
         const formData = appendFileToFormData(form.profilePhotoUrl, 'animal-profile-image.jpg');
-        const res = await AnimalApi.uploadNewAnimalProfilePhoto(Number(animal?.id), formData);
+        await AnimalApi.uploadNewAnimalProfilePhoto(Number(animal?.id), formData);
       } catch (err: any) {
-        const errs = [ err?.response?.data ];
+        const errs = getRequestErrors(err);
         handleErrorAlert(errs);
         setErrors([ ...errs ]);
       }
@@ -174,7 +175,7 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
     if (!form?.profilePhotoUrl && animal?.profilePhotoUrl) {
       setLoading(true);
       try {
-        const res = await AnimalApi.removeAnimalProfilePhoto(Number(animal?.id));
+        await AnimalApi.removeAnimalProfilePhoto(Number(animal?.id));
       } catch (err: any) {
         const errs = [ err?.response?.data ];
         handleErrorAlert(errs);
@@ -192,7 +193,6 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
 
   return (
     <View>
-      {drawErrorAlert(errors)}
       {drawSuccessAlert()}
       {animal?.id && (
         <View style={styles.avatarContainer}>

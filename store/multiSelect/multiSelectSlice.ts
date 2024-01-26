@@ -35,7 +35,7 @@ export const multiSelectSlice = createSlice({
         ...state.multiSelects, {
           id: action.payload,
           selectedOptions: [],
-          fetch: async (params?: Record<string, any>) => [],
+          fetch: async () => [],
           loading: false,
           onChoose: () => {
           },

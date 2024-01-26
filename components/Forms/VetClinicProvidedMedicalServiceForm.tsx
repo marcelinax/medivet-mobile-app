@@ -26,6 +26,7 @@ import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { MoneyInput } from 'components/Inputs/MoneyInput';
 import { HandleSubmitForm } from 'types/components/Forms/types';
 import { useTranslation } from 'react-i18next';
+import { getRequestErrors } from 'utils/errors';
 
 interface Props {
   providedMedicalService?: VetClinicProvidedMedicalService;
@@ -61,7 +62,7 @@ export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitForm, 
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const [ firstRender, setFirstRender ] = useState<boolean>(true);
   const user = useSelector((state: RootState) => state.user.currentUser);
-  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const parsedUserVetSpecializations = parseDataToSelectOptions(user?.specializations || [], 'name', 'id');
   const { t } = useTranslation();
 
@@ -137,7 +138,7 @@ export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitForm, 
       }
       navigation.navigate('Vet Clinic Provided Medical Services');
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
+      const errs = getRequestErrors(err);
       handleErrorAlert(errs);
       setErrors([ ...errs ]);
     }
@@ -146,7 +147,6 @@ export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitForm, 
 
   return (
     <View>
-      {drawErrorAlert(errors)}
       <View>
         <SelectInput
           onChoose={(specialization) => handleChangeInput('specialization', specialization)}

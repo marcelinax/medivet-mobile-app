@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import { RouteProps } from 'types/Navigation/types';
-import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { VetClinicProvidedMedicalServiceForm } from 'components/Forms/VetClinicProvidedMedicalServiceForm';
 import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedicalService/types';
@@ -14,12 +13,12 @@ import { LoadingContainer } from 'components/Composition/LoadingContainer';
 import { StyleSheet } from 'react-native';
 import { HandleSubmitForm } from 'types/components/Forms/types';
 import { useTranslation } from 'react-i18next';
+import { getRequestErrors } from 'utils/errors';
 
 export const EditVetClinicProvidedMedicalServiceScreen = () => {
   const formRef = useRef<HandleSubmitForm>(null);
   const route = useRoute<RouteProps<'Edit Vet Clinic Provided Medical Service'>>();
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
-  const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const [ medicalService, setMedicalService ] = useState<VetClinicProvidedMedicalService | undefined>();
   const { t } = useTranslation();
   const [ loading, setLoading ] = useState(false);
@@ -34,9 +33,8 @@ export const EditVetClinicProvidedMedicalServiceScreen = () => {
       const res = await VetClinicProvidedMedicalServiceApi.getVetClinicProvidedMedicalService(route.params.medicalServiceId, params);
       setMedicalService(res);
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      setErrors([ ...errs ]);
-      handleErrorAlert(errs);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
   };
 
@@ -52,19 +50,16 @@ export const EditVetClinicProvidedMedicalServiceScreen = () => {
       )}
       stickyFooterStyles={styles.footer}
     >
-      <>
-        {drawErrorAlert(errors)}
-        {
-          !medicalService ? <LoadingContainer />
-            : (
-              <VetClinicProvidedMedicalServiceForm
-                ref={formRef}
-                providedMedicalService={medicalService}
-                setLoading={setLoading}
-              />
-            )
-        }
-      </>
+      {
+        !medicalService ? <LoadingContainer />
+          : (
+            <VetClinicProvidedMedicalServiceForm
+              ref={formRef}
+              providedMedicalService={medicalService}
+              setLoading={setLoading}
+            />
+          )
+      }
     </DefaultLayout>
   );
 };

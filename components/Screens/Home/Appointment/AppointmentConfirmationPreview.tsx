@@ -7,14 +7,14 @@ import colors from 'themes/colors';
 import moment from 'moment';
 import { BreakLine } from 'components/Composition/BreakLine';
 import { useTranslation } from 'react-i18next';
-import { forwardRef, useImperativeHandle, useState } from 'react';
+import { forwardRef, useImperativeHandle } from 'react';
 import { HandleSubmitForm } from 'types/components/Forms/types';
-import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { CreateAppointment } from 'types/api/appointment/types';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from 'types/Navigation/types';
 import { AppointmentApi } from 'api/appointment/appointment.api';
+import { getRequestErrors } from 'utils/errors';
 
 interface Props {
   setLoading: (loading: boolean) => void;
@@ -23,8 +23,7 @@ interface Props {
 export const AppointmentConfirmationPreview = forwardRef<HandleSubmitForm, Props>(({ setLoading }, ref) => {
   const { appointmentDetails } = useSelector((state: RootState) => state.appointment);
   const { t } = useTranslation();
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
-  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const navigation = useNavigation<NavigationProps>();
 
   useImperativeHandle(ref, () => ({
@@ -50,16 +49,14 @@ export const AppointmentConfirmationPreview = forwardRef<HandleSubmitForm, Props
       navigation.navigate('Appointment', { appointmentId: res.id });
       // TODO po utworzeniu dodać alert + przenieść na podgląd wizyty
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      setErrors([ ...errs ]);
-      handleErrorAlert(errs);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
     setLoading(false);
   };
 
   return (
     <View>
-      {drawErrorAlert(errors)}
       <Text style={styles.heading}>
         {t('words.summary.title')}
       </Text>

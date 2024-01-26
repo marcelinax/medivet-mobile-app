@@ -10,22 +10,21 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'components/Buttons/Button';
 import { useDispatch } from 'react-redux';
 import { setCurrentClinic } from 'store/clinic/clinicSlice';
-import { ApiError } from 'types/api/error/types';
 import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
 import colors from 'themes/colors';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 import { useTranslation } from 'react-i18next';
 import { ClinicAssignmentRequestStatus } from 'constants/enums/enums';
+import { getRequestErrors } from 'utils/errors';
 
 export const VetClinicScreen = () => {
   const route = useRoute<RouteProps<'Vet Clinic'>>();
   const navigation = useNavigation<NavigationProps>();
   const [ clinic, setClinic ] = useState<Clinic | undefined>();
-  const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
   const dispatch = useDispatch();
   const confirmation = useConfirmationAlert();
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
   const isClinicAboutToRemove = !!clinic?.clinicAssignmentRequests?.find(
     (request) => request.status === ClinicAssignmentRequestStatus.TO_UNASSIGN
       && request.clinic.id === clinic?.id,
@@ -51,9 +50,8 @@ export const VetClinicScreen = () => {
       setClinic(res);
       dispatch(setCurrentClinic(res));
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      setErrors([ ...errs ]);
-      handleErrorAlert(errs);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
   };
 
@@ -67,9 +65,8 @@ export const VetClinicScreen = () => {
       handleSuccessAlert();
       fetchVetClinic();
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      setErrors([ ...errs ]);
-      handleErrorAlert(errs);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
   };
 
@@ -83,16 +80,14 @@ export const VetClinicScreen = () => {
       handleSuccessAlert();
       fetchVetClinic();
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      setErrors([ ...errs ]);
-      handleErrorAlert(errs);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
   };
 
   return (
     <DefaultLayout>
       <>
-        {drawErrorAlert(errors)}
         {drawSuccessAlert()}
         {
           !clinic ? <LoadingContainer />

@@ -10,7 +10,7 @@ import {
   getButtonBorderColor,
   getButtonFontWeight,
   getButtonTextColor,
-} from './utils/styles';
+} from 'components/Buttons/utils/styles';
 
 export const LoadingButton = ({
   title,

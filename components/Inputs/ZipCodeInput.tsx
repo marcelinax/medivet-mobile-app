@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { InputProps } from 'types/components/Inputs/types';
-import { Input } from './Input';
+import { Input } from 'components/Inputs/Input';
 
 export const ZipCodeInput = ({ ...props }: InputProps) => {
   const [ value, setValue ] = useState<string>(props.value);

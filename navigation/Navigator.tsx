@@ -56,7 +56,11 @@ export const Navigator = () => {
     dispatch(setCurrentUser(user));
   };
 
-  const getSelectScreensOptions = (route: RouteProp<RootStackParamList, keyof RootStackParamList>, isMultiSelect?: boolean): NativeStackNavigationOptions => {
+  const getSelectScreensOptions = (
+    route: RouteProp<RootStackParamList,
+      keyof RootStackParamList>,
+    isMultiSelect?: boolean,
+  ): NativeStackNavigationOptions => {
     const routeName = isMultiSelect ? 'Multi Select' : 'Select';
     const title = route.name === routeName && route.params && 'title' in route.params ? route.params.title : '';
     return {

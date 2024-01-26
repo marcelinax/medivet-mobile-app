@@ -8,12 +8,12 @@ import { List } from 'components/List/List';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
-import { ApiError } from 'types/api/error/types';
 import {
   setSingleMultiSelectButtonLoading,
   setSingleMultiSelectSelectedOptions,
 } from 'store/multiSelect/multiSelectSlice';
 import { useTranslation } from 'react-i18next';
+import { getRequestErrors } from 'utils/errors';
 
 export const MultiSelect = () => {
   const route = useRoute<RouteProps<'Multi Select'>>();
@@ -24,9 +24,8 @@ export const MultiSelect = () => {
   const navigation = useNavigation<NavigationProps>();
   const selectedOptions = [ ...(multiSelectState?.selectedOptions || []) ];
   const [ internalSelectedOptions, setInternalSelectedOptions ] = useState<SelectOptionProps[]>(selectedOptions);
-  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const dispatch = useDispatch();
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { t } = useTranslation();
 
   const handleChangeSelectedOptions = (newOption: SelectOptionProps): void => {
@@ -53,9 +52,8 @@ export const MultiSelect = () => {
       if (internalSelectedOptions && multiSelectState?.onChoose) await multiSelectState.onChoose(internalSelectedOptions);
       navigation.goBack();
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      setErrors([ ...errs ]);
-      handleErrorAlert(errs);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
     dispatch(setSingleMultiSelectButtonLoading({
       loading: false,
@@ -78,20 +76,15 @@ export const MultiSelect = () => {
   );
 
   return (
-    <>
-      {drawErrorAlert(errors)}
-      {
-        multiSelectState?.fetch && (
-          <List
-            onFetch={multiSelectState.fetch}
-            renderItem={renderOption}
-            withSearch
-            stickyFooterButtonAction={onChoose}
-            stickyButtonLoading={multiSelectState.loading}
-            stickyFooterButtonTitle={t('actions.choose.title')}
-          />
-        )
-      }
-    </>
+    multiSelectState?.fetch ? (
+      <List
+        onFetch={multiSelectState.fetch}
+        renderItem={renderOption}
+        withSearch
+        stickyFooterButtonAction={onChoose}
+        stickyButtonLoading={multiSelectState.loading}
+        stickyFooterButtonTitle={t('actions.choose.title')}
+      />
+    ) : <></>
   );
 };

@@ -1,6 +1,6 @@
 import { InputProps } from 'types/components/Inputs/types';
 import { useTranslation } from 'react-i18next';
-import { NumberInput } from './NumberInput';
+import { NumberInput } from 'components/Inputs/NumberInput';
 
 interface Props extends InputProps {
   keyboardType?: 'number-pad' | 'decimal-pad' | 'numeric' | 'phone-pad';

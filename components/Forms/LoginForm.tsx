@@ -16,6 +16,7 @@ import { AuthCredentials } from 'types/api/auth/types';
 import { ApiError } from 'types/api/error/types';
 import { NavigationProps } from 'types/Navigation/types';
 import { useTranslation } from 'react-i18next';
+import { getRequestErrors } from 'utils/errors';
 
 export const LoginForm = () => {
   const [ form, setForm ] = useState<AuthCredentials>({
@@ -24,7 +25,7 @@ export const LoginForm = () => {
   });
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const [ loading, setLoading ] = useState<boolean>(false);
-  const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const dispatch = useDispatch();
   const navigation = useNavigation<NavigationProps>();
   const { t } = useTranslation();
@@ -43,7 +44,7 @@ export const LoginForm = () => {
       await SecureStore.setItemAsync('token', res.access_token);
       dispatch(setToken(res.access_token));
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
+      const errs = getRequestErrors(err);
       handleErrorAlert(errs);
       setErrors([ ...errs ]);
     }
@@ -55,53 +56,50 @@ export const LoginForm = () => {
   };
 
   return (
-    <>
-      {drawErrorAlert(errors)}
-      <View>
-        <TextInput
-          value={form.email}
-          onChangeText={(e) => onChange('email', e)}
-          variant="underline"
-          placeholder={t('words.email.title')}
-          isClearable
-          keyboardType="email-address"
-          errors={getInputErrors(errors, 'email')}
-        />
-        <PasswordInput
-          variant="underline"
-          value={form.password}
-          errors={getInputErrors(errors, 'password')}
-          onChangeText={(e) => onChange('password', e)}
-          placeholder={t('words.password.title')}
-        />
+    <View>
+      <TextInput
+        value={form.email}
+        onChangeText={(e) => onChange('email', e)}
+        variant="underline"
+        placeholder={t('words.email.title')}
+        isClearable
+        keyboardType="email-address"
+        errors={getInputErrors(errors, 'email')}
+      />
+      <PasswordInput
+        variant="underline"
+        value={form.password}
+        errors={getInputErrors(errors, 'password')}
+        onChangeText={(e) => onChange('password', e)}
+        placeholder={t('words.password.title')}
+      />
+      <Button
+        variant="link"
+        title={t('actions.forgot_password.title')}
+        style={{ marginTop: 10 }}
+        color="light"
+        fontWeight="light"
+      />
+      <LoadingButton
+        variant="solid"
+        title={t('actions.sign_in.title')}
+        loading={loading}
+        style={{ marginTop: 10 }}
+        onPress={onSignIn}
+      />
+      <View style={styles.signUpButtonContainer}>
+        <Text style={styles.signUpText}>
+          {t('actions.no_account_yet.title')}
+        </Text>
         <Button
           variant="link"
-          title={t('actions.forgot_password.title')}
-          style={{ marginTop: 10 }}
-          color="light"
-          fontWeight="light"
+          title={t('actions.sign_up.title')}
+          color="secondary"
+          fontWeight="bolder"
+          onPress={onSignUp}
         />
-        <LoadingButton
-          variant="solid"
-          title={t('actions.sign_in.title')}
-          loading={loading}
-          style={{ marginTop: 10 }}
-          onPress={onSignIn}
-        />
-        <View style={styles.signUpButtonContainer}>
-          <Text style={styles.signUpText}>
-            {t('actions.no_account_yet.title')}
-          </Text>
-          <Button
-            variant="link"
-            title={t('actions.sign_up.title')}
-            color="secondary"
-            fontWeight="bolder"
-            onPress={onSignUp}
-          />
-        </View>
       </View>
-    </>
+    </View>
   );
 };
 

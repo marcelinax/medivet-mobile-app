@@ -10,17 +10,16 @@ import { SelectOption } from 'components/Inputs/SelectInput/SelectOption';
 import { List } from 'components/List/List';
 import { SimpleList } from 'components/List/SimpleList';
 import { setSingleSelectButtonLoading, setSingleSelectSelectedOption } from 'store/select/selectSlice';
-import { ApiError } from 'types/api/error/types';
 import { useTranslation } from 'react-i18next';
+import { getRequestErrors } from 'utils/errors';
 
 export const Select = () => {
   const route = useRoute<RouteProps<'Select'>>();
   const selectId = route.params.id;
   const selectState = useSelector((state: RootState) => state.select.selects.find((select) => select.id === selectId));
   const navigation = useNavigation<NavigationProps>();
-  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const dispatch = useDispatch();
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
   const [ internalSelectedOption, setInternalSelectedOption ] = useState<SelectOptionProps | undefined>(selectState?.selectedOption);
   const { t } = useTranslation();
   const handleChangeSelectedOption = (option: SelectOptionProps): void => {
@@ -40,9 +39,8 @@ export const Select = () => {
       if (internalSelectedOption && selectState?.onChoose) await selectState.onChoose(internalSelectedOption);
       navigation.goBack();
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      setErrors([ ...errs ]);
-      handleErrorAlert(errs);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
     dispatch(setSingleSelectButtonLoading({
       loading: false,
@@ -62,29 +60,24 @@ export const Select = () => {
   );
 
   return (
-    <>
-      {drawErrorAlert(errors)}
-      {
-        selectState?.fetch ? (
-          <List
-            onFetch={selectState.fetch}
-            renderItem={renderOption}
-            withSearch
-            stickyFooterButtonAction={onChoose}
-            stickyButtonLoading={selectState.loading}
-            stickyFooterButtonTitle={t('actions.choose.title')}
-          />
-        ) : (
-          <SimpleList
-            data={selectState?.options || []}
-            renderItem={renderOption}
-            separateOptions
-            stickyFooterButtonAction={onChoose}
-            stickyButtonLoading={selectState?.loading}
-            stickyFooterButtonTitle={t('actions.choose.title')}
-          />
-        )
-      }
-    </>
+    selectState?.fetch ? (
+      <List
+        onFetch={selectState.fetch}
+        renderItem={renderOption}
+        withSearch
+        stickyFooterButtonAction={onChoose}
+        stickyButtonLoading={selectState.loading}
+        stickyFooterButtonTitle={t('actions.choose.title')}
+      />
+    ) : (
+      <SimpleList
+        data={selectState?.options || []}
+        renderItem={renderOption}
+        separateOptions
+        stickyFooterButtonAction={onChoose}
+        stickyButtonLoading={selectState?.loading}
+        stickyFooterButtonTitle={t('actions.choose.title')}
+      />
+    )
   );
 };

@@ -6,13 +6,13 @@ import { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { NavigationProps, RouteProps } from 'types/Navigation/types';
 import { RatingInput } from 'components/Inputs/RatingInput';
-import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { CreateVetOpinion } from 'types/api/opinion/types';
 import { useDispatch } from 'react-redux';
 import { setForceFetchingList } from 'store/list/listSlice';
 import { OpinionApi } from 'api/opinion/opinion.api';
+import { getRequestErrors } from 'utils/errors';
 
 export const VetOpinionScreen = () => {
   const { t } = useTranslation();
@@ -20,8 +20,7 @@ export const VetOpinionScreen = () => {
   const navigation = useNavigation<NavigationProps>();
   const [ opinion, setOpinion ] = useState<string>('');
   const [ rating, setRating ] = useState<number>(0);
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
-  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const [ loading, setLoading ] = useState(false);
   const dispatch = useDispatch();
 
@@ -52,9 +51,8 @@ export const VetOpinionScreen = () => {
         });
       }
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      setErrors([ ...errs ]);
-      handleErrorAlert(errs);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
     setLoading(false);
   };
@@ -62,7 +60,6 @@ export const VetOpinionScreen = () => {
   return (
     <DefaultLayout>
       <View>
-        {drawErrorAlert(errors)}
         <TextInput
           variant="outline"
           value={opinion}

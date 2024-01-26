@@ -11,8 +11,6 @@ import { AppointmentStatus } from 'constants/enums/enums';
 import { BreakLine } from 'components/Composition/BreakLine';
 import { appointmentPreviewInclude } from 'components/Screens/Appointments/Preview/AppointmentPreview';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
-import { useState } from 'react';
-import { ApiError } from 'types/api/error/types';
 import { AppointmentApi } from 'api/appointment/appointment.api';
 import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 import { useSelector } from 'react-redux';
@@ -21,6 +19,7 @@ import { User } from 'types/api/user/types';
 import { hasVetRole } from 'utils/hasVetRole';
 import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
 import moment from 'moment';
+import { getRequestErrors } from 'utils/errors';
 
 interface Props {
   appointment: Appointment;
@@ -32,9 +31,8 @@ export const AppointmentStatusSection = ({ appointment, isAddOpinionButtonShown,
   const { status, medicalService } = appointment;
   const { t } = useTranslation();
   const navigation = useNavigation<NavigationProps>();
-  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const { handleSuccessAlert, drawSuccessAlert } = useSuccessAlert();
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
   const user = useSelector((state: RootState) => state.user.currentUser) as User;
   const isVet = hasVetRole(user);
   const confirmation = useConfirmationAlert();
@@ -50,9 +48,8 @@ export const AppointmentStatusSection = ({ appointment, isAddOpinionButtonShown,
       setAppointment(res);
       handleSuccessAlert();
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      handleErrorAlert(errs);
-      setErrors([ ...errs ]);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
   };
 
@@ -67,9 +64,8 @@ export const AppointmentStatusSection = ({ appointment, isAddOpinionButtonShown,
       setAppointment(res);
       handleSuccessAlert();
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      handleErrorAlert(errs);
-      setErrors([ ...errs ]);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
   };
 
@@ -91,7 +87,6 @@ export const AppointmentStatusSection = ({ appointment, isAddOpinionButtonShown,
 
   return (
     <View>
-      {drawErrorAlert(errors)}
       {drawSuccessAlert()}
       <Text style={styles.heading}>{t('words.appointment_status.title').toUpperCase()}</Text>
       <AppointmentStatusInfo status={status} />

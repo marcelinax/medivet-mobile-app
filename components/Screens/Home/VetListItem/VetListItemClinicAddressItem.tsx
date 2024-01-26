@@ -11,7 +11,6 @@ import {
 import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedicalService/types';
 import { Loading } from 'components/Composition/Loading';
 import { User } from 'types/api/user/types';
-import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { useTranslation } from 'react-i18next';
 import { AvailableDateApi } from 'api/availableDate/availableDate.api';
@@ -23,6 +22,7 @@ import { RootState } from 'store/store';
 import { SelectOptionProps } from 'types/components/Inputs/types';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from 'types/Navigation/types';
+import { getRequestErrors } from 'utils/errors';
 
 interface Props {
   clinic: Clinic;
@@ -32,8 +32,7 @@ interface Props {
 export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
   const [ medicalService, setMedicalService ] = useState<VetClinicProvidedMedicalService | undefined>(undefined);
   const [ availableDate, setAvailableDate ] = useState<AvailableDate | undefined>();
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
-  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const { t } = useTranslation();
   const [ loading, setLoading ] = useState(true);
   const filters = useSelector((state: RootState) => state.list.selectedFilters);
@@ -48,7 +47,9 @@ export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
     if (medicalService?.id) fetchFirstAvailableDate();
   }, [ medicalService?.id ]);
 
-  // TODO jeżeli medical service został już raz pobrany to niech doda sie do stanu a pozniej przy ponownym wejsciu w zakładkę korzysta z tego pobranego a nie pobiera na nowo
+  // TODO jeżeli medical service został już raz pobrany to
+  // TODO niech doda sie do stanu a pozniej przy ponownym wejsciu w
+  // TODO  zakładkę korzysta z tego pobranego a nie pobiera na nowo
 
   const fetchMedicalServices = async () => {
     try {
@@ -70,9 +71,8 @@ export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
       const res = await VetClinicProvidedMedicalServiceApi.getVetClinicProvidedMedicalServices(clinic.id, params);
       setMedicalService(res[0]);
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      setErrors([ ...errs ]);
-      handleErrorAlert(errs);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
   };
 
@@ -81,9 +81,8 @@ export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
       const res = await AvailableDateApi.getAvailableDate(vet.id, medicalService!.id);
       setAvailableDate(res);
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      setErrors([ ...errs ]);
-      handleErrorAlert(errs);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
     setLoading(false);
   };
@@ -130,73 +129,70 @@ export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
   };
 
   return (
-    <>
-      {drawErrorAlert(errors)}
-      <View>
-        <View style={styles.infoContainer}>
-          <Ionicons
-            name={icons.LOCATION}
-            size={20}
-            color={colors.PRIMARY}
-            style={styles.icon}
+    <View>
+      <View style={styles.infoContainer}>
+        <Ionicons
+          name={icons.LOCATION}
+          size={20}
+          color={colors.PRIMARY}
+          style={styles.icon}
+        />
+        <View>
+          <FormatAddress
+            address={clinic.address}
+            style={styles.title}
           />
-          <View>
-            <FormatAddress
-              address={clinic.address}
-              style={styles.title}
-            />
-            <Text style={styles.description}>{clinic.name}</Text>
-          </View>
+          <Text style={styles.description}>{clinic.name}</Text>
         </View>
-        {
-          !medicalService || loading ? <Loading /> : (
-            <>
-              <View style={styles.infoContainer}>
-                <Ionicons
-                  name={icons.MEDKIT_OUTLINE}
-                  size={18}
-                  color={colors.PRIMARY}
-                  style={styles.icon}
-                />
-                <Text style={styles.title}>
-                  {medicalService.medicalService.name}
-                </Text>
-                <Text style={styles.price}>
-                  {`${medicalService.price} PLN`}
-                </Text>
-              </View>
-              <View style={styles.infoContainer}>
-                <Ionicons
-                  name={icons.CALENDAR_OUTLINE}
-                  size={20}
-                  color={colors.PRIMARY}
-                  style={styles.icon}
-                />
-                {drawAvailableDateText()}
-              </View>
-              {
-                availableDate && (
-                  <View style={styles.availableDatesContainer}>
-                    {drawAvailableDateHours()}
-                    {availableDate.dates.length > 3 && (
-                      <ReceptionHour
-                        variant="small"
-                        hour={t('words.more.title')}
-                        onPress={() => navigation.navigate('Appointment Calendar', {
-                          vet,
-                          clinicId: clinic.id,
-                          medicalService,
-                        })}
-                      />
-                    )}
-                  </View>
-                )
-              }
-            </>
-          )
-        }
       </View>
-    </>
+      {
+        !medicalService || loading ? <Loading /> : (
+          <>
+            <View style={styles.infoContainer}>
+              <Ionicons
+                name={icons.MEDKIT_OUTLINE}
+                size={18}
+                color={colors.PRIMARY}
+                style={styles.icon}
+              />
+              <Text style={styles.title}>
+                {medicalService.medicalService.name}
+              </Text>
+              <Text style={styles.price}>
+                {`${medicalService.price} PLN`}
+              </Text>
+            </View>
+            <View style={styles.infoContainer}>
+              <Ionicons
+                name={icons.CALENDAR_OUTLINE}
+                size={20}
+                color={colors.PRIMARY}
+                style={styles.icon}
+              />
+              {drawAvailableDateText()}
+            </View>
+            {
+              availableDate && (
+                <View style={styles.availableDatesContainer}>
+                  {drawAvailableDateHours()}
+                  {availableDate.dates.length > 3 && (
+                    <ReceptionHour
+                      variant="small"
+                      hour={t('words.more.title')}
+                      onPress={() => navigation.navigate('Appointment Calendar', {
+                        vet,
+                        clinicId: clinic.id,
+                        medicalService,
+                      })}
+                    />
+                  )}
+                </View>
+              )
+            }
+          </>
+        )
+      }
+    </View>
   );
 };
 

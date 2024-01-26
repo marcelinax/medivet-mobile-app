@@ -1,7 +1,7 @@
 import { VetSpecialization } from 'types/api/user/types';
 import { simpleListItemStyles } from 'screens/utils/styles';
 import { Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { SwipeButtonActionProps } from 'types/components/Buttons/types';
 import { SwipeButton } from 'components/Buttons/SwipeButton/SwipeButton';
 import { BreakLine } from 'components/Composition/BreakLine';
@@ -13,8 +13,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
-import { ApiError } from 'types/api/error/types';
 import { useTranslation } from 'react-i18next';
+import { getRequestErrors } from 'utils/errors';
 
 interface Props {
   vetSpecialization: VetSpecialization;
@@ -26,8 +26,7 @@ export const UserSpecializationListItem = ({ vetSpecialization, setRemoveLoading
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.currentUser);
   const confirmation = useConfirmationAlert();
-  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
+  const { handleErrorAlert } = useErrorAlert();
   const { t } = useTranslation();
 
   const handleRemove = async () => {
@@ -48,9 +47,8 @@ export const UserSpecializationListItem = ({ vetSpecialization, setRemoveLoading
       }));
       handleSuccessAction();
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      setErrors([ ...errs ]);
-      handleErrorAlert(errs);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
     setRemoveLoading(false);
   };
@@ -65,22 +63,19 @@ export const UserSpecializationListItem = ({ vetSpecialization, setRemoveLoading
   ];
 
   return (
-    <>
-      {drawErrorAlert(errors)}
-      <View
-        style={simpleListItemStyles.container}
+    <View
+      style={simpleListItemStyles.container}
+    >
+      <SwipeButton
+        rightActions={actions}
       >
-        <SwipeButton
-          rightActions={actions}
-        >
-          <View style={simpleListItemStyles.innerContainer}>
-            <View style={simpleListItemStyles.nameContainer}>
-              <Text style={simpleListItemStyles.name}>{vetSpecialization.name}</Text>
-            </View>
+        <View style={simpleListItemStyles.innerContainer}>
+          <View style={simpleListItemStyles.nameContainer}>
+            <Text style={simpleListItemStyles.name}>{vetSpecialization.name}</Text>
           </View>
-        </SwipeButton>
-        <BreakLine />
-      </View>
-    </>
+        </View>
+      </SwipeButton>
+      <BreakLine />
+    </View>
   );
 };

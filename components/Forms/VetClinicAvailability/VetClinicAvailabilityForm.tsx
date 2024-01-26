@@ -28,6 +28,7 @@ import { useTranslation } from 'react-i18next';
 import { getDayOfWeekSelectOptions } from 'constants/selectOptions';
 import { setForceFetchingList } from 'store/list/listSlice';
 import { DayWeek } from 'constants/enums/enums';
+import { getRequestErrors } from 'utils/errors';
 
 interface Props {
   availability?: VetAvailability;
@@ -58,7 +59,7 @@ export const VetClinicAvailabilityForm = forwardRef<HandleSubmitForm, Props>((
   const navigation = useNavigation<NavigationProps>();
   const parsedUserVetSpecializations = parseDataToSelectOptions(user?.specializations || [], 'name', 'id');
   const currentAvailability = useSelector((state: RootState) => state.clinic.currentVetClinicAvailability);
-  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const receptionHoursAsString = JSON.stringify(currentAvailability?.receptionHours || []);
 
   useEffect(() => () => {
@@ -117,7 +118,7 @@ export const VetClinicAvailabilityForm = forwardRef<HandleSubmitForm, Props>((
       dispatch(setForceFetchingList(true));
       navigation.navigate('Vet Clinic Availabilities');
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
+      const errs = getRequestErrors(err);
       handleErrorAlert(errs);
       setErrors([ ...errs ]);
     }
@@ -133,7 +134,6 @@ export const VetClinicAvailabilityForm = forwardRef<HandleSubmitForm, Props>((
 
   return (
     <View>
-      {drawErrorAlert(errors)}
       <View>
         <SelectInput
           onChoose={(specialization) => setForm({

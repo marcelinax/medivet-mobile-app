@@ -14,7 +14,7 @@ export const useActionsSheet = () => {
   );
 
   const handleActionsSheet = () => {
-    !show && setShow(true);
+    if (!show) setShow(true);
   };
 
   return {

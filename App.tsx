@@ -7,6 +7,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { SwipeButtonContext } from 'contexts/buttons/SwipeButtonContext';
 import './i18n.ts';
 import { Platform, UIManager } from 'react-native';
+import { ToastProvider } from 'react-native-toast-notifications';
 
 export default function App() {
   const currentSwipeButton = useRef<Swipeable | null>(null);
@@ -20,15 +21,17 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <ConfirmationAlertContextProvider>
-        <SwipeButtonContext.Provider value={{
-          currentSwipeButton,
-          setCurrentSwipeButton: (swipeButton) => currentSwipeButton.current = swipeButton,
-        }}
-        >
-          <AppWrapper />
-        </SwipeButtonContext.Provider>
-      </ConfirmationAlertContextProvider>
+      <ToastProvider>
+        <ConfirmationAlertContextProvider>
+          <SwipeButtonContext.Provider value={{
+            currentSwipeButton,
+            setCurrentSwipeButton: (swipeButton) => currentSwipeButton.current = swipeButton,
+          }}
+          >
+            <AppWrapper />
+          </SwipeButtonContext.Provider>
+        </ConfirmationAlertContextProvider>
+      </ToastProvider>
     </Provider>
   );
 }

@@ -57,5 +57,7 @@ export const getInputStylesDependingOnVariant = (variant: InputVariant): StylePr
     return inputStyles.outline;
   case 'underline':
     return inputStyles.underline;
+  default:
+    return undefined;
   }
 };

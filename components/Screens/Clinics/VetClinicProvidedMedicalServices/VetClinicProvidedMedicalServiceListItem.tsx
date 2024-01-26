@@ -9,12 +9,11 @@ import { NavigationProps } from 'types/Navigation/types';
 import { SwipeButton } from 'components/Buttons/SwipeButton/SwipeButton';
 import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
-import { useState } from 'react';
-import { ApiError } from 'types/api/error/types';
 import {
   VetClinicProvidedMedicalServiceApi,
 } from 'api/vetClinicProvidedMedicalService/vetClinicProvidedMedicalService.api';
 import { useTranslation } from 'react-i18next';
+import { getRequestErrors } from 'utils/errors';
 
 interface Props {
   medicalService: VetClinicProvidedMedicalService;
@@ -29,8 +28,7 @@ export const VetClinicProvidedMedicalServiceListItem = ({
 }: Props) => {
   const navigation = useNavigation<NavigationProps>();
   const confirmation = useConfirmationAlert();
-  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
+  const { handleErrorAlert } = useErrorAlert();
   const { t } = useTranslation();
 
   const handleEditVetClinicProvidedMedicalService = () => navigation.navigate(
@@ -48,9 +46,8 @@ export const VetClinicProvidedMedicalServiceListItem = ({
       await VetClinicProvidedMedicalServiceApi.removeVetClinicProvidedMedicalService(medicalService.id);
       handleSuccessAction();
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      setErrors([ ...errs ]);
-      handleErrorAlert(errs);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
     setRemoveLoading(false);
   };
@@ -73,38 +70,35 @@ export const VetClinicProvidedMedicalServiceListItem = ({
   ];
 
   return (
-    <>
-      {drawErrorAlert(errors)}
-      <SwipeButton
-        size="small"
-        rightActions={rightActions}
-      >
-        <View style={styles.container}>
-          <OutlineCard>
-            <View>
-              <Text style={styles.name}>{medicalService.medicalService.name}</Text>
-              <Text style={styles.specialization}>{medicalService.medicalService.specialization.name}</Text>
-              <View style={styles.otherInformationContainer}>
-                <Text style={styles.otherInformationLabel}>
-                  {`${t('words.price.title')}: `}
-                </Text>
-                <Text style={styles.otherInformationValue}>
-                  {`${medicalService.price} PLN`}
-                </Text>
-              </View>
-              <View style={styles.otherInformationContainer}>
-                <Text style={styles.otherInformationLabel}>
-                  {`${t('words.average_duration_time.title')}: `}
-                </Text>
-                <Text style={styles.otherInformationValue}>
-                  {`${t('words.minutes.title', { count: medicalService.duration })}`}
-                </Text>
-              </View>
+    <SwipeButton
+      size="small"
+      rightActions={rightActions}
+    >
+      <View style={styles.container}>
+        <OutlineCard>
+          <View>
+            <Text style={styles.name}>{medicalService.medicalService.name}</Text>
+            <Text style={styles.specialization}>{medicalService.medicalService.specialization.name}</Text>
+            <View style={styles.otherInformationContainer}>
+              <Text style={styles.otherInformationLabel}>
+                {`${t('words.price.title')}: `}
+              </Text>
+              <Text style={styles.otherInformationValue}>
+                {`${medicalService.price} PLN`}
+              </Text>
             </View>
-          </OutlineCard>
-        </View>
-      </SwipeButton>
-    </>
+            <View style={styles.otherInformationContainer}>
+              <Text style={styles.otherInformationLabel}>
+                {`${t('words.average_duration_time.title')}: `}
+              </Text>
+              <Text style={styles.otherInformationValue}>
+                {`${t('words.minutes.title', { count: medicalService.duration })}`}
+              </Text>
+            </View>
+          </View>
+        </OutlineCard>
+      </View>
+    </SwipeButton>
   );
 };
 

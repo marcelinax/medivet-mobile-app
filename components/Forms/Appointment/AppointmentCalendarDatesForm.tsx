@@ -1,6 +1,5 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
-import { ApiError } from 'types/api/error/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { AvailableDateApi } from 'api/availableDate/availableDate.api';
 import { AvailableDate } from 'types/api/availableDates/types';
@@ -11,6 +10,7 @@ import { ReceptionHour } from 'components/Composition/ReceptionHour';
 import { EmptyList } from 'components/Composition/EmptyList';
 import { useTranslation } from 'react-i18next';
 import { AppointmentDetails } from 'store/home/appointmentSlice';
+import { getRequestErrors } from 'utils/errors';
 
 interface Props {
   vetId: number;
@@ -22,10 +22,9 @@ interface Props {
 export const AppointmentCalendarDatesForm = ({
   medicalServiceId, vetId, setForm, form,
 }: Props) => {
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
   const [ loading, setLoading ] = useState(true);
   const [ availableDates, setAvailableDates ] = useState<AvailableDate[]>([]);
-  const { handleErrorAlert, drawErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const containerWidth = useRef(0);
   const { t } = useTranslation();
 
@@ -42,9 +41,8 @@ export const AppointmentCalendarDatesForm = ({
       const filteredRes = res.filter((resItem) => resItem.dates.length > 0);
       setAvailableDates(filteredRes);
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      handleErrorAlert(errs);
-      setErrors([ ...errs ]);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
     setLoading(false);
   };
@@ -114,7 +112,6 @@ export const AppointmentCalendarDatesForm = ({
         containerWidth.current = event.nativeEvent.layout.width;
       }}
     >
-      {drawErrorAlert(errors)}
       {
         loading ? <Loading /> : (
           <View style={styles.scrollViewContainer}>

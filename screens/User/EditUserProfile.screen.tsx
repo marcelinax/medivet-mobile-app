@@ -23,6 +23,7 @@ import { SelectOptionProps } from 'types/components/Inputs/types';
 import { removeSingleSelect } from 'store/select/selectSlice';
 import { useTranslation } from 'react-i18next';
 import { getGenderSelectOptions } from 'constants/selectOptions';
+import { getRequestErrors } from 'utils/errors';
 
 interface FormProps {
   name: string;
@@ -41,7 +42,7 @@ export const EditUserProfileScreen = () => {
     gender: getGenderSelectOptions(t).find((gender) => gender.id === user.gender) || getGenderSelectOptions(t)[0],
   });
   const [ errors, setErrors ] = useState<ApiError[]>([]);
-  const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
   const [ loading, setLoading ] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -78,7 +79,7 @@ export const EditUserProfileScreen = () => {
       handleSuccessAlert();
       dispatch(setCurrentUser(res));
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
+      const errs = getRequestErrors(err);
       handleErrorAlert(errs);
       setErrors([ ...errs ]);
     }
@@ -93,7 +94,7 @@ export const EditUserProfileScreen = () => {
         const res = await UserApi.uploadNewUserProfilePhoto(formData);
         dispatch(setCurrentUser(res));
       } catch (err: any) {
-        const errs = [ err?.response?.data ];
+        const errs = getRequestErrors(err);
         handleErrorAlert(errs);
         setErrors([ ...errs ]);
       }
@@ -107,7 +108,7 @@ export const EditUserProfileScreen = () => {
       try {
         await UserApi.removeUserProfilePhoto();
       } catch (err: any) {
-        const errs = [ err?.response?.data ];
+        const errs = getRequestErrors(err);
         handleErrorAlert(errs);
         setErrors([ ...errs ]);
       }
@@ -132,7 +133,6 @@ export const EditUserProfileScreen = () => {
     )}
     >
       <View>
-        {drawErrorAlert(errors)}
         {drawSuccessAlert(t('alerts.success.save.title'))}
         <View style={styles.avatarContainer}>
           <AvatarInput

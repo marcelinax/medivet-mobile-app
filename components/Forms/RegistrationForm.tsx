@@ -24,6 +24,7 @@ import { removeSingleSelect } from 'store/select/selectSlice';
 import { SelectOptionProps } from 'types/components/Inputs/types';
 import { useTranslation } from 'react-i18next';
 import { getGenderSelectOptions } from 'constants/selectOptions';
+import { getRequestErrors } from 'utils/errors';
 
 interface FormProps {
   email: string;
@@ -38,7 +39,7 @@ interface FormProps {
 export const RegistrationForm = () => {
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const [ loading, setLoading ] = useState<boolean>(false);
-  const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const navigation = useNavigation<NavigationProps>();
   const selectedUserRole = useSelector((state: RootState) => state.user.userRole) as UserRoleType;
   const dispatch = useDispatch();
@@ -78,10 +79,10 @@ export const RegistrationForm = () => {
   const onSignUp = async (): Promise<void> => {
     setLoading(true);
     try {
-      const res = await UserApi.registerUser(getParsedFormData());
+      await UserApi.registerUser(getParsedFormData());
       // TODO powinno przenieść do logowania albo zalogować
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
+      const errs = getRequestErrors(err);
       handleErrorAlert(errs);
       setErrors([ ...errs ]);
     }
@@ -97,82 +98,79 @@ export const RegistrationForm = () => {
   // TODO animacja "shake" kiedy regulamin nie został zaakceptowany
 
   return (
-    <>
-      {drawErrorAlert(errors)}
-      <View>
-        <TextInput
-          value={form.email}
-          onChangeText={(e) => onChange('email', e)}
-          variant="underline"
-          placeholder={t('words.email.title')}
-          isClearable
-          keyboardType="email-address"
-          errors={getInputErrors(errors, 'email')}
+    <View>
+      <TextInput
+        value={form.email}
+        onChangeText={(e) => onChange('email', e)}
+        variant="underline"
+        placeholder={t('words.email.title')}
+        isClearable
+        keyboardType="email-address"
+        errors={getInputErrors(errors, 'email')}
+      />
+      <PasswordInput
+        variant="underline"
+        value={form.password}
+        errors={getInputErrors(errors, 'password')}
+        onChangeText={(e) => onChange('password', e)}
+        placeholder={t('words.password.title')}
+      />
+      <TextInput
+        value={form.name}
+        onChangeText={(e) => onChange('name', e)}
+        variant="underline"
+        placeholder={t('words.name.title')}
+        isClearable
+        errors={getInputErrors(errors, 'name')}
+      />
+      <SelectInput
+        onChoose={(gender) => onChange('gender', gender)}
+        variant="underline"
+        options={getGenderSelectOptions(t)}
+        errors={[]}
+        id={SelectId.GENDER}
+        defaultValue={form.gender}
+        selectScreenHeaderTitle={t('words.gender.title')}
+      />
+      <DatePicker
+        value={form.birthDate ?? new Date()}
+        errors={getInputErrors(errors, 'birthDate')}
+        onConfirm={onDatePickerConfirm}
+        shouldDisplayPlaceholder={!form.birthDate}
+        placeholder={t('words.birth_date.title')}
+      />
+      <View style={styles.acceptTermsContainer}>
+        <Switch
+          style={isAndroidPlatform() ? {} : styles.switch}
+          onValueChange={(e) => onChange('acceptTerms', e)}
+          value={form.acceptTerms}
         />
-        <PasswordInput
-          variant="underline"
-          value={form.password}
-          errors={getInputErrors(errors, 'password')}
-          onChangeText={(e) => onChange('password', e)}
-          placeholder={t('words.password.title')}
-        />
-        <TextInput
-          value={form.name}
-          onChangeText={(e) => onChange('name', e)}
-          variant="underline"
-          placeholder={t('words.name.title')}
-          isClearable
-          errors={getInputErrors(errors, 'name')}
-        />
-        <SelectInput
-          onChoose={(gender) => onChange('gender', gender)}
-          variant="underline"
-          options={getGenderSelectOptions(t)}
-          errors={[]}
-          id={SelectId.GENDER}
-          defaultValue={form.gender}
-          selectScreenHeaderTitle={t('words.gender.title')}
-        />
-        <DatePicker
-          value={form.birthDate ?? new Date()}
-          errors={getInputErrors(errors, 'birthDate')}
-          onConfirm={onDatePickerConfirm}
-          shouldDisplayPlaceholder={!form.birthDate}
-          placeholder={t('words.birth_date.title')}
-        />
-        <View style={styles.acceptTermsContainer}>
-          <Switch
-            style={isAndroidPlatform() ? {} : styles.switch}
-            onValueChange={(e) => onChange('acceptTerms', e)}
-            value={form.acceptTerms}
-          />
-          <Text
-            style={[ styles.acceptTermsText, areAcceptTermsFieldHasError() ? styles.acceptTermsTextError : {} ]}
-          >
-            {t('actions.accept_terms.title')}
-          </Text>
-        </View>
-        <LoadingButton
-          variant="solid"
-          title={t('actions.sign_up.title')}
-          loading={loading}
-          style={{ marginTop: 10 }}
-          onPress={onSignUp}
-        />
-        <View style={styles.signUpButtonContainer}>
-          <Text style={styles.signUpText}>
-            {t('actions.have_account_already.title')}
-          </Text>
-          <Button
-            variant="link"
-            title={t('actions.sign_in.title')}
-            color="secondary"
-            fontWeight="bolder"
-            onPress={onSignIn}
-          />
-        </View>
+        <Text
+          style={[ styles.acceptTermsText, areAcceptTermsFieldHasError() ? styles.acceptTermsTextError : {} ]}
+        >
+          {t('actions.accept_terms.title')}
+        </Text>
       </View>
-    </>
+      <LoadingButton
+        variant="solid"
+        title={t('actions.sign_up.title')}
+        loading={loading}
+        style={{ marginTop: 10 }}
+        onPress={onSignUp}
+      />
+      <View style={styles.signUpButtonContainer}>
+        <Text style={styles.signUpText}>
+          {t('actions.have_account_already.title')}
+        </Text>
+        <Button
+          variant="link"
+          title={t('actions.sign_in.title')}
+          color="secondary"
+          fontWeight="bolder"
+          onPress={onSignIn}
+        />
+      </View>
+    </View>
   );
 };
 

@@ -7,18 +7,17 @@ import { Animal } from 'types/api/animal/types';
 import { AnimalForm } from 'components/Forms/AnimalForm';
 import { LoadingContainer } from 'components/Composition/LoadingContainer';
 import { AnimalApi } from 'api/animal/animal.api';
-import { ApiError } from 'types/api/error/types';
 import { HandleSubmitForm } from 'types/components/Forms/types';
 import { LoadingButton } from 'components/Buttons/LoadingButton';
 import { useTranslation } from 'react-i18next';
+import { getRequestErrors } from 'utils/errors';
 
 export const EditAnimalScreen = () => {
   const formRef = useRef<HandleSubmitForm>(null);
   const route = useRoute<RouteProps<'Edit Animal'>>();
-  const { drawErrorAlert, handleErrorAlert } = useErrorAlert();
+  const { handleErrorAlert } = useErrorAlert();
   const [ animal, setAnimal ] = useState<Animal | undefined>(undefined);
   const navigation = useNavigation<NavigationProps>();
-  const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { t } = useTranslation();
   const [ loading, setLoading ] = useState(false);
 
@@ -36,9 +35,8 @@ export const EditAnimalScreen = () => {
       });
       setAnimal(res);
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      setErrors([ ...errs ]);
-      handleErrorAlert(errs);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
   };
 
@@ -53,19 +51,16 @@ export const EditAnimalScreen = () => {
         />
       )}
     >
-      <>
-        {drawErrorAlert(errors)}
-        {
-          !animal ? <LoadingContainer />
-            : (
-              <AnimalForm
-                ref={formRef}
-                animal={animal}
-                setLoading={setLoading}
-              />
-            )
-        }
-      </>
+      {
+        !animal ? <LoadingContainer />
+          : (
+            <AnimalForm
+              ref={formRef}
+              animal={animal}
+              setLoading={setLoading}
+            />
+          )
+      }
     </DefaultLayout>
   );
 };

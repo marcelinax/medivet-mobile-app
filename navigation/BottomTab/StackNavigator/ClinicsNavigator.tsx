@@ -39,7 +39,9 @@ export const ClinicsNavigator = () => {
   const navigateToAddVetClinicScreen = () => navigation.navigate('Add Vet Clinic');
   const navigateToCreateVetClinicAvailabilityScreen = () => navigation.navigate('Create Vet Clinic Availability');
   const navigateToCreateVetClinicProvidedMedicalServiceScreen = () => navigation.navigate('Create Vet Clinic Provided Medical Service');
-  const navigateToVetClinicProvidedMedicalServiceListFiltersScreen = () => navigation.navigate('Vet Clinic Provided Medical Service List Filters');
+  const navigateToVetClinicProvidedMedicalServiceListFiltersScreen = () => navigation.navigate(
+    'Vet Clinic Provided Medical Service List Filters',
+  );
 
   const vetClinicsScreenHeaderRight = () => (
     <IconButton

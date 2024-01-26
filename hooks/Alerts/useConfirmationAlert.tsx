@@ -30,7 +30,7 @@ export const ConfirmationAlertContextProvider = ({ children }: ConfirmationAlert
   };
 
   const onConfirm = (): void => {
-    resolver.current && resolver.current(true);
+    if (resolver.current) resolver.current(true);
     setConfirmationState(undefined);
   };
 

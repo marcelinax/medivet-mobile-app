@@ -1,5 +1,5 @@
 import { InputProps } from 'types/components/Inputs/types';
-import { Input } from './Input';
+import { Input } from 'components/Inputs/Input';
 
 interface Props extends InputProps {
   keyboardType?: 'email-address' | 'url' | 'default';

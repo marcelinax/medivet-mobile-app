@@ -112,12 +112,10 @@
       "title": "Coś poszło nie tak"
     },
     "no_media_library_permission": {
-      "title": "Brak dostępu do rolki aparatu",
-      "message": "Aby korzystać z rolki aparatu, musisz przejść do ustawień systemowych i zezwolić aplikacji na jej korzystanie."
+      "title": "Brak dostępu do rolki aparatu. Aby korzystać z rolki aparatu, musisz przejść do ustawień systemowych i zezwolić aplikacji na jej korzystanie."
     },
     "no_calendar_permission": {
-      "title": "Brak dostępu do kalendarza",
-      "message": "Aby korzystać z kalendarza, musisz przejść do ustawień systemowych i zezwolić aplikacji na jego korzystanie."
+      "title": "Brak dostępu do kalendarza. Aby korzystać z kalendarza, musisz przejść do ustawień systemowych i zezwolić aplikacji na jego korzystanie."
     }
   },
   "words": {

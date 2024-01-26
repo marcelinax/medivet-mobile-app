@@ -9,7 +9,7 @@ import colors from 'themes/colors';
 import { useNavigation } from '@react-navigation/native';
 import { CreateAnimalScreen } from 'screens/Animals/CreateAnimal.screen';
 import { useTranslation } from 'react-i18next';
-import { getDefaultScreenOptions } from './utils/screenOptions';
+import { getDefaultScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
 
 export const AnimalsNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();

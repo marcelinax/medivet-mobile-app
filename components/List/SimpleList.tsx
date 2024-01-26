@@ -58,7 +58,8 @@ export const SimpleList = ({
     else {
       const filteredData = data.filter((item) => {
         if (searchKeys!.some((key) => item[key]?.toLowerCase()?.includes(search.toLowerCase()))) return item;
-      });
+        return undefined;
+      }).filter((item) => item);
 
       setInternalData([ ...filteredData ]);
     }

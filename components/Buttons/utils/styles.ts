@@ -25,9 +25,6 @@ export const getButtonBackgroundColor = (variant: ButtonVariant, color?: ButtonC
     return 'transparent';
   case 'solid': {
     switch (color) {
-    case 'primary':
-    default:
-      return colors.PRIMARY;
     case 'secondary':
       return colors.SECONDARY;
     case 'light':
@@ -38,6 +35,9 @@ export const getButtonBackgroundColor = (variant: ButtonVariant, color?: ButtonC
       return colors.DANGER;
     case 'info':
       return colors.INFO;
+    case 'primary':
+    default:
+      return colors.PRIMARY;
     }
   }
   default:
@@ -47,9 +47,6 @@ export const getButtonBackgroundColor = (variant: ButtonVariant, color?: ButtonC
 
 export const getButtonBorderColor = (color?: ButtonColor): ColorValue => {
   switch (color) {
-  case 'primary':
-  default:
-    return colors.PRIMARY;
   case 'secondary':
     return colors.SECONDARY;
   case 'light':
@@ -60,6 +57,9 @@ export const getButtonBorderColor = (color?: ButtonColor): ColorValue => {
     return colors.DANGER;
   case 'info':
     return colors.INFO;
+  case 'primary':
+  default:
+    return colors.PRIMARY;
   }
 };
 

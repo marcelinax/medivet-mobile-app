@@ -8,10 +8,10 @@ import { RootState } from 'store/store';
 import { User } from 'types/api/user/types';
 import { hasVetRole } from 'utils/hasVetRole';
 import { AppointmentsNavigator } from 'navigation/BottomTab/StackNavigator/AppointmentsNavigator';
-import { AnimalsNavigator } from './StackNavigator/AnimalsNavigator';
-import { UserNavigator } from './StackNavigator/UserNavigator';
-import { HomeNavigator } from './StackNavigator/HomeNavigator';
-import { ClinicsNavigator } from './StackNavigator/ClinicsNavigator';
+import { AnimalsNavigator } from 'navigation/BottomTab/StackNavigator/AnimalsNavigator';
+import { UserNavigator } from 'navigation/BottomTab/StackNavigator/UserNavigator';
+import { HomeNavigator } from 'navigation/BottomTab/StackNavigator/HomeNavigator';
+import { ClinicsNavigator } from 'navigation/BottomTab/StackNavigator/ClinicsNavigator';
 
 export const BottomTabNavigator = () => {
   const Tab = createBottomTabNavigator();
