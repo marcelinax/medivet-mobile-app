@@ -11,38 +11,29 @@ import {
 } from 'api/vetClinicProvidedMedicalService/vetClinicProvidedMedicalService.api';
 import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedicalService/types';
 import { DefaultLayout } from 'layouts/Default.layout';
-import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
-import { useTranslation } from 'react-i18next';
 import { OpinionApi } from 'api/opinion/opinion.api';
 import { VetPreviewRightHeader } from 'components/Screens/Home/Vet/VetPreviewRightHeader';
 import { getRequestErrors } from 'utils/errors';
 
 export const VetScreen = () => {
-  const { t } = useTranslation();
   const navigation = useNavigation<NavigationProps>();
   const route = useRoute<RouteProps<'Vet'>>();
   const [ vet, setVet ] = useState<User | undefined>();
   const { handleErrorAlert } = useErrorAlert();
-  const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
   const [ medicalServices, setMedicalServices ] = useState<VetClinicProvidedMedicalService[] | undefined>();
   const [ opinionsAmount, setOpinionsAmount ] = useState<number | undefined>();
   const [ isInFavourites, setIsInFavourites ] = useState<boolean | undefined>();
 
   useEffect(() => {
-    fetchVet();
-    fetchVetProvidedMedicalServices();
-    fetchAmountOfVetOpinions();
-    fetchStatusOfVetInFavourites();
+    handleInitFetch();
   }, []);
 
-  useEffect(() => {
-    if (route?.params?.showSuccessAlert) {
-      handleSuccessAlert();
-      navigation.setParams({
-        showSuccessAlert: false,
-      });
-    }
-  }, [ route?.params?.showSuccessAlert ]);
+  const handleInitFetch = async () => {
+    await fetchVet();
+    await fetchVetProvidedMedicalServices();
+    await fetchAmountOfVetOpinions();
+    await fetchStatusOfVetInFavourites();
+  };
 
   useEffect(() => {
     if (route?.params?.shouldRefreshOpinionsAmount) {
@@ -70,8 +61,8 @@ export const VetScreen = () => {
         ,
       });
     } catch (err: any) {
-      const errs = [ err?.response?.data ];
-      handleErrorAlert(errs);
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
   };
 
@@ -110,19 +101,16 @@ export const VetScreen = () => {
 
   return (
     <DefaultLayout>
-      <>
-        {drawSuccessAlert(t('alerts.success.save.title'))}
-        {
-          !vet || !medicalServices || opinionsAmount === undefined || isInFavourites === undefined ? <LoadingContainer />
-            : (
-              <VetPreview
-                vet={vet}
-                opinionsAmount={opinionsAmount}
-                medicalServices={medicalServices}
-              />
-            )
-        }
-      </>
+      {
+        !vet || !medicalServices || opinionsAmount === undefined || isInFavourites === undefined ? <LoadingContainer />
+          : (
+            <VetPreview
+              vet={vet}
+              opinionsAmount={opinionsAmount}
+              medicalServices={medicalServices}
+            />
+          )
+      }
     </DefaultLayout>
   );
 };

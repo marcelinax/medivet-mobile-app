@@ -17,7 +17,7 @@ import { clearSelectedFilters, setForceFetchingList } from 'store/list/listSlice
 export const VetClinicProvidedMedicalServiceList = () => {
   const clinic = useSelector((state: RootState) => state.clinic.currentClinic);
   const [ removeLoading, setRemoveLoading ] = useState(false);
-  const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
+  const { handleSuccessAlert } = useSuccessAlert();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.currentUser);
 
@@ -43,7 +43,6 @@ export const VetClinicProvidedMedicalServiceList = () => {
   return (
     <>
       <FullScreenLoading loading={removeLoading} />
-      {drawSuccessAlert()}
       <List
         onFetch={(params) => VetClinicProvidedMedicalServiceApi.getVetClinicProvidedMedicalServices(clinic!.id, {
           ...params,

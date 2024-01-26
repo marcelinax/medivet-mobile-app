@@ -22,7 +22,7 @@ export const VetClinicAvailabilityList = () => {
   const { handleErrorAlert } = useErrorAlert();
   const user = useSelector((state: RootState) => state.user.currentUser);
   const clinic = useSelector((state: RootState) => state.clinic.currentClinic);
-  const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
+  const { handleSuccessAlert } = useSuccessAlert();
   const isFocused = useIsFocused();
   const [ removeLoading, setRemoveLoading ] = useState(false);
   const { t } = useTranslation();
@@ -98,7 +98,6 @@ export const VetClinicAvailabilityList = () => {
     <DefaultLayout withoutHorizontalPadding>
       <>
         <FullScreenLoading loading={removeLoading} />
-        {drawSuccessAlert()}
         {
           !availabilities ? <LoadingContainer /> : availabilities.length === 0 ? <EmptyList /> : (
             <View>

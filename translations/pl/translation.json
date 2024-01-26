@@ -99,8 +99,7 @@
     "success": {
       "title": "Akcja powiodła się!",
       "appointment_event": {
-        "title": "Wizyta została dodana do kalendarza",
-        "description": "Przypomnienie zostało ustawione na 2 godziny przed wydarzeniem."
+        "title": "Wizyta została dodana do kalendarza. Przypomnienie zostało ustawione na 2 godziny przed wydarzeniem."
       },
       "save": {
         "title": "Zapisano!"

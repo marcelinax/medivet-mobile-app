@@ -32,7 +32,7 @@ export const AppointmentStatusSection = ({ appointment, isAddOpinionButtonShown,
   const { t } = useTranslation();
   const navigation = useNavigation<NavigationProps>();
   const { handleErrorAlert } = useErrorAlert();
-  const { handleSuccessAlert, drawSuccessAlert } = useSuccessAlert();
+  const { handleSuccessAlert } = useSuccessAlert();
   const user = useSelector((state: RootState) => state.user.currentUser) as User;
   const isVet = hasVetRole(user);
   const confirmation = useConfirmationAlert();
@@ -87,7 +87,6 @@ export const AppointmentStatusSection = ({ appointment, isAddOpinionButtonShown,
 
   return (
     <View>
-      {drawSuccessAlert()}
       <Text style={styles.heading}>{t('words.appointment_status.title').toUpperCase()}</Text>
       <AppointmentStatusInfo status={status} />
       {

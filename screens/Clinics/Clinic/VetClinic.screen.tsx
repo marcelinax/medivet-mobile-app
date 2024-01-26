@@ -22,7 +22,7 @@ export const VetClinicScreen = () => {
   const navigation = useNavigation<NavigationProps>();
   const [ clinic, setClinic ] = useState<Clinic | undefined>();
   const { handleErrorAlert } = useErrorAlert();
-  const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
+  const { handleSuccessAlert } = useSuccessAlert();
   const dispatch = useDispatch();
   const confirmation = useConfirmationAlert();
   const isClinicAboutToRemove = !!clinic?.clinicAssignmentRequests?.find(
@@ -87,60 +87,57 @@ export const VetClinicScreen = () => {
 
   return (
     <DefaultLayout>
-      <>
-        {drawSuccessAlert()}
-        {
-          !clinic ? <LoadingContainer />
-            : (
-              <View>
-                {isClinicAboutToRemove && (
-                  <View style={styles.buttonContainer}>
-                    <Text style={styles.removingInfo}>
-                      {t('words.pending_clinic_removal.title')}
-                    </Text>
-                  </View>
-                )}
+      {
+        !clinic ? <LoadingContainer />
+          : (
+            <View>
+              {isClinicAboutToRemove && (
                 <View style={styles.buttonContainer}>
-                  <Button
-                    title={t('words.availabilities.title')}
-                    variant="outline"
-                    color="light"
-                    onPress={() => navigation.navigate('Vet Clinic Availabilities')}
-                  />
+                  <Text style={styles.removingInfo}>
+                    {t('words.pending_clinic_removal.title')}
+                  </Text>
                 </View>
-                <View style={styles.buttonContainer}>
-                  <Button
-                    title={t('words.vet_clinic_provided_medical_services.title')}
-                    variant="outline"
-                    color="light"
-                    onPress={() => navigation.navigate('Vet Clinic Provided Medical Services')}
-                  />
-                </View>
-                {
-                  isClinicAboutToRemove ? (
-                    <View style={styles.buttonContainer}>
-                      <Button
-                        title={t('actions.cancel_removal.title')}
-                        variant="outline"
-                        color="primary"
-                        onPress={handleCancelVetClinicRemoval}
-                      />
-                    </View>
-                  ) : (
-                    <View style={styles.buttonContainer}>
-                      <Button
-                        title={t('actions.remove.title')}
-                        variant="outline"
-                        color="danger"
-                        onPress={handleRemoveVetClinic}
-                      />
-                    </View>
-                  )
-                }
+              )}
+              <View style={styles.buttonContainer}>
+                <Button
+                  title={t('words.availabilities.title')}
+                  variant="outline"
+                  color="light"
+                  onPress={() => navigation.navigate('Vet Clinic Availabilities')}
+                />
               </View>
-            )
-        }
-      </>
+              <View style={styles.buttonContainer}>
+                <Button
+                  title={t('words.vet_clinic_provided_medical_services.title')}
+                  variant="outline"
+                  color="light"
+                  onPress={() => navigation.navigate('Vet Clinic Provided Medical Services')}
+                />
+              </View>
+              {
+                isClinicAboutToRemove ? (
+                  <View style={styles.buttonContainer}>
+                    <Button
+                      title={t('actions.cancel_removal.title')}
+                      variant="outline"
+                      color="primary"
+                      onPress={handleCancelVetClinicRemoval}
+                    />
+                  </View>
+                ) : (
+                  <View style={styles.buttonContainer}>
+                    <Button
+                      title={t('actions.remove.title')}
+                      variant="outline"
+                      color="danger"
+                      onPress={handleRemoveVetClinic}
+                    />
+                  </View>
+                )
+              }
+            </View>
+          )
+      }
     </DefaultLayout>
   );
 };

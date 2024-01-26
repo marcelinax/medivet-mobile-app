@@ -32,7 +32,7 @@ export const VetClinicListItem = ({ clinic }: Props) => {
   const navigation = useNavigation<NavigationProps>();
   const user = useSelector((state: RootState) => state.user.currentUser);
   const [ loading, setLoading ] = useState<boolean>(false);
-  const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert(() => navigation.goBack());
+  const { handleSuccessAlert } = useSuccessAlert();
   const { t } = useTranslation();
 
   const handleAddClinic = async () => {
@@ -46,6 +46,7 @@ export const VetClinicListItem = ({ clinic }: Props) => {
       await ClinicApi.addClinic(clinic.id);
       setLoading((prevState) => !prevState);
       handleSuccessAlert();
+      navigation.goBack();
     } catch (err: any) {
       setLoading(false);
       const errors = getRequestErrors(err);
@@ -67,7 +68,6 @@ export const VetClinicListItem = ({ clinic }: Props) => {
     <TouchableWithoutFeedback onPress={handleAddClinic}>
       <View>
         <FullScreenLoading loading={loading} />
-        {drawSuccessAlert()}
         <View style={simpleListItemStyles.container}>
           <View style={simpleListItemStyles.innerContainer}>
             <View style={simpleListItemStyles.nameContainer}>

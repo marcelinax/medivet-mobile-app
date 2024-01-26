@@ -22,7 +22,7 @@ export const EditUserAddressScreen = () => {
   const [ loading, setLoading ] = useState<boolean>(false);
   const dispatch = useDispatch();
   const { handleErrorAlert } = useErrorAlert();
-  const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
+  const { handleSuccessAlert } = useSuccessAlert();
   const { t } = useTranslation();
 
   const onChange = (field: string, value: string | number): void => {
@@ -40,7 +40,7 @@ export const EditUserAddressScreen = () => {
         address: { ...form },
       });
       dispatch(setCurrentUser(res));
-      handleSuccessAlert();
+      handleSuccessAlert(t('alerts.success.save.title'));
     } catch (err: any) {
       const errors = getRequestErrors(err);
       handleErrorAlert(errors);
@@ -59,7 +59,6 @@ export const EditUserAddressScreen = () => {
     )}
     >
       <View>
-        {drawSuccessAlert(t('alerts.success.save.title'))}
         <View style={styles.inputMargin}>
           <TextInput
             onChangeText={(e) => onChange('street', e)}

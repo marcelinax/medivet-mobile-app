@@ -11,7 +11,7 @@ import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 export const UserSpecializationList = () => {
   const user = useSelector((state: RootState) => state.user.currentUser) as User;
   const [ removeLoading, setRemoveLoading ] = useState(false);
-  const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
+  const { handleSuccessAlert } = useSuccessAlert();
 
   const renderSpecialization: ListRenderItem<VetSpecialization> = ({ item }) => (
     <UserSpecializationListItem
@@ -28,7 +28,6 @@ export const UserSpecializationList = () => {
   return (
     <>
       <FullScreenLoading loading={removeLoading} />
-      {drawSuccessAlert()}
       <SimpleList
         data={user?.specializations || []}
         renderItem={renderSpecialization}

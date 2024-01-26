@@ -43,7 +43,7 @@ export const EditUserProfileScreen = () => {
   });
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { handleErrorAlert } = useErrorAlert();
-  const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
+  const { handleSuccessAlert } = useSuccessAlert();
   const [ loading, setLoading ] = useState<boolean>(false);
   const dispatch = useDispatch();
 
@@ -76,7 +76,7 @@ export const EditUserProfileScreen = () => {
 
       if (!form.address) delete form.address;
       const res = await UserApi.updateUser(getParsedBasicInformationData());
-      handleSuccessAlert();
+      handleSuccessAlert(t('alerts.success.save.title'));
       dispatch(setCurrentUser(res));
     } catch (err: any) {
       const errs = getRequestErrors(err);
@@ -133,7 +133,6 @@ export const EditUserProfileScreen = () => {
     )}
     >
       <View>
-        {drawSuccessAlert(t('alerts.success.save.title'))}
         <View style={styles.avatarContainer}>
           <AvatarInput
             url={user?.profilePhotoUrl}

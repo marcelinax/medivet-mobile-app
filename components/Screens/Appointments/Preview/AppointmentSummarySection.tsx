@@ -27,7 +27,7 @@ export const AppointmentSummarySection = ({ appointment }: Props) => {
   const { date, medicalService } = appointment;
   const { t } = useTranslation();
   const { handleErrorAlert } = useErrorAlert();
-  const { handleSuccessAlert, drawSuccessAlert } = useSuccessAlert();
+  const { handleSuccessAlert } = useSuccessAlert();
   const user = useSelector((state: RootState) => state.user.currentUser) as User;
   const isVet = hasVetRole(user);
   const [ calendarStatus, requestCalendarPermission ] = Calendar.useCalendarPermissions();
@@ -85,7 +85,7 @@ export const AppointmentSummarySection = ({ appointment }: Props) => {
       endDate,
       alarms: [ { relativeOffset: -120 } ],
     });
-    handleSuccessAlert();
+    handleSuccessAlert(t('alerts.success.appointment_event.title'));
   };
 
   const handleRedirectToMaps = async () => {
@@ -109,86 +109,83 @@ export const AppointmentSummarySection = ({ appointment }: Props) => {
   };
 
   return (
-    <>
-      {drawSuccessAlert(t('alerts.success.appointment_event.title'), t('alerts.success.appointment_event.description'))}
-      <View>
-        <Text style={styles.heading}>{t('words.appointment_summary.title').toUpperCase()}</Text>
-        <View style={styles.rowContainer}>
-          <Ionicons
-            name={icons.CALENDAR_OUTLINE}
-            size={22}
-            color={colors.PRIMARY}
-            style={styles.icon}
-          />
-          <Text style={styles.text}>
-            {moment(date).format('HH:mm dddd, DD.MM.YYYY')}
-          </Text>
-        </View>
-        {!isVet && (
-          <Button
-            title={t('actions.add_to_calendar.title')}
-            variant="solid"
-            onPress={handleCalendarPermission}
-            containerStyle={styles.buttonContainer}
-          />
-        )}
-        <View style={styles.rowContainer}>
-          <Ionicons
-            name={icons.MEDKIT_OUTLINE}
-            size={22}
-            color={colors.PRIMARY}
-            style={styles.icon}
-          />
-          <Text style={styles.text}>
-            {medicalService.medicalService.name}
-          </Text>
-        </View>
-        <View style={styles.rowContainer}>
-          <Ionicons
-            name={icons.WALLET_OUTLINE}
-            size={22}
-            color={colors.PRIMARY}
-            style={styles.icon}
-          />
-          <Text style={styles.text}>
-            {`${medicalService.price} PLN`}
-          </Text>
-        </View>
-        <View style={styles.rowContainer}>
-          <Ionicons
-            name={icons.TIME_OUTLINE}
-            size={22}
-            color={colors.PRIMARY}
-            style={styles.icon}
-          />
-          <Text style={styles.text}>
-            {`${medicalService.duration} min`}
-          </Text>
-        </View>
-        <TouchableWithoutFeedback onPress={handleRedirectToMaps}>
+    <View>
+      <Text style={styles.heading}>{t('words.appointment_summary.title').toUpperCase()}</Text>
+      <View style={styles.rowContainer}>
+        <Ionicons
+          name={icons.CALENDAR_OUTLINE}
+          size={22}
+          color={colors.PRIMARY}
+          style={styles.icon}
+        />
+        <Text style={styles.text}>
+          {moment(date).format('HH:mm dddd, DD.MM.YYYY')}
+        </Text>
+      </View>
+      {!isVet && (
+        <Button
+          title={t('actions.add_to_calendar.title')}
+          variant="solid"
+          onPress={handleCalendarPermission}
+          containerStyle={styles.buttonContainer}
+        />
+      )}
+      <View style={styles.rowContainer}>
+        <Ionicons
+          name={icons.MEDKIT_OUTLINE}
+          size={22}
+          color={colors.PRIMARY}
+          style={styles.icon}
+        />
+        <Text style={styles.text}>
+          {medicalService.medicalService.name}
+        </Text>
+      </View>
+      <View style={styles.rowContainer}>
+        <Ionicons
+          name={icons.WALLET_OUTLINE}
+          size={22}
+          color={colors.PRIMARY}
+          style={styles.icon}
+        />
+        <Text style={styles.text}>
+          {`${medicalService.price} PLN`}
+        </Text>
+      </View>
+      <View style={styles.rowContainer}>
+        <Ionicons
+          name={icons.TIME_OUTLINE}
+          size={22}
+          color={colors.PRIMARY}
+          style={styles.icon}
+        />
+        <Text style={styles.text}>
+          {`${medicalService.duration} min`}
+        </Text>
+      </View>
+      <TouchableWithoutFeedback onPress={handleRedirectToMaps}>
+        <View style={[ styles.rowContainer, styles.noMarginBottom ]}>
           <View style={[ styles.rowContainer, styles.noMarginBottom ]}>
-            <View style={[ styles.rowContainer, styles.noMarginBottom ]}>
-              <Ionicons
-                name={icons.LOCATION_OUTLINE}
-                size={22}
-                color={colors.PRIMARY}
-                style={styles.icon}
-              />
-              <FormatAddress
-                address={medicalService.clinic.address}
-                style={styles.text}
-              />
-            </View>
             <Ionicons
-              name={icons.CHEVRON_FORWARD_OUTLINE}
+              name={icons.LOCATION_OUTLINE}
               size={22}
               color={colors.PRIMARY}
               style={styles.icon}
             />
+            <FormatAddress
+              address={medicalService.clinic.address}
+              style={styles.text}
+            />
           </View>
-        </TouchableWithoutFeedback>
-      </View>
-    </>
+          <Ionicons
+            name={icons.CHEVRON_FORWARD_OUTLINE}
+            size={22}
+            color={colors.PRIMARY}
+            style={styles.icon}
+          />
+        </View>
+      </TouchableWithoutFeedback>
+    </View>
   );
 };
 

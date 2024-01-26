@@ -8,6 +8,7 @@ import { SwipeButtonContext } from 'contexts/buttons/SwipeButtonContext';
 import './i18n.ts';
 import { Platform, UIManager } from 'react-native';
 import { ToastProvider } from 'react-native-toast-notifications';
+import colors from 'themes/colors';
 
 export default function App() {
   const currentSwipeButton = useRef<Swipeable | null>(null);
@@ -21,7 +22,16 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <ToastProvider>
+      <ToastProvider
+        placement="top"
+        style={{
+          width: '100%',
+        }}
+        dangerColor={colors.DANGER}
+        warningColor={colors.WARNING}
+        successColor={colors.SUCCESS}
+        swipeEnabled
+      >
         <ConfirmationAlertContextProvider>
           <SwipeButtonContext.Provider value={{
             currentSwipeButton,

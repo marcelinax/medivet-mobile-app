@@ -1,29 +1,18 @@
-import { SuccessAlert } from 'components/Alerts/SuccessAlert';
-import { useState } from 'react';
+import { useToast } from 'react-native-toast-notifications';
+import { useTranslation } from 'react-i18next';
 
-export const useSuccessAlert = (additionalHideAction?: () => void) => {
-  const [ show, setShow ] = useState<boolean>(false);
+export const useSuccessAlert = () => {
+  const toast = useToast();
+  const { t } = useTranslation();
 
-  const handleOnHideSuccessAlert = (): void => {
-    if (additionalHideAction) additionalHideAction();
-    setShow(false);
-  };
-
-  const drawSuccessAlert = (title?: string, message?: string): JSX.Element => (
-    <SuccessAlert
-      isShown={show}
-      onHide={handleOnHideSuccessAlert}
-      title={title}
-      message={message}
-    />
-  );
-
-  const handleSuccessAlert = (): void => {
-    if (!show) setShow(true);
+  const handleSuccessAlert = (message?: string) => {
+    const finalMessage = message ?? t('alerts.success.title');
+    toast.show(finalMessage, {
+      type: 'success',
+    });
   };
 
   return {
-    drawSuccessAlert,
     handleSuccessAlert,
   };
 };

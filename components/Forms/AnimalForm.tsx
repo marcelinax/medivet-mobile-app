@@ -49,7 +49,7 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
   const navigation = useNavigation<NavigationProps>();
   const [ errors, setErrors ] = useState<ApiError[]>([]);
   const { handleErrorAlert } = useErrorAlert();
-  const { drawSuccessAlert, handleSuccessAlert } = useSuccessAlert();
+  const { handleSuccessAlert } = useSuccessAlert();
   const [ firstRender, setFirstRender ] = useState<boolean>(true);
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -144,7 +144,7 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
           headerTitle: `${t('words.edition.title')} "${res.name}"`,
         });
       } else {
-        res = await AnimalApi.createAnimal(getParsedDataForm());
+        await AnimalApi.createAnimal(getParsedDataForm());
         // TODO navigate to preview
       }
       handleSuccessAlert();
@@ -177,7 +177,7 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
       try {
         await AnimalApi.removeAnimalProfilePhoto(Number(animal?.id));
       } catch (err: any) {
-        const errs = [ err?.response?.data ];
+        const errs = getRequestErrors(errors);
         handleErrorAlert(errs);
         setErrors([ ...errs ]);
       }
@@ -193,7 +193,6 @@ export const AnimalForm = forwardRef<HandleSubmitForm, Props>((
 
   return (
     <View>
-      {drawSuccessAlert()}
       {animal?.id && (
         <View style={styles.avatarContainer}>
           <AvatarInput

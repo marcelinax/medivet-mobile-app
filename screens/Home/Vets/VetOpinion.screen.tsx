@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { setForceFetchingList } from 'store/list/listSlice';
 import { OpinionApi } from 'api/opinion/opinion.api';
 import { getRequestErrors } from 'utils/errors';
+import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 
 export const VetOpinionScreen = () => {
   const { t } = useTranslation();
@@ -23,6 +24,7 @@ export const VetOpinionScreen = () => {
   const { handleErrorAlert } = useErrorAlert();
   const [ loading, setLoading ] = useState(false);
   const dispatch = useDispatch();
+  const { handleSuccessAlert } = useSuccessAlert();
 
   const handleCreateOpinion = async () => {
     setLoading(true);
@@ -39,13 +41,14 @@ export const VetOpinionScreen = () => {
           opinionAdded: true,
           appointmentId: route.params.appointmentId,
         });
+        handleSuccessAlert();
       } else {
         dispatch(setForceFetchingList(true));
+        handleSuccessAlert(t('alerts.success.save.title'));
         navigation.navigate({
           name: 'Vet',
           params: {
             vetId: route.params.vetId,
-            showSuccessAlert: true,
             shouldRefreshOpinionsAmount: true,
           },
         });
