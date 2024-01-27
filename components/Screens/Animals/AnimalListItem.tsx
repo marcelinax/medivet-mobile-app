@@ -14,9 +14,10 @@ interface Props {
 export const AnimalListItem = ({ animal }: Props) => {
   const navigation = useNavigation<NavigationProps>();
 
+  // TODO swipe buttons z edycją i usunięciem
   return (
     <TouchableWithoutFeedback
-      onPress={() => navigation.navigate('Edit Animal', { animalId: animal.id })}
+      onPress={() => navigation.push('Animal', { animalId: animal.id })}
     >
       <View style={listItemStyles.container}>
         <Card>

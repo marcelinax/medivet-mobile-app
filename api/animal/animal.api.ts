@@ -43,8 +43,8 @@ export class AnimalApi {
     return res.data;
   }
 
-  static async getOwnerAnimal(animalId: number, params?: Record<string, any>): Promise<Animal> {
-    const res = await authClient.get(`animals/my/${animalId}`, { params });
+  static async getAnimal(animalId: number, params?: Record<string, any>): Promise<Animal> {
+    const res = await authClient.get(`animals/${animalId}`, { params });
     return res.data;
   }
 }

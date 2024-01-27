@@ -55,3 +55,7 @@ export type AppointmentScreenParams = {
   appointmentId: number;
   opinionAdded?: boolean;
 }
+
+export type AnimalScreenParams = {
+  animalId: number;
+}

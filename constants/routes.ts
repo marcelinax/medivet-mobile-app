@@ -45,4 +45,5 @@ export default {
   APPOINTMENT_CONFIRMATION: 'Appointment Confirmation' as keyof RootStackParamList,
   APPOINTMENTS: 'Appointments' as keyof RootStackParamList,
   APPOINTMENT: 'Appointment' as keyof RootStackParamList,
+  ANIMAL: 'Animal' as keyof RootStackParamList,
 };

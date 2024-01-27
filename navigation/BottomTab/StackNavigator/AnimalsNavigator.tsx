@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import { CreateAnimalScreen } from 'screens/Animals/CreateAnimal.screen';
 import { useTranslation } from 'react-i18next';
 import { getDefaultScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
+import { AnimalScreen } from 'screens/Animals/Animal.screen';
 
 export const AnimalsNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -52,6 +53,11 @@ export const AnimalsNavigator = () => {
         name={routes.CREATE_ANIMAL}
         component={CreateAnimalScreen}
         options={() => getDefaultScreenOptions(t('navigation.new_animal.title'))}
+      />
+      <Stack.Screen
+        name={routes.ANIMAL}
+        component={AnimalScreen}
+        options={() => getDefaultScreenOptions('')}
       />
     </Stack.Navigator>
   );
