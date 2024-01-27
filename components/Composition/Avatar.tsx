@@ -2,6 +2,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { ImageBackground, StyleSheet, View } from 'react-native';
 import colors from 'themes/colors';
 import icons from 'themes/icons';
+import { useState } from 'react';
+import { Loading } from 'components/Composition/Loading';
 
 interface Props {
   url?: string;
@@ -13,6 +15,7 @@ export const Avatar = ({ url, size, icon }: Props) => {
   const sizeStyles = size === 'large' ? styles.large : size === 'medium' ? styles.medium : styles.small;
   const borderRadius = size === 'large' ? 100 / 2 : size === 'medium' ? 80 / 2 : 50 / 2;
   const iconSize = size === 'large' ? 100 / 2 : size === 'medium' ? 80 / 2 : 50 / 2;
+  const [ loading, setLoading ] = useState(false);
 
   // TODO zamiast człowieczka może lepiej dac pierwsza litere imienia?
   return (
@@ -21,8 +24,17 @@ export const Avatar = ({ url, size, icon }: Props) => {
         <ImageBackground
           source={{ uri: url }}
           resizeMode="cover"
+          onLoadEnd={() => setLoading(false)}
+          onLoadStart={() => setLoading(true)}
           style={styles.image}
-        />
+        >
+          {loading && (
+            <Loading
+              color={colors.WHITE}
+              size="small"
+            />
+          )}
+        </ImageBackground>
       )
         : (
           <Ionicons
@@ -70,5 +82,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

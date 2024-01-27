@@ -1,9 +1,14 @@
 import { ActivityIndicator } from 'react-native';
 import colors from 'themes/colors';
 
-export const Loading = () => (
+interface Props {
+  size?: 'large' | 'small';
+  color?: string;
+}
+
+export const Loading = ({ size, color }: Props) => (
   <ActivityIndicator
-    size="large"
-    color={colors.GRAY_DARK}
+    size={size ?? 'large'}
+    color={color ?? colors.GRAY_DARK}
   />
 );
