@@ -38,4 +38,5 @@ export default {
     'Nie można anulować wizyty o innym statusie niż "W trakcie"',
   'CANNOT_FINISH_APPOINTMENT_IN_DIFFERENT_STATUS_THAN_"IN_PROGRESS"':
     'Nie można zakończyć wizyty o innym statusie niż "W trakcie"',
+  FORBIDDEN_RESOURCE: 'Brak dostępu',
 } as Record<string, string>;

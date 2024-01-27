@@ -11,6 +11,13 @@ export const getAlertError = (errors: ApiError[]): ErrorMessage | undefined => {
     };
   }
 
+  if (errors[0].statusCode === 403) {
+    return {
+      message: 'Forbidden resource',
+      property: 'all',
+    };
+  }
+
   const errorMessages = errors.map((error) => error?.message).flat();
   return errorMessages.find((errorMessage) => errorMessage!.property === 'all');
 };
