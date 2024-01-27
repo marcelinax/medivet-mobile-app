@@ -30,6 +30,7 @@ export const HomeNavigator = () => {
       <Stack.Screen
         name={routes.HOME}
         component={HomeScreen}
+        options={() => getDefaultScreenOptions('')}
       />
       <Stack.Screen
         name={routes.VETS}
