@@ -18,6 +18,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { User } from 'types/api/user/types';
 import { hasVetRole } from 'utils/hasVetRole';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationProps } from 'types/Navigation/types';
 
 interface Props {
   appointment: Appointment;
@@ -31,6 +33,7 @@ export const AppointmentSummarySection = ({ appointment }: Props) => {
   const user = useSelector((state: RootState) => state.user.currentUser) as User;
   const isVet = hasVetRole(user);
   const [ calendarStatus, requestCalendarPermission ] = Calendar.useCalendarPermissions();
+  const navigation = useNavigation<NavigationProps>();
   // TODO dorobić informację o przyjmowanych płatnościach
 
   const handleCalendarPermission = async () => {
@@ -164,8 +167,8 @@ export const AppointmentSummarySection = ({ appointment }: Props) => {
         </Text>
       </View>
       <TouchableWithoutFeedback onPress={handleRedirectToMaps}>
-        <View style={[ styles.rowContainer, styles.noMarginBottom ]}>
-          <View style={[ styles.rowContainer, styles.noMarginBottom ]}>
+        <View style={styles.rowContainer}>
+          <View style={styles.rowContainer}>
             <Ionicons
               name={icons.LOCATION_OUTLINE}
               size={22}
@@ -185,6 +188,16 @@ export const AppointmentSummarySection = ({ appointment }: Props) => {
           />
         </View>
       </TouchableWithoutFeedback>
+      {
+        appointment.diary?.id && (
+          <Button
+            title={t('actions.show_appointment_diary.title')}
+            variant="solid"
+            onPress={() => navigation.navigate('Appointment Diary', { diaryId: appointment.diary!.id })}
+            containerStyle={styles.buttonContainer}
+          />
+        )
+      }
     </View>
   );
 };
@@ -195,9 +208,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     marginBottom: 16,
-  },
-  noMarginBottom: {
-    marginBottom: 0,
   },
   text: {
     fontSize: 18,

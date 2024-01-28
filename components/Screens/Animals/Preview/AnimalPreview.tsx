@@ -13,6 +13,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { User } from 'types/api/user/types';
 import { hasVetRole } from 'utils/hasVetRole';
+import { AnimalAppointmentDiaryInfo } from 'components/Screens/Animals/Preview/AnimalAppointmentDiaryInfo';
+import { AppointmentApi } from 'api/appointment/appointment.api';
+import { AppointmentDiary } from 'types/api/appointment/types';
 
 export const AnimalPreview = () => {
   const { params: { animalId } } = useRoute<RouteProps<'Animal'>>();
@@ -21,10 +24,17 @@ export const AnimalPreview = () => {
   const navigation = useNavigation<NavigationProps>();
   const user = useSelector((state: RootState) => state.user.currentUser) as User;
   const isVet = hasVetRole(user);
+  const [ appointmentDiaryLoading, setAppointmentDiaryLoading ] = useState(true);
+  const [ appointmentDiary, setAppointmentDiary ] = useState<AppointmentDiary | undefined>();
 
   useEffect(() => {
-    fetchAnimal();
+    handleInit();
   }, []);
+
+  const handleInit = async () => {
+    await fetchAnimal();
+    await fetchAppointmentDiary();
+  };
 
   const fetchAnimal = async () => {
     try {
@@ -42,11 +52,30 @@ export const AnimalPreview = () => {
     }
   };
 
+  const fetchAppointmentDiary = async () => {
+    setAppointmentDiaryLoading(true);
+    try {
+      const params = {
+        size: 1,
+        include: 'appointment',
+      };
+      const res = await AppointmentApi.getAnimalAppointmentDiaries(animalId, params);
+      setAppointmentDiary(res[0]);
+    } catch (err: any) {
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
+    }
+    setAppointmentDiaryLoading(false);
+  };
+
   return (
-    !animal ? <Loading /> : (
+    !animal || appointmentDiaryLoading ? <Loading /> : (
       <View>
         <AnimalBasicInfo animal={animal} />
         {isVet && <AnimalOwnerInfo owner={animal.owner} />}
+        {appointmentDiary && (
+          <AnimalAppointmentDiaryInfo diary={appointmentDiary} />
+        )}
       </View>
     )
   );

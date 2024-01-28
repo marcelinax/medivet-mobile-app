@@ -7,6 +7,7 @@ import colors from 'themes/colors';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { FormatAddress } from 'components/Formatters/FormatAddress';
+import icons from 'themes/icons';
 
 interface Props {
   owner: User;
@@ -21,7 +22,7 @@ export const AnimalOwnerInfo = ({ owner }: Props) => {
         <View style={styles.informationContainer}>
           <View style={styles.informationRow}>
             <Ionicons
-              name="person-outline"
+              name={icons.PERSON_OUTLINE}
               size={18}
               color={colors.PRIMARY}
             />
@@ -31,7 +32,7 @@ export const AnimalOwnerInfo = ({ owner }: Props) => {
           </View>
           <View style={styles.informationRow}>
             <Ionicons
-              name="calendar-outline"
+              name={icons.CALENDAR_OUTLINE}
               size={18}
               color={colors.PRIMARY}
             />
@@ -41,7 +42,7 @@ export const AnimalOwnerInfo = ({ owner }: Props) => {
           </View>
           <View style={styles.informationRow}>
             <Ionicons
-              name="male-female-outline"
+              name={icons.MALE_FEMALE_OUTLINE}
               size={18}
               color={colors.PRIMARY}
             />
@@ -53,7 +54,7 @@ export const AnimalOwnerInfo = ({ owner }: Props) => {
             owner.phoneNumber && (
               <View style={styles.informationRow}>
                 <Ionicons
-                  name="call-outline"
+                  name={icons.CALL}
                   size={18}
                   color={colors.PRIMARY}
                 />
@@ -67,7 +68,7 @@ export const AnimalOwnerInfo = ({ owner }: Props) => {
             owner.address && (
               <View style={styles.informationRow}>
                 <Ionicons
-                  name="pin-outline"
+                  name={icons.LOCATION_OUTLINE}
                   size={18}
                   color={colors.PRIMARY}
                 />

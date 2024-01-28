@@ -39,4 +39,6 @@ export default {
   'CANNOT_FINISH_APPOINTMENT_IN_DIFFERENT_STATUS_THAN_"IN_PROGRESS"':
     'Nie można zakończyć wizyty o innym statusie niż "W trakcie"',
   FORBIDDEN_RESOURCE: 'Brak dostępu',
+  REASON_SHOULD_NOT_BE_EMPTY: 'Wprowadź powód',
+  DESCRIPTION_SHOULD_NOT_BE_EMPTY: 'Wprowadź opis',
 } as Record<string, string>;

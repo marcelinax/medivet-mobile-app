@@ -10,6 +10,8 @@ import { AppointmentCalendarScreen } from 'screens/Home/Appointment/AppointmentC
 import { AppointmentAnimalScreen } from 'screens/Home/Appointment/AppointmentAnimal.screen';
 import { AppointmentConfirmationScreen } from 'screens/Home/Appointment/AppointmentConfirmation.screen';
 import { VetOpinionScreen } from 'screens/Home/Vets/VetOpinion.screen';
+import { CreateAppointmentDiaryScreen } from 'screens/AppointmentDiaries/CreateAppointmentDiary.screen';
+import { AppointmentDiaryScreen } from 'screens/AppointmentDiaries/AppointmentDiary.screen';
 
 export const AppointmentsNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -60,6 +62,20 @@ export const AppointmentsNavigator = () => {
         options={{
           ...getDefaultScreenOptions(t('navigation.create_opinion.title')),
           presentation: 'modal',
+        }}
+      />
+      <Stack.Screen
+        name={routes.CREATE_APPOINTMENT_DIARY}
+        component={CreateAppointmentDiaryScreen}
+        options={{
+          ...getDefaultScreenOptions(t('navigation.create_appointment_diary.title')),
+        }}
+      />
+      <Stack.Screen
+        name={routes.APPOINTMENT_DIARY}
+        component={AppointmentDiaryScreen}
+        options={{
+          ...getDefaultScreenOptions(t('navigation.appointment_diary.title')),
         }}
       />
     </Stack.Navigator>

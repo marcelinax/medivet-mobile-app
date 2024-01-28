@@ -9,6 +9,8 @@ export const useErrorAlert = () => {
 
   const handleErrorAlert = (errors: ApiError[], message?: string) => {
     const alertError = getAlertError(errors);
+    if (!alertError) return;
+
     const alertErrorMessage = alertError ? getErrorMessage([ alertError ]) : t('errors.something_went_wrong.title');
     const finalMessage = message || alertErrorMessage || '';
 

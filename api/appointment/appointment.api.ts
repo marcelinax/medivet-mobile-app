@@ -1,4 +1,6 @@
-import { Appointment, CreateAppointment } from 'types/api/appointment/types';
+import {
+  Appointment, AppointmentDiary, CreateAppointment, CreateAppointmentDiary,
+} from 'types/api/appointment/types';
 import { authClient } from 'api/services';
 
 export class AppointmentApi {
@@ -24,6 +26,21 @@ export class AppointmentApi {
 
   static async finishAppointment(id: number, params?: Record<string, any>): Promise<Appointment> {
     const res = await authClient.put(`appointments/${id}/finish`, undefined, { params });
+    return res.data;
+  }
+
+  static async createAppointmentDiary(data: CreateAppointmentDiary): Promise<AppointmentDiary> {
+    const res = await authClient.post('appointment-diaries', data);
+    return res.data;
+  }
+
+  static async getAppointmentDiary(id: number, params?: Record<string, any>): Promise<AppointmentDiary> {
+    const res = await authClient.get(`appointment-diaries/${id}`, { params });
+    return res.data;
+  }
+
+  static async getAnimalAppointmentDiaries(animalId: number, params?: Record<string, any>): Promise<AppointmentDiary[]> {
+    const res = await authClient.get(`appointment-diaries/animal/${animalId}`, { params });
     return res.data;
   }
 }

@@ -17,4 +17,19 @@ export interface Appointment {
   status: AppointmentStatus;
   opinion: VetOpinion;
   finishedDate?: string;
+  diary?: AppointmentDiary;
+}
+
+export interface CreateAppointmentDiary {
+  reason: string;
+  description: string;
+  appointmentId: number;
+}
+
+export interface AppointmentDiary {
+  id: number;
+  appointment: Appointment;
+  reason: string;
+  description: string;
+  date: string;
 }

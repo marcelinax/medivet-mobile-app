@@ -1,5 +1,5 @@
-import { useRoute } from '@react-navigation/native';
-import { RouteProps } from 'types/Navigation/types';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { NavigationProps, RouteProps } from 'types/Navigation/types';
 import { useEffect, useState } from 'react';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { View } from 'react-native';
@@ -18,11 +18,12 @@ import { getRequestErrors } from 'utils/errors';
 
 export const appointmentPreviewInclude = 'animal,animal.owner,medicalService,medicalService.user,medicalService.user.clinics,'
   + 'medicalService.clinic,medicalService.medicalService,medicalService.medicalService.specialization,'
-  + 'opinion,animal.breed';
+  + 'opinion,animal.breed,diary';
 
 export const AppointmentPreview = () => {
   const route = useRoute<RouteProps<'Appointment'>>();
   const { handleErrorAlert } = useErrorAlert();
+  const navigation = useNavigation<NavigationProps>();
   const [ appointment, setAppointment ] = useState<Appointment | undefined>();
   const user = useSelector((state: RootState) => state.user.currentUser) as User;
   const isVet = hasVetRole(user);
@@ -30,6 +31,15 @@ export const AppointmentPreview = () => {
   useEffect(() => {
     fetchAppointment();
   }, []);
+
+  useEffect(() => {
+    if (route.params.diaryCreated) {
+      fetchAppointment();
+      navigation.setParams({
+        diaryCreated: false,
+      });
+    }
+  }, [ route.params.diaryCreated ]);
 
   const fetchAppointment = async () => {
     try {

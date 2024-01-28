@@ -27,10 +27,13 @@ export default {
   CLOSE_OUTLINE: 'close-outline' as const,
   CLOSE_CIRCLE_OUTLINE: 'close-circle-outline' as const,
   CALL: 'call' as const,
+  CALL_OUTLINE: 'call-outline' as const,
   HEART_OUTLINE: 'heart-outline' as const,
   HEART: 'heart' as const,
   CHECKMARK_CIRCLE: 'checkmark-circle' as const,
   CHECKMARK_CIRCLE_OUTLINE: 'checkmark-circle-outline' as const,
   HOURGLASS: 'hourglass' as const,
   WALLET_OUTLINE: 'wallet-outline' as const,
+  READER_OUTLINE: 'reader-outline' as const,
+  MALE_FEMALE_OUTLINE: 'male-female-outline' as const,
 };

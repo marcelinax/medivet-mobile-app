@@ -63,6 +63,7 @@ export const AppointmentStatusSection = ({ appointment, isAddOpinionButtonShown,
       const res = await AppointmentApi.finishAppointment(appointment.id, params);
       setAppointment(res);
       handleSuccessAlert();
+      navigation.push('Create Appointment Diary', { appointmentId: appointment.id });
     } catch (err: any) {
       const errors = getRequestErrors(err);
       handleErrorAlert(errors);
@@ -80,6 +81,16 @@ export const AppointmentStatusSection = ({ appointment, isAddOpinionButtonShown,
 
     if (appointment.status === AppointmentStatus.FINISHED) {
       return moment(appointment.finishedDate).isAfter(moment().subtract(1, 'hours'));
+    }
+
+    return false;
+  };
+
+  const showFillUpADiaryButton = () => {
+    if (!isVet) return false;
+
+    if (appointment.status === AppointmentStatus.FINISHED && !appointment.diary?.id) {
+      return moment(appointment.finishedDate).isAfter(moment().subtract(1, 'days'));
     }
 
     return false;
@@ -142,6 +153,17 @@ export const AppointmentStatusSection = ({ appointment, isAddOpinionButtonShown,
               preventNavigateToVetScreen: true,
             })}
             containerStyle={styles.buttonContainer}
+          />
+        )
+      }
+      {
+        showFillUpADiaryButton() && (
+          <Button
+            title={t('actions.fill_up_an_appointment_diary.title')}
+            variant="outline"
+            leftIcon={icons.READER_OUTLINE}
+            containerStyle={styles.buttonContainer}
+            onPress={() => navigation.push('Create Appointment Diary', { appointmentId: appointment.id })}
           />
         )
       }

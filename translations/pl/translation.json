@@ -6,9 +6,6 @@
     "confirm": {
       "title": "Potwierdź"
     },
-    "save": {
-      "title": "Zapisz"
-    },
     "forgot_password": {
       "title": "Zapomniałeś hasła?"
     },
@@ -51,8 +48,14 @@
     "add_opinion": {
       "title": "Dodaj opinię"
     },
+    "fill_up_an_appointment_diary": {
+      "title": "Uzupełnij dziennik wizyty"
+    },
     "add_to_calendar": {
       "title": "Dodaj do mojego kalendarza"
+    },
+    "show_appointment_diary": {
+      "title": "Zobacz dziennik wizyty"
     },
     "clear": {
       "title": "Wyczyść"
@@ -62,6 +65,9 @@
     },
     "make_an_appointment": {
       "title": "Umów wizytę"
+    },
+    "save": {
+      "title": "Zapisz"
     },
     "choose_role": {
       "title": "Wybierz rolę"
@@ -88,33 +94,22 @@
       "remove": {
         "title": "Na pewno chcesz usunąć?"
       },
+      "message": "Na pewno chcesz wykonać akcję?",
       "add_clinic": {
         "title": "Na pewno chcesz dodać klinikę"
       },
       "remove_clinic": {
         "title": "Na pewno chcesz usunąć klinikę"
-      },
-      "message": "Na pewno chcesz wykonać akcję?"
+      }
     },
     "success": {
-      "title": "Akcja powiodła się!",
+      "save": {
+        "title": "Zapisano!"
+      },
       "appointment_event": {
         "title": "Wizyta została dodana do kalendarza. Przypomnienie zostało ustawione na 2 godziny przed wydarzeniem."
       },
-      "save": {
-        "title": "Zapisano!"
-      }
-    }
-  },
-  "errors": {
-    "something_went_wrong": {
-      "title": "Coś poszło nie tak"
-    },
-    "no_media_library_permission": {
-      "title": "Brak dostępu do rolki aparatu. Aby korzystać z rolki aparatu, musisz przejść do ustawień systemowych i zezwolić aplikacji na jej korzystanie."
-    },
-    "no_calendar_permission": {
-      "title": "Brak dostępu do kalendarza. Aby korzystać z kalendarza, musisz przejść do ustawień systemowych i zezwolić aplikacji na jego korzystanie."
+      "title": "Akcja powiodła się!"
     }
   },
   "words": {
@@ -152,11 +147,23 @@
     "not_available_dates": {
       "title": "Brak wolnych terminów"
     },
+    "specialization": {
+      "title": "Specjalizacja"
+    },
+    "specializations": {
+      "title": "Specjalizacje"
+    },
     "address": {
       "title": "Adres"
     },
     "service": {
       "title": "Usługa"
+    },
+    "reason": {
+      "title": "Powód"
+    },
+    "description": {
+      "title": "Opis"
     },
     "email": {
       "title": "Email"
@@ -167,14 +174,8 @@
     "name": {
       "title": "Imię i nazwisko"
     },
-    "specialization": {
-      "title": "Specjalizacja"
-    },
     "city": {
       "title": "Miasto"
-    },
-    "specializations": {
-      "title": "Specjalizacje"
     },
     "reception_hours": {
       "title": "Godziny przyjmowania"
@@ -199,6 +200,9 @@
     },
     "search": {
       "title": "Szukaj..."
+    },
+    "appointment_diary": {
+      "title": "Dziennik ostatniej wizyty"
     },
     "appointment_status": {
       "title": "Status wizyty"
@@ -285,6 +289,17 @@
       "title": "Kod pocztowy"
     }
   },
+  "errors": {
+    "no_media_library_permission": {
+      "title": "Brak dostępu do rolki aparatu. Aby korzystać z rolki aparatu, musisz przejść do ustawień systemowych i zezwolić aplikacji na jej korzystanie."
+    },
+    "no_calendar_permission": {
+      "title": "Brak dostępu do kalendarza. Aby korzystać z kalendarza, musisz przejść do ustawień systemowych i zezwolić aplikacji na jego korzystanie."
+    },
+    "something_went_wrong": {
+      "title": "Coś poszło nie tak"
+    }
+  },
   "enums": {
     "appointment": {
       "status": {
@@ -362,6 +377,12 @@
     },
     "create_opinion": {
       "title": "Tworzenie opinii"
+    },
+    "create_appointment_diary": {
+      "title": "Tworzenie dziennika wizyty"
+    },
+    "appointment_diary": {
+      "title": "Dziennik wizyty"
     },
     "user_clinics": {
       "title": "Moje kliniki"

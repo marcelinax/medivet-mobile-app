@@ -54,8 +54,17 @@ export type AppointmentCalendarScreenParams = {
 export type AppointmentScreenParams = {
   appointmentId: number;
   opinionAdded?: boolean;
+  diaryCreated?: boolean;
 }
 
 export type AnimalScreenParams = {
   animalId: number;
+}
+
+export type CreateAppointmentDiaryScreenParams = {
+  appointmentId: number;
+}
+
+export type AppointmentDiaryScreenParams = {
+  diaryId: number;
 }
