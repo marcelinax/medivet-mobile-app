@@ -8,19 +8,26 @@ import colors from 'themes/colors';
 import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from 'types/Navigation/types';
+import { LinkButton } from 'components/Buttons/LinkButton';
 
 interface Props {
   diary: AppointmentDiary;
+  animalId: number;
 
 }
 
-export const AnimalAppointmentDiaryInfo = ({ diary }: Props) => {
+export const AnimalAppointmentDiaryInfo = ({ diary, animalId }: Props) => {
   const { t } = useTranslation();
   const navigation = useNavigation<NavigationProps>();
 
   return (
     <View>
       <Text style={styles.title}>{t('words.appointment_diary.title').toUpperCase()}</Text>
+      <LinkButton
+        style={styles.linkButton}
+        title={t('actions.show_more.title')}
+        onPress={() => navigation.navigate('Appointment Diaries', { animalId })}
+      />
       <OutlineCard>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Appointment Diary', { diaryId: diary.id })}>
           <View>
@@ -38,7 +45,6 @@ export const AnimalAppointmentDiaryInfo = ({ diary }: Props) => {
 
 const styles = StyleSheet.create({
   title: {
-    marginBottom: 16,
     fontSize: 16,
     color: colors.PRIMARY,
   },
@@ -50,5 +56,8 @@ const styles = StyleSheet.create({
   date: {
     color: colors.GRAY_DARK,
     marginBottom: 8,
+  },
+  linkButton: {
+    marginBottom: 6,
   },
 });

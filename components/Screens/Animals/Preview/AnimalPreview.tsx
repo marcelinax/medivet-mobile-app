@@ -74,7 +74,10 @@ export const AnimalPreview = () => {
         <AnimalBasicInfo animal={animal} />
         {isVet && <AnimalOwnerInfo owner={animal.owner} />}
         {appointmentDiary && (
-          <AnimalAppointmentDiaryInfo diary={appointmentDiary} />
+          <AnimalAppointmentDiaryInfo
+            diary={appointmentDiary}
+            animalId={animal.id}
+          />
         )}
       </View>
     )

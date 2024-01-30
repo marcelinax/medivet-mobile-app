@@ -36,6 +36,9 @@
     "remove": {
       "title": "Usuń"
     },
+    "show_more": {
+      "title": "Zobacz więcej"
+    },
     "make_next_appointment": {
       "title": "Umów się na kolejną wizytę"
     },
@@ -366,6 +369,12 @@
     "new_animal": {
       "title": "Dodawanie zwierzęcia"
     },
+    "appointment_diary": {
+      "title": "Dziennik wizyty"
+    },
+    "appointment_diaries": {
+      "title": "Dzienniki wizyt"
+    },
     "appointments": {
       "title": "Wizyty"
     },
@@ -380,9 +389,6 @@
     },
     "create_appointment_diary": {
       "title": "Tworzenie dziennika wizyty"
-    },
-    "appointment_diary": {
-      "title": "Dziennik wizyty"
     },
     "user_clinics": {
       "title": "Moje kliniki"

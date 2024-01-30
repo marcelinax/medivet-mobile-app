@@ -68,3 +68,7 @@ export type CreateAppointmentDiaryScreenParams = {
 export type AppointmentDiaryScreenParams = {
   diaryId: number;
 }
+
+export type AppointmentDiariesScreenParams = {
+  animalId: number;
+}

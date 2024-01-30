@@ -48,4 +48,5 @@ export default {
   ANIMAL: 'Animal' as keyof RootStackParamList,
   CREATE_APPOINTMENT_DIARY: 'Create Appointment Diary' as keyof RootStackParamList,
   APPOINTMENT_DIARY: 'Appointment Diary' as keyof RootStackParamList,
+  APPOINTMENT_DIARIES: 'Appointment Diaries' as keyof RootStackParamList,
 };
