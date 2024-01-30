@@ -1,4 +1,6 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import {
+  ScrollView, StyleSheet, Text, View,
+} from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { AvailableDateApi } from 'api/availableDate/availableDate.api';
@@ -11,12 +13,18 @@ import { EmptyList } from 'components/Composition/EmptyList';
 import { useTranslation } from 'react-i18next';
 import { AppointmentDetails } from 'store/home/appointmentSlice';
 import { getRequestErrors } from 'utils/errors';
+import colors from 'themes/colors';
 
 interface Props {
   vetId: number;
   medicalServiceId: number;
   setForm: (form: AppointmentDetails) => void;
   form: AppointmentDetails;
+}
+
+interface GroupedAvailableDate {
+  month: number;
+  dates: AvailableDate[];
 }
 
 export const AppointmentCalendarDatesForm = ({
@@ -47,7 +55,45 @@ export const AppointmentCalendarDatesForm = ({
     setLoading(false);
   };
 
-  const drawDates = () => availableDates.map((availableDate) => (
+  const groupDatesByMonth = (): GroupedAvailableDate[] => {
+    const groupedDates: GroupedAvailableDate[] = [];
+
+    availableDates.forEach((availableDate) => {
+      const availableDateMonth = moment(availableDate.date).month();
+      const groupedDateWithMonthIndex = groupedDates.findIndex((groupedDate) => groupedDate.month === availableDateMonth);
+
+      if (groupedDateWithMonthIndex > -1) {
+        groupedDates[groupedDateWithMonthIndex] = {
+          ...groupedDates[groupedDateWithMonthIndex],
+          dates: [ ...groupedDates[groupedDateWithMonthIndex].dates, availableDate ],
+        };
+      } else {
+        groupedDates.push({
+          month: availableDateMonth,
+          dates: [ availableDate ],
+        });
+      }
+    });
+
+    return groupedDates;
+  };
+
+  const drawDates = () => groupDatesByMonth().map((date) => (
+    <View>
+      <Text style={styles.month}>
+        {moment().set('month', date.month).format('MMMM').toUpperCase()}
+      </Text>
+      <ScrollView
+        horizontal
+        contentContainerStyle={styles.datesContainer}
+        key={`month-${date.month}`}
+      >
+        {drawDatesForMonth(date.dates)}
+      </ScrollView>
+    </View>
+  ));
+
+  const drawDatesForMonth = (dates: AvailableDate[]) => dates.map((availableDate) => (
     <CalendarDay
       onPress={() => setForm({
         ...form,
@@ -117,12 +163,9 @@ export const AppointmentCalendarDatesForm = ({
           <View style={styles.scrollViewContainer}>
             {!availableDates ? <EmptyList title={t('words.not_available_dates.title')} /> : (
               <>
-                <ScrollView
-                  horizontal
-                  contentContainerStyle={styles.datesContainer}
-                >
+                <View style={styles.monthsContainer}>
                   {drawDates()}
-                </ScrollView>
+                </View>
                 {form.date && (
                   <View style={styles.hoursContainer}>
                     {drawHours()}
@@ -156,5 +199,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     flexDirection: 'row',
     width: '100%',
+  },
+  monthsContainer: {
+    gap: 6,
+  },
+  month: {
+    marginBottom: 10,
+    color: colors.GRAY_DARK,
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
