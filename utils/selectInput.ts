@@ -14,7 +14,7 @@ export const parseDataToSelectOptions = (
   const id = fieldAsId.toString().split('.').reduce((acc, cur) => {
     if (acc) return acc[`${cur}`];
     return cur;
-  }, item);
+  }, item).toString();
 
   const itemAdditionalFields: Record<string, any> = {};
   if (additionalFields && additionalFields.length > 0) {
