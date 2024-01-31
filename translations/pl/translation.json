@@ -6,6 +6,9 @@
     "confirm": {
       "title": "Potwierdź"
     },
+    "choose": {
+      "title": "Wybierz"
+    },
     "forgot_password": {
       "title": "Zapomniałeś hasła?"
     },
@@ -29,9 +32,6 @@
     },
     "change": {
       "title": "Zmień"
-    },
-    "choose": {
-      "title": "Wybierz"
     },
     "remove": {
       "title": "Usuń"
@@ -207,6 +207,12 @@
     "appointment_diary": {
       "title": "Dziennik ostatniej wizyty"
     },
+    "services": {
+      "title": "Usługi"
+    },
+    "appointment_date": {
+      "title": "Data wizyty"
+    },
     "appointment_status": {
       "title": "Status wizyty"
     },
@@ -242,9 +248,6 @@
     },
     "vet_has_not_any_medical_services": {
       "title": "Lekarz nie wykonuje obecnie żadnych usług"
-    },
-    "services": {
-      "title": "Usługi"
     },
     "addresses": {
       "title": "Adresy"

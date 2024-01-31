@@ -1,16 +1,15 @@
 import { useTranslation } from 'react-i18next';
-import { SelectFilterButton } from 'components/Filters/SelectFilterButton';
-import { getAvailableDatesSelectOptions } from 'constants/selectOptions';
-import { SelectId } from 'constants/enums/selectId.enum';
 import { SelectOptionProps } from 'types/components/Inputs/types';
-import { parseDataToSelectOptions } from 'utils/selectInput';
 import {
   VetClinicProvidedMedicalServiceApi,
 } from 'api/vetClinicProvidedMedicalService/vetClinicProvidedMedicalService.api';
+import { parseDataToSelectOptions } from 'utils/selectInput';
+import { SelectFilterButton } from 'components/Filters/SelectFilterButton';
 import { MultiSelectId } from 'constants/enums/multiSelectId.enum';
 import { ListFilters } from 'components/List/ListFilters';
+import { DateFilter } from 'components/Filters/DateFilter';
 
-export const VetListFilters = () => {
+export const AppointmentDiaryListFilters = () => {
   const { t } = useTranslation();
 
   const fetchMedicalServices = async (params?: Record<string, any>): Promise<SelectOptionProps[]> => {
@@ -27,21 +26,16 @@ export const VetListFilters = () => {
     <ListFilters>
       <>
         <SelectFilterButton
-          title={t('words.available_dates.title')}
-          isMultiSelect={false}
-          options={getAvailableDatesSelectOptions(t)}
-          selectId={SelectId.AVAILABLE_DATES}
-          filterId="availableDates"
-          selectScreenHeaderTitle={t('words.available_dates.title')}
-          defaultSelectedFilterValue={getAvailableDatesSelectOptions(t)[2]}
-        />
-        <SelectFilterButton
           title={t('words.services.title')}
           isMultiSelect
           fetchOptions={fetchMedicalServices}
-          selectId={MultiSelectId.MEDICAL_SERVICES}
+          selectId={MultiSelectId.APPOINTMENT_DIARY_MEDICAL_SERVICES}
           filterId="medicalServices"
           selectScreenHeaderTitle={t('words.services.title')}
+        />
+        <DateFilter
+          title={t('words.appointment_date.title')}
+          filterId="appointmentDate"
         />
       </>
     </ListFilters>

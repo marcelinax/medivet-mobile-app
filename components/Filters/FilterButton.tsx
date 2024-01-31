@@ -8,7 +8,6 @@ interface Props {
   title: string;
   filterId: string;
   value: string;
-
 }
 
 export const FilterButton = ({ title, filterId, value }: Props) => {

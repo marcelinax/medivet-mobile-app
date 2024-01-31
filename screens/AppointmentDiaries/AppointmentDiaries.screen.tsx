@@ -1,8 +1,11 @@
 import { ListLayout } from 'layouts/List.layout';
-import { AppointmentDiaryList } from 'components/Screens/AppointmentDiaries/AppointmentDiaryList';
+import { AppointmentDiaryList } from 'components/Screens/AppointmentDiaries/List/AppointmentDiaryList';
 
 export const AppointmentDiariesScreen = () => (
-  <ListLayout withoutBackgroundColor>
+  <ListLayout
+    withoutBackgroundColor
+    withoutVerticalPadding
+  >
     <AppointmentDiaryList />
   </ListLayout>
 );

@@ -1,5 +1,5 @@
 import { ListFilters } from 'components/List/ListFilters';
-import { FilterButton } from 'components/Composition/FilterButton';
+import { FilterButton } from 'components/Filters/FilterButton';
 import { useTranslation } from 'react-i18next';
 import { AppointmentStatus } from 'constants/enums/enums';
 import { FilterId } from 'constants/enums/filterId.enum';
