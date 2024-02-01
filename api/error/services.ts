@@ -18,6 +18,13 @@ export const getAlertError = (errors: ApiError[]): ErrorMessage | undefined => {
     };
   }
 
+  if (errors[0].statusCode === 404) {
+    return {
+      message: 'Not found',
+      property: 'all',
+    };
+  }
+
   const errorMessages = errors.map((error) => error?.message).flat();
   return errorMessages.find((errorMessage) => errorMessage!.property === 'all');
 };
@@ -31,7 +38,7 @@ const parseErrorMessageToTranslationKey = (errorMessage: string) => errorMessage
 
 export const getErrorMessage = (errors: ErrorMessage[]): string => {
   const errorMessage = errors[0].message;
-  return errorsTranslations[parseErrorMessageToTranslationKey(errorMessage)];
+  return errorsTranslations[parseErrorMessageToTranslationKey(errorMessage)] || errorsTranslations.SOMETHING_WENT_WRONG;
 };
 
 export const getNotOmittedErrors = (errors: ApiError[], fieldToOmit: string) => errors.filter(
