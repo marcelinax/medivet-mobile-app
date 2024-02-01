@@ -1,5 +1,5 @@
 import { User } from 'types/api/user/types';
-import { Gender } from 'constants/enums/enums';
+import { AnimalStatus, Gender } from 'constants/enums/enums';
 
 export interface Animal {
   id: number;
@@ -11,6 +11,7 @@ export interface Animal {
   gender: Gender.ANIMAL_FEMALE | Gender.ANIMAL_MALE;
   profilePhotoUrl?: string;
   owner: User;
+  status: AnimalStatus;
 }
 
 export interface CreateAnimal {

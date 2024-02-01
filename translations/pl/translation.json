@@ -36,6 +36,15 @@
     "remove": {
       "title": "Usuń"
     },
+    "edit": {
+      "title": "Edytuj"
+    },
+    "restore": {
+      "title": "Przywróć"
+    },
+    "archive": {
+      "title": "Archiwizuj"
+    },
     "show_more": {
       "title": "Zobacz więcej"
     },
@@ -326,6 +335,10 @@
         "CAT": "Kot",
         "BIRD": "Ptak",
         "FUR_ANIMAL": "Zwierzęta futerkowe"
+      },
+      "status": {
+        "archived": "Zarchiwizowany",
+        "active": "Aktywny"
       }
     },
     "day_of_week": {

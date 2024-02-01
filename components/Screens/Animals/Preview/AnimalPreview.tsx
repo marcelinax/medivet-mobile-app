@@ -9,13 +9,17 @@ import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { Loading } from 'components/Composition/Loading';
 import { AnimalBasicInfo } from 'components/Screens/Animals/Preview/AnimalBasicInfo';
 import { AnimalOwnerInfo } from 'components/Screens/Animals/Preview/AnimalOwnerInfo';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { User } from 'types/api/user/types';
 import { hasVetRole } from 'utils/hasVetRole';
 import { AnimalAppointmentDiaryInfo } from 'components/Screens/Animals/Preview/AnimalAppointmentDiaryInfo';
 import { AppointmentApi } from 'api/appointment/appointment.api';
 import { AppointmentDiary } from 'types/api/appointment/types';
+import { AnimalNavigationMoreButton } from 'components/Navigation/Animal/AnimalNavigationMoreButton';
+import { setForceFetchingList } from 'store/list/listSlice';
+
+export const animalPreviewInclude = 'owner,breed,coatColor';
 
 export const AnimalPreview = () => {
   const { params: { animalId } } = useRoute<RouteProps<'Animal'>>();
@@ -26,10 +30,25 @@ export const AnimalPreview = () => {
   const isVet = hasVetRole(user);
   const [ appointmentDiaryLoading, setAppointmentDiaryLoading ] = useState(true);
   const [ appointmentDiary, setAppointmentDiary ] = useState<AppointmentDiary | undefined>();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     handleInit();
   }, []);
+
+  useEffect(() => {
+    if (animal) {
+      navigation.setOptions({
+        headerRight: () => (
+          <AnimalNavigationMoreButton
+            setAnimal={setAnimal}
+            animal={animal}
+          />
+        ),
+      });
+      dispatch(setForceFetchingList(true));
+    }
+  }, [ animal?.status ]);
 
   const handleInit = async () => {
     await fetchAnimal();
@@ -39,12 +58,18 @@ export const AnimalPreview = () => {
   const fetchAnimal = async () => {
     try {
       const params = {
-        include: 'owner,breed,coatColor',
+        include: animalPreviewInclude,
       };
       const res = await AnimalApi.getAnimal(animalId, params);
       setAnimal(res);
       navigation.setOptions({
         headerTitle: res.name,
+        headerRight: () => (
+          <AnimalNavigationMoreButton
+            setAnimal={setAnimal}
+            animal={res}
+          />
+        ),
       });
     } catch (err: any) {
       const errors = getRequestErrors(err);

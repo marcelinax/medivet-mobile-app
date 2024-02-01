@@ -36,4 +36,5 @@ export default {
   WALLET_OUTLINE: 'wallet-outline' as const,
   READER_OUTLINE: 'reader-outline' as const,
   MALE_FEMALE_OUTLINE: 'male-female-outline' as const,
+  ELLIPSIS_VERTICAL: 'ellipsis-vertical' as const,
 };

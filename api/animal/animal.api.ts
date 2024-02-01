@@ -47,4 +47,14 @@ export class AnimalApi {
     const res = await authClient.get(`animals/${animalId}`, { params });
     return res.data;
   }
+
+  static async archiveAnimal(animalId: number, params?: Record<string, any>): Promise<Animal> {
+    const res = await authClient.put(`animals/archive/${animalId}`, undefined, { params });
+    return res.data;
+  }
+
+  static async restoreAnimal(animalId: number, params?: Record<string, any>): Promise<Animal> {
+    const res = await authClient.put(`animals/restore/${animalId}`, undefined, { params });
+    return res.data;
+  }
 }

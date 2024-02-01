@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import icons from 'themes/icons';
 import { listItemStyles } from 'screens/utils/styles';
 import { NavigationProps } from 'types/Navigation/types';
+import { AnimalStatus } from 'constants/enums/enums';
+import { AnimalStatusBadge } from 'components/Screens/Animals/AnimalStatusBadge';
 
 interface Props {
   animal: Animal;
@@ -14,7 +16,6 @@ interface Props {
 export const AnimalListItem = ({ animal }: Props) => {
   const navigation = useNavigation<NavigationProps>();
 
-  // TODO swipe buttons z edycją i usunięciem
   return (
     <TouchableWithoutFeedback
       onPress={() => navigation.push('Animal', { animalId: animal.id })}
@@ -29,6 +30,13 @@ export const AnimalListItem = ({ animal }: Props) => {
             />
             <View style={listItemStyles.nameContainer}>
               <Text style={listItemStyles.name}>{animal.name}</Text>
+              {animal.status === AnimalStatus.ARCHIVED
+                && (
+                  <AnimalStatusBadge
+                    status={animal.status}
+                    style={{ marginTop: 6 }}
+                  />
+                )}
             </View>
           </View>
         </Card>

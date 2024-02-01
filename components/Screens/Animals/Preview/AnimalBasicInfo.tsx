@@ -5,8 +5,9 @@ import { Avatar } from 'components/Composition/Avatar';
 import colors from 'themes/colors';
 import { BreakLine } from 'components/Composition/BreakLine';
 import { Ionicons } from '@expo/vector-icons';
-import { Gender } from 'constants/enums/enums';
+import { AnimalStatus, Gender } from 'constants/enums/enums';
 import moment from 'moment';
+import { AnimalStatusBadge } from 'components/Screens/Animals/AnimalStatusBadge';
 
 interface Props {
   animal: Animal;
@@ -36,6 +37,12 @@ export const AnimalBasicInfo = ({ animal }: Props) => {
             {animal.name}
           </Text>
         </View>
+        {animal.status === AnimalStatus.ARCHIVED && (
+          <AnimalStatusBadge
+            status={animal.status}
+            style={styles.status}
+          />
+        )}
       </View>
       <BreakLine style={styles.breakLine} />
       <View>
@@ -117,5 +124,8 @@ const styles = StyleSheet.create({
   },
   genderIcon: {
     marginRight: 4,
+  },
+  status: {
+    marginTop: 8,
   },
 });
