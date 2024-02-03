@@ -1,5 +1,7 @@
 import { authClient, noAuthClient } from 'api/services';
-import { RegistrationCredentials, User, VetSpecialization } from 'types/api/user/types';
+import {
+  FavouriteVet, RegistrationCredentials, User, VetSpecialization,
+} from 'types/api/user/types';
 
 class UserApi {
   static async registerUser(data: RegistrationCredentials): Promise<User> {
@@ -65,6 +67,11 @@ class UserApi {
 
   static async checkIfVetIsInFavourites(vetId: number): Promise<boolean> {
     const res = await authClient.get(`users/favourite-vets/${vetId}`);
+    return res.data;
+  }
+
+  static async getFavouriteVets(params?: Record<string, any>): Promise<FavouriteVet[]> {
+    const res = await authClient.get('users/favourite-vets', { params });
     return res.data;
   }
 }

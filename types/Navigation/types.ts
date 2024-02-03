@@ -58,6 +58,7 @@ export type RootStackParamList = {
   'Appointment Diaries': AppointmentDiariesScreenParams;
   'User Opinions': undefined;
   'User Opinion': UserOpinionScreenParams;
+  'User Favourite Vets': undefined;
 }
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;

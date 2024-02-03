@@ -305,6 +305,9 @@
     },
     "zip_code": {
       "title": "Kod pocztowy"
+    },
+    "favourite_vets": {
+      "title": "Polubieni weterynarze"
     }
   },
   "errors": {
@@ -462,6 +465,9 @@
     },
     "user_opinion": {
       "title": "Opinia"
+    },
+    "favourite_vets": {
+      "title": "Polubieni weterynarze"
     },
     "appointment_animal": {
       "title": "Wybór zwierzęcia"

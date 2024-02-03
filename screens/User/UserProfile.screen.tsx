@@ -77,6 +77,13 @@ export const UserProfileScreen = () => {
               icon={icons.HEART_CIRCLE_OUTLINE}
             />
           )}
+          {!isVet && (
+            <WideButton
+              onPress={() => navigation.navigate('User Favourite Vets')}
+              title={t('words.favourite_vets.title')}
+              icon={icons.HEART_CIRCLE_OUTLINE}
+            />
+          )}
           <WideButton
             onPress={onLogout}
             title={t('actions.logout.title')}

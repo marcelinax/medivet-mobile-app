@@ -33,3 +33,10 @@ export interface VetSpecialization {
   name: string;
   id: number;
 }
+
+export interface FavouriteVet {
+  id: number;
+  user: User;
+  vet: User;
+  isFavourite: boolean;
+}

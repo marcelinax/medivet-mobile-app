@@ -28,6 +28,7 @@ import { parseDataToSelectOptions } from 'utils/selectInput';
 import { useTranslation } from 'react-i18next';
 import { UserOpinionsScreen } from 'screens/User/Opinions/UserOpinions.screen';
 import { UserOpinionScreen } from 'screens/User/Opinions/UserOpinion.screen';
+import { FavouriteVetsScreen } from 'screens/User/FavouriteVets.screen';
 
 export const UserNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -137,6 +138,13 @@ export const UserNavigator = () => {
           </>
         )
       }
+      {!isVet && (
+        <Stack.Screen
+          name={routes.USER_FAVOURITE_VETS}
+          component={FavouriteVetsScreen}
+          options={() => getDefaultScreenOptions(t('navigation.favourite_vets.title'))}
+        />
+      )}
     </Stack.Navigator>
   );
 };

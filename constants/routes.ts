@@ -51,4 +51,5 @@ export default {
   APPOINTMENT_DIARIES: 'Appointment Diaries' as keyof RootStackParamList,
   USER_OPINIONS: 'User Opinions' as keyof RootStackParamList,
   USER_OPINION: 'User Opinion' as keyof RootStackParamList,
+  USER_FAVOURITE_VETS: 'User Favourite Vets' as keyof RootStackParamList,
 };
