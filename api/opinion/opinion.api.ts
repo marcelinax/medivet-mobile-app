@@ -26,4 +26,9 @@ export class OpinionApi {
     const res = await authClient.get(`opinions/my/${opinionId}`, { params });
     return res.data;
   }
+
+  static async reportOpinion(opinionId: number, params?: Record<string, any>): Promise<VetOpinion> {
+    const res = await authClient.put(`opinions/my/${opinionId}/report`, undefined, { params });
+    return res.data;
+  }
 }

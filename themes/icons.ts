@@ -38,5 +38,5 @@ export default {
   MALE_FEMALE_OUTLINE: 'male-female-outline' as const,
   ELLIPSIS_VERTICAL: 'ellipsis-vertical' as const,
   HEART_CIRCLE_OUTLINE: 'heart-circle-outline' as const,
-  BAN_OUTLINE: 'ban-outline' as const,
+  MEGAPHONE_OUTLINE: 'megaphone-outline' as const,
 };

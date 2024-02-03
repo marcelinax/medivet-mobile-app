@@ -37,3 +37,9 @@ export enum AnimalStatus {
   ACTIVE = 'active',
   ARCHIVED = 'archived'
 }
+
+export enum OpinionStatus {
+  'ACTIVE' = 'ACTIVE',
+  'REPORTED' = 'REPORTED',
+  'REMOVED' = 'REMOVED'
+}

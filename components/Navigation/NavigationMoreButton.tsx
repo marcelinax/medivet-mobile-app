@@ -15,7 +15,7 @@ export const NavigationMoreButton = ({ actions }: Props) => {
       {drawActionsSheet(actions)}
       <IconButton
         icon={icons.ELLIPSIS_VERTICAL}
-        size="small"
+        size="medium"
         onPress={handleActionsSheet}
       />
     </>

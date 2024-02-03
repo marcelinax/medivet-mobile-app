@@ -31,6 +31,7 @@ export const OpinionList = () => {
       onFetch={(params) => OpinionApi.getMyOpinions(getParams(params))}
       renderItem={renderOpinion}
       withoutBackgroundColor
+      separateOptions
       customHeader={<OpinionListFilters />}
     />
   );

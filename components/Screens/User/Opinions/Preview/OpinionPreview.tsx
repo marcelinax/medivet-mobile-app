@@ -10,25 +10,53 @@ import { Loading } from 'components/Composition/Loading';
 import { OpinionIssuerInfo } from 'components/Screens/User/Opinions/Preview/OpinionIssuerInfo';
 import { OpinionMessage } from 'components/Screens/User/Opinions/Preview/OpinionMessage';
 import { OpinionAppointmentInfo } from 'components/Screens/User/Opinions/Preview/OpinionAppointmentInfo';
+import { OpinionStatus } from 'constants/enums/enums';
+import { OpinionReportButton } from 'components/Screens/User/Opinions/Preview/OpinionReportButton';
 
 export const OpinionPreview = () => {
   const [ opinion, setOpinion ] = useState<VetOpinion | undefined>();
   const { params: { opinionId } } = useRoute<RouteProps<'User Opinion'>>();
   const { handleErrorAlert } = useErrorAlert();
   const navigation = useNavigation<NavigationProps>();
+  const include = 'issuer,appointment,appointment.medicalService,'
+    + 'appointment.medicalService.medicalService,appointment.medicalService.clinic';
 
   useEffect(() => {
     fetchOpinion();
   }, []);
 
+  useEffect(() => {
+    if (opinion?.status) {
+      handleDrawReportButton(opinion);
+    }
+  }, [ opinion?.status ]);
+
+  const isOpinionActive = (opinion: VetOpinion) => opinion.status === OpinionStatus.ACTIVE;
+
+  const handleDrawReportButton = (opinion: VetOpinion) => {
+    if (isOpinionActive(opinion)) {
+      navigation.setOptions({
+        headerRight: () => (
+          <OpinionReportButton
+            opinionId={opinion.id}
+            setOpinion={setOpinion}
+            include={include}
+          />
+        ),
+      });
+    } else {
+      navigation.setOptions({
+        headerRight: () => <></>,
+      });
+    }
+  };
+
   const fetchOpinion = async () => {
     try {
-      const params = {
-        include: 'issuer,appointment,appointment.medicalService,'
-          + 'appointment.medicalService.medicalService,appointment.medicalService.clinic',
-      };
+      const params = { include };
       const res = await OpinionApi.getMyOpinion(opinionId, params);
       setOpinion(res);
+      handleDrawReportButton(res);
     } catch (err: any) {
       const errors = getRequestErrors(err);
       handleErrorAlert(errors);

@@ -41,4 +41,5 @@ export default {
   FORBIDDEN_RESOURCE: 'Brak dostępu',
   REASON_SHOULD_NOT_BE_EMPTY: 'Wprowadź powód',
   DESCRIPTION_SHOULD_NOT_BE_EMPTY: 'Wprowadź opis',
+  CANNOT_REPORT_ALREADY_REPORTED_OR_REMOVED_OPINION: 'Nie można zgłosić już zgłoszonej lub usuniętej opinii.',
 } as Record<string, string>;
