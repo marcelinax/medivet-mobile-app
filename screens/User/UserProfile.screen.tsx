@@ -70,6 +70,13 @@ export const UserProfileScreen = () => {
               icon={icons.MEDKIT_OUTLINE}
             />
           )}
+          {isVet && (
+            <WideButton
+              onPress={() => navigation.navigate('User Opinions')}
+              title={t('words.opinions.title')}
+              icon={icons.HEART_CIRCLE_OUTLINE}
+            />
+          )}
           <WideButton
             onPress={onLogout}
             title={t('actions.logout.title')}

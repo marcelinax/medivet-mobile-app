@@ -26,6 +26,8 @@ import {
 } from 'store/multiSelect/multiSelectSlice';
 import { parseDataToSelectOptions } from 'utils/selectInput';
 import { useTranslation } from 'react-i18next';
+import { UserOpinionsScreen } from 'screens/User/Opinions/UserOpinions.screen';
+import { UserOpinionScreen } from 'screens/User/Opinions/UserOpinion.screen';
 
 export const UserNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -117,6 +119,22 @@ export const UserNavigator = () => {
             component={UserSpecializationsScreen}
             options={userSpecializationsScreenOptions}
           />
+        )
+      }
+      {
+        isVet && (
+          <>
+            <Stack.Screen
+              name={routes.USER_OPINIONS}
+              component={UserOpinionsScreen}
+              options={() => getDefaultScreenOptions(t('navigation.user_opinions.title'))}
+            />
+            <Stack.Screen
+              name={routes.USER_OPINION}
+              component={UserOpinionScreen}
+              options={() => getDefaultScreenOptions(t('navigation.user_opinion.title'))}
+            />
+          </>
         )
       }
     </Stack.Navigator>

@@ -49,4 +49,6 @@ export default {
   CREATE_APPOINTMENT_DIARY: 'Create Appointment Diary' as keyof RootStackParamList,
   APPOINTMENT_DIARY: 'Appointment Diary' as keyof RootStackParamList,
   APPOINTMENT_DIARIES: 'Appointment Diaries' as keyof RootStackParamList,
+  USER_OPINIONS: 'User Opinions' as keyof RootStackParamList,
+  USER_OPINION: 'User Opinion' as keyof RootStackParamList,
 };

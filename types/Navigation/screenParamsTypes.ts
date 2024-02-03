@@ -72,3 +72,7 @@ export type AppointmentDiaryScreenParams = {
 export type AppointmentDiariesScreenParams = {
   animalId: number;
 }
+
+export type UserOpinionScreenParams = {
+  opinionId: number;
+}

@@ -16,4 +16,14 @@ export class OpinionApi {
     const res = await authClient.get(`opinions/${vetId}/amount`);
     return res.data;
   }
+
+  static async getMyOpinions(params?: Record<string, any>): Promise<VetOpinion[]> {
+    const res = await authClient.get('opinions/my', { params });
+    return res.data;
+  }
+
+  static async getMyOpinion(opinionId: number, params?: Record<string, any>): Promise<VetOpinion> {
+    const res = await authClient.get(`opinions/my/${opinionId}`, { params });
+    return res.data;
+  }
 }

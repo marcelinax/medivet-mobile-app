@@ -14,6 +14,7 @@ import {
   MultiSelectScreenParams,
   OpinionScreenParams,
   SelectScreenParams,
+  UserOpinionScreenParams,
   VetClinicScreenParams,
   VetScreenParams,
 } from 'types/Navigation/screenParamsTypes';
@@ -55,6 +56,8 @@ export type RootStackParamList = {
   'Create Appointment Diary': CreateAppointmentDiaryScreenParams;
   'Appointment Diary': AppointmentDiaryScreenParams;
   'Appointment Diaries': AppointmentDiariesScreenParams;
+  'User Opinions': undefined;
+  'User Opinion': UserOpinionScreenParams;
 }
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;
