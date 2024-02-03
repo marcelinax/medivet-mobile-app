@@ -82,3 +82,22 @@ export const getAvailableDatesSelectOptions = (t: TFunction<string, undefined>):
     label: t('enums.available_date.WHENEVER'),
   },
 ];
+
+export const getUserOpinionSortingModeSelectOptions = (t: TFunction<string, undefined>): SelectOptionProps[] => [
+  {
+    id: 'newest',
+    label: t('enums.sorting_mode.NEWEST'),
+  },
+  {
+    id: 'oldest',
+    label: t('enums.sorting_mode.OLDEST'),
+  },
+  {
+    id: 'highest-rate',
+    label: t('enums.sorting_mode.HIGHEST_RATE'),
+  },
+  {
+    id: 'lowest-rate',
+    label: t('enums.sorting_mode.LOWEST_RATE'),
+  },
+];

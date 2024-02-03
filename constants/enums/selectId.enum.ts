@@ -13,4 +13,5 @@ export enum SelectId {
   APPOINTMENT_CLINIC = 'appointmentClinic',
   APPOINTMENT_MEDICAL_SERVICE = 'appointmentMedicalService',
   APPOINTMENT_SPECIALIZATION = 'appointmentSpecialization',
+  USER_OPINION_SORTING = 'userOpinionSorting'
 }

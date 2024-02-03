@@ -276,6 +276,9 @@
     "more": {
       "title": "Więcej"
     },
+    "sorting": {
+      "title": "Sortowanie"
+    },
     "logo": {
       "title": "MediVet"
     },
@@ -364,6 +367,12 @@
       "WITHIN_3_DAYS": "W ciągu 3 dni",
       "WHENEVER": "Kiedykolwiek"
     },
+    "sorting_mode": {
+      "NEWEST": "Najnowsze",
+      "OLDEST": "Najstarsze",
+      "HIGHEST_RATE": "Najwyższa ocena",
+      "LOWEST_RATE": "Najniższa ocena"
+    },
     "user": {
       "role": {
         "PATIENT": {
@@ -450,6 +459,9 @@
     },
     "user_opinions": {
       "title": "Moje opinie"
+    },
+    "user_opinion": {
+      "title": "Opinia"
     },
     "appointment_animal": {
       "title": "Wybór zwierzęcia"

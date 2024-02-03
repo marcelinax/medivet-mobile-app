@@ -1,5 +1,5 @@
 import { ListLayout } from 'layouts/List.layout';
-import { OpinionList } from 'components/Screens/User/Opinions/OpinionList';
+import { OpinionList } from 'components/Screens/User/Opinions/List/OpinionList';
 
 export const UserOpinionsScreen = () => (
   <ListLayout
