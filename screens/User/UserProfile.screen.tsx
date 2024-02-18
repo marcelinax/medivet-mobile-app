@@ -57,32 +57,38 @@ export const UserProfileScreen = () => {
         </TouchableWithoutFeedback>
         <View style={styles.wideButtonsContainer}>
           {!isVet && (
-            <WideButton
-              onPress={() => navigation.navigate('Edit User Address')}
-              title={t('words.address.title')}
-              icon={icons.HOME_OUTLINE}
-            />
+            <>
+              <WideButton
+                onPress={() => navigation.navigate('Edit User Address')}
+                title={t('words.address.title')}
+                icon={icons.HOME_OUTLINE}
+              />
+              <WideButton
+                onPress={() => navigation.navigate('User Favourite Vets')}
+                title={t('words.favourite_vets.title')}
+                icon={icons.HEART_CIRCLE_OUTLINE}
+              />
+            </>
           )}
           {isVet && (
-            <WideButton
-              onPress={() => navigation.navigate('User Specializations')}
-              title={t('words.specializations.title')}
-              icon={icons.MEDKIT_OUTLINE}
-            />
-          )}
-          {isVet && (
-            <WideButton
-              onPress={() => navigation.navigate('User Opinions')}
-              title={t('words.opinions.title')}
-              icon={icons.HEART_CIRCLE_OUTLINE}
-            />
-          )}
-          {!isVet && (
-            <WideButton
-              onPress={() => navigation.navigate('User Favourite Vets')}
-              title={t('words.favourite_vets.title')}
-              icon={icons.HEART_CIRCLE_OUTLINE}
-            />
+            <>
+              <WideButton
+                onPress={() => navigation.navigate('User Specializations')}
+                title={t('words.specializations.title')}
+                icon={icons.MEDKIT_OUTLINE}
+              />
+              <WideButton
+                onPress={() => navigation.navigate('User Opinions')}
+                title={t('words.opinions.title')}
+                icon={icons.HEART_CIRCLE_OUTLINE}
+              />
+              <WideButton
+                onPress={() => navigation.navigate('User Vacations')}
+                title={t('words.vacations.title')}
+                icon={icons.FLOWER_OUTLINE}
+              />
+            </>
+
           )}
           <WideButton
             onPress={onLogout}

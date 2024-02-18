@@ -73,7 +73,7 @@ export const VetClinicAvailabilityReceptionHourForm = () => {
           onConfirm={(hourFrom) => {
             handleChangeInput('hourFrom', parseDateFormatToTime(hourFrom));
           }}
-          label={t('words.hour_from.title')}
+          label={t('words.from.title')}
         />
       </View>
       <View style={styles.inputMargin}>
@@ -84,7 +84,7 @@ export const VetClinicAvailabilityReceptionHourForm = () => {
           onConfirm={(hourTo) => {
             handleChangeInput('hourTo', parseDateFormatToTime(hourTo));
           }}
-          label={t('words.hour_to.title')}
+          label={t('words.to.title')}
         />
       </View>
       <Button

@@ -52,4 +52,7 @@ export default {
   USER_OPINIONS: 'User Opinions' as keyof RootStackParamList,
   USER_OPINION: 'User Opinion' as keyof RootStackParamList,
   USER_FAVOURITE_VETS: 'User Favourite Vets' as keyof RootStackParamList,
+  USER_VACATIONS: 'User Vacations' as keyof RootStackParamList,
+  CREATE_USER_VACATION: 'Create User Vacation' as keyof RootStackParamList,
+  UPDATE_USER_VACATION: 'Update User Vacation' as keyof RootStackParamList,
 };

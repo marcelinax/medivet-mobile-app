@@ -39,4 +39,5 @@ export default {
   ELLIPSIS_VERTICAL: 'ellipsis-vertical' as const,
   HEART_CIRCLE_OUTLINE: 'heart-circle-outline' as const,
   MEGAPHONE_OUTLINE: 'megaphone-outline' as const,
+  FLOWER_OUTLINE: 'flower-outline' as const,
 };

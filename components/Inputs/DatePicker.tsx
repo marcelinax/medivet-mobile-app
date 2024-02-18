@@ -47,8 +47,12 @@ export const DatePicker = ({
   const parseDateToString = (): string => {
     if (shouldDisplayPlaceholder || !value) return '';
     switch (mode) {
-    case 'datetime':
+    case 'datetime': {
+      if (showSeconds === false) {
+        return moment(value).format('DD.MM.YYYY : HH.mm');
+      }
       return moment(value).format('DD.MM.YYYY : HH.mm.ss');
+    }
     case 'time':
       return parseDateFormatToTime(value, showSeconds);
     case 'date':

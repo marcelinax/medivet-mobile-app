@@ -14,6 +14,7 @@ import {
   MultiSelectScreenParams,
   OpinionScreenParams,
   SelectScreenParams,
+  UpdateUserVacationScreenParams,
   UserOpinionScreenParams,
   VetClinicScreenParams,
   VetScreenParams,
@@ -59,6 +60,9 @@ export type RootStackParamList = {
   'User Opinions': undefined;
   'User Opinion': UserOpinionScreenParams;
   'User Favourite Vets': undefined;
+  'User Vacations': undefined;
+  'Create User Vacation': undefined;
+  'Update User Vacation': UpdateUserVacationScreenParams;
 }
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;

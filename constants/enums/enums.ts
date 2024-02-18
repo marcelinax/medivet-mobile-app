@@ -43,3 +43,9 @@ export enum OpinionStatus {
   'REPORTED' = 'REPORTED',
   'REMOVED' = 'REMOVED'
 }
+
+export enum VacationStatus {
+  'ACTIVE' = 'ACTIVE',
+  'CANCELLED' = 'CANCELLED',
+  'FINISHED' = 'FINISHED'
+}

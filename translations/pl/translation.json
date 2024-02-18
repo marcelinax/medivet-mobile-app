@@ -189,16 +189,16 @@
     "city": {
       "title": "Miasto"
     },
+    "from": {
+      "title": "Od"
+    },
     "reception_hours": {
       "title": "Godziny przyjmowania"
     },
     "day_of_week": {
       "title": "Dzień tygodnia"
     },
-    "hour_from": {
-      "title": "Od"
-    },
-    "hour_to": {
+    "to": {
       "title": "Do"
     },
     "price": {
@@ -308,6 +308,9 @@
     },
     "favourite_vets": {
       "title": "Polubieni weterynarze"
+    },
+    "vacations": {
+      "title": "Urlopy"
     }
   },
   "errors": {
@@ -465,6 +468,12 @@
     },
     "user_opinion": {
       "title": "Opinia"
+    },
+    "user_vacations": {
+      "title": "Moje urlopy"
+    },
+    "new_user_vacation": {
+      "title": "Dodawanie urlopu"
     },
     "favourite_vets": {
       "title": "Polubieni weterynarze"

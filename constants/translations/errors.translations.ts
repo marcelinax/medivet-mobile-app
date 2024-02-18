@@ -42,4 +42,5 @@ export default {
   REASON_SHOULD_NOT_BE_EMPTY: 'Wprowadź powód',
   DESCRIPTION_SHOULD_NOT_BE_EMPTY: 'Wprowadź opis',
   CANNOT_REPORT_ALREADY_REPORTED_OR_REMOVED_OPINION: 'Nie można zgłosić już zgłoszonej lub usuniętej opinii.',
+  DATE_FROM_CANNOT_BE_LATER_THAN_DATE_TO: 'Data "od" nie może być później niż data "do"',
 } as Record<string, string>;
