@@ -37,6 +37,8 @@ export const VacationForm = forwardRef<HandleSubmitForm, Props>(
     const navigation = useNavigation<NavigationProps>();
     const { handleSuccessAlert } = useSuccessAlert();
     const dispatch = useDispatch();
+    const maxDate = moment().add(3, 'month').toDate();
+    const minDate = moment().toDate();
 
     useImperativeHandle(ref, () => ({
       submit() {
@@ -80,6 +82,8 @@ export const VacationForm = forwardRef<HandleSubmitForm, Props>(
             label={t('words.from.title')}
             value={form.from}
             showSeconds={false}
+            minimumDate={minDate}
+            maximumDate={maxDate}
           />
         </View>
         <DatePicker
@@ -89,6 +93,8 @@ export const VacationForm = forwardRef<HandleSubmitForm, Props>(
           label={t('words.to.title')}
           value={form.to}
           showSeconds={false}
+          minimumDate={minDate}
+          maximumDate={maxDate}
         />
       </View>
     );

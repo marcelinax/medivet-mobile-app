@@ -26,6 +26,8 @@ interface Props {
   label?: string;
   placeholder?: string;
   showSeconds?: boolean;
+  maximumDate?: Date;
+  minimumDate?: Date;
 }
 
 export const DatePicker = ({
@@ -40,6 +42,8 @@ export const DatePicker = ({
   label,
   placeholder,
   showSeconds,
+  maximumDate,
+  minimumDate,
 }: Props) => {
   const [ visible, setVisible ] = useState<boolean>(false);
   const { t } = useTranslation();
@@ -115,6 +119,8 @@ export const DatePicker = ({
           if (handleCancel) handleCancel();
         }}
         date={value || new Date()}
+        maximumDate={maximumDate}
+        minimumDate={minimumDate}
       />
     </View>
   );
