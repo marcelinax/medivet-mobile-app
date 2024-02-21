@@ -53,7 +53,11 @@ export const VacationForm = forwardRef<HandleSubmitForm, Props>(
     const onSubmit = async () => {
       setLoading(true);
       try {
-        await VacationApi.createUserVacation(form);
+        if (vacation) {
+          await VacationApi.updateUserVacation(vacation.id, form);
+        } else {
+          await VacationApi.createUserVacation(form);
+        }
         handleSuccessAlert();
         dispatch(setForceFetchingList(true));
         navigation.goBack();

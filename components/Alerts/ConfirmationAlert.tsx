@@ -48,7 +48,7 @@ export const ConfirmationAlert = ({
               title={t('actions.cancel.title')}
               color="danger"
               onPress={onHide}
-              variant="solid"
+              variant="outline"
               containerStyle={alertStyles.button}
             />
           </View>

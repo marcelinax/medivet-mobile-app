@@ -49,9 +49,9 @@ export const DatePicker = ({
     switch (mode) {
     case 'datetime': {
       if (showSeconds === false) {
-        return moment(value).format('DD.MM.YYYY : HH.mm');
+        return moment(value).format('DD.MM.YYYY, HH:mm');
       }
-      return moment(value).format('DD.MM.YYYY : HH.mm.ss');
+      return moment(value).format('DD.MM.YYYY, HH:mm:ss');
     }
     case 'time':
       return parseDateFormatToTime(value, showSeconds);

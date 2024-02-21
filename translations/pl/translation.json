@@ -192,14 +192,14 @@
     "from": {
       "title": "Od"
     },
+    "to": {
+      "title": "Do"
+    },
     "reception_hours": {
       "title": "Godziny przyjmowania"
     },
     "day_of_week": {
       "title": "Dzień tygodnia"
-    },
-    "to": {
-      "title": "Do"
     },
     "price": {
       "title": "Cena"
@@ -278,6 +278,9 @@
     },
     "sorting": {
       "title": "Sortowanie"
+    },
+    "days": {
+      "title": "Dni"
     },
     "logo": {
       "title": "MediVet"
@@ -379,6 +382,13 @@
       "HIGHEST_RATE": "Najwyższa ocena",
       "LOWEST_RATE": "Najniższa ocena"
     },
+    "vacation": {
+      "status": {
+        "ACTIVE": "Aktywny",
+        "CANCELLED": "Anulowany",
+        "FINISHED": "Zakończony"
+      }
+    },
     "user": {
       "role": {
         "PATIENT": {
@@ -474,6 +484,9 @@
     },
     "new_user_vacation": {
       "title": "Dodawanie urlopu"
+    },
+    "update_user_vacation": {
+      "title": "Edycja urlopu"
     },
     "favourite_vets": {
       "title": "Polubieni weterynarze"

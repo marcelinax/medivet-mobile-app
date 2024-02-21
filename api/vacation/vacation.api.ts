@@ -16,6 +16,16 @@ class VacationApi {
     const res = await authClient.post('vacations', data);
     return res.data;
   }
+
+  static async cancelUserVacation(vacationId: number): Promise<Vacation> {
+    const res = await authClient.put(`vacations/${vacationId}/cancel`);
+    return res.data;
+  }
+
+  static async updateUserVacation(vacationId: number, data: CreateVacation): Promise<Vacation> {
+    const res = await authClient.put(`vacations/${vacationId}`, data);
+    return res.data;
+  }
 }
 
 export { VacationApi };
