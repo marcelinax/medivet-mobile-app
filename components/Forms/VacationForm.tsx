@@ -14,6 +14,7 @@ import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
 import { useDispatch } from 'react-redux';
 import { setForceFetchingList } from 'store/list/listSlice';
 import { VacationApi } from 'api/vacation/vacation.api';
+import moment from 'moment';
 
 // TODO w momencie tworzenia/edycji urlopu powinno wyskoczyć potwierdzenie czy na
 //  pewno chce utworzyć urlop z informacją ile wizyt zostanie odwołanych
@@ -27,8 +28,8 @@ interface Props {
 export const VacationForm = forwardRef<HandleSubmitForm, Props>(
   ({ vacation, setLoading }, ref) => {
     const [ form, setForm ] = useState<CreateVacation>({
-      from: vacation?.from ?? new Date(),
-      to: vacation?.to ?? new Date(),
+      from: vacation?.from ? moment(vacation.from).toDate() : new Date(),
+      to: vacation?.to ? moment(vacation.to).toDate() : new Date(),
     });
     const [ errors, setErrors ] = useState<ApiError[]>([]);
     const { t } = useTranslation();

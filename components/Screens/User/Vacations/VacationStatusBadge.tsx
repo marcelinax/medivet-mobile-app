@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import colors from 'themes/colors';
 import { VacationStatus } from 'constants/enums/enums';
 import { Vacation } from 'types/api/vacation/types';
-import { isVacationFinished } from 'components/Screens/User/Vacations/VacationListItem';
+import { isVacationFinished } from 'components/Screens/User/Vacations/utils';
 
 interface Props {
   vacation: Vacation;

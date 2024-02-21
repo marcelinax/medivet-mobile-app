@@ -19,12 +19,11 @@ import { VacationStatus } from 'constants/enums/enums';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from 'types/Navigation/types';
 import { VacationStatusBadge } from 'components/Screens/User/Vacations/VacationStatusBadge';
+import { isVacationFinished } from 'components/Screens/User/Vacations/utils';
 
 interface Props {
   vacation: Vacation;
 }
-
-export const isVacationFinished = (vacation: Vacation) => moment().isAfter(moment(vacation.to));
 
 export const VacationListItem = ({ vacation }: Props) => {
   const { from, to } = vacation;
@@ -72,7 +71,7 @@ export const VacationListItem = ({ vacation }: Props) => {
 
   return (
     <SwipeButton rightActions={actions}>
-      <View style={[ listItemStyles.container, { opacity: isActive ? 1 : 0.8 } ]}>
+      <View style={[ listItemStyles.container ]}>
         <Card>
           <View>
             <View>

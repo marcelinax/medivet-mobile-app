@@ -8,7 +8,7 @@ class VacationApi {
   }
 
   static async getUserVacation(vacationId: number): Promise<Vacation> {
-    const res = await authClient.post(`vacations/${vacationId}`);
+    const res = await authClient.get(`vacations/${vacationId}`);
     return res.data;
   }
 
