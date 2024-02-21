@@ -9,9 +9,14 @@ import { useEffect } from 'react';
 import { IconButton } from 'components/Buttons/IconButton';
 import icons from 'themes/icons';
 import colors from 'themes/colors';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { VacationListFilters } from 'components/Screens/User/Vacations/VacationListFilters';
+import { FilterId } from 'constants/enums/filterId.enum';
 
 export const VacationList = () => {
   const navigation = useNavigation<NavigationProps>();
+  const { selectedFilters } = useSelector((state: RootState) => state.list);
 
   useEffect(() => {
     navigation.setOptions({
@@ -26,15 +31,32 @@ export const VacationList = () => {
     });
   }, []);
 
+  const getParams = () => {
+    let params: Record<string, any> = {};
+    const vacationStatus = selectedFilters.find((filter) => filter.id === FilterId.VACATION_STATUS);
+
+    if (vacationStatus) {
+      params = {
+        ...params,
+        status: vacationStatus.value,
+      };
+    }
+
+    return params;
+  };
+
   const renderVacation: ListRenderItem<Vacation> = ({ item }) => <VacationListItem vacation={item} />;
-  // TODO dodać filtry po statusie jak w wizytach
-  // TODO dodać listę akcji dla kazdego itema
+
   return (
     <List
-      onFetch={VacationApi.getUserVacations}
+      onFetch={(params) => VacationApi.getUserVacations({
+        ...params,
+        ...getParams(),
+      })}
       renderItem={renderVacation}
       separateOptions
       withoutBackgroundColor
+      customStickyHeader={<VacationListFilters />}
     />
   );
 };

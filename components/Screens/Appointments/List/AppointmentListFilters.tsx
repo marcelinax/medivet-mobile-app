@@ -27,6 +27,5 @@ export const AppointmentListFilters = () => {
         />
       </>
     </ListFilters>
-
   );
 };
