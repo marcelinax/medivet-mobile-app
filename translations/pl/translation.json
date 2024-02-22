@@ -103,6 +103,12 @@
   "alerts": {
     "confirmation": {
       "title": "Potwierdzenie",
+      "create_vacation": {
+        "message_one": "Wzięcie urlopu w wybranym okresie spowoduje anulowanie {{count}} wizyty.",
+        "message_few": "Wzięcie urlopu w wybranym okresie spowoduje anulowanie {{count}} wizyt.",
+        "message_many": "Wzięcie urlopu w wybranym okresie spowoduje anulowanie {{count}} wizyt.",
+        "message_other": "Wzięcie urlopu w wybranym okresie spowoduje anulowanie {{count}} wizyt."
+      },
       "remove": {
         "title": "Na pewno chcesz usunąć?"
       },
@@ -335,6 +341,13 @@
         "CANCELLED": "Anulowana"
       }
     },
+    "vacation": {
+      "status": {
+        "ACTIVE": "Aktywny",
+        "CANCELLED": "Anulowany",
+        "FINISHED": "Zakończony"
+      }
+    },
     "gender": {
       "FEMALE": "Kobieta",
       "MALE": "Mężczyzna",
@@ -381,13 +394,6 @@
       "OLDEST": "Najstarsze",
       "HIGHEST_RATE": "Najwyższa ocena",
       "LOWEST_RATE": "Najniższa ocena"
-    },
-    "vacation": {
-      "status": {
-        "ACTIVE": "Aktywny",
-        "CANCELLED": "Anulowany",
-        "FINISHED": "Zakończony"
-      }
     },
     "user": {
       "role": {

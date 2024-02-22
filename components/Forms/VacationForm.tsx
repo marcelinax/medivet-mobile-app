@@ -15,10 +15,7 @@ import { useDispatch } from 'react-redux';
 import { setForceFetchingList } from 'store/list/listSlice';
 import { VacationApi } from 'api/vacation/vacation.api';
 import moment from 'moment';
-
-// TODO w momencie tworzenia/edycji urlopu powinno wyskoczyć potwierdzenie czy na
-//  pewno chce utworzyć urlop z informacją ile wizyt zostanie odwołanych
-// TODO Do tego będzie osobny request, który powinien się odaplić przed samym zapisem
+import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
 
 interface Props {
   vacation?: Vacation;
@@ -39,6 +36,7 @@ export const VacationForm = forwardRef<HandleSubmitForm, Props>(
     const dispatch = useDispatch();
     const maxDate = moment().add(3, 'month').toDate();
     const minDate = moment().toDate();
+    const confirmation = useConfirmationAlert();
 
     useImperativeHandle(ref, () => ({
       submit() {
@@ -53,8 +51,24 @@ export const VacationForm = forwardRef<HandleSubmitForm, Props>(
       });
     };
 
-    const onSubmit = async () => {
+    const handleFetchAppointmentsToBeCancelled = async () => {
       setLoading(true);
+      try {
+        return VacationApi.getAmountOfAppointmentsToBeCancelled(form);
+      } catch (err: any) {
+        const errors = getRequestErrors(err);
+        handleErrorAlert(errors);
+      }
+      setLoading(false);
+    };
+
+    const onSubmit = async () => {
+      const appointmentsCount = await handleFetchAppointmentsToBeCancelled();
+      await confirmation({
+        title: '',
+        message: t('alerts.confirmation.create_vacation.message', { count: appointmentsCount }),
+      });
+
       try {
         if (vacation) {
           await VacationApi.updateUserVacation(vacation.id, form);

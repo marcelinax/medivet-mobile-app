@@ -26,6 +26,16 @@ class VacationApi {
     const res = await authClient.put(`vacations/${vacationId}`, data);
     return res.data;
   }
+
+  static async getAmountOfAppointmentsToBeCancelled(data: CreateVacation): Promise<number> {
+    const res = await authClient.get('vacations/appointments-to-be-cancelled', {
+      params: {
+        from: data.from,
+        to: data.to,
+      },
+    });
+    return res.data;
+  }
 }
 
 export { VacationApi };
