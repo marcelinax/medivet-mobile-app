@@ -14,6 +14,8 @@ import { DefaultLayout } from 'layouts/Default.layout';
 import { OpinionApi } from 'api/opinion/opinion.api';
 import { VetPreviewRightHeader } from 'components/Screens/Home/Vet/VetPreviewRightHeader';
 import { getRequestErrors } from 'utils/errors';
+import { VacationApi } from 'api/vacation/vacation.api';
+import { Vacation } from 'types/api/vacation/types';
 
 export const VetScreen = () => {
   const navigation = useNavigation<NavigationProps>();
@@ -23,6 +25,7 @@ export const VetScreen = () => {
   const [ medicalServices, setMedicalServices ] = useState<VetClinicProvidedMedicalService[] | undefined>();
   const [ opinionsAmount, setOpinionsAmount ] = useState<number | undefined>();
   const [ isInFavourites, setIsInFavourites ] = useState<boolean | undefined>();
+  const [ vacations, setVacations ] = useState<Vacation[] | undefined>();
 
   useEffect(() => {
     handleInitFetch();
@@ -33,6 +36,7 @@ export const VetScreen = () => {
     await fetchVetProvidedMedicalServices();
     await fetchAmountOfVetOpinions();
     await fetchStatusOfVetInFavourites();
+    await fetchVetVacations();
   };
 
   useEffect(() => {
@@ -60,6 +64,16 @@ export const VetScreen = () => {
         )
         ,
       });
+    } catch (err: any) {
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
+    }
+  };
+
+  const fetchVetVacations = async () => {
+    try {
+      const res = await VacationApi.getActiveVetVacations(route.params.vetId);
+      setVacations(res);
     } catch (err: any) {
       const errors = getRequestErrors(err);
       handleErrorAlert(errors);
@@ -102,12 +116,14 @@ export const VetScreen = () => {
   return (
     <DefaultLayout>
       {
-        !vet || !medicalServices || opinionsAmount === undefined || isInFavourites === undefined ? <LoadingContainer />
+        !vet || !medicalServices || opinionsAmount === undefined || isInFavourites === undefined || !vacations
+          ? <LoadingContainer />
           : (
             <VetPreview
               vet={vet}
               opinionsAmount={opinionsAmount}
               medicalServices={medicalServices}
+              vacations={vacations}
             />
           )
       }

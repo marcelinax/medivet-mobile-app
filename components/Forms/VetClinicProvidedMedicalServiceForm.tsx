@@ -27,6 +27,7 @@ import { MoneyInput } from 'components/Inputs/MoneyInput';
 import { HandleSubmitForm } from 'types/components/Forms/types';
 import { useTranslation } from 'react-i18next';
 import { getRequestErrors } from 'utils/errors';
+import { setForceFetchingList } from 'store/list/listSlice';
 
 interface Props {
   providedMedicalService?: VetClinicProvidedMedicalService;
@@ -137,6 +138,7 @@ export const VetClinicProvidedMedicalServiceForm = forwardRef<HandleSubmitForm, 
         );
       }
       navigation.navigate('Vet Clinic Provided Medical Services');
+      dispatch(setForceFetchingList(true));
     } catch (err: any) {
       const errs = getRequestErrors(err);
       handleErrorAlert(errs);

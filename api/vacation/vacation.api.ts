@@ -36,6 +36,11 @@ class VacationApi {
     });
     return res.data;
   }
+
+  static async getActiveVetVacations(vetId: number): Promise<Vacation[]> {
+    const res = await authClient.get(`vacations/vets/${vetId}/active`);
+    return res.data;
+  }
 }
 
 export { VacationApi };

@@ -43,4 +43,7 @@ export default {
   DESCRIPTION_SHOULD_NOT_BE_EMPTY: 'Wprowadź opis',
   CANNOT_REPORT_ALREADY_REPORTED_OR_REMOVED_OPINION: 'Nie można zgłosić już zgłoszonej lub usuniętej opinii.',
   DATE_FROM_CANNOT_BE_LATER_THAN_DATE_TO: 'Data "od" nie może być później niż data "do"',
+  VET_IS_ON_VACATION: 'Weterynarz jest w tym czasie na urlopie',
+  'CANNOT_CANCEL_VACATION_IN_DIFFERENT_STATUS_THAN_"ACTIVE""': 'Nie mozna anulować urlopu o innym statusie niż "Aktywny"',
+  CANNOT_TAKE_VACATION_BETWEEN_ANOTHER_ONE: 'Nie można wziąć urlopu podczas trawania innego,',
 } as Record<string, string>;

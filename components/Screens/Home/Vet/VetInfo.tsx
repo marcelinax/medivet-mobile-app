@@ -8,17 +8,24 @@ import { Button } from 'components/Buttons/Button';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from 'types/Navigation/types';
+import moment from 'moment';
+import { Vacation } from 'types/api/vacation/types';
 
 interface Props {
   vet: User;
   opinions: VetOpinion[];
   opinionsAmount: number;
+  vacations: Vacation[];
 }
 
-export const VetInfo = ({ vet, opinions, opinionsAmount }: Props) => {
+export const VetInfo = ({
+  vet, opinions, opinionsAmount, vacations,
+}: Props) => {
   const specializations = (vet.specializations || []).map((specialization) => specialization.name).join(', ');
   const { t } = useTranslation();
   const navigation = useNavigation<NavigationProps>();
+
+  const isOnVacation = () => vacations.find((vacation) => moment().isBetween(moment(vacation.from), moment(vacation.to)));
 
   return (
     <View>
@@ -36,11 +43,15 @@ export const VetInfo = ({ vet, opinions, opinionsAmount }: Props) => {
           />
         </View>
       </View>
-      <View style={{
-        marginTop: 16,
-        marginBottom: 16,
-      }}
-      >
+      {isOnVacation() && (
+        <Text style={styles.vacationInfo}>
+          {t('words.vacation_date.title', {
+            from: moment(isOnVacation()!.from).format('DD.MM.YYYY, HH:mm'),
+            to: moment(isOnVacation()!.to).format('DD.MM.YYYY, HH:mm'),
+          })}
+        </Text>
+      )}
+      <View style={styles.buttonContainer}>
         <Button
           title={t('actions.make_an_appointment.title')}
           variant="solid"
@@ -70,5 +81,14 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 10,
     fontSize: 15,
+  },
+  buttonContainer: {
+    marginVertical: 16,
+  },
+  vacationInfo: {
+    color: colors.DANGER,
+    fontSize: 15,
+    lineHeight: 22,
+    marginVertical: 10,
   },
 });

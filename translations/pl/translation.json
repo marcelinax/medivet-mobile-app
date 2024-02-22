@@ -264,6 +264,9 @@
     "vet_has_not_any_medical_services": {
       "title": "Lekarz nie wykonuje obecnie żadnych usług"
     },
+    "vacation_date": {
+      "title": "Weterynarz jest na urlopie od {{from}} do {{to}}"
+    },
     "addresses": {
       "title": "Adresy"
     },
