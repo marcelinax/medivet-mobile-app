@@ -24,6 +24,7 @@ import { removeSingleSelect } from 'store/select/selectSlice';
 import { useTranslation } from 'react-i18next';
 import { getGenderSelectOptions } from 'constants/selectOptions';
 import { getRequestErrors } from 'utils/errors';
+import { hasVetRole } from 'utils/hasVetRole';
 
 interface FormProps {
   name: string;
@@ -46,6 +47,7 @@ export const EditUserProfileScreen = () => {
   const { handleSuccessAlert } = useSuccessAlert();
   const [ loading, setLoading ] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const isVet = hasVetRole(user);
 
   useEffect(() => () => handleClearSelectInputs(), []);
 
@@ -169,14 +171,16 @@ export const EditUserProfileScreen = () => {
               selectScreenHeaderTitle={t('words.gender.title')}
             />
           </View>
-          <View style={styles.inputMargin}>
-            <PhoneNumberInput
-              variant="underline"
-              errors={getInputErrors(errors, 'phoneNumber')}
-              value={form?.phoneNumber}
-              onChangeText={(e) => onChangeInput('phoneNumber', e)}
-            />
-          </View>
+          {!isVet && (
+            <View style={styles.inputMargin}>
+              <PhoneNumberInput
+                variant="underline"
+                errors={getInputErrors(errors, 'phoneNumber')}
+                value={form?.phoneNumber}
+                onChangeText={(e) => onChangeInput('phoneNumber', e)}
+              />
+            </View>
+          )}
         </View>
       </View>
     </DefaultLayout>
