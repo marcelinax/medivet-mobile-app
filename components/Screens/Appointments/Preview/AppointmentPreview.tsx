@@ -17,8 +17,8 @@ import { AppointmentAnimalInfoSection } from 'components/Screens/Appointments/Pr
 import { getRequestErrors } from 'utils/errors';
 
 export const appointmentPreviewInclude = 'animal,animal.owner,medicalService,medicalService.user,medicalService.user.clinics,'
-  + 'medicalService.clinic,medicalService.medicalService,medicalService.medicalService.specialization,'
-  + 'opinion,animal.breed,diary';
+  + 'medicalService.clinic,medicalService.clinic.paymentMethods,medicalService.medicalService,'
+  + 'medicalService.medicalService.specialization,opinion,animal.breed,diary';
 
 export const AppointmentPreview = () => {
   const route = useRoute<RouteProps<'Appointment'>>();

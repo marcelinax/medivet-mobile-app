@@ -20,6 +20,7 @@ import { User } from 'types/api/user/types';
 import { hasVetRole } from 'utils/hasVetRole';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from 'types/Navigation/types';
+import { PaymentMethodStatus } from 'constants/enums/enums';
 
 interface Props {
   appointment: Appointment;
@@ -34,7 +35,6 @@ export const AppointmentSummarySection = ({ appointment }: Props) => {
   const isVet = hasVetRole(user);
   const [ calendarStatus, requestCalendarPermission ] = Calendar.useCalendarPermissions();
   const navigation = useNavigation<NavigationProps>();
-  // TODO dorobić informację o przyjmowanych płatnościach
 
   const handleCalendarPermission = async () => {
     if (calendarStatus?.status === 'granted') {
@@ -164,6 +164,19 @@ export const AppointmentSummarySection = ({ appointment }: Props) => {
         />
         <Text style={styles.text}>
           {`${medicalService.duration} min`}
+        </Text>
+      </View>
+      <View style={styles.rowContainer}>
+        <Ionicons
+          name={icons.CASH_OUTLINE}
+          size={22}
+          color={colors.PRIMARY}
+          style={styles.icon}
+        />
+        <Text style={styles.text}>
+          {medicalService.clinic.paymentMethods.filter(
+            (paymentMethod) => paymentMethod.status === PaymentMethodStatus.ACTIVE,
+          ).map((paymentMethod) => paymentMethod.name).join(', ')}
         </Text>
       </View>
       <TouchableWithoutFeedback onPress={handleRedirectToMaps}>

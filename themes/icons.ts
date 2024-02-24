@@ -40,4 +40,5 @@ export default {
   HEART_CIRCLE_OUTLINE: 'heart-circle-outline' as const,
   MEGAPHONE_OUTLINE: 'megaphone-outline' as const,
   FLOWER_OUTLINE: 'flower-outline' as const,
+  CASH_OUTLINE: 'cash-outline' as const,
 };

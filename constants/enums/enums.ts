@@ -49,3 +49,8 @@ export enum VacationStatus {
   'CANCELLED' = 'CANCELLED',
   'FINISHED' = 'FINISHED'
 }
+
+export enum PaymentMethodStatus {
+  'ACTIVE' = 'ACTIVE',
+  'INACTIVE' = 'INACTIVE',
+}

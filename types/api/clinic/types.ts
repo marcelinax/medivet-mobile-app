@@ -1,6 +1,6 @@
 import { AddressApi, CoordinatesApi } from 'types/api/types';
 import { User } from 'types/api/user/types';
-import { ClinicAssignmentRequestStatus } from 'constants/enums/enums';
+import { ClinicAssignmentRequestStatus, PaymentMethodStatus } from 'constants/enums/enums';
 
 export interface Clinic {
   id: number;
@@ -9,6 +9,7 @@ export interface Clinic {
   phoneNumber: string;
   clinicAssignmentRequests: ClinicAssignmentRequest[];
   coordinates: CoordinatesApi;
+  paymentMethods: ClinicPaymentMethod[];
 }
 
 export interface ClinicAssignmentRequest {
@@ -16,4 +17,10 @@ export interface ClinicAssignmentRequest {
   user: User;
   clinic: Clinic;
   status: ClinicAssignmentRequestStatus;
+}
+
+export interface ClinicPaymentMethod {
+  id: number;
+  name: string;
+  status: PaymentMethodStatus;
 }

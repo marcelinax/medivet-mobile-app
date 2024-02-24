@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from 'types/Navigation/types';
 import { User } from 'types/api/user/types';
+import { PaymentMethodStatus } from 'constants/enums/enums';
 
 interface Props {
   clinic: Clinic;
@@ -36,7 +37,7 @@ export const VetClinic = ({ clinic, medicalServices, vet }: Props) => {
 
   return (
     <View>
-      <View style={styles.row}>
+      <View style={[ styles.row, { marginBottom: 16 } ]}>
         <Ionicons
           name={icons.LOCATION}
           color={colors.PRIMARY}
@@ -51,6 +52,21 @@ export const VetClinic = ({ clinic, medicalServices, vet }: Props) => {
             address={clinic.address}
             style={styles.information}
           />
+        </View>
+      </View>
+      <View style={styles.row}>
+        <Ionicons
+          name={icons.CASH_OUTLINE}
+          color={colors.PRIMARY}
+          size={20}
+          style={styles.icon}
+        />
+        <View>
+          <Text style={styles.information}>
+            {clinic.paymentMethods.filter(
+              (paymentMethod) => paymentMethod.status === PaymentMethodStatus.ACTIVE,
+            ).map((paymentMethod) => paymentMethod.name).join(', ')}
+          </Text>
         </View>
       </View>
       <View style={styles.infoContainer}>
@@ -90,6 +106,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 5,
+    marginTop: 2,
   },
   name: {
     fontSize: 18,

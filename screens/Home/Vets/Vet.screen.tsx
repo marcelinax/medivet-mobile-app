@@ -50,7 +50,7 @@ export const VetScreen = () => {
 
   const fetchVet = async () => {
     try {
-      const params = { include: 'specializations,clinics,opinions' };
+      const params = { include: 'specializations,clinics,opinions,clinics.paymentMethods' };
       const res = await UserApi.getVet(route.params.vetId, params);
       setVet(res);
       navigation.setOptions({
