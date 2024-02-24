@@ -51,6 +51,7 @@ export const List = ({
   const forceFetchingList = useSelector((state: RootState) => state.list.forceFetchingList);
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [ isRefreshing, setIsRefreshing ] = useState(false);
 
   useEffect(() => {
     if (forceFetchingList) {
@@ -82,6 +83,12 @@ export const List = ({
 
     return acc;
   }, {});
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await onFetchData(true);
+    setIsRefreshing(false);
+  };
 
   const onFetchData = async (forceReset?: boolean): Promise<void | undefined> => {
     if (!hasNextPage && !forceReset) return;
@@ -167,6 +174,8 @@ export const List = ({
           contentContainerStyle={{
             flexGrow: 1,
           }}
+          onRefresh={handleRefresh}
+          refreshing={isRefreshing}
           nestedScrollEnabled
           style={listStyles.list}
           stickyHeaderIndices={withSearch || customStickyHeader ? [ 0 ] : undefined}
