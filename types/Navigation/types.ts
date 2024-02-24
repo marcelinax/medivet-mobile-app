@@ -44,7 +44,6 @@ export type RootStackParamList = {
   'Vet Clinic Provided Medical Services': undefined;
   'Create Vet Clinic Provided Medical Service': undefined;
   'Edit Vet Clinic Provided Medical Service': EditVetClinicProvidedMedicalServiceScreenParams;
-  'Vet Clinic Provided Medical Service List Filters': undefined;
   'Vets': undefined;
   'Vet': VetScreenParams;
   'Create Opinion': OpinionScreenParams;

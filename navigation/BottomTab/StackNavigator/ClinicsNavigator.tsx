@@ -26,9 +26,6 @@ import {
 } from 'screens/Clinics/ProvidedMedicalService/EditVetClinicProvidedMedicalService.screen';
 import { View } from 'react-native';
 import { bottomTabStyles } from 'navigation/BottomTab/StackNavigator/utils/styles';
-import {
-  VetClinicProvidedMedicalServiceListFiltersScreen,
-} from 'screens/Clinics/ProvidedMedicalService/VetClinicProvidedMedicalServiceListFilters.screen';
 import { useTranslation } from 'react-i18next';
 
 export const ClinicsNavigator = () => {
@@ -39,9 +36,6 @@ export const ClinicsNavigator = () => {
   const navigateToAddVetClinicScreen = () => navigation.navigate('Add Vet Clinic');
   const navigateToCreateVetClinicAvailabilityScreen = () => navigation.navigate('Create Vet Clinic Availability');
   const navigateToCreateVetClinicProvidedMedicalServiceScreen = () => navigation.navigate('Create Vet Clinic Provided Medical Service');
-  const navigateToVetClinicProvidedMedicalServiceListFiltersScreen = () => navigation.navigate(
-    'Vet Clinic Provided Medical Service List Filters',
-  );
 
   const vetClinicsScreenHeaderRight = () => (
     <IconButton
@@ -69,14 +63,6 @@ export const ClinicsNavigator = () => {
           size="large"
           color={colors.PRIMARY}
           onPress={navigateToCreateVetClinicProvidedMedicalServiceScreen}
-        />
-      </View>
-      <View>
-        <IconButton
-          icon={icons.OPTIONS_OUTLINE}
-          size="large"
-          color={colors.PRIMARY}
-          onPress={navigateToVetClinicProvidedMedicalServiceListFiltersScreen}
         />
       </View>
     </View>
@@ -156,16 +142,6 @@ export const ClinicsNavigator = () => {
         name={routes.EDIT_VET_CLINIC_PROVIDED_MEDICAL_SERVICE}
         component={EditVetClinicProvidedMedicalServiceScreen}
         options={getDefaultScreenOptions(t('navigation.edit_vet_clinic_provided_medical_services.title'))}
-      />
-      <Stack.Screen
-        name={routes.VET_CLINIC_PROVIDED_MEDICAL_SERVICE_LIST_FILTERS}
-        component={VetClinicProvidedMedicalServiceListFiltersScreen}
-        options={
-          {
-            ...getDefaultScreenOptions(t('navigation.filters.title')),
-            presentation: 'card',
-          }
-        }
       />
     </Stack.Navigator>
   );

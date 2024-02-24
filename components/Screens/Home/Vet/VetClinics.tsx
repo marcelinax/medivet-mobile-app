@@ -32,11 +32,15 @@ export const VetClinics = ({ clinics, medicalServices, vet }: Props) => {
   ));
 
   return (
-    <ScrollView bounces={false}>
+    <ScrollView
+      bounces={false}
+      showsVerticalScrollIndicator={false}
+    >
       {clinics.length > 1 && (
         <View>
           <ScrollView
             horizontal
+            showsHorizontalScrollIndicator={false}
           >
             <View style={styles.buttonsContainer}>
               {drawClinicButtons()}

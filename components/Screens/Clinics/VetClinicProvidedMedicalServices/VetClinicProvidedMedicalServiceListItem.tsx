@@ -1,6 +1,5 @@
 import { VetClinicProvidedMedicalService } from 'types/api/vetClinicProvidedMedicalService/types';
 import { StyleSheet, Text, View } from 'react-native';
-import { OutlineCard } from 'components/Composition/OutlineCard';
 import colors from 'themes/colors';
 import { SwipeButtonActionProps } from 'types/components/Buttons/types';
 import icons from 'themes/icons';
@@ -14,22 +13,27 @@ import {
 } from 'api/vetClinicProvidedMedicalService/vetClinicProvidedMedicalService.api';
 import { useTranslation } from 'react-i18next';
 import { getRequestErrors } from 'utils/errors';
+import { Card } from 'components/Composition/Card';
+import { listItemStyles } from 'screens/utils/styles';
+import { useSuccessAlert } from 'hooks/Alerts/useSuccessAlert';
+import { useDispatch } from 'react-redux';
+import { setForceFetchingList } from 'store/list/listSlice';
 
 interface Props {
   medicalService: VetClinicProvidedMedicalService;
   setRemoveLoading: (loading: boolean) => void;
-  handleSuccessAction: () => void;
 }
 
 export const VetClinicProvidedMedicalServiceListItem = ({
   medicalService,
   setRemoveLoading,
-  handleSuccessAction,
 }: Props) => {
   const navigation = useNavigation<NavigationProps>();
   const confirmation = useConfirmationAlert();
   const { handleErrorAlert } = useErrorAlert();
+  const { handleSuccessAlert } = useSuccessAlert();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const handleEditVetClinicProvidedMedicalService = () => navigation.navigate(
     'Edit Vet Clinic Provided Medical Service',
@@ -44,7 +48,8 @@ export const VetClinicProvidedMedicalServiceListItem = ({
     setRemoveLoading(true);
     try {
       await VetClinicProvidedMedicalServiceApi.removeVetClinicProvidedMedicalService(medicalService.id);
-      handleSuccessAction();
+      handleSuccessAlert();
+      dispatch(setForceFetchingList(true));
     } catch (err: any) {
       const errors = getRequestErrors(err);
       handleErrorAlert(errors);
@@ -74,8 +79,8 @@ export const VetClinicProvidedMedicalServiceListItem = ({
       size="small"
       rightActions={rightActions}
     >
-      <View style={styles.container}>
-        <OutlineCard>
+      <View style={listItemStyles.container}>
+        <Card>
           <View>
             <Text style={styles.name}>{medicalService.medicalService.name}</Text>
             <Text style={styles.specialization}>{medicalService.medicalService.specialization.name}</Text>
@@ -96,7 +101,7 @@ export const VetClinicProvidedMedicalServiceListItem = ({
               </Text>
             </View>
           </View>
-        </OutlineCard>
+        </Card>
       </View>
     </SwipeButton>
   );
@@ -127,5 +132,6 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 15,
+    backgroundColor: colors.WHITE,
   },
 });

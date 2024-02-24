@@ -4,7 +4,10 @@ import {
 } from 'components/Screens/Clinics/VetClinicProvidedMedicalServices/VetClinicProvidedMedicalServiceList';
 
 export const VetClinicProvidedMedicalServicesScreen = () => (
-  <ListLayout>
+  <ListLayout
+    withoutBackgroundColor
+    withoutVerticalPadding
+  >
     <VetClinicProvidedMedicalServiceList />
   </ListLayout>
 );

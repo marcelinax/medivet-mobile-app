@@ -163,7 +163,6 @@ export const List = ({
           data={data}
           renderItem={renderItem}
           ListHeaderComponent={withSearch ? headerComponent : customStickyHeader || customHeader || <></>}
-          bounces={false}
           ItemSeparatorComponent={itemSeparator}
           keyExtractor={(item) => item.id}
           ListEmptyComponent={emptyComponent}

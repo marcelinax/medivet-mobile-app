@@ -69,9 +69,6 @@
     "show_appointment_diary": {
       "title": "Zobacz dziennik wizyty"
     },
-    "clear": {
-      "title": "Wyczyść"
-    },
     "show_calendar": {
       "title": "Pokaż kalendarz"
     },
@@ -86,9 +83,6 @@
     },
     "cancel_removal": {
       "title": "Anuluj usunięcie"
-    },
-    "apply": {
-      "title": "Zastosuj"
     },
     "next": {
       "title": "Dalej"

@@ -17,10 +17,12 @@ export const Opinions = ({ vetId }: Props) => {
       style={styles.scrollView}
       nestedScrollEnabled
       bounces={false}
+      showsVerticalScrollIndicator={false}
     >
       <ScrollView
         horizontal
         scrollEnabled={false}
+        showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.horizontalScrollViewContentContainer}
       >
         <List

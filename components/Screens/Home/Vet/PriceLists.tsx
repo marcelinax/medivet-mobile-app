@@ -44,6 +44,7 @@ export const PriceLists = ({ medicalServices }: Props) => {
     <ScrollView
       style={styles.scrollView}
       bounces={false}
+      showsVerticalScrollIndicator={false}
     >
       {drawMedicalServicePriceLists()}
     </ScrollView>

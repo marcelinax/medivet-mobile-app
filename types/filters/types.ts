@@ -5,10 +5,6 @@ export interface SelectedFilter {
   value: SelectOptionProps[] | SelectOptionProps | string;
 }
 
-export interface HandleApplyFilters {
-  value: SelectOptionProps[] | SelectOptionProps;
-}
-
 export interface SearchVetsFilters {
   city?: string;
   specialization?: SelectOptionProps;
