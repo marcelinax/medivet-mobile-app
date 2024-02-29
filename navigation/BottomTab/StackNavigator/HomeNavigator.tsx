@@ -1,7 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'types/Navigation/types';
 import routes from 'constants/routes';
-import { HomeScreen } from 'screens/Home/Home.screen';
 import colors from 'themes/colors';
 import { VetsScreen } from 'screens/Home/Vets/Vets.screen';
 import { useSelector } from 'react-redux';
@@ -12,11 +11,17 @@ import { useTranslation } from 'react-i18next';
 import { AppointmentCalendarScreen } from 'screens/Home/Appointment/AppointmentCalendar.screen';
 import { AppointmentAnimalScreen } from 'screens/Home/Appointment/AppointmentAnimal.screen';
 import { AppointmentConfirmationScreen } from 'screens/Home/Appointment/AppointmentConfirmation.screen';
+import { hasVetRole } from 'utils/hasVetRole';
+import { User } from 'types/api/user/types';
+import { VetHomeScreen } from 'screens/Home/VetHome.screen';
+import { PatientHomeScreen } from 'screens/Home/PatientHome.screen';
 
 export const HomeNavigator = () => {
   const { t } = useTranslation();
+  const user = useSelector((state: RootState) => state.user.currentUser) as User;
   const Stack = createNativeStackNavigator<RootStackParamList>();
   const vetsFilters = useSelector((state: RootState) => state.home.selectedFilters);
+  const isVet = hasVetRole(user);
 
   const vetsScreenTitle = `${vetsFilters?.specialization?.label}, ${vetsFilters?.city}`;
 
@@ -29,7 +34,7 @@ export const HomeNavigator = () => {
     >
       <Stack.Screen
         name={routes.HOME}
-        component={HomeScreen}
+        component={isVet ? VetHomeScreen : PatientHomeScreen}
         options={() => getDefaultScreenOptions('')}
       />
       <Stack.Screen

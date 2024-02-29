@@ -31,6 +31,20 @@ export const VetScreen = () => {
     handleInitFetch();
   }, []);
 
+  useEffect(() => {
+    if (vet) {
+      navigation.setOptions({
+        headerRight: () => (
+          <VetPreviewRightHeader
+            isInFavourites={!!isInFavourites}
+            vetId={vet.id}
+            key={`${isInFavourites}`}
+          />
+        ),
+      });
+    }
+  }, [ isInFavourites ]);
+
   const handleInitFetch = async () => {
     await fetchVet();
     await fetchVetProvidedMedicalServices();
@@ -56,13 +70,6 @@ export const VetScreen = () => {
       navigation.setOptions({
         headerTitle: res.name,
         headerShown: true,
-        headerRight: () => (
-          <VetPreviewRightHeader
-            isInFavourites={!!isInFavourites}
-            vetId={res.id}
-          />
-        )
-        ,
       });
     } catch (err: any) {
       const errors = getRequestErrors(err);

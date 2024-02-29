@@ -74,6 +74,11 @@ class UserApi {
     const res = await authClient.get('users/favourite-vets', { params });
     return res.data;
   }
+
+  static async getRecentVets(params?: Record<string, any>): Promise<User[]> {
+    const res = await authClient.get('users/vets/recent', { params });
+    return res.data;
+  }
 }
 
 export { UserApi };

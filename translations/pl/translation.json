@@ -255,6 +255,15 @@
     "animal": {
       "title": "Zwierzę"
     },
+    "find_vet": {
+      "title": "Znajdź weterynarza i umów wizytę"
+    },
+    "recent_vets": {
+      "title": "Poprzedni weterynarze"
+    },
+    "favourite_vets": {
+      "title": "Polubieni weterynarze"
+    },
     "vet_has_not_any_medical_services": {
       "title": "Lekarz nie wykonuje obecnie żadnych usług"
     },
@@ -297,9 +306,6 @@
     "vet_clinic_provided_medical_services": {
       "title": "Świadczone usługi"
     },
-    "find_vet": {
-      "title": "Znajdź weterynarza i umów wizytę"
-    },
     "street": {
       "title": "Ulica"
     },
@@ -311,9 +317,6 @@
     },
     "zip_code": {
       "title": "Kod pocztowy"
-    },
-    "favourite_vets": {
-      "title": "Polubieni weterynarze"
     },
     "vacations": {
       "title": "Urlopy"
@@ -460,9 +463,6 @@
     },
     "edit_vet_clinic_provided_medical_services": {
       "title": "Edycja świadczonej usługi"
-    },
-    "filters": {
-      "title": "Filtrowanie"
     },
     "user_specializations": {
       "title": "Moje specjalizacje"
