@@ -27,7 +27,7 @@ export interface User {
   clinics?: Clinic[];
 }
 
-export type UserRoleType = 'patient' | 'vet';
+export type UserRoleType = 'PATIENT' | 'VET';
 
 export interface VetSpecialization {
   name: string;

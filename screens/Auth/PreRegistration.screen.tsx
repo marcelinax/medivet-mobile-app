@@ -29,14 +29,14 @@ export const PreRegistrationScreen = () => {
           <Button
             title={t('enums.user.role.PATIENT.title')}
             variant="outline"
-            onPress={() => onChooseRole('patient')}
+            onPress={() => onChooseRole('PATIENT')}
           />
         </View>
         <View style={styles.buttonContainer}>
           <Button
             title={t('enums.user.role.VET.title')}
             variant="solid"
-            onPress={() => onChooseRole('vet')}
+            onPress={() => onChooseRole('VET')}
           />
         </View>
       </View>

@@ -359,8 +359,8 @@
         "FUR_ANIMAL": "Zwierzęta futerkowe"
       },
       "status": {
-        "archived": "Zarchiwizowany",
-        "active": "Aktywny"
+        "ARCHIVED": "Zarchiwizowany",
+        "ACTIVE": "Aktywny"
       }
     },
     "day_of_week": {

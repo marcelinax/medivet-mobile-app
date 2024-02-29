@@ -47,7 +47,7 @@ export const AnimalOwnerInfo = ({ owner }: Props) => {
               color={colors.PRIMARY}
             />
             <Text style={styles.informationRowTitle}>
-              {t(`enums.gender.${owner.gender.toUpperCase()}`)}
+              {t(`enums.gender.${owner.gender}`)}
             </Text>
           </View>
           {

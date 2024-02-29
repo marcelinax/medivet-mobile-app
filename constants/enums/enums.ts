@@ -14,17 +14,17 @@ export enum DayWeek {
 }
 
 export enum AnimalType {
-  DOG = 'dog',
-  CAT = 'cat',
-  BIRD = 'bird',
-  FUR_ANIMAL = 'fur-animal',
+  DOG = 'DOG',
+  CAT = 'CAT',
+  BIRD = 'BIRD',
+  FUR_ANIMAL = 'FUR-ANIMAL',
 }
 
 export enum Gender {
-  FEMALE = 'female',
-  MALE = 'male',
-  ANIMAL_FEMALE = 'animal-female',
-  ANIMAL_MALE = 'animal-male'
+  FEMALE = 'FEMALE',
+  MALE = 'MALE',
+  ANIMAL_FEMALE = 'ANIMAL-FEMALE',
+  ANIMAL_MALE = 'ANIMAL-MALE'
 }
 
 export enum AppointmentStatus {
@@ -34,8 +34,8 @@ export enum AppointmentStatus {
 }
 
 export enum AnimalStatus {
-  ACTIVE = 'active',
-  ARCHIVED = 'archived'
+  ACTIVE = 'ACTIVE',
+  ARCHIVED = 'ARCHIVED'
 }
 
 export enum OpinionStatus {

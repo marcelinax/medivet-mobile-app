@@ -85,19 +85,19 @@ export const getAvailableDatesSelectOptions = (t: TFunction<string, undefined>):
 
 export const getUserOpinionSortingModeSelectOptions = (t: TFunction<string, undefined>): SelectOptionProps[] => [
   {
-    id: 'newest',
+    id: 'NEWEST',
     label: t('enums.sorting_mode.NEWEST'),
   },
   {
-    id: 'oldest',
+    id: 'OLDEST',
     label: t('enums.sorting_mode.OLDEST'),
   },
   {
-    id: 'highest-rate',
+    id: 'HIGHEST-RATE',
     label: t('enums.sorting_mode.HIGHEST_RATE'),
   },
   {
-    id: 'lowest-rate',
+    id: 'LOWEST-RATE',
     label: t('enums.sorting_mode.LOWEST_RATE'),
   },
 ];

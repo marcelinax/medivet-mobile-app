@@ -5,8 +5,8 @@
 // t('enums.day_of_week.shortcut.WEDNESDAY');
 // t('enums.day_of_week.shortcut.THURSDAY');
 // t('enums.day_of_week.shortcut.TUESDAY');
-// t('enums.animal.status.archived');
-// t('enums.animal.status.active');
+// t('enums.animal.status.ARCHIVED');
+// t('enums.animal.status.ACTIVE');
 // t('enums.vacation.status.ACTIVE');
 // t('enums.vacation.status.CANCELLED');
 // t('enums.vacation.status.FINISHED');
