@@ -276,6 +276,12 @@
     "price_list": {
       "title": "Cennik"
     },
+    "recent_opinion": {
+      "title": "Najnowsza opinia"
+    },
+    "no_added_opinion_yet": {
+      "title": "Nie masz jeszcze żadnych opinii"
+    },
     "available_dates": {
       "title": "Dostępne terminy"
     },

@@ -15,6 +15,7 @@ import { hasVetRole } from 'utils/hasVetRole';
 import { User } from 'types/api/user/types';
 import { VetHomeScreen } from 'screens/Home/VetHome.screen';
 import { PatientHomeScreen } from 'screens/Home/PatientHome.screen';
+import { UserOpinionScreen } from 'screens/User/Opinions/UserOpinion.screen';
 
 export const HomeNavigator = () => {
   const { t } = useTranslation();
@@ -67,6 +68,11 @@ export const HomeNavigator = () => {
           ...getDefaultScreenOptions(t('navigation.appointment_confirmation.title')),
           presentation: 'card',
         }}
+      />
+      <Stack.Screen
+        name={routes.USER_OPINION}
+        component={UserOpinionScreen}
+        options={() => getDefaultScreenOptions(t('navigation.user_opinion.title'))}
       />
     </Stack.Navigator>
   );

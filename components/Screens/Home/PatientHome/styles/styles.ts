@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import colors from 'themes/colors';
 
-export const patientHomeStyles = StyleSheet.create({
+export const homeStyles = StyleSheet.create({
   headerText: {
     fontWeight: '600',
     fontSize: 20,

@@ -3,12 +3,12 @@ import { HandleSearchVets, SearchVetsForm } from 'components/Forms/SearchVetsFor
 import React, { RefObject, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PatientHomeVetList } from 'components/Screens/Home/PatientHome/PatientHomeVetList';
-import { patientHomeStyles } from 'components/Screens/Home/PatientHome/styles/styles';
 import { UserApi } from 'api/user/user.api';
 import { getRequestErrors } from 'utils/errors';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { User } from 'types/api/user/types';
 import { LoadingContainer } from 'components/Composition/LoadingContainer';
+import { homeStyles } from 'components/Screens/Home/PatientHome/styles/styles';
 
 interface Props {
   formRef: RefObject<HandleSearchVets>;
@@ -59,7 +59,7 @@ export const PatientHome = ({ formRef, setIsButtonDisabled, isButtonDisabled }: 
 
   return (
     <>
-      <Text style={patientHomeStyles.headerText}>
+      <Text style={homeStyles.headerText}>
         {t('words.find_vet.title')}
       </Text>
       <SearchVetsForm

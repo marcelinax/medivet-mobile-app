@@ -1,8 +1,8 @@
 import { DefaultLayout } from 'layouts/Default.layout';
-import { Text } from 'react-native';
+import { VetHome } from 'components/Screens/Home/VetHome/VetHome';
 
 export const VetHomeScreen = () => (
   <DefaultLayout>
-    <Text>Homepage</Text>
+    <VetHome />
   </DefaultLayout>
 );

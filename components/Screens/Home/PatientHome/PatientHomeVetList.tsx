@@ -3,8 +3,8 @@ import {
 } from 'react-native';
 import { User } from 'types/api/user/types';
 import { PatientHomeVetListItem } from 'components/Screens/Home/PatientHome/PatientHomeVetListItem';
-import { patientHomeStyles } from 'components/Screens/Home/PatientHome/styles/styles';
 import colors from 'themes/colors';
+import { homeStyles } from 'components/Screens/Home/PatientHome/styles/styles';
 
 interface Props {
   vets: User[];
@@ -14,7 +14,7 @@ interface Props {
 export const PatientHomeVetList = ({ vets, title }: Props) => (
   <View style={styles.container}>
     <Text
-      style={patientHomeStyles.headerText}
+      style={homeStyles.headerText}
     >
       {title}
     </Text>
