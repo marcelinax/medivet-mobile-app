@@ -65,7 +65,7 @@ export const AppointmentBasicInfoSection = ({ appointment }: Props) => {
         </View>
         <Avatar
           size="small"
-          url={medicalService.user.profilePhotoUrl}
+          url={isVet ? animal.owner.profilePhotoUrl : medicalService.user.profilePhotoUrl}
         />
       </View>
       <BreakLine style={appointmentBasicInfoSectionStyles.breakLine} />

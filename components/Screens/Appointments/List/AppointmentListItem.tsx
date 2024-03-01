@@ -40,7 +40,7 @@ export const AppointmentListItem = ({ appointment }: Props) => {
     <TouchableWithoutFeedback onPress={() => navigation.navigate('Appointment', { appointmentId: appointment.id })}>
       <View style={listItemStyles.container}>
         <Card>
-          <View style={[ listItemStyles.innerContainer, styles.innerContainer ]}>
+          <View style={listItemStyles.innerContainer}>
             <View style={styles.textContainer}>
               <Text style={[ styles.specialization, { color: titleColor } ]}>
                 {userName}
@@ -101,11 +101,13 @@ export const AppointmentListItem = ({ appointment }: Props) => {
               </View>
             </View>
 
-            <Avatar
-              size="small"
-              url={userAvatar}
-              icon={icons.PAW_OUTLINE}
-            />
+            <View style={styles.avatarContainer}>
+              <Avatar
+                size="small"
+                url={userAvatar}
+                icon={icons.PAW_OUTLINE}
+              />
+            </View>
           </View>
         </Card>
       </View>
@@ -114,7 +116,6 @@ export const AppointmentListItem = ({ appointment }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  innerContainer: { justifyContent: 'space-between' },
   specialization: {
     fontWeight: '600',
     fontSize: 20,
@@ -128,10 +129,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   textContainer: {
-    flex: 1,
-    marginRight: 10,
+    flex: 0.7,
   },
   icon: {
     marginRight: 10,
+  },
+  avatarContainer: {
+    flex: 0.3,
+    alignItems: 'flex-end',
   },
 });

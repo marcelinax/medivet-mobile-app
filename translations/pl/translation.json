@@ -276,6 +276,21 @@
     "price_list": {
       "title": "Cennik"
     },
+    "today": {
+      "title": "Dzisiaj"
+    },
+    "about": {
+      "title": "O"
+    },
+    "tomorrow": {
+      "title": "Jutro"
+    },
+    "nearest_appointment": {
+      "title": "Najbliższa wizyta"
+    },
+    "no_nearest_appointment": {
+      "title": "Nie masz żadnej umówionej wizyty"
+    },
     "recent_opinion": {
       "title": "Najnowsza opinia"
     },
@@ -470,6 +485,9 @@
     "edit_vet_clinic_provided_medical_services": {
       "title": "Edycja świadczonej usługi"
     },
+    "user_opinion": {
+      "title": "Opinia"
+    },
     "user_specializations": {
       "title": "Moje specjalizacje"
     },
@@ -484,9 +502,6 @@
     },
     "user_opinions": {
       "title": "Moje opinie"
-    },
-    "user_opinion": {
-      "title": "Opinia"
     },
     "user_vacations": {
       "title": "Moje urlopy"

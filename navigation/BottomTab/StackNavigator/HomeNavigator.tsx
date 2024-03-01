@@ -16,6 +16,7 @@ import { User } from 'types/api/user/types';
 import { VetHomeScreen } from 'screens/Home/VetHome.screen';
 import { PatientHomeScreen } from 'screens/Home/PatientHome.screen';
 import { UserOpinionScreen } from 'screens/User/Opinions/UserOpinion.screen';
+import { AppointmentScreen } from 'screens/Appointments/Appointment.screen';
 
 export const HomeNavigator = () => {
   const { t } = useTranslation();
@@ -73,6 +74,11 @@ export const HomeNavigator = () => {
         name={routes.USER_OPINION}
         component={UserOpinionScreen}
         options={() => getDefaultScreenOptions(t('navigation.user_opinion.title'))}
+      />
+      <Stack.Screen
+        name={routes.APPOINTMENT}
+        component={AppointmentScreen}
+        options={getDefaultScreenOptions(t('navigation.appointment.title'))}
       />
     </Stack.Navigator>
   );

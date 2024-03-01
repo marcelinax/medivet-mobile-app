@@ -29,6 +29,11 @@ export class AppointmentApi {
     return res.data;
   }
 
+  static async getNearestAppointment(params?: Record<string, any>): Promise<Appointment | undefined> {
+    const res = await authClient.get('appointments/nearest', { params });
+    return res.data;
+  }
+
   static async createAppointmentDiary(data: CreateAppointmentDiary): Promise<AppointmentDiary> {
     const res = await authClient.post('appointment-diaries', data);
     return res.data;

@@ -23,7 +23,7 @@ export const RecentOpinion = ({ opinion }: Props) => {
   return (
     <View>
       <Text style={homeStyles.headerText}>{t('words.recent_opinion.title')}</Text>
-      <View style={styles.container}>
+      <View style={homeStyles.sectionContainer}>
         {opinion ? (
           <TouchableWithoutFeedback onPress={() => navigation.push('User Opinion', { opinionId: opinion!.id })}>
             <View style={{ flex: 1 }}>
@@ -52,7 +52,7 @@ export const RecentOpinion = ({ opinion }: Props) => {
             </View>
           </TouchableWithoutFeedback>
         )
-          : <Text style={styles.noOpinionTitle}>{t('words.no_added_opinion_yet.title')}</Text>}
+          : <Text style={homeStyles.sectionContainer}>{t('words.no_added_opinion_yet.title')}</Text>}
       </View>
     </View>
   );
@@ -79,18 +79,5 @@ const styles = StyleSheet.create({
   },
   message: {
     marginTop: 5,
-  },
-  container: {
-    backgroundColor: colors.GRAY_LIGHTER,
-    padding: 10,
-    borderRadius: 10,
-    minHeight: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-  },
-  noOpinionTitle: {
-    fontSize: 16,
-    textAlign: 'center',
   },
 });
