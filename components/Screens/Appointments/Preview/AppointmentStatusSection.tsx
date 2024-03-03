@@ -7,7 +7,7 @@ import { Button } from 'components/Buttons/Button';
 import icons from 'themes/icons';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from 'types/Navigation/types';
-import { AppointmentStatus } from 'constants/enums/enums';
+import { AnimalStatus, AppointmentStatus } from 'constants/enums/enums';
 import { BreakLine } from 'components/Composition/BreakLine';
 import { appointmentPreviewInclude } from 'components/Screens/Appointments/Preview/AppointmentPreview';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
@@ -79,7 +79,7 @@ export const AppointmentStatusSection = ({ appointment, isAddOpinionButtonShown,
   const showMakeNextAppointmentButton = () => {
     if (!isVet) return true;
 
-    if (appointment.status === AppointmentStatus.FINISHED) {
+    if (appointment.status === AppointmentStatus.FINISHED && appointment.animal.status !== AnimalStatus.ARCHIVED) {
       return moment(appointment.finishedDate).isAfter(moment().subtract(1, 'hours'));
     }
 
