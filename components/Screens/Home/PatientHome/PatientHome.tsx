@@ -20,7 +20,9 @@ export const PatientHome = ({ formRef, setIsButtonDisabled, isButtonDisabled }: 
   const { t } = useTranslation();
   const { handleErrorAlert } = useErrorAlert();
   const [ recentVets, setRecentVets ] = useState<User[] | undefined>();
+  const [ recentVetsLoading, setRecentVetsLoading ] = useState(true);
   const [ favouriteVets, setFavouriteVets ] = useState<User[] | undefined>();
+  const [ favouriteVetsLoading, setFavouriteVetsLoading ] = useState(true);
   const params = { size: 10 };
 
   useEffect(() => {
@@ -40,6 +42,7 @@ export const PatientHome = ({ formRef, setIsButtonDisabled, isButtonDisabled }: 
       const errors = getRequestErrors(err);
       handleErrorAlert(errors);
     }
+    setRecentVetsLoading(false);
   };
 
   const fetchFavouriteVets = async () => {
@@ -53,9 +56,10 @@ export const PatientHome = ({ formRef, setIsButtonDisabled, isButtonDisabled }: 
       const errors = getRequestErrors(err);
       handleErrorAlert(errors);
     }
+    setFavouriteVetsLoading(false);
   };
 
-  if (!recentVets || !favouriteVets) return <LoadingContainer />;
+  if (recentVetsLoading || favouriteVetsLoading) return <LoadingContainer />;
 
   return (
     <>
@@ -67,18 +71,16 @@ export const PatientHome = ({ formRef, setIsButtonDisabled, isButtonDisabled }: 
         isButtonDisabled={isButtonDisabled}
         setIsButtonDisabled={setIsButtonDisabled}
       />
-      {recentVets.length > 0 && (
-        <PatientHomeVetList
-          vets={recentVets}
-          title={t('words.recent_vets.title')}
-        />
-      )}
-      {favouriteVets.length > 0 && (
-        <PatientHomeVetList
-          vets={favouriteVets}
-          title={t('words.favourite_vets.title')}
-        />
-      )}
+      <PatientHomeVetList
+        vets={recentVets}
+        title={t('words.recent_vets.title')}
+        emptyDataTitle={t('words.no_recent_vets_yet.title')}
+      />
+      <PatientHomeVetList
+        vets={favouriteVets}
+        title={t('words.favourite_vets.title')}
+        emptyDataTitle={t('words.no_favourite_vets_yet.title')}
+      />
     </>
   );
 };

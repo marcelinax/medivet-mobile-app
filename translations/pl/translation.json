@@ -261,8 +261,14 @@
     "recent_vets": {
       "title": "Poprzedni weterynarze"
     },
+    "no_recent_vets_yet": {
+      "title": "Nie masz jeszcze weterynarzy z poprzednich wizyt"
+    },
     "favourite_vets": {
       "title": "Polubieni weterynarze"
+    },
+    "no_favourite_vets_yet": {
+      "title": "Nie masz jeszcze żadnych polubionych weterynarzy"
     },
     "vet_has_not_any_medical_services": {
       "title": "Lekarz nie wykonuje obecnie żadnych usług"
