@@ -10,7 +10,7 @@ import { OpinionRating } from 'components/Composition/OpinionRating';
 import colors from 'themes/colors';
 import moment from 'moment';
 import { Card } from 'components/Composition/Card';
-import { homeStyles } from 'components/Screens/Home/PatientHome/styles/styles';
+import { homeStyles } from 'components/Screens/Home/styles/styles';
 
 interface Props {
   opinion: VetOpinion | undefined;

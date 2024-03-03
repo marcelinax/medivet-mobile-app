@@ -17,6 +17,7 @@ import { VetHomeScreen } from 'screens/Home/VetHome.screen';
 import { PatientHomeScreen } from 'screens/Home/PatientHome.screen';
 import { UserOpinionScreen } from 'screens/User/Opinions/UserOpinion.screen';
 import { AppointmentScreen } from 'screens/Appointments/Appointment.screen';
+import { CreateAppointmentDiaryScreen } from 'screens/AppointmentDiaries/CreateAppointmentDiary.screen';
 
 export const HomeNavigator = () => {
   const { t } = useTranslation();
@@ -79,6 +80,11 @@ export const HomeNavigator = () => {
         name={routes.APPOINTMENT}
         component={AppointmentScreen}
         options={getDefaultScreenOptions(t('navigation.appointment.title'))}
+      />
+      <Stack.Screen
+        name={routes.CREATE_APPOINTMENT_DIARY}
+        component={CreateAppointmentDiaryScreen}
+        options={getDefaultScreenOptions(t('navigation.create_appointment_diary.title'))}
       />
     </Stack.Navigator>
   );

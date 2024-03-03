@@ -12,6 +12,9 @@ import { VacationApi } from 'api/vacation/vacation.api';
 import { Vacation } from 'types/api/vacation/types';
 import { NearestVacation } from 'components/Screens/Home/VetHome/NearestVacation';
 import { VacationStatus } from 'constants/enums/enums';
+import {
+  AppointmentWithoutDiaryList,
+} from 'components/Screens/Home/VetHome/IncompleteAppointmentDiaryList/AppointmentWithoutDiaryList';
 
 export const VetHome = () => {
   const [ recentOpinionLoading, setRecentOpinionLoading ] = useState(true);
@@ -20,6 +23,7 @@ export const VetHome = () => {
   const [ nearestAppointmentLoading, setNearestAppointmentLoading ] = useState(true);
   const [ nearestVacation, setNearestVacation ] = useState<Vacation | undefined>();
   const [ nearestVacationLoading, setNearestVacationLoading ] = useState(true);
+  const [ appointmentsWithoutDiary, setAppointmentsWithoutDiary ] = useState<Appointment[] | undefined>();
   const { handleErrorAlert } = useErrorAlert();
 
   useEffect(() => {
@@ -30,12 +34,13 @@ export const VetHome = () => {
     await fetchRecentOpinion();
     await fetchNearestAppointment();
     await fetchNearestVacation();
+    await fetchAppointmentsWithoutDiary();
   };
 
   const fetchRecentOpinion = async () => {
     try {
       const params = {
-        size: 1,
+        pageSize: 1,
         include: 'issuer',
       };
       const res = await OpinionApi.getMyOpinions(params);
@@ -65,7 +70,7 @@ export const VetHome = () => {
   const fetchNearestVacation = async () => {
     try {
       const params = {
-        size: 1,
+        pageSize: 1,
         sortingMode: 'ASC',
         status: VacationStatus.ACTIVE,
       };
@@ -78,10 +83,30 @@ export const VetHome = () => {
     setNearestVacationLoading(false);
   };
 
-  if (recentOpinionLoading || nearestAppointmentLoading || nearestVacationLoading) return <LoadingContainer />;
+  const fetchAppointmentsWithoutDiary = async () => {
+    try {
+      const params = {
+        pageSize: 5,
+        include: 'animal,medicalService.clinic,medicalService.medicalService',
+      };
+      const res = await AppointmentApi.getVetIncompleteAppointmentDiaries(params);
+      setAppointmentsWithoutDiary(res);
+    } catch (err: any) {
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
+    }
+  };
+
+  if (
+    recentOpinionLoading
+    || nearestAppointmentLoading
+    || nearestVacationLoading
+    || !appointmentsWithoutDiary
+  ) return <LoadingContainer />;
 
   return (
     <>
+      {appointmentsWithoutDiary.length > 0 && <AppointmentWithoutDiaryList appointments={appointmentsWithoutDiary} />}
       <RecentOpinion opinion={recentOpinion} />
       <NearestAppointment appointment={nearestAppointment} />
       <NearestVacation vacation={nearestVacation} />

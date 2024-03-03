@@ -22,4 +22,12 @@ export const homeStyles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
   },
+  listContainer: {
+    backgroundColor: colors.GRAY_LIGHTER,
+    padding: 10,
+    borderRadius: 10,
+  },
+  scrollViewContainer: {
+    gap: 10,
+  },
 });

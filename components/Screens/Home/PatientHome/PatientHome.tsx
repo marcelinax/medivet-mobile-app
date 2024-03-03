@@ -8,7 +8,7 @@ import { getRequestErrors } from 'utils/errors';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { User } from 'types/api/user/types';
 import { LoadingContainer } from 'components/Composition/LoadingContainer';
-import { homeStyles } from 'components/Screens/Home/PatientHome/styles/styles';
+import { homeStyles } from 'components/Screens/Home/styles/styles';
 
 interface Props {
   formRef: RefObject<HandleSearchVets>;

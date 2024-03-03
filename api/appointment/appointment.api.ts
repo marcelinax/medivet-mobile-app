@@ -34,6 +34,11 @@ export class AppointmentApi {
     return res.data;
   }
 
+  static async getVetIncompleteAppointmentDiaries(params?: Record<string, any>): Promise<Appointment[]> {
+    const res = await authClient.get('appointments/without-diary', { params });
+    return res.data;
+  }
+
   static async createAppointmentDiary(data: CreateAppointmentDiary): Promise<AppointmentDiary> {
     const res = await authClient.post('appointment-diaries', data);
     return res.data;

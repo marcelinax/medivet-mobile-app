@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import {
   StyleSheet, Text, TouchableWithoutFeedback, View,
 } from 'react-native';
-import { homeStyles } from 'components/Screens/Home/PatientHome/styles/styles';
 import colors from 'themes/colors';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from 'types/Navigation/types';
@@ -13,6 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import icons from 'themes/icons';
 import { FormatAddress } from 'components/Formatters/FormatAddress';
 import moment from 'moment/moment';
+import { homeStyles } from 'components/Screens/Home/styles/styles';
 
 interface Props {
   appointment: Appointment | undefined;

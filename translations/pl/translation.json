@@ -276,6 +276,9 @@
     "price_list": {
       "title": "Cennik"
     },
+    "appointments_without_diary": {
+      "title": "Nieuzupełnione dzienniki zakończonych wizyt"
+    },
     "today": {
       "title": "Dzisiaj"
     },

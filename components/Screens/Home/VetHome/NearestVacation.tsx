@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Vacation } from 'types/api/vacation/types';
 import { useTranslation } from 'react-i18next';
-import { homeStyles } from 'components/Screens/Home/PatientHome/styles/styles';
 import { Card } from 'components/Composition/Card';
 import { OutlineCard } from 'components/Composition/OutlineCard';
 import moment from 'moment';
 import colors from 'themes/colors';
+import { homeStyles } from 'components/Screens/Home/styles/styles';
 
 interface Props {
   vacation: Vacation | undefined;

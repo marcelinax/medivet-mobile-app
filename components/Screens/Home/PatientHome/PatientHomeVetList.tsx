@@ -3,8 +3,7 @@ import {
 } from 'react-native';
 import { User } from 'types/api/user/types';
 import { PatientHomeVetListItem } from 'components/Screens/Home/PatientHome/PatientHomeVetListItem';
-import colors from 'themes/colors';
-import { homeStyles } from 'components/Screens/Home/PatientHome/styles/styles';
+import { homeStyles } from 'components/Screens/Home/styles/styles';
 
 interface Props {
   vets: User[];
@@ -18,10 +17,10 @@ export const PatientHomeVetList = ({ vets, title }: Props) => (
     >
       {title}
     </Text>
-    <View style={styles.listContainer}>
+    <View style={homeStyles.listContainer}>
       <ScrollView
         horizontal
-        contentContainerStyle={styles.scrollViewContainer}
+        contentContainerStyle={homeStyles.scrollViewContainer}
         showsHorizontalScrollIndicator={false}
       >
         {vets.map((vet) => (
@@ -38,17 +37,5 @@ export const PatientHomeVetList = ({ vets, title }: Props) => (
 const styles = StyleSheet.create({
   container: {
     marginTop: 30,
-  },
-  listContainer: {
-    backgroundColor: colors.GRAY_LIGHTER,
-    padding: 16,
-    borderRadius: 10,
-  },
-  scrollViewContainer: {
-    gap: 10,
-  },
-  emptyListTitle: {
-    textAlign: 'center',
-    fontWeight: '500',
   },
 });

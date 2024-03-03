@@ -4,6 +4,7 @@ import { StyleProp, Text, TextStyle } from 'react-native';
 interface Props {
   address: AddressApi;
   style?: StyleProp<TextStyle>;
+  numberOfLines?: number;
 }
 
 export const getAddressString = (address: AddressApi) => {
@@ -31,4 +32,13 @@ export const getAddressString = (address: AddressApi) => {
   return result;
 };
 
-export const FormatAddress = ({ address, style }: Props) => <Text style={style}>{getAddressString(address)}</Text>;
+export const FormatAddress = ({ address, style, numberOfLines }: Props) => (
+  <Text
+    style={style}
+    numberOfLines={numberOfLines}
+  >
+    {getAddressString(address)}
+    {' '}
+    kiskisajfioajsfjaisdjiaosdjoaisjdioa sjdiojasidjasoiji
+  </Text>
+);
