@@ -57,7 +57,7 @@ export const VetListItemClinicAddressItem = ({ clinic, vet }: Props) => {
         vetId: vet.id,
         include: 'medicalService,user',
         size: 1,
-        sorting: 'nearest-availability',
+        sorting: 'NEAREST-AVAILABILITY',
       };
       const medicalServicesFilter = filters.find((filter) => filter.id === 'medicalServices');
 

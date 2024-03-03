@@ -52,7 +52,7 @@ export const RecentOpinion = ({ opinion }: Props) => {
             </View>
           </TouchableWithoutFeedback>
         )
-          : <Text style={homeStyles.sectionContainer}>{t('words.no_added_opinion_yet.title')}</Text>}
+          : <Text style={homeStyles.sectionNoData}>{t('words.no_added_opinion_yet.title')}</Text>}
       </View>
     </View>
   );

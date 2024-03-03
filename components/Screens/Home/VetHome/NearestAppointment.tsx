@@ -106,7 +106,7 @@ export const NearestAppointment = ({ appointment }: Props) => {
             </View>
           </TouchableWithoutFeedback>
         )
-          : <Text style={homeStyles.sectionContainer}>{t('words.no_nearest_appointment.title')}</Text>}
+          : <Text style={homeStyles.sectionNoData}>{t('words.no_nearest_appointment.title')}</Text>}
       </View>
     </View>
   );

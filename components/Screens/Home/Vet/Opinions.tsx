@@ -30,7 +30,7 @@ export const Opinions = ({ vetId }: Props) => {
             ...params,
             include: 'appointment,appointment.medicalService,appointment.medicalService.clinic,'
               + 'appointment.medicalService.medicalService',
-            sortingMode: 'newest',
+            sortingMode: 'NEWEST',
           })}
           renderItem={renderOpinion}
           customOptionsSeparator={<BreakLine style={styles.separator} />}

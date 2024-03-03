@@ -280,7 +280,7 @@
       "title": "Dzisiaj"
     },
     "about": {
-      "title": "O"
+      "title": "o"
     },
     "tomorrow": {
       "title": "Jutro"
@@ -290,6 +290,12 @@
     },
     "no_nearest_appointment": {
       "title": "Nie masz żadnej umówionej wizyty"
+    },
+    "nearest_vacation": {
+      "title": "Najbliższy urlop"
+    },
+    "no_vacation_yet": {
+      "title": "Nie masz żadnego aktywnego urlopu"
     },
     "recent_opinion": {
       "title": "Najnowsza opinia"

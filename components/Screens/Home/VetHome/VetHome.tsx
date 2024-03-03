@@ -8,12 +8,18 @@ import { VetOpinion } from 'types/api/opinion/types';
 import { Appointment } from 'types/api/appointment/types';
 import { AppointmentApi } from 'api/appointment/appointment.api';
 import { NearestAppointment } from 'components/Screens/Home/VetHome/NearestAppointment';
+import { VacationApi } from 'api/vacation/vacation.api';
+import { Vacation } from 'types/api/vacation/types';
+import { NearestVacation } from 'components/Screens/Home/VetHome/NearestVacation';
+import { VacationStatus } from 'constants/enums/enums';
 
 export const VetHome = () => {
   const [ recentOpinionLoading, setRecentOpinionLoading ] = useState(true);
   const [ recentOpinion, setRecentOpinion ] = useState<VetOpinion | undefined>();
   const [ nearestAppointment, setNearestAppointment ] = useState<Appointment | undefined>();
   const [ nearestAppointmentLoading, setNearestAppointmentLoading ] = useState(true);
+  const [ nearestVacation, setNearestVacation ] = useState<Vacation | undefined>();
+  const [ nearestVacationLoading, setNearestVacationLoading ] = useState(true);
   const { handleErrorAlert } = useErrorAlert();
 
   useEffect(() => {
@@ -23,6 +29,7 @@ export const VetHome = () => {
   const handleInit = async () => {
     await fetchRecentOpinion();
     await fetchNearestAppointment();
+    await fetchNearestVacation();
   };
 
   const fetchRecentOpinion = async () => {
@@ -55,12 +62,29 @@ export const VetHome = () => {
     setNearestAppointmentLoading(false);
   };
 
-  if (recentOpinionLoading || nearestAppointmentLoading) return <LoadingContainer />;
+  const fetchNearestVacation = async () => {
+    try {
+      const params = {
+        size: 1,
+        sortingMode: 'ASC',
+        status: VacationStatus.ACTIVE,
+      };
+      const res = await VacationApi.getUserVacations(params);
+      setNearestVacation(res[0]);
+    } catch (err: any) {
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
+    }
+    setNearestVacationLoading(false);
+  };
+
+  if (recentOpinionLoading || nearestAppointmentLoading || nearestVacationLoading) return <LoadingContainer />;
 
   return (
     <>
       <RecentOpinion opinion={recentOpinion} />
       <NearestAppointment appointment={nearestAppointment} />
+      <NearestVacation vacation={nearestVacation} />
     </>
   );
 };
