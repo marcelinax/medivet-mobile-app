@@ -6,6 +6,6 @@ export interface SelectedFilter {
 }
 
 export interface SearchVetsFilters {
-  city?: string;
+  city?: SelectOptionProps;
   specialization?: SelectOptionProps;
 }

@@ -7,7 +7,7 @@ interface HomeSlice {
 
 const initialState: HomeSlice = {
   selectedFilters: {
-    city: '',
+    city: undefined,
     specialization: undefined,
   },
 };

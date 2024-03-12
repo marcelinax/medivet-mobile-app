@@ -26,7 +26,7 @@ export const HomeNavigator = () => {
   const vetsFilters = useSelector((state: RootState) => state.home.selectedFilters);
   const isVet = hasVetRole(user);
 
-  const vetsScreenTitle = `${vetsFilters?.specialization?.label}, ${vetsFilters?.city}`;
+  const vetsScreenTitle = `${vetsFilters?.specialization?.label}, ${vetsFilters?.city?.label}`;
 
   return (
     <Stack.Navigator screenOptions={{

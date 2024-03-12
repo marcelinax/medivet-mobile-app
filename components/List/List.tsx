@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { FlatList, ListRenderItem, View } from 'react-native';
 import { EmptyList } from 'components/Composition/EmptyList';
@@ -51,28 +51,27 @@ export const List = ({
   const forceFetchingList = useSelector((state: RootState) => state.list.forceFetchingList);
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const searchTimeout = useRef(0);
   const [ isRefreshing, setIsRefreshing ] = useState(false);
 
   useEffect(() => {
     if (forceFetchingList) {
       dispatch(setForceFetchingList(false));
-      onFetchData(true);
+      handleDelayFetchingData(true);
     }
   }, [ forceFetchingList ]);
 
   useEffect(() => {
     setLoading(true);
-
-    if (!search) {
-      onFetchData();
-    } else {
-      const searchTimeout = setTimeout(() => {
-        onFetchData();
-      }, 300);
-
-      return () => clearTimeout(searchTimeout);
-    }
+    handleDelayFetchingData();
   }, [ search ]);
+
+  const handleDelayFetchingData = async (forceReset?: boolean) => {
+    if (searchTimeout.current) window.clearTimeout(searchTimeout.current);
+    searchTimeout.current = window.setTimeout(() => {
+      onFetchData(forceReset);
+    }, 300);
+  };
 
   const getParsedFilters = (): Record<string, any> => filters.reduce((acc: Record<string, any>, cur) => {
     if (Array.isArray(cur.value)) {
@@ -86,13 +85,12 @@ export const List = ({
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
-    await onFetchData(true);
+    await handleDelayFetchingData(true);
     setIsRefreshing(false);
   };
 
   const onFetchData = async (forceReset?: boolean): Promise<void | undefined> => {
     if (!hasNextPage && !forceReset) return;
-    if (loading) return;
 
     setLoading(true);
     try {
@@ -140,6 +138,7 @@ export const List = ({
         errors={[]}
         autoCapitalize="none"
         placeholder={t('words.search.title')}
+        isClearable
       />
     </View>
   );
@@ -169,7 +168,7 @@ export const List = ({
           ListFooterComponent={footerComponent}
           showsVerticalScrollIndicator={false}
           onEndReachedThreshold={0.5}
-          onEndReached={() => onFetchData()}
+          onEndReached={() => handleDelayFetchingData()}
           contentContainerStyle={{
             flexGrow: 1,
           }}

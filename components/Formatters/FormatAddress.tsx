@@ -38,7 +38,5 @@ export const FormatAddress = ({ address, style, numberOfLines }: Props) => (
     numberOfLines={numberOfLines}
   >
     {getAddressString(address)}
-    {' '}
-    kiskisajfioajsfjaisdjiaosdjoaisjdioa sjdiojasidjasoiji
   </Text>
 );

@@ -22,7 +22,7 @@ export const VetList = () => {
     const { city, specialization } = homeFilters;
     let params: Record<string, any> = {
       specializationIds: `${specialization!.id}`,
-      city,
+      city: city?.id,
     };
 
     if (medicalServices) {

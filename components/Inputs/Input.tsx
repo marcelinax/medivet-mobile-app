@@ -67,7 +67,7 @@ export const Input = ({
             placeholderTextColor={colors.GRAY_DARK}
             {...props}
           />
-          {isClearable && (
+          {isClearable && value.length > 0 && (
             <Ionicons
               name={icons.CLOSE_CIRCLE}
               size={20}

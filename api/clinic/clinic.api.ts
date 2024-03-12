@@ -31,4 +31,9 @@ export class ClinicApi {
     const res = await authClient.post(`clinic-assignment-requests/${clinicId}/unassignment-cancellation`);
     return res.data;
   }
+
+  static async getCities(params?: Record<string, any>): Promise<string[]> {
+    const res = await authClient.get('cities', { params });
+    return res.data;
+  }
 }

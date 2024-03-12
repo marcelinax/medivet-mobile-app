@@ -9,15 +9,15 @@ import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from 'types/Navigation/types';
 import { parseDataToSelectOptions } from 'utils/selectInput';
 import { UserApi } from 'api/user/user.api';
-import { TextInput } from 'components/Inputs/TextInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedFilters } from 'store/home/homeSlice';
 import { RootState } from 'store/store';
 import { useTranslation } from 'react-i18next';
+import { ClinicApi } from 'api/clinic/clinic.api';
 
 interface FormProps {
   specialization?: SelectOptionProps;
-  city?: string;
+  city?: SelectOptionProps;
 }
 
 export interface HandleSearchVets {
@@ -76,6 +76,14 @@ export const SearchVetsForm = forwardRef<HandleSearchVets, Props>((
     return parseDataToSelectOptions(res, 'name', 'id');
   };
 
+  const fetchCities = async (params?: Record<string, any>): Promise<SelectOptionProps[]> => {
+    const res = await ClinicApi.getCities(params);
+    return res.map((item) => ({
+      id: item,
+      label: item,
+    }));
+  };
+
   return (
     <View>
       <View style={styles.inputMargin}>
@@ -90,12 +98,14 @@ export const SearchVetsForm = forwardRef<HandleSearchVets, Props>((
         />
       </View>
       <View>
-        <TextInput
+        <SelectInput
+          id={SelectId.CITY}
           variant="outline"
-          value={form?.city}
-          onChangeText={(city) => handleChangeInput('city', city)}
           errors={[]}
+          onChoose={(city) => handleChangeInput('city', city)}
           label={t('words.city.title')}
+          fetchOptions={fetchCities}
+          defaultValue={form?.city}
         />
       </View>
     </View>
