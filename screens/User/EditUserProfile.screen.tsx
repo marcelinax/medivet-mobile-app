@@ -144,7 +144,7 @@ export const EditUserProfileScreen = () => {
         </View>
         <View>
           <TextInput
-            value={user.name}
+            value={form?.name}
             variant="underline"
             isClearable={false}
             label={t('words.name.title')}
