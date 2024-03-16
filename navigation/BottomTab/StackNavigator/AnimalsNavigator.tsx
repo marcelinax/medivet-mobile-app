@@ -9,7 +9,7 @@ import colors from 'themes/colors';
 import { useNavigation } from '@react-navigation/native';
 import { CreateAnimalScreen } from 'screens/Animals/CreateAnimal.screen';
 import { useTranslation } from 'react-i18next';
-import { getDefaultScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
+import { getDefaultScreenOptions, navigatorScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
 import { AnimalScreen } from 'screens/Animals/Animal.screen';
 import { AnimalAppointmentDiaryScreen } from 'screens/Animals/AnimalAppointmentDiary.screen';
 import { AppointmentDiariesScreen } from 'screens/AppointmentDiaries/AppointmentDiaries.screen';
@@ -36,12 +36,7 @@ export const AnimalsNavigator = () => {
   };
 
   return (
-    <Stack.Navigator screenOptions={{
-      headerShown: false,
-      headerBackTitle: '',
-      headerTintColor: colors.BLACK,
-    }}
-    >
+    <Stack.Navigator screenOptions={navigatorScreenOptions}>
       <Stack.Screen
         name={routes.USER_ANIMALS}
         component={UserAnimalsScreen}

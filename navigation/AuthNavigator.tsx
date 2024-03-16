@@ -4,7 +4,7 @@ import React from 'react';
 import { LoginScreen } from 'screens/Auth/Login.screen';
 import { RegistrationScreen } from 'screens/Auth/Registration.screen';
 import { PreRegistrationScreen } from 'screens/Auth/PreRegistration.screen';
-import colors from 'themes/colors';
+import { navigatorScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
 
 export const AuthNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -12,11 +12,7 @@ export const AuthNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={routes.LOGIN}
-      screenOptions={{
-        headerShown: false,
-        headerBackTitle: '',
-        headerTintColor: colors.BLACK,
-      }}
+      screenOptions={navigatorScreenOptions}
     >
       <Stack.Screen
         name={routes.LOGIN}

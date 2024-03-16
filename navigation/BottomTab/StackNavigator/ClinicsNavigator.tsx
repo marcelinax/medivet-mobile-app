@@ -5,7 +5,7 @@ import routes from 'constants/routes';
 import { VetClinicsScreen } from 'screens/Clinics/Clinic/VetClinics.screen';
 import { VetClinicScreen } from 'screens/Clinics/Clinic/VetClinic.screen';
 import { VetClinicAvailabilitiesScreen } from 'screens/Clinics/VetAvailability/VetClinicAvailabilities.screen';
-import { getDefaultScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
+import { getDefaultScreenOptions, navigatorScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
 import { IconButton } from 'components/Buttons/IconButton';
 import icons from 'themes/icons';
 import { useNavigation } from '@react-navigation/native';
@@ -84,12 +84,7 @@ export const ClinicsNavigator = () => {
   };
 
   return (
-    <Stack.Navigator screenOptions={{
-      headerShown: false,
-      headerBackTitle: '',
-      headerTintColor: colors.BLACK,
-    }}
-    >
+    <Stack.Navigator screenOptions={navigatorScreenOptions}>
       <Stack.Screen
         name={routes.VET_CLINICS}
         component={VetClinicsScreen}

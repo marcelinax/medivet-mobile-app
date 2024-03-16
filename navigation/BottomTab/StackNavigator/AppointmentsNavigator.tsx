@@ -1,10 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'types/Navigation/types';
 import { useTranslation } from 'react-i18next';
-import colors from 'themes/colors';
 import routes from 'constants/routes';
 import { AppointmentsScreen } from 'screens/Appointments/Appointments.screen';
-import { getDefaultScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
+import { getDefaultScreenOptions, navigatorScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
 import { AppointmentScreen } from 'screens/Appointments/Appointment.screen';
 import { AppointmentCalendarScreen } from 'screens/Home/Appointment/AppointmentCalendar.screen';
 import { AppointmentAnimalScreen } from 'screens/Home/Appointment/AppointmentAnimal.screen';
@@ -18,12 +17,7 @@ export const AppointmentsNavigator = () => {
   const { t } = useTranslation();
 
   return (
-    <Stack.Navigator screenOptions={{
-      headerShown: false,
-      headerBackTitle: '',
-      headerTintColor: colors.BLACK,
-    }}
-    >
+    <Stack.Navigator screenOptions={navigatorScreenOptions}>
       <Stack.Screen
         name={routes.APPOINTMENTS}
         component={AppointmentsScreen}

@@ -15,7 +15,7 @@ import { IconButton } from 'components/Buttons/IconButton';
 import icons from 'themes/icons';
 import { SelectOptionProps } from 'types/components/Inputs/types';
 import { setCurrentUser } from 'store/user/userSlice';
-import { getDefaultScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
+import { getDefaultScreenOptions, navigatorScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
 import { UserApi } from 'api/user/user.api';
 import { MultiSelectId } from 'constants/enums/multiSelectId.enum';
 import {
@@ -95,12 +95,7 @@ export const UserNavigator = () => {
   };
 
   return (
-    <Stack.Navigator screenOptions={{
-      headerShown: false,
-      headerBackTitle: '',
-      headerTintColor: colors.BLACK,
-    }}
-    >
+    <Stack.Navigator screenOptions={navigatorScreenOptions}>
       <Stack.Screen
         name={routes.USER}
         component={UserProfileScreen}

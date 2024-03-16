@@ -1,12 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'types/Navigation/types';
 import routes from 'constants/routes';
-import colors from 'themes/colors';
 import { VetsScreen } from 'screens/Home/Vets/Vets.screen';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { VetScreen } from 'screens/Home/Vets/Vet.screen';
-import { getDefaultScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
+import { getDefaultScreenOptions, navigatorScreenOptions } from 'navigation/BottomTab/StackNavigator/utils/screenOptions';
 import { useTranslation } from 'react-i18next';
 import { AppointmentCalendarScreen } from 'screens/Home/Appointment/AppointmentCalendar.screen';
 import { AppointmentAnimalScreen } from 'screens/Home/Appointment/AppointmentAnimal.screen';
@@ -29,12 +28,7 @@ export const HomeNavigator = () => {
   const vetsScreenTitle = `${vetsFilters?.specialization?.label}, ${vetsFilters?.city?.label}`;
 
   return (
-    <Stack.Navigator screenOptions={{
-      headerShown: false,
-      headerBackTitle: '',
-      headerTintColor: colors.BLACK,
-    }}
-    >
+    <Stack.Navigator screenOptions={navigatorScreenOptions}>
       <Stack.Screen
         name={routes.HOME}
         component={isVet ? VetHomeScreen : PatientHomeScreen}
