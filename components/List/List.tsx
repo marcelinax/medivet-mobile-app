@@ -41,6 +41,7 @@ export const List = ({
   customHeader,
 }: Props) => {
   const [ loading, setLoading ] = useState<boolean>(false);
+  const [ finishedLoad, setFinishedLoad ] = useState<boolean>(false);
   const [ offset, setOffset ] = useState<number>(0);
   const [ data, setData ] = useState<any[]>([]);
   const [ hasNextPage, setHasNextPage ] = useState<boolean>(true);
@@ -56,19 +57,22 @@ export const List = ({
 
   useEffect(() => {
     if (forceFetchingList) {
+      setLoading(true);
       dispatch(setForceFetchingList(false));
+      reset();
       handleDelayFetchingData(true);
     }
   }, [ forceFetchingList ]);
 
   useEffect(() => {
     setLoading(true);
-    handleDelayFetchingData();
+    handleDelayFetchingData(true);
   }, [ search ]);
 
   const handleDelayFetchingData = async (forceReset?: boolean) => {
     if (searchTimeout.current) window.clearTimeout(searchTimeout.current);
     searchTimeout.current = window.setTimeout(() => {
+      if (forceReset) reset();
       onFetchData(forceReset);
     }, 300);
   };
@@ -84,7 +88,9 @@ export const List = ({
   }, {});
 
   const handleRefresh = async () => {
+    setLoading(true);
     setIsRefreshing(true);
+    reset();
     await handleDelayFetchingData(true);
     setIsRefreshing(false);
   };
@@ -92,7 +98,6 @@ export const List = ({
   const onFetchData = async (forceReset?: boolean): Promise<void | undefined> => {
     if (!hasNextPage && !forceReset) return;
 
-    setLoading(true);
     try {
       const params = {
         pageSize,
@@ -115,10 +120,13 @@ export const List = ({
       const errors = getRequestErrors(err);
       handleErrorAlert(errors);
     }
+
+    setFinishedLoad(true);
     setLoading(false);
   };
 
   const reset = (): void => {
+    setFinishedLoad(false);
     setHasNextPage(true);
     setOffset(0);
     setData([]);
@@ -144,8 +152,7 @@ export const List = ({
   );
 
   const emptyComponent: JSX.Element = !loading && data.length === 0 ? <EmptyList /> : <></>;
-
-  const footerComponent: JSX.Element = loading && data.length === 0 ? <Loading /> : <></>;
+  const footerComponent: JSX.Element = loading && hasNextPage ? <Loading /> : <></>;
 
   const itemSeparator = customOptionsSeparator ? () => customOptionsSeparator : (separateOptions ? () => (
     <View
@@ -168,7 +175,11 @@ export const List = ({
           ListFooterComponent={footerComponent}
           showsVerticalScrollIndicator={false}
           onEndReachedThreshold={0.5}
-          onEndReached={() => handleDelayFetchingData()}
+          onEndReached={() => {
+            if (!finishedLoad) return;
+            setLoading(true);
+            handleDelayFetchingData();
+          }}
           contentContainerStyle={{
             flexGrow: 1,
           }}
