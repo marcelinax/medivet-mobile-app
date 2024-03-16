@@ -1,5 +1,4 @@
-import Constants from 'expo-constants';
-
 export default {
-  apiUrl: `http://${Constants?.manifest?.debuggerHost?.split(':')?.shift()}:3005/`,
+  apiUrl: process.env.EXPO_PUBLIC_API_URL,
+  webSocketApiUrl: process.env.EXPO_PUBLIC_WEB_SOCKET_URL,
 };
