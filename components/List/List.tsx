@@ -25,6 +25,7 @@ interface Props {
   customStickyHeader?: JSX.Element;
   customOptionsSeparator?: JSX.Element;
   customHeader?: JSX.Element;
+  itemFieldAsId?: string;
 }
 
 export const List = ({
@@ -39,6 +40,7 @@ export const List = ({
   withoutBackgroundColor,
   customStickyHeader,
   customHeader,
+  itemFieldAsId,
 }: Props) => {
   const [ loading, setLoading ] = useState<boolean>(false);
   const [ finishedLoad, setFinishedLoad ] = useState<boolean>(false);
@@ -170,7 +172,7 @@ export const List = ({
           renderItem={renderItem}
           ListHeaderComponent={withSearch ? headerComponent : customStickyHeader || customHeader || <></>}
           ItemSeparatorComponent={itemSeparator}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => (itemFieldAsId ? item[itemFieldAsId] : item.id)}
           ListEmptyComponent={emptyComponent}
           ListFooterComponent={footerComponent}
           showsVerticalScrollIndicator={false}
