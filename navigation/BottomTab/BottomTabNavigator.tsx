@@ -12,6 +12,7 @@ import { AnimalsNavigator } from 'navigation/BottomTab/StackNavigator/AnimalsNav
 import { UserNavigator } from 'navigation/BottomTab/StackNavigator/UserNavigator';
 import { HomeNavigator } from 'navigation/BottomTab/StackNavigator/HomeNavigator';
 import { ClinicsNavigator } from 'navigation/BottomTab/StackNavigator/ClinicsNavigator';
+import { ChatNavigator } from 'navigation/BottomTab/StackNavigator/ChatNavigator';
 
 export const BottomTabNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -53,6 +54,13 @@ export const BottomTabNavigator = () => {
         component={UserNavigator}
         options={{
           tabBarIcon: ({ focused }) => getTabIcon(focused, icons.PERSON_OUTLINE),
+        }}
+      />
+      <Tab.Screen
+        name={routes.CHAT_NAVIGATOR}
+        component={ChatNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => getTabIcon(focused, icons.CHATBUBBLE_OUTLINE),
         }}
       />
       {

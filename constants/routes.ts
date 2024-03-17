@@ -10,6 +10,7 @@ export default {
   ANIMALS_NAVIGATOR: 'Animals Navigator' as keyof RootStackParamList,
   CLINICS_NAVIGATOR: 'Clinics Navigator' as keyof RootStackParamList,
   APPOINTMENTS_NAVIGATOR: 'Appointments Navigator' as keyof RootStackParamList,
+  CHAT_NAVIGATOR: 'Chat Navigator' as keyof RootStackParamList,
 
   // SCREENS
   LOGIN: 'Login' as keyof RootStackParamList,
@@ -54,4 +55,5 @@ export default {
   USER_VACATIONS: 'User Vacations' as keyof RootStackParamList,
   CREATE_USER_VACATION: 'Create User Vacation' as keyof RootStackParamList,
   UPDATE_USER_VACATION: 'Update User Vacation' as keyof RootStackParamList,
+  CHAT: 'Chat' as keyof RootStackParamList,
 };

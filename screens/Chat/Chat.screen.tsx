@@ -2,7 +2,10 @@ import { ListLayout } from 'layouts/List.layout';
 import { MessageList } from 'components/Screens/Chat/MessageList';
 
 export const ChatScreen = () => (
-  <ListLayout>
+  <ListLayout
+    withoutBackgroundColor
+    withoutVerticalPadding
+  >
     <MessageList />
   </ListLayout>
 );

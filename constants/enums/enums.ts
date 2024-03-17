@@ -54,3 +54,9 @@ export enum PaymentMethodStatus {
   'ACTIVE' = 'ACTIVE',
   'INACTIVE' = 'INACTIVE',
 }
+
+export enum MessageStatus {
+  'ACTIVE' = 'ACTIVE',
+  'ARCHIVED' = 'ARCHIVED',
+  'REMOVED' = 'REMOVED',
+}
