@@ -8,9 +8,12 @@ interface Props {
   title: string;
   filterId: string;
   value: string;
+  notClearable?: boolean;
 }
 
-export const FilterButton = ({ title, filterId, value }: Props) => {
+export const FilterButton = ({
+  title, filterId, value, notClearable,
+}: Props) => {
   const selectedFilters = useSelector((state: RootState) => state.list.selectedFilters);
   const filter = selectedFilters.find((selectedFilter) => selectedFilter.id === filterId);
   const isFilterApplied = filter?.value === value;
@@ -22,10 +25,11 @@ export const FilterButton = ({ title, filterId, value }: Props) => {
         id: filterId,
         value,
       }));
-    } else {
+      dispatch(setForceFetchingList(true));
+    } else if (!notClearable) {
       dispatch(clearFilter(filterId));
+      dispatch(setForceFetchingList(true));
     }
-    dispatch(setForceFetchingList(true));
   };
 
   return (
@@ -33,7 +37,7 @@ export const FilterButton = ({ title, filterId, value }: Props) => {
       title={title}
       variant={isFilterApplied ? 'solid' : 'outline'}
       onPress={handleOnPress}
-      rightIcon={isFilterApplied ? icons.CLOSE_OUTLINE : undefined}
+      rightIcon={isFilterApplied && !notClearable ? icons.CLOSE_OUTLINE : undefined}
       style={{ padding: 10 }}
     />
   );
