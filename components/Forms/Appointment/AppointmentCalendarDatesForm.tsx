@@ -130,7 +130,8 @@ export const AppointmentCalendarDatesForm = ({
               key={hour}
               style={{
                 width: columnWidth,
-                paddingRight: index === (hours.length < maxNumberOfColumns ? hours.length - 1 : maxNumberOfColumns - 1) ? 0 : 5,
+                paddingRight: index === (hours.length < maxNumberOfColumns
+                  ? hours.length - 1 : maxNumberOfColumns - 1) ? 0 : 5,
                 paddingLeft: index === 0 ? 0 : 5,
               }}
             >

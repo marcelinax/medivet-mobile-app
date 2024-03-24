@@ -80,3 +80,8 @@ export type UserOpinionScreenParams = {
 export type UpdateUserVacationScreenParams = {
   vacationId: number;
 }
+
+export type ChatPreviewScreenParams = {
+  correspondingUserId: number;
+  user: User;
+}

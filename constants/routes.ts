@@ -56,4 +56,5 @@ export default {
   CREATE_USER_VACATION: 'Create User Vacation' as keyof RootStackParamList,
   UPDATE_USER_VACATION: 'Update User Vacation' as keyof RootStackParamList,
   CHAT: 'Chat' as keyof RootStackParamList,
+  CHAT_PREVIEW: 'Chat Preview' as keyof RootStackParamList,
 };

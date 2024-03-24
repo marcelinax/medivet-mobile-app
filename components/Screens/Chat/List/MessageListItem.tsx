@@ -11,6 +11,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { Ionicons } from '@expo/vector-icons';
 import icons from 'themes/icons';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationProps } from 'types/Navigation/types';
 
 interface Props {
   conversation: Conversation
@@ -19,6 +21,7 @@ interface Props {
 export const MessageListItem = ({ conversation }: Props) => {
   const { messages, user, lastUpdate } = conversation;
   const { currentUser } = useSelector((state: RootState) => state.user);
+  const navigation = useNavigation<NavigationProps>();
 
   const getParsedDate = () => {
     const today = moment().set({
@@ -80,7 +83,14 @@ export const MessageListItem = ({ conversation }: Props) => {
   };
 
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={() => navigation.push(
+      'Chat Preview',
+      {
+        correspondingUserId: user.id,
+        user,
+      },
+    )}
+    >
       <View style={listItemStyles.container}>
         <Card>
           <View style={listItemStyles.innerContainer}>

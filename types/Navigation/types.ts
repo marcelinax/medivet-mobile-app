@@ -6,6 +6,7 @@ import {
   AppointmentDiariesScreenParams,
   AppointmentDiaryScreenParams,
   AppointmentScreenParams,
+  ChatPreviewScreenParams,
   CreateAppointmentDiaryScreenParams,
   CreateVetClinicAvailabilityReceptionHourScreenParams,
   EditAnimalScreenParams,
@@ -62,6 +63,7 @@ export type RootStackParamList = {
   'User Vacations': undefined;
   'Create User Vacation': undefined;
   'Update User Vacation': UpdateUserVacationScreenParams;
+  'Chat Preview': ChatPreviewScreenParams;
 }
 
 export type NavigationProps = NativeStackNavigationProp<RootStackParamList>;

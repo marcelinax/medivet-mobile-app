@@ -2,11 +2,11 @@ import { ListRenderItem } from 'react-native';
 import { List } from 'components/List/List';
 import { ChatApi } from 'api/chat/chat.api';
 import { Conversation } from 'types/api/chat/types';
-import { MessageListItem } from 'components/Screens/Chat/MessageListItem';
+import { MessageListItem } from 'components/Screens/Chat/List/MessageListItem';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { FilterId } from 'constants/enums/filterId.enum';
-import { MessageListFilters } from 'components/Screens/Chat/MessageListFilters';
+import { MessageListFilters } from 'components/Screens/Chat/List/MessageListFilters';
 
 export const MessageList = () => {
   const { selectedFilters } = useSelector((state: RootState) => state.list);

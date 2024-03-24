@@ -377,6 +377,12 @@
         "CANCELLED": "Anulowana"
       }
     },
+    "message": {
+      "status": {
+        "ACTIVE": "Aktywne",
+        "ARCHIVED": "Zarchiwizowane"
+      }
+    },
     "vacation": {
       "status": {
         "ACTIVE": "Aktywny",
@@ -472,6 +478,9 @@
     },
     "create_appointment_diary": {
       "title": "Tworzenie dziennika wizyty"
+    },
+    "chat": {
+      "title": "Wiadomości"
     },
     "user_clinics": {
       "title": "Moje kliniki"

@@ -9,6 +9,7 @@ export interface Message {
   receiverStatus: MessageStatus;
   issuerStatus: MessageStatus;
   message: string;
+  read: boolean;
 }
 
 export interface Conversation {
