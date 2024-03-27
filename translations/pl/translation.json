@@ -231,6 +231,12 @@
     "appointment_summary": {
       "title": "Podsumowanie wizyty"
     },
+    "about": {
+      "title": "o"
+    },
+    "new_message": {
+      "title": "Nowa wiadomość"
+    },
     "pending_approval": {
       "title": "Oczekuje na zatwierdzenie"
     },
@@ -287,9 +293,6 @@
     },
     "today": {
       "title": "Dzisiaj"
-    },
-    "about": {
-      "title": "o"
     },
     "tomorrow": {
       "title": "Jutro"

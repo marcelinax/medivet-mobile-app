@@ -40,7 +40,7 @@ export const Input = ({
   return (
     <View style={inputStyles.container}>
       <View>
-        <Text style={inputStyles.label}>{label?.toUpperCase()}</Text>
+        {label && <Text style={inputStyles.label}>{label.toUpperCase()}</Text>}
         <View style={[
           inputStyles.inputInnerContainer,
           getInputStylesDependingOnVariant(variant),

@@ -19,8 +19,8 @@ export const ChatPreviewListItem = ({ message, forSameUser, containsSeparatorDat
   const currentUser = useSelector((state: RootState) => state.user.currentUser) as User;
   const isLoggedUser = useMemo(() => message.issuer.id === currentUser.id, [ message.issuer.id ]);
 
-  // Moje Wiadomości powinny mieć znaczek czy użytkownik odczytał
-  // można z poziomu navigation header usunac zarchiwizować/przywrócić wiadomości
+  // TODO  Moje Wiadomości powinny mieć znaczek czy użytkownik odczytał
+  // TODO można z poziomu navigation header usunac zarchiwizować/przywrócić wiadomości
 
   const render = useMemo(() => (
     <View style={styles.container}>

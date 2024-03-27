@@ -1,6 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import {
+  RefObject, useEffect, useRef, useState,
+} from 'react';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
-import { FlatList, ListRenderItem, View } from 'react-native';
+import {
+  FlatList, ListRenderItem, NativeScrollEvent, NativeSyntheticEvent, View, ViewToken,
+} from 'react-native';
 import { EmptyList } from 'components/Composition/EmptyList';
 import { Loading } from 'components/Composition/Loading';
 import { TextInput } from 'components/Inputs/TextInput';
@@ -26,6 +30,15 @@ interface Props {
   customOptionsSeparator?: JSX.Element;
   customHeader?: JSX.Element;
   itemFieldAsId?: string;
+  stickyFooter?: JSX.Element;
+  upstreamedItems?: any[];
+  setUpstreamedItems?: (items: any[]) => void;
+  inverted?: boolean;
+  size?: number;
+  onViewableItemsChanged?: (info: { viewableItems: ViewToken[], changed: ViewToken[] }) => void;
+  preventOnRefresh?: boolean;
+  onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+  ref?: RefObject<FlatList>;
 }
 
 export const List = ({
@@ -41,6 +54,15 @@ export const List = ({
   customStickyHeader,
   customHeader,
   itemFieldAsId,
+  stickyFooter,
+  upstreamedItems,
+  setUpstreamedItems,
+  inverted,
+  size,
+  onViewableItemsChanged,
+  preventOnRefresh,
+  ref,
+  onScroll,
 }: Props) => {
   const [ loading, setLoading ] = useState<boolean>(false);
   const [ finishedLoad, setFinishedLoad ] = useState<boolean>(false);
@@ -49,13 +71,22 @@ export const List = ({
   const [ hasNextPage, setHasNextPage ] = useState<boolean>(true);
   const [ search, setSearch ] = useState<string>('');
   const { handleErrorAlert } = useErrorAlert();
-  const pageSize = 10;
+  const pageSize = size ?? 10;
   const filters = useSelector((state: RootState) => state.list.selectedFilters);
   const forceFetchingList = useSelector((state: RootState) => state.list.forceFetchingList);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const searchTimeout = useRef(0);
   const [ isRefreshing, setIsRefreshing ] = useState(false);
+  const allData = [
+    ...(upstreamedItems || []),
+    ...data,
+  ].filter((item, index) => [
+    ...(upstreamedItems || []),
+    ...data,
+  ]
+    .findIndex((value) => item.id === value.id) === index)
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
   useEffect(() => {
     if (forceFetchingList) {
@@ -90,6 +121,8 @@ export const List = ({
   }, {});
 
   const handleRefresh = async () => {
+    if (preventOnRefresh) return;
+
     setLoading(true);
     setIsRefreshing(true);
     reset();
@@ -132,6 +165,7 @@ export const List = ({
     setHasNextPage(true);
     setOffset(0);
     setData([]);
+    if (setUpstreamedItems) setUpstreamedItems([]);
   };
 
   const onChangeSearch = (value: string): void => {
@@ -153,7 +187,7 @@ export const List = ({
     </View>
   );
 
-  const emptyComponent: JSX.Element = !loading && data.length === 0 ? <EmptyList /> : <></>;
+  const emptyComponent: JSX.Element = !loading && allData.length === 0 ? <EmptyList /> : <></>;
   const footerComponent: JSX.Element = loading && hasNextPage ? <Loading /> : <></>;
 
   const itemSeparator = customOptionsSeparator ? () => customOptionsSeparator : (separateOptions ? () => (
@@ -168,7 +202,8 @@ export const List = ({
         style={stickyFooterButtonTitle && stickyFooterButtonAction ? listStyles.listContainer : listStyles.list}
       >
         <FlatList
-          data={data}
+          ref={ref}
+          data={allData}
           renderItem={renderItem}
           ListHeaderComponent={withSearch ? headerComponent : customStickyHeader || customHeader || <></>}
           ItemSeparatorComponent={itemSeparator}
@@ -190,10 +225,18 @@ export const List = ({
           nestedScrollEnabled
           style={listStyles.list}
           stickyHeaderIndices={withSearch || customStickyHeader ? [ 0 ] : undefined}
+          inverted={inverted}
+          viewabilityConfig={{
+            waitForInteraction: true,
+            itemVisiblePercentThreshold: 100,
+          }}
+          onViewableItemsChanged={onViewableItemsChanged}
+          onScroll={onScroll}
+          bounces={!preventOnRefresh}
         />
       </View>
       {
-        stickyFooterButtonTitle && stickyFooterButtonAction && (
+        stickyFooterButtonTitle && stickyFooterButtonAction && !stickyFooter && (
           <View
             style={[ listStyles.footerButtonContainer ]}
           >
@@ -206,6 +249,7 @@ export const List = ({
           </View>
         )
       }
+      {stickyFooter}
     </View>
   );
 };
