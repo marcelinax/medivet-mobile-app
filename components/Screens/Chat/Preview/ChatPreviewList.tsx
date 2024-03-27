@@ -15,7 +15,6 @@ import { ChatPreviewNewMessageInfo } from 'components/Screens/Chat/Preview/ChatP
 
 // TODO dodać padding na górze listy
 // TODO po powrocie do listy konwersacji powinno się odświeżyć
-// TODO data nie jest na środku linii
 // TODO zamienić prop ref w liście na używanie useForwardRef
 // TODO wszystkie socket listenery i emittery powinny się wykonac jeżeli dotycza zalogowanego usera
 

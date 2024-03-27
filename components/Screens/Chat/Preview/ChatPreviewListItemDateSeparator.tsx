@@ -30,8 +30,10 @@ export const ChatPreviewListItemDateSeparator = ({ date }: Props) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.textContainer}>
-        <Text style={styles.text}>{getParsedMessageDate()}</Text>
+      <View style={styles.textAbsoluteContainer}>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>{getParsedMessageDate()}</Text>
+        </View>
       </View>
       <BreakLine />
     </View>
@@ -42,17 +44,16 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 16,
   },
-  textContainer: {
+  textAbsoluteContainer: {
+    width: '100%',
+    alignItems: 'center',
     position: 'absolute',
-    left: '50%',
-    transform: [
-      {
-        translateX: -50,
-      },
-    ],
+    justifyContent: 'center',
+    zIndex: 2,
+  },
+  textContainer: {
     backgroundColor: colors.WHITE,
     paddingHorizontal: 5,
-    zIndex: 2,
     top: 5,
   },
   text: {
