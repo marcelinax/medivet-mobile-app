@@ -12,6 +12,9 @@ import { ChatPreviewListFooter } from 'components/Screens/Chat/Preview/ChatPrevi
 import { useWebSocket } from 'hooks/useWebSocket';
 import { List } from 'components/List/List';
 import { ChatPreviewNewMessageInfo } from 'components/Screens/Chat/Preview/ChatPreviewNewMessageInfo';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { User } from 'types/api/user/types';
 
 // TODO dodać padding na górze listy
 // TODO po powrocie do listy konwersacji powinno się odświeżyć
@@ -24,6 +27,7 @@ export const ChatPreviewList = () => {
   const [ messages, setMessages ] = useState<Message[]>([]);
   const [ showNewMessageInfo, setShowNewMessageInfo ] = useState(false);
   const listRef = useRef<FlatList>(null);
+  const currentUser = useSelector((state: RootState) => state.user.currentUser) as User;
 
   useEffect(() => {
     // TODO na froncie trzeba sprawdzić czy kanał receiveMessage ma być dla obecnie zalogowanego usera czy nie
@@ -92,7 +96,7 @@ export const ChatPreviewList = () => {
 
   const handleOnViewableItemsChanged = (info: { viewableItems: ViewToken[], changed: ViewToken[] }) => {
     const unreadMessage = messages.filter((message) => !message.read);
-    if (unreadMessage.length > 0) {
+    if (unreadMessage.length > 0 && unreadMessage.some((message) => message.receiver.id === currentUser.id)) {
       const viewableMessageIds: number[] = info.viewableItems.map((item) => item.item.id);
       if (!viewableMessageIds.includes(unreadMessage[unreadMessage.length - 1].id)) {
         setShowNewMessageInfo(true);
