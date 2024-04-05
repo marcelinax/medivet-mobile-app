@@ -18,7 +18,10 @@ export const ChatPreviewScreen = () => {
   }, [ JSON.stringify(user) ]);
 
   return (
-    <ListLayout withoutVerticalPadding>
+    <ListLayout
+      withoutVerticalPadding
+      topPadding={15}
+    >
       <ChatPreviewList />
     </ListLayout>
   );
