@@ -115,7 +115,6 @@ export const ChatPreviewList = () => {
   const handleScrollToBottom = () => {
     listRef.current?.scrollToOffset({
       offset: 0,
-      animated: true,
     });
   };
 

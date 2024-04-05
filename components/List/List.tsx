@@ -1,5 +1,5 @@
 import {
-  RefObject, useEffect, useRef, useState,
+  forwardRef, useEffect, useRef, useState,
 } from 'react';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import {
@@ -38,10 +38,9 @@ interface Props {
   onViewableItemsChanged?: (info: { viewableItems: ViewToken[], changed: ViewToken[] }) => void;
   preventOnRefresh?: boolean;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
-  ref?: RefObject<FlatList>;
 }
 
-export const List = ({
+export const List = forwardRef<FlatList, Props>(({
   onFetch,
   renderItem,
   withSearch,
@@ -61,9 +60,8 @@ export const List = ({
   size,
   onViewableItemsChanged,
   preventOnRefresh,
-  ref,
   onScroll,
-}: Props) => {
+}, ref) => {
   const [ loading, setLoading ] = useState<boolean>(false);
   const [ finishedLoad, setFinishedLoad ] = useState<boolean>(false);
   const [ offset, setOffset ] = useState<number>(0);
@@ -252,4 +250,4 @@ export const List = ({
       {stickyFooter}
     </View>
   );
-};
+});
