@@ -171,6 +171,8 @@ export const List = forwardRef<FlatList, Props>(({
     reset();
   };
 
+  const getDeepValueOfItemByChainedKey = (item: any, keys: string[]) => keys.reduce((acc, cur) => acc?.[cur] ?? null, item);
+
   const headerComponent: JSX.Element = (
     <View style={listStyles.inputContainer}>
       <TextInput
@@ -205,7 +207,12 @@ export const List = forwardRef<FlatList, Props>(({
           renderItem={renderItem}
           ListHeaderComponent={withSearch ? headerComponent : customStickyHeader || customHeader || <></>}
           ItemSeparatorComponent={itemSeparator}
-          keyExtractor={(item) => (itemFieldAsId ? item[itemFieldAsId] : item.id)}
+          keyExtractor={(item) => {
+            if (itemFieldAsId) {
+              return getDeepValueOfItemByChainedKey(item, itemFieldAsId.split('.'));
+            }
+            return item.id;
+          }}
           ListEmptyComponent={emptyComponent}
           ListFooterComponent={footerComponent}
           showsVerticalScrollIndicator={false}

@@ -32,7 +32,7 @@ export const MessageList = () => {
       onFetch={(params) => ChatApi.getConversations(getParams(params))}
       renderItem={renderConversation}
       withoutBackgroundColor
-      itemFieldAsId="user.id"
+      itemFieldAsId="messages[0].id"
       customStickyHeader={<MessageListFilters />}
       separateOptions
     />
