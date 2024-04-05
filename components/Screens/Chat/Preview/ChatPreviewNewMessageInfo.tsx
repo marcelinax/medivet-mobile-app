@@ -8,7 +8,6 @@ interface Props {
   handleOnPress: () => void
 }
 
-// TODO kliknięcie w belkę powoduje dojechanie na dół listy
 export const ChatPreviewNewMessageInfo = ({ handleOnPress }: Props) => {
   const { t } = useTranslation();
 

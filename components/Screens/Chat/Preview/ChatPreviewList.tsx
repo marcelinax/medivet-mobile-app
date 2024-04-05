@@ -15,7 +15,6 @@ import { ChatPreviewNewMessageInfo } from 'components/Screens/Chat/Preview/ChatP
 
 // TODO dodać padding na górze listy
 // TODO po powrocie do listy konwersacji powinno się odświeżyć
-// TODO zamienić prop ref w liście na używanie useForwardRef
 // TODO wszystkie socket listenery i emittery powinny się wykonac jeżeli dotycza zalogowanego usera
 
 export const ChatPreviewList = () => {
@@ -86,6 +85,7 @@ export const ChatPreviewList = () => {
           moment(item.createdAt),
           'd',
         )}
+        isNewest={index === 0}
       />
     );
   };

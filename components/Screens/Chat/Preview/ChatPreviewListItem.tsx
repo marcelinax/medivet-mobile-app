@@ -8,18 +8,28 @@ import { Card } from 'components/Composition/Card';
 import colors from 'themes/colors';
 import { Avatar } from 'components/Composition/Avatar';
 import { ChatPreviewListItemDateSeparator } from 'components/Screens/Chat/Preview/ChatPreviewListItemDateSeparator';
+import { Ionicons } from '@expo/vector-icons';
+import icons from 'themes/icons';
 
 interface Props {
   message: Message;
   forSameUser: boolean;
   containsSeparatorDate: boolean;
+  isNewest: boolean;
 }
 
-export const ChatPreviewListItem = ({ message, forSameUser, containsSeparatorDate }: Props) => {
+export const ChatPreviewListItem = ({
+  message, forSameUser, containsSeparatorDate, isNewest,
+}: Props) => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser) as User;
-  const isLoggedUser = useMemo(() => message.issuer.id === currentUser.id, [ message.issuer.id ]);
-
-  // TODO  Moje Wiadomości powinny mieć znaczek czy użytkownik odczytał
+  const isLoggedUser = useMemo(
+    () => message.issuer.id === currentUser.id,
+    [ message.issuer.id ],
+  );
+  const showReadIcon = useMemo(
+    () => isNewest && message.read && isLoggedUser,
+    [ isLoggedUser, message.read, isNewest ],
+  );
   // TODO można z poziomu navigation header usunac zarchiwizować/przywrócić wiadomości
 
   const render = useMemo(() => (
@@ -58,10 +68,18 @@ export const ChatPreviewListItem = ({ message, forSameUser, containsSeparatorDat
               {message.message}
             </Text>
           </Card>
+          {showReadIcon && (
+            <Ionicons
+              name={icons.CHECKMARK_OUTLINE}
+              size={18}
+              color={colors.SECONDARY}
+              style={styles.readIcon}
+            />
+          )}
         </View>
       </View>
     </View>
-  ), [ JSON.stringify(message), forSameUser, containsSeparatorDate ]);
+  ), [ JSON.stringify(message), forSameUser, containsSeparatorDate, showReadIcon ]);
 
   return render;
 };
@@ -90,5 +108,9 @@ const styles = StyleSheet.create({
   },
   message: {
     fontWeight: '500',
+  },
+  readIcon: {
+    alignSelf: 'flex-end',
+    marginLeft: 5,
   },
 });
