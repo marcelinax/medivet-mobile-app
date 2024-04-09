@@ -1,13 +1,7 @@
-import { io } from 'socket.io-client';
-import config from 'config';
-import * as SecureStore from 'expo-secure-store';
+import webSocket from 'hooks/webSocket';
 
 export const useWebSocket = () => {
-  const socket = io(config.webSocketApiUrl || '', {
-    auth: async (cb) => {
-      cb({ token: await SecureStore.getItemAsync('token') });
-    },
-  });
+  const { socket } = webSocket;
 
   return { socket };
 };

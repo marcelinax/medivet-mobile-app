@@ -87,6 +87,8 @@ module.exports = {
     'react/no-unstable-nested-components': 'off',
     '@typescript-eslint/ban-types': 'warn',
     'no-unused-vars': 'warn',
+    'no-underscore-dangle': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
   },
   globals: {
     React: true,

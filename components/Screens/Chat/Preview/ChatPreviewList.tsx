@@ -16,9 +16,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { User } from 'types/api/user/types';
 
-// TODO dodać padding na górze listy
 // TODO po powrocie do listy konwersacji powinno się odświeżyć
-// TODO wszystkie socket listenery i emittery powinny się wykonac jeżeli dotycza zalogowanego usera
 
 export const ChatPreviewList = () => {
   const { params: { correspondingUserId } } = useRoute<RouteProps<'Chat Preview'>>();
@@ -30,7 +28,6 @@ export const ChatPreviewList = () => {
   const currentUser = useSelector((state: RootState) => state.user.currentUser) as User;
 
   useEffect(() => {
-    // TODO na froncie trzeba sprawdzić czy kanał receiveMessage ma być dla obecnie zalogowanego usera czy nie
     socket.on('receiveMessage', (data) => {
       setMessages((prevState) => [ ...prevState, data.data ]);
     });
@@ -44,6 +41,16 @@ export const ChatPreviewList = () => {
     socket.on('receiveReadMessages', (data) => {
       handleUpdateUnreadMessages(data.data);
     });
+
+    // @ts-ignore
+    const listOffset = listRef.current?._listRef?._scrollMetrics?.offset;
+    if (listOffset >= 0 && listOffset <= 30) {
+      if ([ ...messages, ...dataRef.current ].some((message) => !message.read)) {
+        socket.emit('markAsRead', {
+          receiverId: correspondingUserId,
+        });
+      }
+    }
 
     return () => {
       socket.removeListener('receiveReadMessages');
