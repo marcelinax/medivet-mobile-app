@@ -231,6 +231,7 @@ export const List = forwardRef<FlatList, Props>(({
           ItemSeparatorComponent={itemSeparator}
           keyExtractor={(item) => {
             if (itemFieldAsId) {
+              return getDeepValueOfListItemByChainedKey(item, itemFieldAsId.split('.'));
             }
             return item.id;
           }}
