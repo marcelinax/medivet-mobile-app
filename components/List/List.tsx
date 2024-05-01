@@ -1,5 +1,5 @@
 import {
-  forwardRef, useEffect, useRef, useState,
+  forwardRef, useEffect, useMemo, useRef, useState,
 } from 'react';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import {
@@ -16,6 +16,7 @@ import colors from 'themes/colors';
 import { useTranslation } from 'react-i18next';
 import { setForceFetchingList } from 'store/list/listSlice';
 import { getRequestErrors } from 'utils/errors';
+import { getDeepValueOfListItemByChainedKey } from 'components/List/utils';
 
 interface Props {
   onFetch: (params: Record<string, any>, id?: number) => Promise<any[]>;
@@ -38,6 +39,7 @@ interface Props {
   onViewableItemsChanged?: (info: { viewableItems: ViewToken[], changed: ViewToken[] }) => void;
   preventOnRefresh?: boolean;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+  handleSort?: (items: any[]) => void;
 }
 
 export const List = forwardRef<FlatList, Props>(({
@@ -61,6 +63,7 @@ export const List = forwardRef<FlatList, Props>(({
   onViewableItemsChanged,
   preventOnRefresh,
   onScroll,
+  handleSort,
 }, ref) => {
   const [ loading, setLoading ] = useState<boolean>(false);
   const [ finishedLoad, setFinishedLoad ] = useState<boolean>(false);
@@ -76,15 +79,36 @@ export const List = forwardRef<FlatList, Props>(({
   const dispatch = useDispatch();
   const searchTimeout = useRef(0);
   const [ isRefreshing, setIsRefreshing ] = useState(false);
-  const allData = [
-    ...(upstreamedItems || []),
-    ...data,
-  ].filter((item, index) => [
-    ...(upstreamedItems || []),
-    ...data,
-  ]
-    .findIndex((value) => item.id === value.id) === index)
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  const allData = useMemo(() => {
+    let items = [
+      ...(upstreamedItems || []),
+      ...data,
+    ];
+    items = items.filter((item, index) => [
+      ...(upstreamedItems || []),
+      ...data,
+    ]
+      .findIndex((value) => {
+        let itemId;
+        let valueId;
+
+        if (itemFieldAsId) {
+          itemId = getDeepValueOfListItemByChainedKey(item, itemFieldAsId.split('.'));
+          valueId = getDeepValueOfListItemByChainedKey(value, itemFieldAsId.split('.'));
+        } else {
+          itemId = item.id;
+          valueId = value.id;
+        }
+
+        return itemId === valueId;
+      }) === index);
+
+    if (handleSort) {
+      handleSort(items);
+    }
+
+    return items;
+  }, [ JSON.stringify(upstreamedItems), JSON.stringify(data) ]);
 
   useEffect(() => {
     if (forceFetchingList) {
@@ -171,8 +195,6 @@ export const List = forwardRef<FlatList, Props>(({
     reset();
   };
 
-  const getDeepValueOfItemByChainedKey = (item: any, keys: string[]) => keys.reduce((acc, cur) => acc?.[cur] ?? null, item);
-
   const headerComponent: JSX.Element = (
     <View style={listStyles.inputContainer}>
       <TextInput
@@ -209,7 +231,6 @@ export const List = forwardRef<FlatList, Props>(({
           ItemSeparatorComponent={itemSeparator}
           keyExtractor={(item) => {
             if (itemFieldAsId) {
-              return getDeepValueOfItemByChainedKey(item, itemFieldAsId.split('.'));
             }
             return item.id;
           }}

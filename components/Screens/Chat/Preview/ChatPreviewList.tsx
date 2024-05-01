@@ -6,83 +6,115 @@ import { ChatPreviewListItem } from 'components/Screens/Chat/Preview/ChatPreview
 import { ChatApi } from 'api/chat/chat.api';
 import { useRoute } from '@react-navigation/native';
 import { RouteProps } from 'types/Navigation/types';
-import { useEffect, useRef, useState } from 'react';
+import {
+  useEffect, useMemo, useRef, useState,
+} from 'react';
 import moment from 'moment';
 import { ChatPreviewListFooter } from 'components/Screens/Chat/Preview/ChatPreviewListFooter';
-import { useWebSocket } from 'hooks/useWebSocket';
 import { List } from 'components/List/List';
 import { ChatPreviewNewMessageInfo } from 'components/Screens/Chat/Preview/ChatPreviewNewMessageInfo';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { User } from 'types/api/user/types';
-
-// TODO po powrocie do listy konwersacji powinno się odświeżyć
+import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
+import { getRequestErrors } from 'utils/errors';
+import { getSynchronizedChatPreviewData } from 'services/chatPreviewSynchronizer';
 
 export const ChatPreviewList = () => {
   const { params: { correspondingUserId } } = useRoute<RouteProps<'Chat Preview'>>();
   const dataRef = useRef<Message[]>([]);
-  const { socket } = useWebSocket();
   const [ messages, setMessages ] = useState<Message[]>([]);
   const [ showNewMessageInfo, setShowNewMessageInfo ] = useState(false);
   const listRef = useRef<FlatList>(null);
   const currentUser = useSelector((state: RootState) => state.user.currentUser) as User;
+  const timeoutRef = useRef<number | undefined>(undefined);
+  const { handleErrorAlert } = useErrorAlert();
+  const [ startSynchronizer, setStartSynchronizer ] = useState(false);
+  const syncInProgress = useRef(false);
+  const [ newMessageSent, setNewMessageSent ] = useState(false);
+  const [ newMessages, setNewMessages ] = useState<Message[]>([]);
+  const upstreamedItems = useMemo(
+    () => [ ...messages, ...newMessages ].filter((message, index) => [
+      ...messages,
+      ...newMessages,
+    ]
+      .findIndex((value) => message.id === value.id) === index),
+    [ JSON.stringify(messages), JSON.stringify(newMessages) ],
+  );
 
-  useEffect(() => {
-    socket.on('receiveMessage', (data) => {
-      setMessages((prevState) => [ ...prevState, data.data ]);
-    });
-
-    return () => {
-      socket.removeListener('receiveMessage');
-    };
+  useEffect(() => () => {
+    timeoutRef.current = undefined;
+    window.clearTimeout(timeoutRef.current);
   }, []);
 
   useEffect(() => {
-    socket.on('receiveReadMessages', (data) => {
-      handleUpdateUnreadMessages(data.data);
-    });
+    if (startSynchronizer) handleSynchronizer();
+  }, [ startSynchronizer ]);
 
+  useEffect(() => {
+    if (newMessageSent) {
+      setNewMessageSent(false);
+    }
+  }, [ newMessageSent ]);
+
+  const handleUpdateNewMessages = (fetchedMessages: Message[]) => {
+    const updatedNewMessages = [ ...newMessages ];
+
+    fetchedMessages.forEach((fetchedMessage) => {
+      const updatedNewMessageIndex = updatedNewMessages.findIndex(
+        (message) => message.id === fetchedMessage.id,
+      );
+      if (updatedNewMessageIndex > -1) {
+        updatedNewMessages.splice(updatedNewMessageIndex, 1);
+      }
+      setNewMessages(updatedNewMessages);
+    });
+  };
+
+  const handleSynchronizer = async () => {
+    if (syncInProgress.current) return;
+
+    try {
+      syncInProgress.current = true;
+      const newMessages = await getSynchronizedChatPreviewData(correspondingUserId);
+
+      if (JSON.stringify(newMessages) !== JSON.stringify(messages)) {
+        setMessages([ ...newMessages ]);
+      }
+      handleUpdateNewMessages(newMessages);
+
+      startSynchronizerTimeout();
+    } catch (err: any) {
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
+    } finally {
+      syncInProgress.current = false;
+    }
+  };
+
+  const startSynchronizerTimeout = () => {
+    if (timeoutRef.current) {
+      window.clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = window.setTimeout(() => {
+      if (timeoutRef.current) handleSynchronizer();
+    }, 1000);
+  };
+
+  useEffect(() => {
     // @ts-ignore
     const listOffset = listRef.current?._listRef?._scrollMetrics?.offset;
     if (listOffset >= 0 && listOffset <= 30) {
-      if ([ ...messages, ...dataRef.current ].some((message) => !message.read)) {
-        socket.emit('markAsRead', {
-          receiverId: correspondingUserId,
-        });
-      }
+      handleMarkMessagesAsRead();
     }
-
-    return () => {
-      socket.removeListener('receiveReadMessages');
-    };
-  }, [ messages ]);
-
-  const handleUpdateUnreadMessages = (data: Message[]) => {
-    const newMessages = [ ...messages ];
-    const newDataRef = [ ...dataRef.current ];
-
-    data.forEach((messageToUpdate) => {
-      const index = newMessages.findIndex(({ id }) => id === messageToUpdate.id);
-      if (index >= 0) {
-        newMessages[index] = JSON.parse(JSON.stringify(messageToUpdate));
-      }
-
-      const dataIndex = newDataRef.findIndex(({ id }) => id === messageToUpdate.id);
-      if (dataIndex >= 0) {
-        newDataRef[dataIndex] = JSON.parse(JSON.stringify(messageToUpdate));
-      }
-    });
-
-    setMessages([ ...newMessages ]);
-    dataRef.current = [ ...newDataRef ];
-  };
+  }, []);
 
   const renderMessage: ListRenderItem<Message> = ({ item, index }) => {
     const allMessages = [
-      ...messages,
+      ...upstreamedItems,
       ...dataRef.current,
     ].filter((message, index) => [
-      ...messages,
+      ...upstreamedItems,
       ...dataRef.current,
     ]
       .findIndex((value) => message.id === value.id) === index)
@@ -92,9 +124,9 @@ export const ChatPreviewList = () => {
       <ChatPreviewListItem
         message={item}
         forSameUser={allMessages[index + 1]?.issuer?.id === item.issuer.id}
-        containsSeparatorDate={!moment(allMessages[index + 1]?.createdAt).isSame(
-          moment(item.createdAt),
-          'd',
+        containsSeparatorDate={!moment.utc(allMessages[index + 1]?.createdAt).isSame(
+          moment.utc(item.createdAt),
+          'date',
         )}
         isNewest={index === 0}
       />
@@ -103,7 +135,9 @@ export const ChatPreviewList = () => {
 
   const handleOnViewableItemsChanged = (info: { viewableItems: ViewToken[], changed: ViewToken[] }) => {
     const unreadMessage = messages.filter((message) => !message.read);
-    if (unreadMessage.length > 0 && unreadMessage.some((message) => message.receiver.id === currentUser.id)) {
+    if (unreadMessage.length > 0 && unreadMessage.some(
+      (message) => message.receiver.id === currentUser.id,
+    )) {
       const viewableMessageIds: number[] = info.viewableItems.map((item) => item.item.id);
       if (!viewableMessageIds.includes(unreadMessage[unreadMessage.length - 1].id)) {
         setShowNewMessageInfo(true);
@@ -115,11 +149,21 @@ export const ChatPreviewList = () => {
 
   const handleReadMessages = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (event.nativeEvent.contentOffset.y >= 0 && event.nativeEvent.contentOffset.y <= 30) {
-      if ([ ...messages, ...dataRef.current ].some((message) => !message.read)) {
-        socket.emit('markAsRead', {
-          receiverId: correspondingUserId,
-        });
+      if ([ ...upstreamedItems, ...dataRef.current ].filter(
+        (message) => message.receiver.id === currentUser.id,
+      )
+        .some((message) => !message.read)) {
+        handleMarkMessagesAsRead();
       }
+    }
+  };
+
+  const handleMarkMessagesAsRead = async () => {
+    try {
+      await ChatApi.markMessagesAsRead(correspondingUserId);
+    } catch (err: any) {
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
     }
   };
 
@@ -136,15 +180,19 @@ export const ChatPreviewList = () => {
         onFetch={async (params) => {
           const promise = ChatApi.getConversationMessages(correspondingUserId, params);
           dataRef.current = [ ...dataRef.current, ...(await promise) ];
+          if (!startSynchronizer) setStartSynchronizer(true);
           return promise;
         }}
         renderItem={renderMessage}
         stickyFooter={(
           <ChatPreviewListFooter
             receiverId={correspondingUserId}
+            setNewMessageSent={setNewMessageSent}
+            setNewMessages={setNewMessages}
+            newMessages={newMessages}
           />
         )}
-        upstreamedItems={messages}
+        upstreamedItems={upstreamedItems}
         setUpstreamedItems={setMessages}
         inverted
         size={25}
@@ -152,6 +200,9 @@ export const ChatPreviewList = () => {
         preventOnRefresh
         onScroll={handleReadMessages}
         ref={listRef}
+        handleSort={(items) => items.sort(
+          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        )}
       />
     </>
   );

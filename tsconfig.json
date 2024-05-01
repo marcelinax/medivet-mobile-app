@@ -42,6 +42,9 @@
       ],
       "navigation/*": [
         "./navigation/*"
+      ],
+      "services/*": [
+        "./services/*"
       ]
     }
   }

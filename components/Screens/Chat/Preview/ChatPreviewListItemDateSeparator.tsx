@@ -12,18 +12,24 @@ export const ChatPreviewListItemDateSeparator = ({ date }: Props) => {
   const { t } = useTranslation();
 
   const getParsedMessageDate = () => {
-    const lastUpdateDate = moment(date).set({
+    const lastUpdateDate = moment.utc(date).set({
+      hour: 0,
+      minute: 0,
+      second: 0,
+      millisecond: 0,
+    });
+    const today = moment.utc().set({
       hour: 0,
       minute: 0,
       second: 0,
       millisecond: 0,
     });
 
-    if (lastUpdateDate.isSame(moment(), 'd')) {
+    if (lastUpdateDate.isSame(today, 'date')) {
       return moment(date).format('HH:mm');
     }
 
-    return moment(date).format(lastUpdateDate.get('year') === moment().get('year')
+    return moment(date).format(lastUpdateDate.get('year') === today.get('year')
       ? `DD.MM ${t('words.about.title')} HH:mm`
       : `DD.MM.YYYY ${t('words.about.title')} HH:mm`);
   };

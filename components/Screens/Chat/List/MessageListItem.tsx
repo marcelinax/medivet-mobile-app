@@ -19,37 +19,38 @@ interface Props {
 }
 
 export const MessageListItem = ({ conversation }: Props) => {
-  const { messages, user, lastUpdate } = conversation;
+  const { messages, user } = conversation;
   const { currentUser } = useSelector((state: RootState) => state.user);
   const navigation = useNavigation<NavigationProps>();
 
   const getParsedDate = () => {
-    const today = moment().set({
+    const date = messages[0].createdAt;
+    const today = moment.utc().set({
       hour: 0,
       minute: 0,
       second: 0,
       millisecond: 0,
     });
-    const sevenDaysAgo = moment().subtract(7, 'd').set({
+    const sevenDaysAgo = moment.utc().subtract(7, 'd').set({
       hour: 0,
       minute: 0,
       second: 0,
       millisecond: 0,
     });
-    const lastUpdateDate = moment(lastUpdate).set({
+    const lastUpdateDate = moment.utc(date).set({
       hour: 0,
       minute: 0,
       second: 0,
       millisecond: 0,
     });
 
-    if (lastUpdateDate.isSame(today)) {
-      return moment(lastUpdate).format('HH:mm');
+    if (lastUpdateDate.isSame(today, 'date')) {
+      return moment(date).format('HH:mm');
     }
     if (lastUpdateDate.isSameOrAfter(sevenDaysAgo)) {
-      return moment(lastUpdate).format('ddd');
+      return moment(date).format('ddd');
     }
-    return moment(lastUpdate).format(lastUpdateDate.get('year') === moment().get('year') ? 'DD.MM' : 'DD.MM.YYYY');
+    return moment(date).format(lastUpdateDate.get('year') === today.get('year') ? 'DD.MM' : 'DD.MM.YYYY');
   };
 
   const drawReadConversationStatus = () => {

@@ -18,6 +18,7 @@ module.exports = function (api) {
             types: './types',
             hooks: './hooks',
             store: './store',
+            services: './services',
           },
           extensions: [
             '.js',

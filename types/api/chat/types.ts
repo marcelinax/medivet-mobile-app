@@ -18,3 +18,8 @@ export interface Conversation {
   lastUpdate: Date;
   status: MessageStatus;
 }
+
+export interface CreateMessage {
+  message: string;
+  receiverId: number;
+}
