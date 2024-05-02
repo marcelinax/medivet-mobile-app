@@ -42,10 +42,21 @@ export const ChatPreviewList = () => {
     [ JSON.stringify(messages), JSON.stringify(newMessages) ],
   );
 
-  useEffect(() => () => {
-    timeoutRef.current = undefined;
-    window.clearTimeout(timeoutRef.current);
+  useEffect(() => {
+    startSynchronizerTimeout();
+    return () => {
+      timeoutRef.current = undefined;
+      window.clearTimeout(timeoutRef.current);
+    };
   }, []);
+
+  useEffect(() => {
+    handleReadMessagesWithoutScrolling();
+  }, []);
+
+  useEffect(() => {
+    handleReadMessagesWithoutScrolling();
+  }, [ JSON.stringify(upstreamedItems) ]);
 
   useEffect(() => {
     if (startSynchronizer) handleSynchronizer();
@@ -67,8 +78,22 @@ export const ChatPreviewList = () => {
       if (updatedNewMessageIndex > -1) {
         updatedNewMessages.splice(updatedNewMessageIndex, 1);
       }
+
       setNewMessages(updatedNewMessages);
     });
+  };
+
+  const handleReadMessagesWithoutScrolling = () => {
+    // @ts-ignore
+    const listOffset = listRef.current?._listRef?._scrollMetrics?.offset;
+    if (listOffset >= 0 && listOffset <= 30) {
+      if ([ ...upstreamedItems, ...dataRef.current ].filter(
+        (message) => message.receiver.id === currentUser.id,
+      )
+        .some((message) => !message.read)) {
+        handleMarkMessagesAsRead();
+      }
+    }
   };
 
   const handleSynchronizer = async () => {
@@ -77,7 +102,7 @@ export const ChatPreviewList = () => {
     try {
       syncInProgress.current = true;
       const newMessages = await getSynchronizedChatPreviewData(correspondingUserId);
-
+      if (!timeoutRef.current) return;
       if (JSON.stringify(newMessages) !== JSON.stringify(messages)) {
         setMessages([ ...newMessages ]);
       }
@@ -97,17 +122,9 @@ export const ChatPreviewList = () => {
       window.clearTimeout(timeoutRef.current);
     }
     timeoutRef.current = window.setTimeout(() => {
-      if (timeoutRef.current) handleSynchronizer();
+      handleSynchronizer();
     }, 1000);
   };
-
-  useEffect(() => {
-    // @ts-ignore
-    const listOffset = listRef.current?._listRef?._scrollMetrics?.offset;
-    if (listOffset >= 0 && listOffset <= 30) {
-      handleMarkMessagesAsRead();
-    }
-  }, []);
 
   const renderMessage: ListRenderItem<Message> = ({ item, index }) => {
     const allMessages = [

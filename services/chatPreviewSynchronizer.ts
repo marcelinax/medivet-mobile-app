@@ -13,7 +13,9 @@ const params: Record<string, any> = {
 export const getSynchronizedChatPreviewData = async (correspondingUserId: number) => {
   const now = moment().format();
   const res = await ChatApi.getConversationMessages(correspondingUserId, params);
-  chatPreviewData = [ ...chatPreviewData, ...res ];
+  const data = [ ...res, ...chatPreviewData ];
+  chatPreviewData = [ ...data ].filter(((message, index) => data
+    .findIndex((item) => item.id === message.id) === index));
   params.lastUpdate = now;
 
   return chatPreviewData;
