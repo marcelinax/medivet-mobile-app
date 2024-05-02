@@ -31,7 +31,7 @@ export const MessageList = () => {
 
   useEffect(() => {
     if (isFocused && firstRequestDone) {
-      setStartSynchronizer(true);
+      handleSynchronizer();
     } else {
       window.clearTimeout(timeoutRef.current);
       setStartSynchronizer(false);
