@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { Conversation } from 'types/api/chat/types';
 import { ChatApi } from 'api/chat/chat.api';
+import { MessageStatus } from 'constants/enums/enums';
 
 let messageListData: Conversation[] = [];
 
@@ -10,7 +11,7 @@ const params: Record<string, any> = {
   lastUpdate: moment().format(),
 };
 
-export const synchronizeMessageListData = async (status: string) => {
+export const synchronizeMessageListData = async (status: MessageStatus) => {
   const now = moment().format();
   const res = await ChatApi.getConversations({
     ...params,

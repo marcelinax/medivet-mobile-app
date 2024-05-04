@@ -14,13 +14,13 @@ import { getRequestErrors } from 'utils/errors';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { synchronizeMessageListData } from 'services/messageListSynchronizer';
 import { useIsFocused } from '@react-navigation/native';
+import { MessageStatus } from 'constants/enums/enums';
 
 export const MessageList = () => {
   const { selectedFilters } = useSelector((state: RootState) => state.list);
   const [ conversations, setConversations ] = useState<Conversation[]>([]);
   const timeoutRef = useRef<number | undefined>(undefined);
   const { handleErrorAlert } = useErrorAlert();
-  const [ startSynchronizer, setStartSynchronizer ] = useState(false);
   const [ firstRequestDone, setFirstRequestDone ] = useState(false);
   const syncInProgress = useRef(false);
   const status = useMemo(() => selectedFilters.find(
@@ -34,25 +34,23 @@ export const MessageList = () => {
       handleSynchronizer();
     } else {
       window.clearTimeout(timeoutRef.current);
-      setStartSynchronizer(false);
+      setConversations([]);
     }
   }, [ isFocused ]);
 
   useEffect(() => {
-    if (startSynchronizer) {
-      startSynchronizerTimeout();
-    }
-  }, [ startSynchronizer ]);
+    if (firstRequestDone) startSynchronizerTimeout();
+  }, [ firstRequestDone ]);
 
   useEffect(() => {
-    if (startSynchronizer) {
-      if (syncInProgress.current) {
-        ignorePreviousSyncRequest.current = true;
-      }
-      syncInProgress.current = false;
-      setConversations([]);
-      handleSynchronizer();
+    setConversations([]);
+    if (syncInProgress.current) {
+      ignorePreviousSyncRequest.current = true;
     }
+    syncInProgress.current = false;
+    window.clearTimeout(timeoutRef.current);
+    setFirstRequestDone(false);
+    startSynchronizerTimeout();
   }, [ status ]);
 
   const getParams = (params: Record<string, any>) => {
@@ -71,7 +69,7 @@ export const MessageList = () => {
 
     try {
       syncInProgress.current = true;
-      const newConversations = await synchronizeMessageListData(getParams({}).status);
+      const newConversations = await synchronizeMessageListData(status!.value as MessageStatus);
 
       if (ignorePreviousSyncRequest.current) return;
 
@@ -104,7 +102,6 @@ export const MessageList = () => {
       onFetch={async (params) => {
         const promise = ChatApi.getConversations(getParams(params));
         if (!firstRequestDone) setFirstRequestDone(true);
-        if (!startSynchronizer) setStartSynchronizer(true);
         return promise;
       }}
       renderItem={renderConversation}
