@@ -1,5 +1,6 @@
 import { authClient } from 'api/services';
 import { Conversation, CreateMessage, Message } from 'types/api/chat/types';
+import { MessageStatus } from 'constants/enums/enums';
 
 export class ChatApi {
   static async getConversations(
@@ -25,5 +26,12 @@ export class ChatApi {
   static async markMessagesAsRead(correspondingUserId: number): Promise<Message[]> {
     const res = await authClient.put(`messages/read/${correspondingUserId}`);
     return res.data;
+  }
+
+  static async changeConversationStatus(status: MessageStatus, correspondingUser: number): Promise<void> {
+    await authClient.put('messages', {
+      status,
+      userId: correspondingUser,
+    });
   }
 }

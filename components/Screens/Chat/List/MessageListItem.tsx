@@ -13,15 +13,27 @@ import { Ionicons } from '@expo/vector-icons';
 import icons from 'themes/icons';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProps } from 'types/Navigation/types';
+import { SwipeButtonActionProps } from 'types/components/Buttons/types';
+import { MessageStatus } from 'constants/enums/enums';
+import { ChatApi } from 'api/chat/chat.api';
+import { getRequestErrors } from 'utils/errors';
+import { useConfirmationAlert } from 'hooks/Alerts/useConfirmationAlert';
+import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
+import { useTranslation } from 'react-i18next';
+import { SwipeButton } from 'components/Buttons/SwipeButton/SwipeButton';
 
 interface Props {
   conversation: Conversation
+  onChangeStatus: () => void;
 }
 
-export const MessageListItem = ({ conversation }: Props) => {
+export const MessageListItem = ({ conversation, onChangeStatus }: Props) => {
   const { messages, user } = conversation;
   const { currentUser } = useSelector((state: RootState) => state.user);
   const navigation = useNavigation<NavigationProps>();
+  const confirmation = useConfirmationAlert();
+  const { handleErrorAlert } = useErrorAlert();
+  const { t } = useTranslation();
 
   const getParsedDate = () => {
     const date = messages[0].createdAt;
@@ -83,51 +95,101 @@ export const MessageListItem = ({ conversation }: Props) => {
     return <></>;
   };
 
+  const handleChangeStatus = async (status: MessageStatus) => {
+    await confirmation({
+      title: '',
+      message: status === MessageStatus.REMOVED
+        ? `${t('alerts.confirmation.remove.title')} ${t('alerts.confirmation.irreversible_action.title')}`
+        : t('alerts.confirmation.message'),
+    });
+    try {
+      await ChatApi.changeConversationStatus(status, user.id);
+      onChangeStatus();
+    } catch (err: any) {
+      const errors = getRequestErrors(err);
+      handleErrorAlert(errors);
+    }
+  };
+
+  const rightActions: SwipeButtonActionProps[] = [
+    {
+      icon: icons.REFRESH_OUTLINE,
+      color: colors.PRIMARY,
+      onPress: () => handleChangeStatus(MessageStatus.ACTIVE),
+      id: 'restore',
+      backgroundColor: 'transparent',
+      visible: conversation.status === MessageStatus.ARCHIVED,
+    },
+    {
+      icon: icons.ARCHIVE_OUTLINE,
+      color: colors.PRIMARY,
+      onPress: () => handleChangeStatus(MessageStatus.ARCHIVED),
+      id: 'archive',
+      backgroundColor: 'transparent',
+      visible: conversation.status === MessageStatus.ACTIVE,
+    },
+    {
+      icon: icons.TRASH_OUTLINE,
+      color: colors.DANGER,
+      onPress: () => handleChangeStatus(MessageStatus.REMOVED),
+      id: 'remove',
+      backgroundColor: 'transparent',
+      visible: conversation.status === MessageStatus.ARCHIVED,
+    },
+  ];
+
   return (
-    <TouchableWithoutFeedback onPress={() => navigation.push(
-      'Chat Preview',
-      {
-        correspondingUserId: user.id,
-        user,
-      },
-    )}
-    >
-      <View style={listItemStyles.container}>
-        <Card>
-          <View style={listItemStyles.innerContainer}>
-            <Avatar
-              size="small"
-              url={user.profilePhotoUrl}
-            />
-            <View style={[ simpleListItemStyles.nameContainer, styles.nameContainer ]}>
-              <View style={styles.nameContainerRow}>
-                <Text
-                  style={styles.name}
-                  numberOfLines={1}
-                >
-                  {user.name}
-                </Text>
-                <Text
-                  style={styles.date}
-                  numberOfLines={1}
-                >
-                  {getParsedDate()}
-                </Text>
+    <View style={listItemStyles.container}>
+      <SwipeButton
+        size="small"
+        rightActions={rightActions}
+      >
+        <TouchableWithoutFeedback onPress={() => navigation.push(
+          'Chat Preview',
+          {
+            correspondingUserId: user.id,
+            user,
+          },
+        )}
+        >
+          <View style={{}}>
+            <Card>
+              <View style={listItemStyles.innerContainer}>
+                <Avatar
+                  size="small"
+                  url={user.profilePhotoUrl}
+                />
+                <View style={[ simpleListItemStyles.nameContainer, styles.nameContainer ]}>
+                  <View style={styles.nameContainerRow}>
+                    <Text
+                      style={styles.name}
+                      numberOfLines={1}
+                    >
+                      {user.name}
+                    </Text>
+                    <Text
+                      style={styles.date}
+                      numberOfLines={1}
+                    >
+                      {getParsedDate()}
+                    </Text>
+                  </View>
+                  <View style={[ styles.nameContainerRow, styles.messageContainer ]}>
+                    <Text
+                      numberOfLines={1}
+                      style={styles.message}
+                    >
+                      {messages[0].message}
+                    </Text>
+                    <View style={styles.messageInfoContainer}>{drawReadConversationStatus()}</View>
+                  </View>
+                </View>
               </View>
-              <View style={[ styles.nameContainerRow, styles.messageContainer ]}>
-                <Text
-                  numberOfLines={1}
-                  style={styles.message}
-                >
-                  {messages[0].message}
-                </Text>
-                <View style={styles.messageInfoContainer}>{drawReadConversationStatus()}</View>
-              </View>
-            </View>
+            </Card>
           </View>
-        </Card>
-      </View>
-    </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </SwipeButton>
+    </View>
   );
 };
 

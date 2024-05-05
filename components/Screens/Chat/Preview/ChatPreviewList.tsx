@@ -19,6 +19,7 @@ import { User } from 'types/api/user/types';
 import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { getRequestErrors } from 'utils/errors';
 import { getSynchronizedChatPreviewData } from 'services/chatPreviewSynchronizer';
+import { MessageStatus } from 'constants/enums/enums';
 
 export const ChatPreviewList = () => {
   const { params: { correspondingUserId } } = useRoute<RouteProps<'Chat Preview'>>();
@@ -41,6 +42,9 @@ export const ChatPreviewList = () => {
       .findIndex((value) => message.id === value.id) === index),
     [ JSON.stringify(messages), JSON.stringify(newMessages) ],
   );
+  const hideStickyFooter = dataRef.current.some((
+    item,
+  ) => item.issuerStatus !== MessageStatus.ACTIVE);
 
   useEffect(() => {
     startSynchronizerTimeout();
@@ -201,7 +205,7 @@ export const ChatPreviewList = () => {
           return promise;
         }}
         renderItem={renderMessage}
-        stickyFooter={(
+        stickyFooter={hideStickyFooter ? undefined : (
           <ChatPreviewListFooter
             receiverId={correspondingUserId}
             setNewMessageSent={setNewMessageSent}

@@ -3,7 +3,7 @@ import { List } from 'components/List/List';
 import { ChatApi } from 'api/chat/chat.api';
 import { Conversation } from 'types/api/chat/types';
 import { MessageListItem } from 'components/Screens/Chat/List/MessageListItem';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { FilterId } from 'constants/enums/filterId.enum';
 import { MessageListFilters } from 'components/Screens/Chat/List/MessageListFilters';
@@ -15,6 +15,7 @@ import { useErrorAlert } from 'hooks/Alerts/useErrorAlert';
 import { synchronizeMessageListData } from 'services/messageListSynchronizer';
 import { useIsFocused } from '@react-navigation/native';
 import { MessageStatus } from 'constants/enums/enums';
+import { setForceFetchingList } from 'store/list/listSlice';
 
 export const MessageList = () => {
   const { selectedFilters } = useSelector((state: RootState) => state.list);
@@ -28,6 +29,7 @@ export const MessageList = () => {
   ), [ JSON.stringify(selectedFilters) ]);
   const ignorePreviousSyncRequest = useRef(false);
   const isFocused = useIsFocused();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isFocused && firstRequestDone) {
@@ -95,7 +97,25 @@ export const MessageList = () => {
     timeoutRef.current = window.setTimeout(() => handleSynchronizer(), 1000);
   };
 
-  const renderConversation: ListRenderItem<Conversation> = ({ item }) => <MessageListItem conversation={item} />;
+  const handleOnMessageListItemAction = () => {
+    setConversations([]);
+    if (syncInProgress.current) {
+      ignorePreviousSyncRequest.current = true;
+    }
+    syncInProgress.current = false;
+    window.clearTimeout(timeoutRef.current);
+    setFirstRequestDone(false);
+    dispatch(setForceFetchingList(true));
+
+    startSynchronizerTimeout();
+  };
+
+  const renderConversation: ListRenderItem<Conversation> = ({ item }) => (
+    <MessageListItem
+      conversation={item}
+      onChangeStatus={handleOnMessageListItemAction}
+    />
+  );
 
   return (
     <List

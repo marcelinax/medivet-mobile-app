@@ -18,8 +18,9 @@ export const synchronizeMessageListData = async (status: MessageStatus) => {
     status,
   });
   const list = [ ...res, ...messageListData ];
-  messageListData = [ ...list ].filter(((conversation, index) => list
-    .findIndex((item) => item.user.id === conversation.user.id) === index));
+  messageListData = [ ...list ].filter((conversation) => conversation.status === status)
+    .filter(((conversation, index) => list
+      .findIndex((item) => item.user.id === conversation.user.id) === index));
   params.lastUpdate = now;
 
   return messageListData;

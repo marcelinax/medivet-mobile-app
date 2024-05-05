@@ -30,7 +30,6 @@ export const ChatPreviewListItem = ({
     () => isNewest && message.read && isLoggedUser,
     [ isLoggedUser, message.read, isNewest ],
   );
-  // TODO można z poziomu navigation header usunac zarchiwizować/przywrócić wiadomości
 
   const render = useMemo(() => (
     <View style={styles.container}>

@@ -41,4 +41,6 @@ export default {
   FLOWER_OUTLINE: 'flower-outline' as const,
   CASH_OUTLINE: 'cash-outline' as const,
   CHATBUBBLE_OUTLINE: 'chatbubble-outline' as const,
+  ARCHIVE_OUTLINE: 'archive-outline' as const,
+  REFRESH_OUTLINE: 'refresh-outline' as const,
 };

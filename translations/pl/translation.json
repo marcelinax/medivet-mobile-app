@@ -107,6 +107,9 @@
         "title": "Na pewno chcesz usunąć?"
       },
       "message": "Na pewno chcesz wykonać akcję?",
+      "irreversible_action": {
+        "title": "Ta akcja jest nieodwracalna!"
+      },
       "add_clinic": {
         "title": "Na pewno chcesz dodać klinikę"
       },

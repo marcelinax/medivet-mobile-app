@@ -80,7 +80,6 @@ export const AnimalNavigationMoreButton = ({ animal, setAnimal }: Props) => {
   ];
 
   return (
-
     <NavigationMoreButton actions={actions} />
   );
 };
