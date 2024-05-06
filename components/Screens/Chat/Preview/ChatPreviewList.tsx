@@ -42,9 +42,13 @@ export const ChatPreviewList = () => {
       .findIndex((value) => message.id === value.id) === index),
     [ JSON.stringify(messages), JSON.stringify(newMessages) ],
   );
-  const hideStickyFooter = dataRef.current.some((
-    item,
-  ) => item.issuerStatus !== MessageStatus.ACTIVE);
+  const hideStickyFooter = useMemo(
+    () => dataRef.current.some((
+      item,
+    ) => (item.issuer.id === currentUser.id && item.issuerStatus !== MessageStatus.ACTIVE)
+      || (item.receiver.id === currentUser.id && item.receiverStatus !== MessageStatus.ACTIVE)),
+    [ JSON.stringify(dataRef.current) ],
+  );
 
   useEffect(() => {
     startSynchronizerTimeout();
