@@ -32,11 +32,13 @@ export const MessageList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isFocused && firstRequestDone) {
-      handleSynchronizer();
+    if (isFocused) {
+      if (firstRequestDone) {
+        timeoutRef.current = 1;
+        handleSynchronizer();
+      }
     } else {
       window.clearTimeout(timeoutRef.current);
-      setConversations([]);
     }
   }, [ isFocused ]);
 

@@ -9,15 +9,18 @@ const params: Record<string, any> = {
   pageSize: 20,
   offset: 0,
   lastUpdate: moment().format(),
+  status: MessageStatus.ACTIVE,
 };
 
 export const synchronizeMessageListData = async (status: MessageStatus) => {
   const now = moment().format();
+  const sameStatus = status === params.status;
   const res = await ChatApi.getConversations({
     ...params,
     status,
   });
-  const list = [ ...res, ...messageListData ];
+  params.status = status;
+  const list = sameStatus ? [ ...res, ...messageListData ] : [ ...res ];
   messageListData = [ ...list ].filter((conversation) => conversation.status === status)
     .filter(((conversation, index) => list
       .findIndex((item) => item.user.id === conversation.user.id) === index));
