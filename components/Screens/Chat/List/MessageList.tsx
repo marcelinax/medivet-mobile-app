@@ -30,6 +30,20 @@ export const MessageList = () => {
   const ignorePreviousSyncRequest = useRef(false);
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
+  const dataRef = useRef<Conversation[]>([]);
+  const unreadMessagesCount = useMemo(() => {
+    const conversationsFilteredByStatus = [ ...conversations, ...dataRef.current ].filter(
+      ((conversation, index) => [ ...conversations, ...dataRef.current ]
+        .findIndex((item) => item.user.id === conversation.user.id) === index),
+    )
+      .filter(
+        (conversation) => conversation.status === status?.value as MessageStatus || MessageStatus.ACTIVE,
+      );
+
+    return conversationsFilteredByStatus.filter(
+      (conversation) => conversation.messages.some((message) => !message.read),
+    ).length;
+  }, [ JSON.stringify(conversations), JSON.stringify(dataRef.current), status?.value ]);
 
   useEffect(() => {
     if (isFocused) {
@@ -123,13 +137,19 @@ export const MessageList = () => {
     <List
       onFetch={async (params) => {
         const promise = ChatApi.getConversations(getParams(params));
+        dataRef.current = [ ...(await promise) ];
         if (!firstRequestDone) setFirstRequestDone(true);
         return promise;
       }}
       renderItem={renderConversation}
       withoutBackgroundColor
       itemFieldAsId="user.id"
-      customStickyHeader={<MessageListFilters />}
+      customStickyHeader={(
+        <MessageListFilters
+          type={status?.value as (MessageStatus | undefined)}
+          unreadMessageCount={unreadMessagesCount}
+        />
+      )}
       separateOptions
       upstreamedItems={conversations}
       setUpstreamedItems={(items) => setConversations(items)}

@@ -21,7 +21,6 @@ export const Button = ({
   fontWeight,
   ...props
 }: ButtonProps) => (
-  // zamienic dla androida na native
   <TouchableHighlight
     {...props}
     disabled={disabled}

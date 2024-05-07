@@ -7,7 +7,12 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateFilter } from 'store/list/listSlice';
 
-export const MessageListFilters = () => {
+interface Props {
+  unreadMessageCount: number;
+  type?: MessageStatus;
+}
+
+export const MessageListFilters = ({ unreadMessageCount, type }: Props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -22,13 +27,17 @@ export const MessageListFilters = () => {
     <ListFilters>
       <>
         <FilterButton
-          title={t('enums.message.status.ACTIVE')}
+          title={
+            `${t('enums.message.status.ACTIVE')}${type === MessageStatus.ACTIVE
+            && unreadMessageCount > 0 ? ` (${unreadMessageCount})` : ''}`
+          }
           filterId={FilterId.MESSAGE_STATUS}
           value={MessageStatus.ACTIVE}
           notClearable
         />
         <FilterButton
-          title={t('enums.message.status.ARCHIVED')}
+          title={`${t('enums.message.status.ARCHIVED')}${type === MessageStatus.ARCHIVED
+          && unreadMessageCount > 0 ? ` (${unreadMessageCount})` : ''}`}
           filterId={FilterId.MESSAGE_STATUS}
           value={MessageStatus.ARCHIVED}
           notClearable
