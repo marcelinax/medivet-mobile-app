@@ -43,10 +43,29 @@ export const ChatPreviewList = () => {
     [ JSON.stringify(messages), JSON.stringify(newMessages) ],
   );
   const hideStickyFooter = useMemo(
-    () => dataRef.current.some((
-      item,
-    ) => (item.issuer.id === currentUser.id && item.issuerStatus !== MessageStatus.ACTIVE)
-      || (item.receiver.id === currentUser.id && item.receiverStatus !== MessageStatus.ACTIVE)),
+    () => {
+      const allMessages = [ ...upstreamedItems, ...dataRef.current ].filter((message, index) => [
+        ...upstreamedItems,
+        ...dataRef.current,
+      ]
+        .findIndex((value) => message.id === value.id) === index);
+
+      const anyMessageWithStatusDifferentThanActive = allMessages.some((
+        item,
+      ) => (item.issuer.id === currentUser.id && item.issuerStatus !== MessageStatus.ACTIVE)
+        || (item.receiver.id === currentUser.id && item.receiverStatus !== MessageStatus.ACTIVE));
+
+      if (anyMessageWithStatusDifferentThanActive) return true;
+
+      const isCorrespondingUserRemoved = !!allMessages.find(
+        (message) => (
+          (message.issuer.id !== currentUser.id && message.issuer.role === 'REMOVED')
+          || (message.receiver.id !== currentUser.id && message.receiver.role === 'REMOVED')
+        ),
+      );
+
+      return isCorrespondingUserRemoved;
+    },
     [ JSON.stringify(dataRef.current) ],
   );
 
